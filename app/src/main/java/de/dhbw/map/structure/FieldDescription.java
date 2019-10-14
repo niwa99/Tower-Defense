@@ -1,4 +1,4 @@
-package de.dhbw.map.map;
+package de.dhbw.map.structure;
 
 public enum FieldDescription {
 

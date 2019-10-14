@@ -2,18 +2,24 @@ package de.dhbw.map.matchfield;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
-import tower.defense.enemy.Enemy;
-import tower.defense.tower.Tower;
+import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.structure.MapStructur;
 
 public class MatchField {
 	private List<Enemy> enemies;
 	private List<Tower> towers;
+	private Timer timer = new Timer();
+	private MapStructur map;
 	
-	public MatchField() {
+	public MatchField(MapStructur map) {
+		this.map=map;
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
 	}
@@ -43,6 +49,10 @@ public class MatchField {
 		}
 		return false;
 	}
+	
+	public boolean isGameOver() {
+		return !enemies.stream().filter(e -> !e.reachedTarget()).findAny().isPresent();
+	}
 
 	public Optional<Tower> getTower(UUID id) {
 		return towers.stream().filter(e -> e.getId()==id).findAny();
@@ -58,5 +68,57 @@ public class MatchField {
 	
 	public List<UUID> getEnemies(){
 		return enemies.stream().map(Enemy::getId).collect(Collectors.toList());
+	}
+	
+	public void moveEnemies() {
+		enemies.stream().forEach(e -> {
+			timer.scheduleAtFixedRate(new TimerTask() {
+				
+				@Override
+				public void run() {
+					if(e.isAlive()) {
+						if(!e.move(map)) {
+							stopGame();
+						}	
+					}
+				}
+			}, 0, 1000 - e.getSpeed());
+		});
+	}
+	
+	public void fireTowers() {
+		towers.stream().forEach(t -> {
+			timer.scheduleAtFixedRate(new TimerTask() {
+				
+				@Override
+				public void run() {
+					if(enemies.size()>0){
+						t.fire(enemies);
+						removeDeadEnemies();
+					}else {
+						stopTowers();
+					}
+				}
+			}, 1000, t.getFireRate()*1000);
+		});
+	}
+	
+	
+	private void removeDeadEnemies() {
+		List<Enemy> deadEnemies= enemies.stream().filter(e -> !e.isAlive()).collect(Collectors.toList());
+		for (Enemy enemy : deadEnemies) {
+			System.out.println(enemy.getLabel() + " is dead now");
+		}
+		enemies.removeAll(deadEnemies);
+	}
+	
+	public void stopTowers() {
+		timer.cancel();
+		System.out.println("No enemies left, towers are going to sleep");
+	}
+	
+	public void stopGame() {
+		timer.cancel();
+		System.out.println("Game over, all enemies reached the target");
 	}
 }

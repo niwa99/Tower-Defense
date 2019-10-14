@@ -1,4 +1,4 @@
-package de.dhbw.towerdefense;
+package de.dhbw.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 

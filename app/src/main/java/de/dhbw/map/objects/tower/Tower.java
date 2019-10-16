@@ -3,12 +3,13 @@ package de.dhbw.map.objects.tower;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimerTask;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.game.util.Position;
-import de.dhbw.game.util.SortingUtil;
+import de.dhbw.util.Position;
+import de.dhbw.util.SortingUtil;
 
 public abstract class Tower {
 	private SortingUtil sortingUtil = new SortingUtil();
@@ -21,6 +22,7 @@ public abstract class Tower {
 	private int fireRate;
 	private int x;
 	private int y;
+	private TimerTask task;
 	
 	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Position pos) {
 		this.label=label;
@@ -50,6 +52,14 @@ public abstract class Tower {
 	
 	public boolean isEnemyInRange(Enemy enemy) {	
 		return getDistance(enemy.getPositionX(), enemy.getPositionY())<range;
+	}
+
+	public TimerTask getTask(){
+		return task;
+	}
+
+	public void setTask(TimerTask task){
+		this.task=task;
 	}
 
 	/**

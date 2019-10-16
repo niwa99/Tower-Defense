@@ -76,17 +76,18 @@ public class MatchField {
 	 */
 	public void moveEnemies() {
 		enemies.stream().forEach(e -> {
-			timer.scheduleAtFixedRate(new TimerTask() {
-				
+			TimerTask task = new TimerTask() {
 				@Override
 				public void run() {
 					if(e.isAlive()) {
 						if(!e.move(map)) {
 							stopGame();
-						}	
+						}
 					}
 				}
-			}, 0, 1000 - e.getSpeed());
+			};
+			e.setTask(task);
+			timer.scheduleAtFixedRate(task, 0, 1000 - e.getSpeed());
 		});
 	}
 
@@ -96,8 +97,7 @@ public class MatchField {
 	 */
 	public void fireTowers() {
 		towers.stream().forEach(t -> {
-			timer.scheduleAtFixedRate(new TimerTask() {
-				
+			TimerTask task = new TimerTask() {
 				@Override
 				public void run() {
 					if(enemies.size()>0){
@@ -107,7 +107,9 @@ public class MatchField {
 						stopTowers();
 					}
 				}
-			}, 1000, t.getFireRate()*1000);
+			};
+			t.setTask(task);
+			timer.scheduleAtFixedRate(task, 1000, t.getFireRate()*1000);
 		});
 	}
 	
@@ -115,6 +117,7 @@ public class MatchField {
 	private void removeDeadEnemies() {
 		List<Enemy> deadEnemies= enemies.stream().filter(e -> !e.isAlive()).collect(Collectors.toList());
 		for (Enemy enemy : deadEnemies) {
+			enemy.getTask().cancel();
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
 		enemies.removeAll(deadEnemies);

@@ -1,4 +1,4 @@
-package de.dhbw.game.util;
+package de.dhbw.util;
 
 import java.util.Collections;
 import java.util.Comparator;

@@ -1,6 +1,6 @@
 package de.dhbw.map.structure;
 
-import de.dhbw.game.util.Position;
+import de.dhbw.util.Position;
 
 public class Field {
 

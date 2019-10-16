@@ -1,4 +1,4 @@
-package de.dhbw.game.util;
+package de.dhbw.util;
 
 public class Position {
 	private int x;

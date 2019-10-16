@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import de.dhbw.game.util.Position;
+import de.dhbw.util.Position;
 
 public class MapStructur {
 	private Map<String, Field> fields = new HashMap<String, Field>();

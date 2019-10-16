@@ -3,7 +3,7 @@ package de.dhbw.game;
 import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.game.util.Position;
+import de.dhbw.util.Position;
 import de.dhbw.map.structure.MapStructur;
 
 public class Game {

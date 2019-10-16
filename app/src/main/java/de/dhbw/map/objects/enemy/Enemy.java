@@ -4,7 +4,8 @@ import java.util.UUID;
 
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.MapStructur;
-import de.dhbw.game.util.Position;
+import de.dhbw.util.Position;
+import java.util.TimerTask;
 
 public abstract class Enemy{
 	private String label;
@@ -16,6 +17,7 @@ public abstract class Enemy{
 	private int y;
 	private boolean isAlive = true;
 	private boolean reachedTarget =  false;
+	private TimerTask task;
 	
 	private Field lastField;
 	private Field actualField;
@@ -26,6 +28,14 @@ public abstract class Enemy{
 		this.hp=hp;
 		this.speed=speed;
 		this.progress=0;
+	}
+
+	public TimerTask getTask(){
+		return task;
+	}
+
+	public void setTask(TimerTask task){
+		this.task=task;
 	}
 	
 	public int getHealthPoints() {

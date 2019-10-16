@@ -2,7 +2,7 @@ package de.dhbw.map.objects.tower;
 
 import java.util.UUID;
 
-import de.dhbw.game.util.Position;
+import de.dhbw.util.Position;
 
 public class DefTower extends Tower{
 	private static final int costs = 100;

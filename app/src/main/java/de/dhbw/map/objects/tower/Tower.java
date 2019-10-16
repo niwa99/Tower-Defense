@@ -32,7 +32,11 @@ public abstract class Tower {
 		this.x=pos.getX();
 		this.y=pos.getY();
 	}
-	
+
+	/**
+	 * The tower shoots the nearest enemy if it is in range
+	 * @param enemies
+	 */
 	public boolean fire(List<Enemy> enemies) {
 		List<Enemy> enemiesInRange = enemies.stream().filter(e -> isEnemyInRange(e)).collect(Collectors.toList());
 		Enemy enemy = getNearestEnemy(enemiesInRange);
@@ -47,7 +51,13 @@ public abstract class Tower {
 	public boolean isEnemyInRange(Enemy enemy) {	
 		return getDistance(enemy.getPositionX(), enemy.getPositionY())<range;
 	}
-	
+
+	/**
+	 * All enemies are saved in a map with their actual distance to the tower.
+	 * The map is sorted by distance, so the nearest enemy is on the first place of the map. We don't have to care about enemies with the same distance.
+	 * @param enemies
+	 * @return
+	 */
 	public Enemy getNearestEnemy(List<Enemy> enemies) {
 		Map<Enemy, Integer> distanceToEnemy =  new HashMap<Enemy, Integer>();
 		
@@ -66,7 +76,13 @@ public abstract class Tower {
 		
 		return null;
 	}
-	
+
+	/**
+	 *
+	 * @param xEnemy
+	 * @param yEnemy
+	 * @return distance between Enemy or other Object and Tower
+	 */
 	public int getDistance(int xEnemy, int yEnemy) {
 		return (int) Math.round(Math.sqrt(Math.pow(Math.abs(xEnemy-x), 2) + Math.pow(Math.abs(yEnemy-y), 2)));
 	}

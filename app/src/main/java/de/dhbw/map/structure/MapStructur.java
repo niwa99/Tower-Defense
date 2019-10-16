@@ -50,11 +50,21 @@ public class MapStructur {
     public List<Field> getFields(){
     	return new ArrayList<Field>(fields.values());
     }
-    
+
+    /**
+     * returns the first Field, where enemies should spawn
+     *
+     */
     public Field getFirstFieldForEnemy() {
     	return fields.values().stream().filter(f -> isFirstField(f)).findFirst().get();
     }
-    
+
+    /**
+     * returns the next Field for an enemy to move
+     * @param lastField
+     * @param actualField
+     * @return
+     */
     public Field getNextFieldForEnemy(Field lastField, Field actualField) {
     	List<Field> possibleFields = new ArrayList<Field>();
     	possibleFields.add(fields.getOrDefault((new Position(actualField.getFieldPositionX()-1, actualField.getFieldPositionY()).toString()), new Field()));
@@ -69,7 +79,8 @@ public class MapStructur {
     public Field getField(Position pos) {
     	return fields.get(pos.toString());
     }
-    
+
+    //First Field has to be on the left side X=0
     public boolean isFirstField(Field field) {
     	return field.getFieldPositionX()==0 && field.getFieldDescription()==FieldDescription.PATH;
     }

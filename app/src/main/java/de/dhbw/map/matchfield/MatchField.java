@@ -69,7 +69,11 @@ public class MatchField {
 	public List<UUID> getEnemies(){
 		return enemies.stream().map(Enemy::getId).collect(Collectors.toList());
 	}
-	
+
+	/**
+	 * all enemies are moving in an own thread. The speed is defined by the time this task is repeated.
+	 * An enemy moves only one pixel each time. Speed is 1 second - (int) speed of the enemy
+	 */
 	public void moveEnemies() {
 		enemies.stream().forEach(e -> {
 			timer.scheduleAtFixedRate(new TimerTask() {
@@ -85,7 +89,11 @@ public class MatchField {
 			}, 0, 1000 - e.getSpeed());
 		});
 	}
-	
+
+	/**
+	 * all towers are shooting in an own thread. The speed is defined by the time this task is repeated.
+	 * int fireRate defines how much seconds the tower sleeps between two shoots
+	 */
 	public void fireTowers() {
 		towers.stream().forEach(t -> {
 			timer.scheduleAtFixedRate(new TimerTask() {

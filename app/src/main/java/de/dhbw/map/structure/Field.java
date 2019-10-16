@@ -19,7 +19,8 @@ public class Field {
         this.yCoord = yCoord;
         this.fieldDescription = fieldDescription;
     }
-    
+
+    //Constructor only for dummy objects
     public Field() {
     	this.sizeInPx=0;
         this.xCoord = 0;
@@ -27,32 +28,45 @@ public class Field {
         this.fieldDescription = FieldDescription.FREE;
     }
 
-    // Getters and Setters
+    /**
+     *
+     * returns the y-Position of the Field in the map
+     */
     public int getFieldPositionY() {
 
         return yCoord;
     }
 
+    /**
+     *
+     * returns the x-Positon of the Field in the map
+     */
     public int getFieldPositionX() {
 
         return xCoord;
     }
-    
+
+    /**
+     * returns the real x-Coordinate
+     *
+     */
     public int getPixelCoordX() {
     	return xCoord*sizeInPx;
     }
-    
+
+    /**
+     * returns the real y-Coordinate
+     *
+     */
     public int getPixelCoordY() {
     	return yCoord*sizeInPx*-1;
     }
 
     public FieldDescription getFieldDescription() {
-
         return fieldDescription;
     }
 
     public void setFieldDescription(FieldDescription fieldDescription){
-
         this.fieldDescription = fieldDescription;
     }
     

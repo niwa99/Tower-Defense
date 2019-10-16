@@ -48,7 +48,12 @@ public abstract class Enemy{
 	public boolean isAlive() {
 		return isAlive;
 	}
-	
+
+	/**
+	 * This method moves an enemy on the first call to the spawn position
+	 * All next calls are moving the enemy one pixel in the direction of the spawnpoint from the next Field on the path
+	 * @param map
+	 */
 	public boolean move(MapStructur map) {
 		if(actualField==null) {
 			actualField=map.getFirstFieldForEnemy();
@@ -81,7 +86,11 @@ public abstract class Enemy{
 		reachedTarget=true;
 		return false;
 	}
-	
+
+	/**
+	 * the target is reached when an enemy reached the Spawnpoint of the last Field on the path
+	 * @return
+	 */
 	public boolean reachedTarget() {
 		return reachedTarget;
 	}
@@ -91,8 +100,8 @@ public abstract class Enemy{
 	}
 	
 	public void moveToPosition(Position pos) {
-		this.x+=pos.getX();
-		this.y+=pos.getY();
+		this.x=pos.getX();
+		this.y=pos.getY();
 	}
 	
 	public void moveTo(int x, int y) {

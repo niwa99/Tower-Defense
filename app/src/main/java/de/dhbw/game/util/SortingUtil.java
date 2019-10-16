@@ -15,7 +15,12 @@ public class SortingUtil {
 	public SortingUtil() {
 		
 	}
-	
+
+    /**
+     * The given map is sorted by value. We need this to get the nearest Enemy for the towers to shoot.
+     * @param unsortMap
+     * @return sortedMap
+     */
 	public static List<Enemy> getSortedListBySortingMapByValue(Map<Enemy, Integer> unsortMap) {
         List<Map.Entry<Enemy, Integer>> list =
                 new LinkedList<Map.Entry<Enemy, Integer>>(unsortMap.entrySet());

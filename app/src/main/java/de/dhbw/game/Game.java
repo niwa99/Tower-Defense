@@ -10,7 +10,11 @@ public class Game {
 	public Game() {
 		
 	}
-	
+
+	/**
+	 * this method starts the game
+	 *
+	 */
 	public static void main(String[] args) {
 		MapStructur map = new MapStructur();
 		Tank tank1 = new Tank("Tank1",5, 950);

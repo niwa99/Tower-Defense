@@ -3,7 +3,7 @@ package de.dhbw.map.objects.enemy;
 import java.util.UUID;
 
 import de.dhbw.map.structure.Field;
-import de.dhbw.map.structure.MapStructur;
+import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Position;
 import java.util.TimerTask;
 
@@ -18,8 +18,6 @@ public abstract class Enemy{
 	private boolean isAlive = true;
 	private boolean reachedTarget =  false;
 	private TimerTask task;
-	
-	private Field lastField;
 	private Field actualField;
 	
 	public Enemy(String label, UUID id, int hp, int speed) {
@@ -64,17 +62,17 @@ public abstract class Enemy{
 	 * All next calls are moving the enemy one pixel in the direction of the spawnpoint from the next Field on the path
 	 * @param map
 	 */
-	public boolean move(MapStructur map) {
+	public boolean move(MapStructure map) {
 		if(actualField==null) {
-			actualField=map.getFirstFieldForEnemy();
+			actualField=map.getFieldForEnemy(progress);
+			progress++;
 			moveToPosition(actualField.getSpawnPoint());
 			return true;
 		}
 		if(actualField.getSpawnPoint().equals(getPosition())) {
-			Field newField = map.getNextFieldForEnemy(lastField, actualField);
-			lastField=actualField;
-			actualField = newField;
-			if(newField!=null) {
+			actualField = map.getFieldForEnemy(progress);
+			progress++;
+			if(actualField!=null) {
 				System.out.println(label + " is moving to a new field [" + actualField.getFieldPositionX() + actualField.getFieldPositionY() + "]");
 			}
 		}

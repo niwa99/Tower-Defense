@@ -69,18 +69,20 @@ public abstract class Tower {
 	 * @return
 	 */
 	public Enemy getNearestEnemy(List<Enemy> enemies) {
-		Map<Enemy, Integer> distanceToEnemy =  new HashMap<Enemy, Integer>();
-		
-		for (Enemy enemy : enemies) {
-			int distance = getDistance(enemy.getPositionX(), enemy.getPositionY());
-			distanceToEnemy.put(enemy, distance);
-		}
-		
-		List<Enemy> sortedByDistance = sortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
-		
-		for (Enemy enemy : sortedByDistance) {
-			if(enemy.isAlive()) {
-				return enemy;
+		if(!enemies.isEmpty()) {
+			Map<Enemy, Integer> distanceToEnemy = new HashMap<Enemy, Integer>();
+
+			for (Enemy enemy : enemies) {
+				int distance = getDistance(enemy.getPositionX(), enemy.getPositionY());
+				distanceToEnemy.put(enemy, distance);
+			}
+
+			List<Enemy> sortedByDistance = sortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
+
+			for (Enemy enemy : sortedByDistance) {
+				if (enemy.isAlive()) {
+					return enemy;
+				}
 			}
 		}
 		

@@ -2,7 +2,9 @@ package de.dhbw.map.structure;
 
 public enum FieldDescription {
 
-    FREE("Free"), TOWER("Tower"), PATH("Path");
+    FREE("Free"),
+    TOWER("Tower"),
+    PATH("Path");
 
     private String label;
 

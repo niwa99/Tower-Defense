@@ -10,15 +10,15 @@ import java.util.Optional;
 
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.tower.Tower;
-import de.dhbw.map.structure.MapStructur;
+import de.dhbw.map.structure.MapStructure;
 
 public class MatchField {
 	private List<Enemy> enemies;
 	private List<Tower> towers;
 	private Timer timer = new Timer();
-	private MapStructur map;
+	private MapStructure map;
 	
-	public MatchField(MapStructur map) {
+	public MatchField(MapStructure map) {
 		this.map=map;
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
@@ -31,7 +31,8 @@ public class MatchField {
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
 	}
-	
+
+	//not in use
 	public boolean removeTower(UUID id) {
 		Optional<Tower> tower = getTower(id);
 		if(tower.isPresent()) {
@@ -40,7 +41,8 @@ public class MatchField {
 		}
 		return false;
 	}
-	
+
+	//not in use
 	public boolean removeEnemy(UUID id) {
 		Optional<Enemy> enemy = getEnemy(id);
 		if(enemy.isPresent()) {
@@ -57,15 +59,15 @@ public class MatchField {
 	public Optional<Tower> getTower(UUID id) {
 		return towers.stream().filter(e -> e.getId()==id).findAny();
 	}
-	
+
 	public List<UUID> getTowers(){
 		return towers.stream().map(Tower::getId).collect(Collectors.toList());
 	}
-	
+
 	public Optional<Enemy> getEnemy(UUID id) {
 		return enemies.stream().filter(e -> e.getId()==id).findAny();
 	}
-	
+
 	public List<UUID> getEnemies(){
 		return enemies.stream().map(Enemy::getId).collect(Collectors.toList());
 	}
@@ -80,7 +82,8 @@ public class MatchField {
 				@Override
 				public void run() {
 					if(e.isAlive()) {
-						if(!e.move(map)) {
+						e.move(map);
+						if(isGameOver()){
 							stopGame();
 						}
 					}
@@ -129,7 +132,14 @@ public class MatchField {
 	}
 	
 	public void stopGame() {
-		timer.cancel();
-		System.out.println("Game over, all enemies reached the target");
+		timer.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				if(isGameOver()){
+					timer.cancel();
+					System.out.println("Game over, all enemies reached the target");
+				}
+			}
+		},0,5000);
 	}
 }

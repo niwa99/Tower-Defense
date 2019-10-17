@@ -4,7 +4,7 @@ import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.util.Position;
-import de.dhbw.map.structure.MapStructur;
+import de.dhbw.map.structure.MapStructure;
 
 public class Game {
 	public Game() {
@@ -16,7 +16,7 @@ public class Game {
 	 *
 	 */
 	public static void main(String[] args) {
-		MapStructur map = new MapStructur();
+		MapStructure map = new MapStructure();
 		Tank tank1 = new Tank("Tank1",5, 950);
 		Tank tank2 = new Tank("Tank2",9, 950);
 		DefTower tower = new DefTower("tower1",1, map.getSizeField()*2, 2, map.getField(new Position(2, 3)).getSpawnPoint());

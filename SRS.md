@@ -114,7 +114,7 @@ Our Use-Case-Diagram
 
 ### 2.3 User characteristics
 
-Our target group is pretty wide-ranging from teenagers up to older adults. In order to have fun playing this game, tactical thinking is required. Different levels provide a great challenge for young and old people.
+Our target group is pretty wide-ranging from teenagers up to older adults. In order to have fun playing this game, tactical thinking is required. Different levels provide a great challenge for people at any age.
 
 ### 2.4 Dependencies
 
@@ -148,11 +148,7 @@ tbd
 
 The Android application will not require any practice or tutorial because of its user-friendly design.
 
--   [FAQ](https://github.com/phoenixfeder/fc-com/blob/master/UseCases/FAQ/FAQ.md)
-
 ### 3.3 Reliability
-
-In the following we describe the availability, MTBF and MTTR, accuracy and bug classes we strive for.
 
 #### 3.3.1 Publishing of Updates
 

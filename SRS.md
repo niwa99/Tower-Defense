@@ -23,13 +23,29 @@
 
     -   [3.1 Functionality](#31-functionality)
 
-        -   [3.1.1 Startscreen](#311-startscreen)
-        -   [3.1.2 Gamescreen - Structure](#312-gamescreen---structure)
-        -   [3.1.3 Gamescreen - Actions](#313-gamescreen---actions)
-        -   [3.1.4 Settings Menu](#314-settings-menu)
-        -   [3.1.5 Customize Enemies, Towers and the Map](#315-customize-enemies-towers-and-the-map)
+        -   [3.1.1 Start the game from the menu](#311-start-the-game-from-the-menu)
+        -   [3.1.2 Build towers on selected area](#312-build-towers-on-selected-area)
+        -   [3.1.3 Upgrade towers](#313-upgrade-towers)
+        -   [3.1.4 Sell towers](#314-sell-towers)
+        -   [3.1.5 Select between different towers](#315-select-between-different-towers)
+        -   [3.1.6 Start waves](#316-start-waves)
+        -   [3.1.7 Edit settings](#317-edit-settings)
+        -   [3.1.8 Return to main menu](#318-return-to-main-menu)
+        -   [3.1.9 Start a randomly generated map](#319-start-a-randomly-generated-map)
+        -   [3.1.10 Toggle sound and animations](#3110-toggle-sound-and-animations)
+        -   [3.1.11 Customize own towers](#3111-customize-own-towers)
+        -   [3.1.12 Play multiple levels with different difficulties](#3112-play-multiple-levels-with-different-difficulties)
+        -   [3.1.13 Draw/design own towers/enemies](#3113-draw/design-own-towers/enemies)
+        -   [3.1.14 Save/load own elements](#3114-save/load-own-elements)
+        -   [3.1.15 Edit elements](#3115-edit-elements)
 
     -   [3.2 Usability](#32-usability)
+    
+        -   [3.2.1 Startscreen](#321-startscreen)
+        -   [3.2.2 Gamescreen - Structure](#322-gamescreen---structure)
+        -   [3.2.3 Gamescreen - Actions](#323-gamescreen---actions)
+        -   [3.2.4 Settings Menu](#324-settings-menu)
+        -   [3.2.5 Customize Enemies, Towers and the Map](#325-customize-enemies-towers-and-the-map)
 
     -   [3.3 Reliability](#33-reliability)
 
@@ -124,29 +140,91 @@ Tower Defense does not require any additional software. One will be able to down
 
 ### 3.1 Functionality
 
-#### 3.1.1 Startscreen
+#### 3.1.1 Start the game from the menu
 
-The start screen functions as a landing page when opening the app. It should contain a gameplay image as background, a “start” button which forwards to the game page and a menu button which will pop up a settings-menu.
+The game should be started from the start screen using a button.
 
-#### 3.1.2 Gamescreen - Structure
+#### 3.1.2 Build towers on selected area
 
-The gamescreen shows the map, a button for the settings menu and a top bar with some game information (lives, money, …).
+Towers need to be placed on the game grid in order to kill enemies. Therefore, one can click on a tile which opens a menu for building a tower.
 
-#### 3.1.3 Gamescreen - Actions
+#### 3.1.3 Upgrade towers
 
-A player should be able to build, remove and upgrade towers. Those actions should be doable by clicking on a map-tile. Moreover, a button for skipping to the next wave could be useful.
+Clicking on a tower, a menu should pop up which lets a user upgrade a tower for a specific amount of money. Probably, an upgrade influences the range, the fire rate and the damage of a tower.
 
-#### 3.1.4 Settings Menu
+#### 3.1.4 Sell towers
 
+Clicking on a tower, a menu should pop up in which one can choose to sell the tower.
+
+#### 3.1.5 Select between different towers
+
+In the future, there will be different kind of towers which have different values and abilities.
+
+#### 3.1.6 Start waves
+
+Using a button (or after a specific time), a wave can be started which makes enemies approaching.
+
+#### 3.1.7 Edit settings
+
+Settings will be editable in an own menu.
 tbd
 
-#### 3.1.5 Customize Enemies, Towers and the Map
+#### 3.1.8 Return to main menu
 
-tbd
+While being on the game screen, a button can be used in order to go back to the start screen.
+
+#### 3.1.9 Start a randomly generated map
+
+Using a button labeled as "Random", a randomly generated map will be created and can be played.
+
+#### 3.1.10 Toggle sound and animations
+
+There will be two buttons which let a player toggle sounds and animations.
+
+#### 3.1.11 Customize own towers
+
+This functionality allows users to create and design their own tower with given patterns.
+
+#### 3.1.12 Play multiple levels with different difficulties
+
+One can choose between three difficulties: Easy, Medium and Hard. This choice influences tower- and enemy-attributes.
+
+#### 3.1.13 Draw/design own towers/enemies
+
+Own towers and enemies can be drawn on a separate screen by hand. This functionality makes the game highly customizable.
+
+#### 3.1.14 Save/load own elements
+
+In a separate menu, one can choose between the standard towers/enemies and the custom towers/enemies for the next games.
+
+#### 3.1.15 Edit elements
+
+Custom enemies and towers can be edited in a specific screen. This functionality is connected to "draw/design own towers/elements".
 
 ### 3.2 Usability
 
 The Android application will not require any practice or tutorial because of its user-friendly design.
+The following screen flow explains the structure of the app.
+
+#### 3.2.1 Startscreen
+
+The start screen functions as a landing page when opening the app. It should contain a gameplay image as background, a “start” button which forwards to the game page and a menu button which will pop up a settings-menu.
+
+#### 3.2.2 Gamescreen - Structure
+
+The gamescreen shows the map, a button for the settings menu and a top bar with some game information (lives, money, …).
+
+#### 3.2.3 Gamescreen - Actions
+
+A player should be able to build, remove and upgrade towers. Those actions should be doable by clicking on a map-tile. Moreover, a button for skipping to the next wave could be useful.
+
+#### 3.2.4 Settings Menu
+
+tbd
+
+#### 3.2.5 Customize Enemies, Towers and the Map
+
+tbd
 
 ### 3.3 Reliability
 
@@ -171,6 +249,7 @@ While having code reviews, the quality of code is kept high.
 ### 3.6 Design Constraints
 
 Tower Defense is developed with Java, XML and the Android framework wherefore the app will only be runnable on Android devices.
+Developing the app, the team makes use of Git and GitHub for version controlling, Android Studio as development environment, Jira for project management, Adobe Photoshop Elements 12 for designs and yEd Graph Editor for modelling processes.
 
 ### 3.7 Online User Documentation and Help System Requirements
 

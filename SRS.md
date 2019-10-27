@@ -35,8 +35,8 @@
         -   [3.1.10 Toggle sound and animations](#3110-toggle-sound-and-animations)
         -   [3.1.11 Customize own towers](#3111-customize-own-towers)
         -   [3.1.12 Play multiple levels with different difficulties](#3112-play-multiple-levels-with-different-difficulties)
-        -   [3.1.13 Draw/design own towers/enemies](#3113-draw/design-own-towers/enemies)
-        -   [3.1.14 Save/load own elements](#3114-save/load-own-elements)
+        -   [3.1.13 Draw or design own towers or enemies](#3113-draw-or-design-own-towers-or-enemies)
+        -   [3.1.14 Save or load own elements](#3114-save-or-load-own-elements)
         -   [3.1.15 Edit elements](#3115-edit-elements)
 
     -   [3.2 Usability](#32-usability)
@@ -143,6 +143,7 @@ Tower Defense does not require any additional software. One will be able to down
 #### 3.1.1 Start the game from the menu
 
 The game should be started from the start screen using a button.
+[UC Specification](./Use-Case-StartTheGameFromTheMenu-Specification.md)
 
 #### 3.1.2 Build towers on selected area
 
@@ -163,6 +164,7 @@ In the future, there will be different kind of towers which have different value
 #### 3.1.6 Start waves
 
 Using a button (or after a specific time), a wave can be started which makes enemies approaching.
+[UC Specification](./Use-Case-StartWaves-Specification.md)
 
 #### 3.1.7 Edit settings
 
@@ -189,11 +191,11 @@ This functionality allows users to create and design their own tower with given 
 
 One can choose between three difficulties: Easy, Medium and Hard. This choice influences tower- and enemy-attributes.
 
-#### 3.1.13 Draw/design own towers/enemies
+#### 3.1.13 Draw or design own towers or enemies
 
 Own towers and enemies can be drawn on a separate screen by hand. This functionality makes the game highly customizable.
 
-#### 3.1.14 Save/load own elements
+#### 3.1.14 Save or load own elements
 
 In a separate menu, one can choose between the standard towers/enemies and the custom towers/enemies for the next games.
 

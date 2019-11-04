@@ -12,10 +12,10 @@ Every user can start the game from the menu page using a specific button. There 
 - The map structure is generated and displayed
 
 ### 2.1.1 Activity Diagram
-![Activity Diagram for StartTheGameFromTheMenu](./UCSpecification-startthegamefromthemenu.jpg)
+![Activity Diagram for StartTheGameFromTheMenu](./Activity_Diagram-Start_The_Game_From_The_Menu.jpg)
 
 ### 2.1.2 Mock-up
-![Mockup for StartTheGameFromTheMenu](./UCSpecification-startthegamefromthemenu-mockup.jpg)
+![Mockup for StartTheGameFromTheMenu](./Mockup-Start_The_Game_From_The_Menu.jpg)
 
 ### 2.1.3 Narrative
 ```gherkin

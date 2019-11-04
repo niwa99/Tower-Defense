@@ -13,10 +13,10 @@ Every user can start a wave using a specific button. At this point the map struc
 - If all enemies pass the spawn point, the button is active again
 
 ### 2.1.1 Activity Diagram
-![Activity Diagram for StartWaves](./UCSpecification-startwaves.jpg)
+![Activity Diagram for StartWaves](./Activity_Diagram-Start_Waves.jpg)
 
 ### 2.1.2 Mock-up
-![Mockup for StartWaves](./UCSpecification-startwaves-mockup.jpg)
+![Mockup for StartWaves](./Mockup-Start_Waves.jpg)
 
 ### 2.1.3 Narrative
 ```gherkin

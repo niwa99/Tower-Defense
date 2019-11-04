@@ -10,7 +10,7 @@ import java.util.Optional;
 import de.dhbw.util.Position;
 
 public class MapStructure {
-	private Map<Position, Field> fields = new HashMap<Position, Field>();
+	private Map<String, Field> fields = new HashMap<String, Field>();
 	private static final int sizeField = 80;
 	private static final int rows = 6;
 	private static final int columns = 11;
@@ -29,7 +29,7 @@ public class MapStructure {
         for (int x = 0; x < columns; x++) {
             for (int y = 0; y < rows; y++) {
             	Position pos = new Position(x,y);
-                fields.put(pos, new Field(sizeField, x, y, fieldDescription[x][y]));
+                fields.put(pos.toString(), new Field(sizeField, x, y, fieldDescription[x][y]));
             }
         }
     }
@@ -64,7 +64,7 @@ public class MapStructure {
      * @return Field where the enemy should move to
      */
     public Field getFieldForEnemy(int progress){
-        return fields.get(path[progress]);
+        return fields.get(path[progress].toString());
     }
     
     public Field getField(Position pos) {

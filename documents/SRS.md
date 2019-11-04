@@ -126,7 +126,7 @@ On top of those basic features, custom editing functionalities for enemies, towe
 
 Our Use-Case-Diagram
 
-![UseCaseDiagram](https://github.com/niwa99/Tower-Defense/blob/master/UCD-2019-10-21.png)
+![UseCaseDiagram](./UCS/UseCaseDiagram-2019-10-21.png)
 
 ### 2.3 User characteristics
 
@@ -143,7 +143,7 @@ Tower Defense does not require any additional software. One will be able to down
 #### 3.1.1 Start the game from the menu
 
 The game should be started from the start screen using a button.
-[UC Specification](./Use-Case-StartTheGameFromTheMenu-Specification.md)
+[UC Specification](./UCS/UCS-Start_The_Game_From_The_Menu/UCS-Start_The_Game_From_The_Menu.md)
 
 #### 3.1.2 Build towers on selected area
 
@@ -164,7 +164,7 @@ In the future, there will be different kind of towers which have different value
 #### 3.1.6 Start waves
 
 Using a button (or after a specific time), a wave can be started which makes enemies approaching.
-[UC Specification](./Use-Case-StartWaves-Specification.md)
+[UC Specification](./UCS/UCS-Start_Waves/UCS-Start_Waves.md)
 
 #### 3.1.7 Edit settings
 

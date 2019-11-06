@@ -15,7 +15,7 @@ Every user can start the game from the menu page using a specific button. There 
 ![Activity Diagram for StartTheGameFromTheMenu](./Activity_Diagram-Start_The_Game_From_The_Menu.jpg)
 
 ### 2.1.2 Mock-up
-![Mockup for StartTheGameFromTheMenu](./Mockup-Start_The_Game_From_The_Menu.jpg)
+![Mockup for StartTheGameFromTheMenu](./Mockup-Start_The_Game_From_The_Menu-2019-11-06.jpg)
 
 ### 2.1.3 Narrative
 ```gherkin

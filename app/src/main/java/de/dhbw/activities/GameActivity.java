@@ -2,20 +2,35 @@ package de.dhbw.activities;
 
 import android.annotation.SuppressLint;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.content.Context;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import java.util.Timer;
+import java.util.TimerTask;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 
 import androidx.core.app.NavUtils;
+import de.dhbw.game.Game;
 
 import de.dhbw.R;
+import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.Tank;
+import de.dhbw.map.structure.MapStructure;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -24,6 +39,7 @@ public class GameActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -177,5 +193,9 @@ public class GameActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        Game game = new Game();
+        FrameLayout layout = (FrameLayout)findViewById(R.id.map);
+        game.runGame(this, R.drawable.tank, R.drawable.tower, layout);
     }
 }

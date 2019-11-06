@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="background"
-        android:src="@android:color/holo_green_dark" />
+        android:src="@android:color/white" />
 
     <Button
         android:id="@+id/buttonBackToMenu"
@@ -28,7 +28,6 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:keepScreenOn="true"
-        android:text="@string/title_activity_game"
         android:textColor="#33b5e5"
         android:textSize="50sp"
         android:textStyle="bold" />
@@ -38,6 +37,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/map"
         android:fitsSystemWindows="true">
 
         <LinearLayout

@@ -59,7 +59,7 @@ public class Field {
      *
      */
     public int getPixelCoordY() {
-    	return yCoord*sizeInPx*-1;
+    	return yCoord*sizeInPx;
     }
 
     public FieldDescription getFieldDescription() {
@@ -71,7 +71,11 @@ public class Field {
     }
     
     public Position getSpawnPoint() {
-    	return new Position(getPixelCoordX()+(sizeInPx/2), getPixelCoordY()-(sizeInPx/2));
+    	return new Position(getPixelCoordX()+(sizeInPx/2), getPixelCoordY()+(sizeInPx/2));
+    }
+
+    public int getSizeInPx(){
+        return sizeInPx;
     }
     
     @Override

@@ -11,7 +11,7 @@ import de.dhbw.util.Position;
 
 public class MapStructure {
 	private Map<String, Field> fields = new HashMap<String, Field>();
-	private static final int sizeField = 80;
+	private static final int sizeField = 100;
 	private static final int rows = 6;
 	private static final int columns = 11;
     private static final Position[] path = new Position[]{
@@ -64,7 +64,7 @@ public class MapStructure {
      * @return Field where the enemy should move to
      */
     public Field getFieldForEnemy(int progress){
-        return fields.get(path[progress].toString());
+        return progress<path.length? fields.get(path[progress].toString()):null;
     }
     
     public Field getField(Position pos) {

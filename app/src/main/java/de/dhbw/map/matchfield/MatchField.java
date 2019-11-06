@@ -81,7 +81,7 @@ public class MatchField {
 			TimerTask task = new TimerTask() {
 				@Override
 				public void run() {
-					if(e.isAlive()) {
+					if(e.isAlive() && !e.reachedTarget()) {
 						e.move(map);
 						if(isGameOver()){
 							stopGame();

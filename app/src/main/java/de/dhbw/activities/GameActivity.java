@@ -1,36 +1,23 @@
 package de.dhbw.activities;
 
 import android.annotation.SuppressLint;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
-import android.content.Context;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import java.util.Timer;
-import java.util.TimerTask;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Path;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
-import de.dhbw.game.Game;
 
 import de.dhbw.R;
-import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.map.objects.enemy.Tank;
-import de.dhbw.map.structure.MapStructure;
+import de.dhbw.game.Game;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -157,6 +144,9 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         //Initial Layout Stuff
         setContentView(R.layout.activity_game);
         ActionBar actionBar = getSupportActionBar();
@@ -196,6 +186,6 @@ public class GameActivity extends AppCompatActivity {
 
         Game game = new Game();
         FrameLayout layout = (FrameLayout)findViewById(R.id.map);
-        game.runGame(this, R.drawable.tank, R.drawable.tower, layout);
+        game.runGame(this, R.drawable.tank, R.drawable.tower, R.drawable.bullet, layout);
     }
 }

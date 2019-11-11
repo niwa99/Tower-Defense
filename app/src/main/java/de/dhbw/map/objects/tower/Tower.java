@@ -85,7 +85,6 @@ public abstract class Tower {
 				}
 			}
 		}
-		
 		return null;
 	}
 
@@ -130,4 +129,9 @@ public abstract class Tower {
 	public int getPositionY() {
 		return y;
 	}
+
+	public Position getPosition(){
+		return new Position(x,y);
+	}
+
 }

@@ -188,4 +188,8 @@ public class GameActivity extends AppCompatActivity {
         FrameLayout layout = (FrameLayout)findViewById(R.id.map);
         game.runGame(this, R.drawable.tank, R.drawable.tower, R.drawable.bullet, layout);
     }
+
+    public FrameLayout getLayout(){
+        return (FrameLayout)findViewById(R.id.map);
+    }
 }

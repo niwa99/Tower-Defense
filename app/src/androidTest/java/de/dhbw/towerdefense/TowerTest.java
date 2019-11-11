@@ -21,7 +21,7 @@ public class TowerTest {
     @Test
     void towerKillsEnemyIfItsInRange() {
         //arrange
-        Tower t = new DefTower(null,"t1", 100, 100, 1, new Position(0, 0));
+        Tower t = new DefTower(null, null,"t1", 100, 100, 1, new Position(0, 0));
         Enemy e = new Tank(null,"tank", 5, 950);
         e.moveToPosition(new Position(50, 50));
 
@@ -35,7 +35,7 @@ public class TowerTest {
     @Test
     void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        Tower t = new DefTower(null,"t1", 100, 100, 1, new Position(0, 0));
+        Tower t = new DefTower(null, null,"t1", 100, 100, 1, new Position(0, 0));
         Enemy e = new Tank(null,"tank", 5, 950);
         e.moveToPosition(new Position(150, 150));
 

@@ -1,8 +1,11 @@
 package de.dhbw.towerdefense;
 
+import android.widget.ImageView;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
 
@@ -14,15 +17,19 @@ import de.dhbw.util.Position;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
-@RunWith(JUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class TowerTest {
 
+    @Mock
+    ImageView imageDummy = mock(ImageView.class);
+
     @Test
-    void towerKillsEnemyIfItsInRange() {
+    public void towerKillsEnemyIfItsInRange() {
         //arrange
-        Tower t = new DefTower(null, null,"t1", 100, 100, 1, new Position(0, 0));
-        Enemy e = new Tank(null,"tank", 5, 950);
+        Tower t = new DefTower(imageDummy, null,"t1", 100, 100, 1, new Position(0, 0));
+        Enemy e = new Tank(imageDummy,"tank", 5, 950);
         e.moveToPosition(new Position(50, 50));
 
         //act
@@ -33,10 +40,10 @@ public class TowerTest {
     }
 
     @Test
-    void towerDontShootEnemyIfItsNotInRange() {
+    public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        Tower t = new DefTower(null, null,"t1", 100, 100, 1, new Position(0, 0));
-        Enemy e = new Tank(null,"tank", 5, 950);
+        Tower t = new DefTower(imageDummy, null,"t1", 100, 100, 1, new Position(0, 0));
+        Enemy e = new Tank(imageDummy,"tank", 5, 950);
         e.moveToPosition(new Position(150, 150));
 
         //act

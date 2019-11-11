@@ -1,8 +1,11 @@
 package de.dhbw.towerdefense;
 
+import android.widget.ImageView;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
@@ -15,14 +18,17 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 
-@RunWith(JUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class EnemyTest {
+    @Mock
+    ImageView imageDummy = mock(ImageView.class);
 
     @Test
-    void ifDamageToEnemyIsLowerThanHP_EnemyShouldBeAlive() {
+    public void ifDamageToEnemyIsLowerThanHP_EnemyShouldBeAlive() {
         //arrange
-        Enemy enemy = new Tank(null,"tank1", 100, 900);
+        Enemy enemy = new Tank(imageDummy,"tank1", 100, 900);
 
         //act
         enemy.reduceHealthPoints(50);
@@ -34,7 +40,7 @@ public class EnemyTest {
     @Test
     public void ifDamageToEnemyHigherThanHP_EnemyShouldBeDead() {
         //arrange
-        Enemy enemy = new Tank(null,"tank1", 100, 900);
+        Enemy enemy = new Tank(imageDummy,"tank1", 100, 900);
 
         //act
         enemy.reduceHealthPoints(150);
@@ -45,7 +51,7 @@ public class EnemyTest {
 
     @Test
     public void whenEnemyMoves_ThePositionShouldChange() {
-        Enemy e = new Tank(null,"tank", 5, 950);
+        Enemy e = new Tank(imageDummy,"tank", 5, 950);
         MapStructure map = new MapStructure();
 
         //act

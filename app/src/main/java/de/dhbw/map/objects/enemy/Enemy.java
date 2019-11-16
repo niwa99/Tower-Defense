@@ -17,6 +17,7 @@ public abstract class Enemy{
 	private int y;
 	private boolean isAlive = true;
 	private boolean reachedTarget =  false;
+	private String direction = "right";
 	private TimerTask task;
 	private Field actualField;
 	
@@ -81,12 +82,16 @@ public abstract class Enemy{
 			Position pos = actualField.getSpawnPoint();
 			if(pos.getX()-x<0) {
 				moveTo(x-1, y);
+				direction = "left";
 			}else if(pos.getX()-x>0){
 				moveTo(x+1, y);
+				direction = "right";
 			}else if(pos.getY()-y<0) {
 				moveTo(x, y-1);
+				direction = "top";
 			}else {
 				moveTo(x, y+1);
+				direction = "bottom";
 			}
 			return true;
 		}
@@ -131,5 +136,9 @@ public abstract class Enemy{
 	
 	public int getPositionY() {
 		return y;
+	}
+
+	public String getDirection() {
+		return direction;
 	}
 }

@@ -4,10 +4,7 @@ import android.widget.ImageView;
 
 import java.util.UUID;
 
-import de.dhbw.R;
-import de.dhbw.activities.GameActivity;
 import de.dhbw.map.structure.MapStructure;
-import android.content.Context;
 
 public class Tank extends Enemy{
 	private final static int hp = 7;
@@ -24,6 +21,12 @@ public class Tank extends Enemy{
 		if(super.move(map)){
 			tankImage.setX(getPositionX());
 			tankImage.setY(getPositionY());
+			switch (getDirection()) {
+				case "top": tankImage.setRotation(0); break;
+				case "right": tankImage.setRotation(90); break;
+				case "bottom": tankImage.setRotation(180); break;
+				case "left": tankImage.setRotation(270); break;
+			}
 		}
 		return false;
 	}

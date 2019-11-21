@@ -89,6 +89,42 @@ public abstract class Tower {
 	}
 
 	/**
+	 * Returns the number necessary to rotate the tower image according to the targeted enemy
+	 * @return
+	 */
+	public float rotateImage(List<Enemy> enemies){
+
+		float rotation = 0;
+		Enemy enemy = getNearestEnemy(enemies);
+		if (enemy != null){
+			if ((this.getPositionX() - enemy.getPositionX())< 0){
+				if((this.getPositionY() - enemy.getPositionY()) < 0){
+					rotation = 225;
+				}else if((this.getPositionY() - enemy.getPositionY()) == 0){
+					rotation = 180;
+				}else{
+					rotation = 135;
+				}
+			}else if((this.getPositionX() - enemy.getPositionX())== 0){
+				if((this.getPositionY() - enemy.getPositionY()) < 0) {
+					rotation = 270;
+				}else{
+					rotation = 90;
+				}
+			}else{
+				if((this.getPositionY() - enemy.getPositionY()) < 0){
+					rotation = 315;
+				}else if((this.getPositionY() - enemy.getPositionY()) == 0){
+					rotation = 00;
+				}else{
+					rotation = 45;
+				}
+			}
+		}
+		return rotation;
+	}
+
+	/**
 	 *
 	 * @param xEnemy
 	 * @param yEnemy

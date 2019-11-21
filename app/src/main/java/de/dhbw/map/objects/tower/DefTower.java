@@ -33,7 +33,8 @@ public class DefTower extends Tower{
 	@Override
 	public boolean fire(List<Enemy> enemies) {
 		if(super.fire(enemies)){
-		    //bulletImage.setVisibility(View.VISIBLE);
+			towerImage.setRotation(rotateImage(enemies));
+			//bulletImage.setVisibility(View.VISIBLE);
 			//Bullet bullet = new Bullet(bulletImage, getPosition(), new Position(0, 0), 950);
 			//bullet.visualizeShot();
 			return true;

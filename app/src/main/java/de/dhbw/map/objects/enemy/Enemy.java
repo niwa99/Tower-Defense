@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.MapStructure;
+import de.dhbw.util.Direction;
 import de.dhbw.util.Position;
 import java.util.TimerTask;
 
@@ -17,7 +18,7 @@ public abstract class Enemy{
 	private int y;
 	private boolean isAlive = true;
 	private boolean reachedTarget =  false;
-	private String direction = "right";
+	private Direction direction = Direction.RIGHT;
 	private TimerTask task;
 	private Field actualField;
 	
@@ -82,16 +83,16 @@ public abstract class Enemy{
 			Position pos = actualField.getSpawnPoint();
 			if(pos.getX()-x<0) {
 				moveTo(x-1, y);
-				direction = "left";
+				direction = Direction.LEFT;
 			}else if(pos.getX()-x>0){
 				moveTo(x+1, y);
-				direction = "right";
+				direction = Direction.RIGHT;
 			}else if(pos.getY()-y<0) {
 				moveTo(x, y-1);
-				direction = "top";
+				direction = Direction.UP;
 			}else {
 				moveTo(x, y+1);
-				direction = "bottom";
+				direction = Direction.DOWN;
 			}
 			return true;
 		}
@@ -138,7 +139,7 @@ public abstract class Enemy{
 		return y;
 	}
 
-	public String getDirection() {
+	public Direction getDirection() {
 		return direction;
 	}
 }

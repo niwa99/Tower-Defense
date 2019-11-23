@@ -18,6 +18,7 @@ import androidx.core.app.NavUtils;
 
 import de.dhbw.R;
 import de.dhbw.game.Game;
+import de.dhbw.util.ObjectStorage;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -26,6 +27,8 @@ public class GameActivity extends AppCompatActivity {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
+    private FrameLayout mapLayout;
 
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -184,12 +187,14 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        Game game = new Game();
-        FrameLayout layout = (FrameLayout)findViewById(R.id.map);
-        game.runGame(this, R.drawable.tank, R.drawable.tower, R.drawable.bullet, layout);
-    }
 
-    public FrameLayout getLayout(){
-        return (FrameLayout)findViewById(R.id.map);
+        mapLayout = findViewById(R.id.map);
+
+        ObjectStorage.setGameActivity(GameActivity.this);
+        ObjectStorage.setContext(this);
+        ObjectStorage.setMapLayout(mapLayout);
+
+        Game game = new Game();
+        game.runGame();
     }
 }

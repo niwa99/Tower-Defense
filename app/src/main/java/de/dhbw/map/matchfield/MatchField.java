@@ -9,17 +9,17 @@ import java.util.stream.Collectors;
 import java.util.Optional;
 
 import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.Tower;
-import de.dhbw.map.structure.MapStructure;
+
+import static de.dhbw.util.ObjectStorage.*;
 
 public class MatchField {
 	private List<Enemy> enemies;
 	private List<Tower> towers;
-	private Timer timer = new Timer();
-	private MapStructure map;
+	private Timer waveTimer = new Timer();
 	
-	public MatchField(MapStructure map) {
-		this.map=map;
+	public MatchField() {
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
 	}
@@ -32,65 +32,25 @@ public class MatchField {
 		enemies.add(enemy);
 	}
 
-	//not in use
-	public boolean removeTower(UUID id) {
-		Optional<Tower> tower = getTower(id);
-		if(tower.isPresent()) {
-			towers.remove(tower.get());
-			return true;
-		}
-		return false;
-	}
-
-	//not in use
-	public boolean removeEnemy(UUID id) {
-		Optional<Enemy> enemy = getEnemy(id);
-		if(enemy.isPresent()) {
-			enemies.remove(enemy.get());
-			return true;
-		}
-		return false;
-	}
-	
-	public boolean isGameOver() {
-		return !enemies.stream().filter(e -> !e.reachedTarget()).findAny().isPresent();
-	}
-
-	public Optional<Tower> getTower(UUID id) {
-		return towers.stream().filter(e -> e.getId()==id).findAny();
-	}
-
-	public List<UUID> getTowers(){
-		return towers.stream().map(Tower::getId).collect(Collectors.toList());
-	}
-
-	public Optional<Enemy> getEnemy(UUID id) {
-		return enemies.stream().filter(e -> e.getId()==id).findAny();
-	}
-
-	public List<UUID> getEnemies(){
-		return enemies.stream().map(Enemy::getId).collect(Collectors.toList());
-	}
-
 	/**
 	 * all enemies are moving in an own thread. The speed is defined by the time this task is repeated.
 	 * An enemy moves only one pixel each time. Speed is 1 second - (int) speed of the enemy
 	 */
-	public void moveEnemies() {
-		enemies.stream().forEach(e -> {
-			TimerTask task = new TimerTask() {
+	public void startEnemyMovement() {
+		enemies.stream().forEach(enemy -> {
+			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
-					if(e.isAlive() && !e.reachedTarget()) {
-						e.move(map);
-						if(isGameOver()){
+					if (enemy.isAlive() && !enemy.reachedTarget()) {
+						enemy.move(getMapStructure());
+						if (isGameOver()){
 							stopGame();
 						}
 					}
 				}
 			};
-			e.setTask(task);
-			timer.scheduleAtFixedRate(task, 0, 1000 - e.getSpeed());
+			enemy.setTimerTask(timerTask);
+			waveTimer.scheduleAtFixedRate(timerTask, 0, 1000-enemy.getSpeed());
 		});
 	}
 
@@ -98,48 +58,90 @@ public class MatchField {
 	 * all towers are shooting in an own thread. The speed is defined by the time this task is repeated.
 	 * int fireRate defines how much seconds the tower sleeps between two shoots
 	 */
-	public void fireTowers() {
-		towers.stream().forEach(t -> {
-			TimerTask task = new TimerTask() {
+	public void startTowerFire() {
+		towers.stream().forEach(tower -> {
+			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
-					if(enemies.size()>0){
-						t.fire(enemies);
-						removeDeadEnemies();
-					}else {
-						stopTowers();
+					if (enemies.size() > 0){
+						tower.fire(enemies);
+					} else {
+						stopWave();
 					}
 				}
 			};
-			t.setTask(task);
-			timer.scheduleAtFixedRate(task, 1000, t.getFireRate()*1000);
+			tower.setTask(timerTask);
+			waveTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate()*1000);
 		});
 	}
 	
 	
-	private void removeDeadEnemies() {
-		List<Enemy> deadEnemies= enemies.stream().filter(e -> !e.isAlive()).collect(Collectors.toList());
+	public void removeDeadEnemies() {
+		List<Enemy> deadEnemies = enemies.stream().filter(enemy -> !enemy.isAlive()).collect(Collectors.toList());
 		for (Enemy enemy : deadEnemies) {
-			enemy.getTask().cancel();
+			if (enemy instanceof Tank) {
+				getGameActivity().runOnUiThread(() -> getMapLayout().removeView(((Tank) enemy).getTankImage()));
+			}
+			enemy.getTimerTask().cancel();
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
 		enemies.removeAll(deadEnemies);
 	}
 	
-	public void stopTowers() {
-		timer.cancel();
+	private void stopWave() {
+		waveTimer.cancel();
 		System.out.println("No enemies left, towers are going to sleep");
 	}
 	
-	public void stopGame() {
-		timer.scheduleAtFixedRate(new TimerTask() {
+	private void stopGame() {
+		waveTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				if(isGameOver()){
-					timer.cancel();
+				if (isGameOver()){
+					waveTimer.cancel();
 					System.out.println("Game over, all enemies reached the target");
 				}
 			}
 		},0,5000);
+	}
+
+	private boolean isGameOver() {
+		return !enemies.stream().filter(enemy -> !enemy.reachedTarget()).findAny().isPresent();
+	}
+
+	private Optional<Tower> getTower(UUID towerUUID) {
+		return towers.stream().filter(tower -> tower.getId() == towerUUID).findAny();
+	}
+
+	private List<UUID> getTowerUUIDs(){
+		return towers.stream().map(Tower::getId).collect(Collectors.toList());
+	}
+
+	private Optional<Enemy> getEnemy(UUID enemyUUID) {
+		return enemies.stream().filter(enemy -> enemy.getUuid() == enemyUUID).findAny();
+	}
+
+	private List<UUID> getEnemyUUIDs(){
+		return enemies.stream().map(Enemy::getUuid).collect(Collectors.toList());
+	}
+
+	//not in use yet
+	private boolean removeTower(UUID towerUUID) {
+		Optional<Tower> tower = getTower(towerUUID);
+		if (tower.isPresent()) {
+			towers.remove(tower.get());
+			return true;
+		}
+		return false;
+	}
+
+	//not in use yet
+	private boolean removeEnemy(UUID enemyUUID) {
+		Optional<Enemy> enemy = getEnemy(enemyUUID);
+		if (enemy.isPresent()) {
+			enemies.remove(enemy.get());
+			return true;
+		}
+		return false;
 	}
 }

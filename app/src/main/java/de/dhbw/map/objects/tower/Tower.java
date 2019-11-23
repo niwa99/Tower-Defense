@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.lang.Math;
 
 import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 import de.dhbw.util.SortingUtil;
 
@@ -18,41 +19,44 @@ public abstract class Tower {
 	private String label;
 	private UUID id;
 	private int costs;
-	private int damage;
+	protected int damage;
 	private int range;
 	private int fireRate;
 	private int x;
 	private int y;
 	private TimerTask task;
+	protected Enemy targetedEnemy;
 	
 	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Position pos) {
-		this.label=label;
-		this.id=id;
-		this.costs=costs;
-		this.damage=damage;
-		this.range=range;
-		this.fireRate=fireRate;
-		this.x=pos.getX();
-		this.y=pos.getY();
+		this.label = label;
+		this.id = id;
+		this.costs = costs;
+		this.damage = damage;
+		this.range = range;
+		this.fireRate = fireRate;
+		this.x = pos.getX();
+		this.y = pos.getY();
 	}
 
 	/**
 	 * The tower shoots the nearest enemy if it is in range
 	 * @param enemies
+	 * @return true if there is an enemy to shoot at
 	 */
 	public boolean fire(List<Enemy> enemies) {
-		List<Enemy> enemiesInRange = enemies.stream().filter(e -> isEnemyInRange(e)).collect(Collectors.toList());
+		List<Enemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
 		Enemy enemy = getNearestEnemy(enemiesInRange);
-		if(enemy!=null) {
-			enemy.reduceHealthPoints(damage);
-			System.out.println(enemy.getLabel() + " was shot by " + label + " and has " + enemy.getHealthPoints() + " hp left");
-			return true;
+		if (enemy != null) {
+			if (enemy instanceof Tank) {
+				targetedEnemy = enemy;
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public boolean isEnemyInRange(Enemy enemy) {	
-		return getDistance(enemy.getPositionX(), enemy.getPositionY())<range;
+		return getDistance(enemy.getPositionX(), enemy.getPositionY()) < range;
 	}
 
 	public TimerTask getTask(){
@@ -60,7 +64,7 @@ public abstract class Tower {
 	}
 
 	public void setTask(TimerTask task){
-		this.task=task;
+		this.task = task;
 	}
 
 	/**
@@ -70,7 +74,7 @@ public abstract class Tower {
 	 * @return
 	 */
 	public Enemy getNearestEnemy(List<Enemy> enemies) {
-		if(!enemies.isEmpty()) {
+		if (!enemies.isEmpty()) {
 			Map<Enemy, Integer> distanceToEnemy = new HashMap<Enemy, Integer>();
 
 			for (Enemy enemy : enemies) {
@@ -94,7 +98,6 @@ public abstract class Tower {
 	 * @return
 	 */
 	public double rotateImage(List<Enemy> enemies){
-
 		double rotation = 0;
 		Enemy enemy = getNearestEnemy(enemies);
 		if (enemy != null){
@@ -149,7 +152,6 @@ public abstract class Tower {
 	}
 
 	public Position getPosition(){
-		return new Position(x,y);
+		return new Position(x, y);
 	}
-
 }

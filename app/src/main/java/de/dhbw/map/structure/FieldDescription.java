@@ -1,7 +1,6 @@
 package de.dhbw.map.structure;
 
 public enum FieldDescription {
-
     FREE("Free"),
     TOWER("Tower"),
     PATH("Path");
@@ -13,8 +12,7 @@ public enum FieldDescription {
         this.label = label;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return this.label;
     }
-
 }

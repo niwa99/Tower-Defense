@@ -1,0 +1,296 @@
+@startuml
+
+title __Project TowerDefense - Class Diagram__\n
+
+  package de.dhbw {
+    package de.dhbw.activities {
+      class de.dhbw.activities.MainActivity {
+        # onCreate()
+      }
+
+      class de.dhbw.activities.GameActivity {
+        {static} - AUTO_HIDE : boolean
+        {static} - AUTO_HIDE_DELAY_MILLIS : int
+        {static} - UI_ANIMATION_DELAY : int
+        - mContentView : View
+        - mControlsView : View
+        - mDelayHideTouchListener : OnTouchListener
+        - mHideHandler : Handler
+        - mHidePart2Runnable : Runnable
+        - mHideRunnable : Runnable
+        - mShowPart2Runnable : Runnable
+        - mVisible : boolean
+        - mapLayout : FrameLayout
+        + onOptionsItemSelected()
+        # onCreate()
+        # onPostCreate()
+        - delayedHide()
+        - hide()
+        - show()
+        - toggle()
+      }
+    }
+
+    package de.dhbw.game {
+      class de.dhbw.game.Game {
+        - buttonSizeParams : LayoutParams
+        - mapButtons : List<Button>
+        + Game()
+        + runGame()
+        - addEnemiesToMatchField()
+        - addTowersToMatchField()
+        - generateButtonsOnMap()
+      }
+    }
+
+    package de.dhbw.map {
+      package de.dhbw.map.matchfield {
+        class de.dhbw.map.matchfield.MatchField {
+          - enemies : List<Enemy>
+          - towers : List<Tower>
+          - waveTimer : Timer
+          + MatchField()
+          + addEnemy()
+          + addTower()
+          + removeDeadEnemies()
+          + startEnemyMovement()
+          + startTowerFire()
+          - getEnemy()
+          - getEnemyUUIDs()
+          - getTower()
+          - getTowerUUIDs()
+          - isGameOver()
+          - removeEnemy()
+          - removeTower()
+          - stopGame()
+          - stopWave()
+        }
+      }
+
+      package de.dhbw.map.objects {
+        package de.dhbw.map.objects.enemy {
+          abstract class de.dhbw.map.objects.enemy.Enemy {
+            - healthpoints : int
+            - isAlive : boolean
+            - label : String
+            - progress : int
+            - reachedTarget : boolean
+            - speed : int
+            - timerTask : TimerTask
+            - uuid : UUID
+            - x : int
+            - y : int
+            + Enemy()
+            + getDirection()
+            + getHealthPoints()
+            + getLabel()
+            + getPosition()
+            + getPositionX()
+            + getPositionY()
+            + getSpeed()
+            + getTimerTask()
+            + getUuid()
+            + isAlive()
+            + move()
+            + moveTo()
+            + moveToPosition()
+            + reachedTarget()
+            + reduceHealthPoints()
+            + setTimerTask()
+          }
+
+          class de.dhbw.map.objects.enemy.Tank {
+            - tankImage : ImageView
+            - timer : Timer
+            + Tank()
+            + getTankImage()
+            + hit()
+            + move()
+            {static} - getTankHealthpointsByLevel()
+            {static} - getTankSpeedByLevel()
+          }
+        }
+
+        package de.dhbw.map.objects.tower {
+          class de.dhbw.map.objects.tower.Bullet {
+            - bulletImage : ImageView
+            - x : int
+            - y : int
+            + Bullet()
+            + getPosition()
+            + move()
+            + moveTo()
+            + visualizeShot()
+            - getBulletRotation()
+            - setMidpointOfPositions()
+          }
+
+          class de.dhbw.map.objects.tower.DefTower {
+            - defTowerImage : ImageView
+            + DefTower()
+            + fire()
+            {static} - getDefTowerCostsByLevel()
+            {static} - getDefTowerDamageByLevel()
+            {static} - getDefTowerFirerateByLevel()
+            {static} - getDefTowerRangeByLevel()
+          }
+
+          abstract class de.dhbw.map.objects.tower.Tower {
+            # damage : int
+            - costs : int
+            - fireRate : int
+            - id : UUID
+            - label : String
+            - range : int
+            - task : TimerTask
+            - x : int
+            - y : int
+            + Tower()
+            + fire()
+            + getCosts()
+            + getDamage()
+            + getDistance()
+            + getFireRate()
+            + getId()
+            + getLabel()
+            + getNearestEnemy()
+            + getPosition()
+            + getPositionX()
+            + getPositionY()
+            + getRange()
+            + getTask()
+            + isEnemyInRange()
+            + rotateImage()
+            + setTask()
+          }
+        }
+      }
+
+      package de.dhbw.map.structure {
+        class de.dhbw.map.structure.Field {
+          - sizeInPx : int
+          - xCoord : int
+          - yCoord : int
+          + Field()
+          + Field()
+          + equals()
+          + getFieldDescription()
+          + getFieldPositionX()
+          + getFieldPositionY()
+          + getPixelCoordX()
+          + getPixelCoordY()
+          + getSizeInPx()
+          + getSpawnPoint()
+          + hashCode()
+          + setFieldDescription()
+        }
+
+        enum de.dhbw.map.structure.FieldDescription {
+          FREE
+          PATH
+          TOWER
+          label
+        }
+
+        class de.dhbw.map.structure.MapStructure {
+          - fields : Map<String, Field>
+          {static} - path : Position[]
+          + MapStructure()
+          + getField()
+          + getFieldForEnemy()
+          + getFields()
+          {static} + getSizeField()
+          - createPath()
+        }
+      }
+    }
+
+    package de.dhbw.util {
+      class de.dhbw.util.Constants {
+        {static} + AMOUNT_COLUMNS : int
+        {static} + AMOUNT_ROWS : int
+        {static} + BULLET_SIZE_PARAMS : LayoutParams
+        {static} + BULLET_SPEED : int
+        {static} + DEF_TOWER_LEVEL_1_COSTS : int
+        {static} + DEF_TOWER_LEVEL_1_DAMAGE : int
+        {static} + DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS : int
+        {static} + DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS : int
+        {static} + DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+        {static} + DRAWABLE_BULLET : int
+        {static} + DRAWABLE_TANK : int
+        {static} + DRAWABLE_TANK_HITTED : int
+        {static} + DRAWABLE_TOWER : int
+        {static} + FIELD_SIZE : int
+        {static} + TANK_ENEMY_SIZE_PARAMS : LayoutParams
+        {static} + TANK_LEVEL_1_HEALTHPOINTS : int
+        {static} + TANK_LEVEL_1_SPEED : int
+        {static} + TANK_LEVEL_2_HEALTHPOINTS : int
+        {static} + TANK_LEVEL_2_SPEED : int
+      }
+
+      enum de.dhbw.util.Direction {
+        DOWN
+        LEFT
+        RIGHT
+        UP
+      }
+
+      class de.dhbw.util.ObjectStorage {
+        {static} - context : Context
+        {static} - gameActivity : GameActivity
+        {static} - mapLayout : FrameLayout
+        {static} - mapStructure : MapStructure
+        {static} - matchField : MatchField
+        {static} + getContext()
+        {static} + getGameActivity()
+        {static} + getMapLayout()
+        {static} + getMapStructure()
+        {static} + getMatchField()
+        {static} + setContext()
+        {static} + setGameActivity()
+        {static} + setMapLayout()
+        {static} + setMapStructure()
+        {static} + setMatchField()
+      }
+
+      class de.dhbw.util.Position {
+        - x : int
+        - y : int
+        + Position()
+        + equals()
+        + getX()
+        + getY()
+        + toString()
+      }
+
+      class de.dhbw.util.SortingUtil {
+        + SortingUtil()
+        {static} + getSortedListBySortingMapByValue()
+        + sortMapByValue()
+      }
+    }
+  }
+  
+
+  de.dhbw.activities.GameActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  de.dhbw.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.map.structure.Field : actualField
+  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.util.Direction : direction
+  de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.Enemy
+  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.util.Position : targetPos
+  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.map.objects.tower.DefTower : tower
+  de.dhbw.map.objects.tower.DefTower -up-|> de.dhbw.map.objects.tower.Tower
+  de.dhbw.map.objects.tower.Tower o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.tower.Tower o-- de.dhbw.util.SortingUtil : sortingUtil
+  de.dhbw.map.structure.Field o-- de.dhbw.map.structure.FieldDescription : fieldDescription
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

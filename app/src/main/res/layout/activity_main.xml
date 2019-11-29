@@ -40,6 +40,15 @@
             android:text="PLAY"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="#FFEB3B" />
+
+        <Spinner
+            android:id="@+id/spinner_choose_difficulties"
+            android:layout_width="192dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center_horizontal"
+            android:foregroundTint="@color/colorPrimaryDark"
+            android:spinnerMode="dropdown"
+            android:textColor="#000000" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

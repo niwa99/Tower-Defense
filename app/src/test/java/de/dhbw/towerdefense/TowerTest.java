@@ -28,28 +28,28 @@ public class TowerTest {
     @Test
     public void towerKillsEnemyIfItsInRange() {
         //arrange
-        Tower t = new DefTower(imageDummy, null,"t1", 100, 100, 1, new Position(0, 0));
-        Enemy e = new Tank(imageDummy,"tank", 5, 950);
-        e.moveToPosition(new Position(50, 50));
+        Tower tower = new DefTower("t1", new Position(0, 0), 1);
+        Enemy enemy = new Tank("tank", 1);
+        enemy.moveToPosition(new Position(50, 50));
 
         //act
-        t.fire(Arrays.asList(e));
+        tower.fire(Arrays.asList(enemy));
 
         //assert
-        assertFalse(e.isAlive());
+        assertFalse(enemy.isAlive());
     }
 
     @Test
     public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        Tower t = new DefTower(imageDummy, null,"t1", 100, 100, 1, new Position(0, 0));
-        Enemy e = new Tank(imageDummy,"tank", 5, 950);
-        e.moveToPosition(new Position(150, 150));
+        Tower tower = new DefTower("t1", new Position(0, 0), 1);
+        Enemy enemy = new Tank("tank", 1);
+        enemy.moveToPosition(new Position(150, 150));
 
         //act
-        t.fire(Arrays.asList(e));
+        tower.fire(Arrays.asList(enemy));
 
         //assert
-        assertTrue(e.isAlive());
+        assertTrue(enemy.isAlive());
     }
 }

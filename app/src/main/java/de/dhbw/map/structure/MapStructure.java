@@ -5,16 +5,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import de.dhbw.util.Position;
 
+import static de.dhbw.util.Constants.*;
+
 public class MapStructure {
 	private Map<String, Field> fields = new HashMap<String, Field>();
-	private static final int sizeField = 100;
-	private static final int rows = 6;
-	private static final int columns = 11;
-    private static final Position[] path = new Position[]{
+    private static final Position[] path = new Position[] {
             new Position(0,2), new Position(1,2), new Position(1,1),
             new Position(1,0), new Position(2,0), new Position(3,0),
             new Position(4,0), new Position(4,1), new Position(4,2),
@@ -23,26 +21,27 @@ public class MapStructure {
             new Position(6,3), new Position(6,2), new Position(7,2),
             new Position(8,2), new Position(9,2), new Position(10,2)};
 
-    // Constructor
-    public MapStructure(){
+    public MapStructure() {
         FieldDescription[][] fieldDescription = createPath();
-        for (int x = 0; x < columns; x++) {
-            for (int y = 0; y < rows; y++) {
+        for (int x = 0; x < AMOUNT_COLUMNS; x++) {
+            for (int y = 0; y < AMOUNT_ROWS; y++) {
             	Position pos = new Position(x,y);
-                fields.put(pos.toString(), new Field(sizeField, x, y, fieldDescription[x][y]));
+                fields.put(pos.toString(), new Field(FIELD_SIZE, x, y, fieldDescription[x][y]));
             }
         }
     }
 
-    // sets the FieldDescription for the Map (says which Field belongs to the Path and which not)
-    private FieldDescription[][] createPath(){
-
-        // There is only one fix Path with the following Coordinates
-        FieldDescription[][] fieldDescription = new FieldDescription[columns][rows];
+    /**
+     * Sets the FieldDescriptions for the Map (says which Field belongs to the Path and which not)
+     * @return 2D-FieldDescription-Array
+     */
+    private FieldDescription[][] createPath() {
+        // There is only one fixed Path with the following Coordinates
+        FieldDescription[][] fieldDescription = new FieldDescription[AMOUNT_COLUMNS][AMOUNT_ROWS];
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 6; j++) {
-                for (Position pos : path){
-                    if(pos.equals(new Position(i,j))) {
+                for (Position pos : path) {
+                    if (pos.equals(new Position(i, j))) {
                         fieldDescription[i][j] = FieldDescription.PATH;
                         break;
                     } else {
@@ -63,15 +62,15 @@ public class MapStructure {
      * @param progress
      * @return Field where the enemy should move to
      */
-    public Field getFieldForEnemy(int progress){
-        return progress<path.length? fields.get(path[progress].toString()):null;
+    public Field getFieldForEnemy(int progress) {
+        return progress<path.length ? fields.get(path[progress].toString()) : null;
     }
     
     public Field getField(Position pos) {
     	return fields.get(pos.toString());
     }
     
-    public int getSizeField() {
-    	return sizeField;
+    public static int getSizeField() {
+    	return FIELD_SIZE;
     }
 }

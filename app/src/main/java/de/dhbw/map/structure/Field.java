@@ -1,20 +1,19 @@
 package de.dhbw.map.structure;
 
+import java.util.UUID;
+
 import de.dhbw.util.Position;
 
 public class Field {
 
-    // x and y Coordinates
     private int xCoord;
     private int yCoord;
     private int sizeInPx;
 
-    // Enum for Field type
     private FieldDescription fieldDescription;
 
-    //Constructor
     public Field(int sizeInPx, int xCoord, int yCoord, FieldDescription fieldDescription) {
-    	this.sizeInPx=sizeInPx;
+    	this.sizeInPx = sizeInPx;
         this.xCoord = xCoord;
         this.yCoord = yCoord;
         this.fieldDescription = fieldDescription;
@@ -22,32 +21,33 @@ public class Field {
 
     //Constructor only for dummy objects
     public Field() {
-    	this.sizeInPx=0;
+    	this.sizeInPx = 0;
         this.xCoord = 0;
         this.yCoord = 0;
         this.fieldDescription = FieldDescription.FREE;
     }
 
+    public int getId(){
+        return Integer.valueOf(String.valueOf(getFieldPositionX())+String.valueOf(getFieldPositionY()));
+    }
+
     /**
-     *
-     * returns the y-Position of the Field in the map
+     * @return y-Position of the Field in the map
      */
     public int getFieldPositionY() {
-
         return yCoord;
     }
 
     /**
      *
-     * returns the x-Positon of the Field in the map
+     * @return x-Positon of the Field in the map
      */
     public int getFieldPositionX() {
-
         return xCoord;
     }
 
     /**
-     * returns the real x-Coordinate
+     * @return real x-Coordinate in px
      *
      */
     public int getPixelCoordX() {
@@ -55,7 +55,7 @@ public class Field {
     }
 
     /**
-     * returns the real y-Coordinate
+     * @return real y-Coordinate in px
      *
      */
     public int getPixelCoordY() {
@@ -66,7 +66,7 @@ public class Field {
         return fieldDescription;
     }
 
-    public void setFieldDescription(FieldDescription fieldDescription){
+    public void setFieldDescription(FieldDescription fieldDescription) {
         this.fieldDescription = fieldDescription;
     }
     
@@ -74,7 +74,7 @@ public class Field {
     	return new Position(getPixelCoordX()+(sizeInPx/2), getPixelCoordY()+(sizeInPx/2));
     }
 
-    public int getSizeInPx(){
+    public int getSizeInPx() {
         return sizeInPx;
     }
     

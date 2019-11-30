@@ -28,10 +28,10 @@ public class EnemyTest {
     @Test
     public void ifDamageToEnemyIsLowerThanHP_EnemyShouldBeAlive() {
         //arrange
-        Enemy enemy = new Tank(imageDummy,"tank1", 100, 900);
+        Enemy enemy = new Tank("tank1",1);
 
         //act
-        enemy.reduceHealthPoints(50);
+        enemy.reduceHealthPoints(5);
 
         //assert
         assertTrue(enemy.isAlive());
@@ -40,10 +40,10 @@ public class EnemyTest {
     @Test
     public void ifDamageToEnemyHigherThanHP_EnemyShouldBeDead() {
         //arrange
-        Enemy enemy = new Tank(imageDummy,"tank1", 100, 900);
+        Enemy enemy = new Tank("tank1", 1);
 
         //act
-        enemy.reduceHealthPoints(150);
+        enemy.reduceHealthPoints(10);
 
         //assert
         assertFalse(enemy.isAlive());
@@ -51,15 +51,15 @@ public class EnemyTest {
 
     @Test
     public void whenEnemyMoves_ThePositionShouldChange() {
-        Enemy e = new Tank(imageDummy,"tank", 5, 950);
+        Enemy enemy = new Tank("tank", 1);
         MapStructure map = new MapStructure();
 
         //act
-        e.move(map);
-        Position oldPos = e.getPosition();
-        e.move(map);
+        enemy.move(map);
+        Position oldPos = enemy.getPosition();
+        enemy.move(map);
 
         //assert
-        assertThat(oldPos, is(not(equalTo(e.getPosition()))));
+        assertThat(oldPos, is(not(equalTo(enemy.getPosition()))));
     }
 }

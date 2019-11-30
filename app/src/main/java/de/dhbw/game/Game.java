@@ -1,6 +1,5 @@
 package de.dhbw.game;
 
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +8,6 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Tank;

@@ -29,25 +29,35 @@ public class Tank extends Enemy {
 	@Override
 	public boolean move(MapStructure map) {
 		if (super.move(map)){
-			tankImage.setX(getPositionX());
-			tankImage.setY(getPositionY());
-			switch (getDirection()) {
-				case UP:	tankImage.setRotation(0); break;
-				case RIGHT:	tankImage.setRotation(90); break;
-				case DOWN:	tankImage.setRotation(180); break;
-				case LEFT:	tankImage.setRotation(270); break;
-			}
+			getGameActivity().runOnUiThread(() -> {
+				tankImage.setX(getPositionX());
+				tankImage.setY(getPositionY());
+				switch (getDirection()) {
+					case UP:
+						tankImage.setRotation(0);
+						break;
+					case RIGHT:
+						tankImage.setRotation(90);
+						break;
+					case DOWN:
+						tankImage.setRotation(180);
+						break;
+					case LEFT:
+						tankImage.setRotation(270);
+						break;
+				}
+			});
 		}
 		return false;
 	}
 
 	public void hit(int damage) {
 		super.reduceHealthPoints(damage);
-		tankImage.setImageResource(DRAWABLE_TANK_HITTED);
+		getGameActivity().runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK_HITTED));
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				tankImage.setImageResource(DRAWABLE_TANK);
+				getGameActivity().runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK));
 			}
 		}, 100);
 	}

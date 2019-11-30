@@ -24,7 +24,7 @@ public class Constants {
     //Def-Tower Parameters
     public static final int DEF_TOWER_LEVEL_1_COSTS = 100;
     public static final int DEF_TOWER_LEVEL_1_DAMAGE = 1;
-    public static final int DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS = 300;
+    public static final int DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS = 450;
     public static final int DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS = 3;
 
     public static final LinearLayout.LayoutParams DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);

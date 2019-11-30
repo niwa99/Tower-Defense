@@ -44,8 +44,10 @@ public class Bullet {
             @Override
             public void run() {
                 if (move()) {
-                    bulletImage.setX(x);
-                    bulletImage.setY(y);
+                    getGameActivity().runOnUiThread(() -> {
+                            bulletImage.setX(x);
+                            bulletImage.setY(y);
+                    });
                 } else {
                     getGameActivity().runOnUiThread(() -> getMapLayout().removeView(bulletImage));
                     if (targetedEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde

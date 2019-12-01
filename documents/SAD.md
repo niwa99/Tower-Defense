@@ -1,6 +1,6 @@
 # Tower-Defense - Software Architecture Document
 
-### Version 0.01
+### Version 1.0
 
 # Revision history
 

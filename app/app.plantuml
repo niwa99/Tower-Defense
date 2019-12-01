@@ -4,11 +4,12 @@ title __Project TowerDefense - Class Diagram__\n
 
   package de.dhbw {
     package de.dhbw.activities {
-      class de.dhbw.activities.MainActivity {
+
+      class de.dhbw.activities.MainActivity #lightblue {
         # onCreate()
       }
 
-      class de.dhbw.activities.GameActivity {
+      class de.dhbw.activities.GameActivity #lightblue {
         {static} - AUTO_HIDE : boolean
         {static} - AUTO_HIDE_DELAY_MILLIS : int
         {static} - UI_ANIMATION_DELAY : int
@@ -32,7 +33,7 @@ title __Project TowerDefense - Class Diagram__\n
     }
 
     package de.dhbw.game {
-      class de.dhbw.game.Game {
+      class de.dhbw.game.Game #lightgreen {
         - buttonSizeParams : LayoutParams
         - mapButtons : List<Button>
         + Game()
@@ -45,7 +46,7 @@ title __Project TowerDefense - Class Diagram__\n
 
     package de.dhbw.map {
       package de.dhbw.map.matchfield {
-        class de.dhbw.map.matchfield.MatchField {
+        class de.dhbw.map.matchfield.MatchField #orange {
           - enemies : List<Enemy>
           - towers : List<Tower>
           - waveTimer : Timer
@@ -69,7 +70,7 @@ title __Project TowerDefense - Class Diagram__\n
 
       package de.dhbw.map.objects {
         package de.dhbw.map.objects.enemy {
-          abstract class de.dhbw.map.objects.enemy.Enemy {
+          abstract class de.dhbw.map.objects.enemy.Enemy #orange {
             - healthpoints : int
             - isAlive : boolean
             - label : String
@@ -99,7 +100,7 @@ title __Project TowerDefense - Class Diagram__\n
             + setTimerTask()
           }
 
-          class de.dhbw.map.objects.enemy.Tank {
+          class de.dhbw.map.objects.enemy.Tank #orange {
             - tankImage : ImageView
             - timer : Timer
             + Tank()
@@ -112,7 +113,7 @@ title __Project TowerDefense - Class Diagram__\n
         }
 
         package de.dhbw.map.objects.tower {
-          class de.dhbw.map.objects.tower.Bullet {
+          class de.dhbw.map.objects.tower.Bullet #orange {
             - bulletImage : ImageView
             - x : int
             - y : int
@@ -125,7 +126,7 @@ title __Project TowerDefense - Class Diagram__\n
             - setMidpointOfPositions()
           }
 
-          class de.dhbw.map.objects.tower.DefTower {
+          class de.dhbw.map.objects.tower.DefTower #orange {
             - defTowerImage : ImageView
             + DefTower()
             + fire()
@@ -135,7 +136,7 @@ title __Project TowerDefense - Class Diagram__\n
             {static} - getDefTowerRangeByLevel()
           }
 
-          abstract class de.dhbw.map.objects.tower.Tower {
+          abstract class de.dhbw.map.objects.tower.Tower #orange {
             # damage : int
             - costs : int
             - fireRate : int
@@ -167,7 +168,7 @@ title __Project TowerDefense - Class Diagram__\n
       }
 
       package de.dhbw.map.structure {
-        class de.dhbw.map.structure.Field {
+        class de.dhbw.map.structure.Field #orange {
           - sizeInPx : int
           - xCoord : int
           - yCoord : int
@@ -185,14 +186,14 @@ title __Project TowerDefense - Class Diagram__\n
           + setFieldDescription()
         }
 
-        enum de.dhbw.map.structure.FieldDescription {
+        enum de.dhbw.map.structure.FieldDescription #orange {
           FREE
           PATH
           TOWER
           label
         }
 
-        class de.dhbw.map.structure.MapStructure {
+        class de.dhbw.map.structure.MapStructure #orange {
           - fields : Map<String, Field>
           {static} - path : Position[]
           + MapStructure()
@@ -206,7 +207,7 @@ title __Project TowerDefense - Class Diagram__\n
     }
 
     package de.dhbw.util {
-      class de.dhbw.util.Constants {
+      class de.dhbw.util.Constants #orange {
         {static} + AMOUNT_COLUMNS : int
         {static} + AMOUNT_ROWS : int
         {static} + BULLET_SIZE_PARAMS : LayoutParams
@@ -228,14 +229,14 @@ title __Project TowerDefense - Class Diagram__\n
         {static} + TANK_LEVEL_2_SPEED : int
       }
 
-      enum de.dhbw.util.Direction {
+      enum de.dhbw.util.Direction #orange {
         DOWN
         LEFT
         RIGHT
         UP
       }
 
-      class de.dhbw.util.ObjectStorage {
+      class de.dhbw.util.ObjectStorage #orange {
         {static} - context : Context
         {static} - gameActivity : GameActivity
         {static} - mapLayout : FrameLayout
@@ -253,7 +254,7 @@ title __Project TowerDefense - Class Diagram__\n
         {static} + setMatchField()
       }
 
-      class de.dhbw.util.Position {
+      class de.dhbw.util.Position #orange {
         - x : int
         - y : int
         + Position()
@@ -263,13 +264,20 @@ title __Project TowerDefense - Class Diagram__\n
         + toString()
       }
 
-      class de.dhbw.util.SortingUtil {
+      class de.dhbw.util.SortingUtil #orange {
         + SortingUtil()
         {static} + getSortedListBySortingMapByValue()
         + sortMapByValue()
       }
     }
   }
+
+  legend
+  |= |= Type |
+  |<back:lightblue>   </back>| View |
+  |<back:lightgreen>   </back>| Controller |
+  |<back:orange>   </back>| Model |
+  endlegend
   
 
   de.dhbw.activities.GameActivity -up-|> androidx.appcompat.app.AppCompatActivity

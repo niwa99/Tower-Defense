@@ -26,6 +26,11 @@ public class Tank extends Enemy {
 		getMapLayout().addView(tankImage);
 	}
 
+	public Tank(String label, int level, ImageView tankImage) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level));
+		this.tankImage = tankImage;
+	}
+
 	@Override
 	public boolean move(MapStructure map) {
 		if (super.move(map)){

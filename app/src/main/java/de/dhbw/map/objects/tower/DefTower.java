@@ -27,6 +27,12 @@ public class DefTower extends Tower {
 		getMapLayout().addView(defTowerImage);
 	}
 
+	public DefTower(String label, Position position, int level, ImageView defTowerImage) {
+		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
+				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), position);
+		this.defTowerImage = defTowerImage;
+	}
+
 	@Override
 	public boolean fire(List<Enemy> enemies) {
 		defTowerImage.setRotation((float)rotateImage(enemies));

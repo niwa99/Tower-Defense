@@ -14,9 +14,9 @@ import java.util.List;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.DefTower;
+import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.util.Position;
 
-import static de.dhbw.util.ObjectStorage.getMapStructure;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -24,24 +24,26 @@ import static org.mockito.Mockito.mock;
 public class TowerRotationTest {
 
     @Mock
-    ImageView imageDummy = mock(ImageView.class);
+    ImageView dummyImage = mock(ImageView.class);
 
     @Test
     public void checkRotationIsOnCorrectAngle() {
         //arrange
         List<Enemy> enemy = new ArrayList<>();
-        enemy.add(new Tank("tank1",1));
-        DefTower tower = new DefTower("tower1", getMapStructure().getField(new Position(2, 3)).getSpawnPoint(), 1);
+        enemy.add(new Tank("tank1",1, dummyImage));
+        Tower tower = new DefTower("t1", new Position(2, 3), 1, dummyImage);
 
         //act
         enemy.get(0).moveTo(3,3);
         double rotation = tower.rotateImage(enemy);
         enemy.get(0).moveTo(1,3);
         double rotation2 = tower.rotateImage(enemy);
-        enemy.get(1).moveTo(2,4);
+        enemy.get(0).moveTo(2,4);
         double rotation3 = tower.rotateImage(enemy);
 
         //assert
-        assertTrue(rotation == 270 && rotation2 == 90 && rotation3 == 180);
+        assertTrue(rotation == 180.0);
+        assertTrue(rotation2 == 0.0);
+        assertTrue(rotation3 == -90.0);
     }
 }

@@ -82,7 +82,7 @@ public abstract class Tower {
 				distanceToEnemy.put(enemy, distance);
 			}
 
-			List<Enemy> sortedByDistance = sortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
+			List<Enemy> sortedByDistance = SortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
 
 			for (Enemy enemy : sortedByDistance) {
 				if (enemy.isAlive()) {

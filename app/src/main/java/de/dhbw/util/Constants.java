@@ -1,6 +1,5 @@
 package de.dhbw.util;
 
-import android.graphics.drawable.Drawable;
 import android.widget.LinearLayout;
 
 import de.dhbw.R;
@@ -13,7 +12,12 @@ public class Constants {
     public static final int DRAWABLE_TOWER = R.drawable.tower;
     public static final int DRAWABLE_FIELD_TRANSPARENT = R.drawable.transparent_background;
     public static final int DRAWABLE_FIELD_ON_CLICK_PLUS = R.drawable.button_plus_background;
-
+    public static final int DRAWABLE_PATH_HORIZONTAL = R.drawable.path_horizontal;
+    public static final int DRAWABLE_PATH_VERTICAL = R.drawable.path_horizontal;
+    public static final int DRAWABLE_PATH_LEFT_UP= R.drawable.path_corner;
+    public static final int DRAWABLE_PATH_LEFT_DOWN = R.drawable.path_corner;
+    public static final int DRAWABLE_PATH_RIGHT_DOWN = R.drawable.path_corner;
+    public static final int DRAWABLE_PATH_RIGHT_UP = R.drawable.path_corner;
 
     //Map Parameters
     public static final int FIELD_SIZE = 150;

@@ -1,6 +1,5 @@
 package de.dhbw.game;
 
-import android.graphics.Color;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -26,7 +25,7 @@ public class Game {
 
 	public Game() {
 		setMapStructure(new MapStructure());
-		buttonSizeParams = new LinearLayout.LayoutParams(getMapStructure().getSizeField(), getMapStructure().getSizeField());
+		buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
 		mapButtons = new ArrayList<>();
 		setMatchField(new MatchField());
 	}
@@ -75,9 +74,10 @@ public class Game {
             fieldButton.setY(f.getSpawnPoint().getY());
             fieldButton.setLayoutParams(buttonSizeParams);
             fieldButton.setId(f.getId());
+            System.out.println(fieldButton.getX() + ", " + fieldButton.getY());
             if (f.getFieldDescription().equals(FieldDescription.PATH)) {
                 fieldButton.setEnabled(false);
-                fieldButton.setBackgroundColor(Color.GREEN);
+                fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
                 getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             } else if (f.getFieldDescription().equals(FieldDescription.FREE)) {

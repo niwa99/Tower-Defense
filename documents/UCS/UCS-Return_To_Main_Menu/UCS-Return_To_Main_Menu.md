@@ -12,10 +12,10 @@ While playing a game, a user should be able to return to the main menu in order 
 - The MainActivity displays its common functionalities
 
 ### 2.1.1 Activity Diagram
-![Activity Diagram for StartTheGameFromTheMenu](./Activity_Diagram-Return_To_Main_Menu.jpg)
+![Activity Diagram for ReturnToMainMenu](./Activity_Diagram-Return_To_Main_Menu.jpg)
 
 ### 2.1.2 Mock-up
-![Mockup for StartTheGameFromTheMenu](./Mockup-Return_To_Main_Menu.jpg)
+![Mockup for ReturnToMainMenu](./Mockup-Return_To_Main_Menu.jpg)
 
 ### 2.1.3 Narrative
 ```gherkin

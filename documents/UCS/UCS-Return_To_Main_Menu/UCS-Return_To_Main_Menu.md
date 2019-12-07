@@ -38,7 +38,7 @@ Feature: Return To Main Menu
 
 # 4 Preconditions
 ## 4.1 Starting the application
-The user has to start the app, start a game and he need to be on the game-page.
+The user has to start the app, start a game and he needs to be on the game-page.
 
 # 5 Postconditions
 (n/a)

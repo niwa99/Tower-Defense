@@ -13,11 +13,11 @@ public class Constants {
     public static final int DRAWABLE_FIELD_TRANSPARENT = R.drawable.transparent_background;
     public static final int DRAWABLE_FIELD_ON_CLICK_PLUS = R.drawable.button_plus_background;
     public static final int DRAWABLE_PATH_HORIZONTAL = R.drawable.path_horizontal;
-    public static final int DRAWABLE_PATH_VERTICAL = R.drawable.path_horizontal;
-    public static final int DRAWABLE_PATH_LEFT_UP= R.drawable.path_corner;
-    public static final int DRAWABLE_PATH_LEFT_DOWN = R.drawable.path_corner;
-    public static final int DRAWABLE_PATH_RIGHT_DOWN = R.drawable.path_corner;
-    public static final int DRAWABLE_PATH_RIGHT_UP = R.drawable.path_corner;
+    public static final int DRAWABLE_PATH_VERTICAL = R.drawable.path_vertical;
+    public static final int DRAWABLE_PATH_LEFT_UP= R.drawable.path_left_up;
+    public static final int DRAWABLE_PATH_LEFT_DOWN = R.drawable.path_left_down;
+    public static final int DRAWABLE_PATH_RIGHT_DOWN = R.drawable.path_right_down;
+    public static final int DRAWABLE_PATH_RIGHT_UP = R.drawable.path_right_up;
 
     //Map Parameters
     public static final int FIELD_SIZE = 150;

@@ -12,6 +12,7 @@ import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 import de.dhbw.util.SortingUtil;
+import de.dhbw.map.structure.Field;
 
 public abstract class Tower {
 	private SortingUtil sortingUtil = new SortingUtil();
@@ -24,18 +25,21 @@ public abstract class Tower {
 	private int fireRate;
 	private int x;
 	private int y;
+	private Field field;
 	private TimerTask task;
 	protected Enemy targetedEnemy;
 	
-	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Position pos) {
+	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field) {
 		this.label = label;
 		this.id = id;
 		this.costs = costs;
 		this.damage = damage;
 		this.range = range;
 		this.fireRate = fireRate;
-		this.x = pos.getX();
-		this.y = pos.getY();
+		this.field = field;
+		this.x = field.getSpawnPoint().getX();
+		this.y = field.getSpawnPoint().getY();
+
 	}
 
 	/**
@@ -57,6 +61,10 @@ public abstract class Tower {
 	
 	public boolean isEnemyInRange(Enemy enemy) {	
 		return getDistance(enemy.getPositionX(), enemy.getPositionY()) < range;
+	}
+
+	public Field getField(){
+		return field;
 	}
 
 	public TimerTask getTask(){

@@ -39,11 +39,17 @@ public class MapStructure {
     private FieldDescription[][] createPath() {
         // There is only one fixed Path with the following Coordinates
         FieldDescription[][] fieldDescription = new FieldDescription[AMOUNT_COLUMNS][AMOUNT_ROWS];
+        boolean spawn = true;
         for (int i = 0; i < 11; i++) {
             for (int j = 0; j < 6; j++) {
                 for (Position pos : path) {
                     if (pos.equals(new Position(i, j))) {
-                        fieldDescription[i][j] = FieldDescription.PATH;
+                        if(spawn){
+                            fieldDescription[i][j] = FieldDescription.Spawn;
+                            spawn=false;
+                        }else{
+                            fieldDescription[i][j] = FieldDescription.PATH;
+                        }
                         break;
                     } else {
                         fieldDescription[i][j] = FieldDescription.FREE;

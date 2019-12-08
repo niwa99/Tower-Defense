@@ -1,6 +1,6 @@
 package de.dhbw.util;
 
-public class Position {
+public class Position{
 	private int x;
 	private int y;
 	
@@ -27,4 +27,5 @@ public class Position {
 	public String toString() {
 		return String.valueOf(x) + String.valueOf(y);
 	}
+
 }

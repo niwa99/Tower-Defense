@@ -10,13 +10,14 @@ import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
 import static de.dhbw.util.ObjectStorage.*;
+import de.dhbw.map.structure.Field;
 
 public class DefTower extends Tower {
 	private ImageView defTowerImage;
 
-	public DefTower(String label, Position position, int level) {
+	public DefTower(String label, Field field, int level) {
 		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), position);
+				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field);
 
 		defTowerImage = new ImageView(getContext());
 		defTowerImage.setLayoutParams(DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS);
@@ -27,9 +28,9 @@ public class DefTower extends Tower {
 		getMapLayout().addView(defTowerImage);
 	}
 
-	public DefTower(String label, Position position, int level, ImageView defTowerImage) {
+	public DefTower(String label, Field field, int level, ImageView defTowerImage) {
 		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), position);
+				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field);
 		this.defTowerImage = defTowerImage;
 	}
 
@@ -42,6 +43,10 @@ public class DefTower extends Tower {
 		}
 		return false;
 
+	}
+
+	public ImageView getDefTowerImage() {
+		return defTowerImage;
 	}
 
 	private static int getDefTowerCostsByLevel(int level) {

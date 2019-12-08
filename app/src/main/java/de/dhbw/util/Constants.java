@@ -41,6 +41,9 @@ public class Constants {
     public static final int TANK_LEVEL_2_HEALTHPOINTS = 7;
     public static final int TANK_LEVEL_2_SPEED = 980;
 
+    public static final int TANK_LEVEL_3_HEALTHPOINTS = 25;
+    public static final int TANK_LEVEL_3_SPEED = 985;
+
     public static final LinearLayout.LayoutParams TANK_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 

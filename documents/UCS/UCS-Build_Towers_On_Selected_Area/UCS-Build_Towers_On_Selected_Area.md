@@ -8,7 +8,7 @@ While playing a game, a player needs to build towers in order to fight against e
 - User is on the game page and clicks a field
 - A plus sign is displayed on the clicked field
 - User clicks on the field one more time
-- A tower is built on this field
+- A tower is built on this field and the plus-symbol disappears
 - The tower is able to fire at enemies
 
 ### 2.1.1 Activity Diagram
@@ -29,7 +29,8 @@ Feature: Build towers on selected area
     When I click on a vacant field
     Then a plus-symbol appears on this field
     When I click on this field one more time
-    Then a tower appears on this field
+    Then the plus-symbol disappears
+    And a tower appears on this field
 
   Scenario: cancel the build-process
     Given I am on the game page
@@ -59,4 +60,4 @@ The user has to start the app, start a game and he needs to be on the game-page.
 (n/a)
  
 # 6 Extension Points
-Instead of showing the plus-symbol, one could display a popup-menu which allows to choose different towers.
+Instead of showing the plus-symbol, one could display a popup-menu which allows to choose between different towers.

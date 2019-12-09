@@ -75,6 +75,7 @@ public class Tank extends Enemy {
 		switch (level) {
 			case 1: return TANK_LEVEL_1_HEALTHPOINTS;
 			case 2: return TANK_LEVEL_2_HEALTHPOINTS;
+			case 3: return TANK_LEVEL_3_HEALTHPOINTS;
 			default: return TANK_LEVEL_1_HEALTHPOINTS;
 		}
 	}
@@ -83,6 +84,7 @@ public class Tank extends Enemy {
 		switch (level) {
 			case 1: return TANK_LEVEL_1_SPEED;
 			case 2: return TANK_LEVEL_2_SPEED;
+			case 3: return TANK_LEVEL_3_SPEED;
 			default: return TANK_LEVEL_1_SPEED;
 		}
 	}

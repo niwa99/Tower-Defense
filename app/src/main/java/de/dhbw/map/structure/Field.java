@@ -27,8 +27,8 @@ public class Field {
         this.fieldDescription = FieldDescription.FREE;
     }
 
-    public int getId(){
-        return Integer.valueOf(String.valueOf(getFieldPositionX())+String.valueOf(getFieldPositionY()));
+    public String getId(){
+        return String.valueOf(getFieldPositionX())+"01230"+String.valueOf(getFieldPositionY());
     }
 
     /**

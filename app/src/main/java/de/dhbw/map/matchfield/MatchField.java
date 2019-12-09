@@ -11,6 +11,8 @@ import java.util.Optional;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.structure.Field;
+import de.dhbw.util.Position;
 
 import static de.dhbw.util.ObjectStorage.*;
 
@@ -26,18 +28,19 @@ public class MatchField {
 	
 	public void addTower(Tower tower) {
 		towers.add(tower);
+		startTowerFire(tower);
 	}
 	
 	public void addEnemy(Enemy enemy) {
 		enemies.add(enemy);
+		startEnemyMovement(enemy);
 	}
 
 	/**
 	 * all enemies are moving in an own thread. The speed is defined by the time this task is repeated.
 	 * An enemy moves only one pixel each time. Speed is 1 second - (int) speed of the enemy
 	 */
-	public void startEnemyMovement() {
-		enemies.stream().forEach(enemy -> {
+	public void startEnemyMovement(Enemy enemy) {
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
@@ -51,15 +54,13 @@ public class MatchField {
 			};
 			enemy.setTimerTask(timerTask);
 			waveTimer.scheduleAtFixedRate(timerTask, 0, 1000-enemy.getSpeed());
-		});
 	}
 
 	/**
 	 * all towers are shooting in an own thread. The speed is defined by the time this task is repeated.
 	 * int fireRate defines how much seconds the tower sleeps between two shoots
 	 */
-	public void startTowerFire() {
-		towers.stream().forEach(tower -> {
+	public void startTowerFire(Tower tower) {
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
@@ -72,7 +73,6 @@ public class MatchField {
 			};
 			tower.setTask(timerTask);
 			waveTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate()*1000);
-		});
 	}
 	
 	
@@ -113,8 +113,8 @@ public class MatchField {
 		return towers.stream().filter(tower -> tower.getId() == towerUUID).findAny();
 	}
 
-	private List<UUID> getTowerUUIDs(){
-		return towers.stream().map(Tower::getId).collect(Collectors.toList());
+	public Optional<Tower> getTower(Field field){
+		return towers.stream().filter(t -> t.getField().equals(field)).findAny();
 	}
 
 	private Optional<Enemy> getEnemy(UUID enemyUUID) {
@@ -123,6 +123,11 @@ public class MatchField {
 
 	private List<UUID> getEnemyUUIDs(){
 		return enemies.stream().map(Enemy::getUuid).collect(Collectors.toList());
+	}
+
+	public void removeTower(Tower tower){
+		towers.remove(tower);
+		tower.getTask().cancel();
 	}
 
 	//not in use yet

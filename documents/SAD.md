@@ -86,7 +86,7 @@ Because the whole game-engine is developed by ourselves, we are not explicitly b
 
 This is our overall use-case diagram:
 
-<img src="./UCS/UseCaseDiagram-2019-10-21.png" alt="Overall use-case diagram" />
+<img src="./UCS/UseCaseDiagram-2019-12-07.png" alt="Overall use-case diagram" />
 
 ## 5. Logical View
 

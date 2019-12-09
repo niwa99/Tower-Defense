@@ -4,7 +4,7 @@ public enum FieldDescription {
     FREE("Free"),
     TOWER("Tower"),
     PATH("Path"),
-    Spawn("Spawn");
+    SPAWN("Spawn");
 
     private String label;
 

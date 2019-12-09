@@ -37,7 +37,7 @@ public class MapStructure {
      * @return 2D-FieldDescription-Array
      */
     private FieldDescription[][] createPath() {
-        // There is only one fixed Path with the following Coordinates
+        // There is only one fixed Path with the Coordinates generated as following
         FieldDescription[][] fieldDescription = new FieldDescription[AMOUNT_COLUMNS][AMOUNT_ROWS];
         boolean spawn = true;
         for (int i = 0; i < 11; i++) {
@@ -45,7 +45,7 @@ public class MapStructure {
                 for (Position pos : path) {
                     if (pos.equals(new Position(i, j))) {
                         if(spawn){
-                            fieldDescription[i][j] = FieldDescription.Spawn;
+                            fieldDescription[i][j] = FieldDescription.SPAWN;
                             spawn=false;
                         }else{
                             fieldDescription[i][j] = FieldDescription.PATH;

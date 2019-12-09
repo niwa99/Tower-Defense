@@ -78,7 +78,7 @@ public class Game {
             }
         };
 
-        View.OnClickListener spwanFieldListener = new View.OnClickListener() {
+        View.OnClickListener spawnFieldListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 addEnemiesToMatchField();
@@ -97,8 +97,8 @@ public class Game {
                 fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
                 getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
-            } else if(f.getFieldDescription().equals(FieldDescription.Spawn)){
-                fieldButton.setOnClickListener(spwanFieldListener);
+            } else if(f.getFieldDescription().equals(FieldDescription.SPAWN)){
+                fieldButton.setOnClickListener(spawnFieldListener);
                 fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
                 getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);

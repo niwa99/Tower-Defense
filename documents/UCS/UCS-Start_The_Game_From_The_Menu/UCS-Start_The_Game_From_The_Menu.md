@@ -49,6 +49,8 @@ Feature: Start the game from the menu
     And the map with hard settings is loaded
 ```
 
+[Link to the feature file](https://github.com/niwa99/Tower-Defense/blob/master/app/src/androidTest/assets/features/StartTheGameFromTheMenu.feature)
+
 ## 2.2 Alternative Flows
 (n/a)
 

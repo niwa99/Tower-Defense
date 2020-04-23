@@ -35,6 +35,8 @@ Feature: Start a new wave in the game
     Then The next wave will start
 ```
 
+[Link to the feature file](https://github.com/niwa99/Tower-Defense/blob/master/app/src/androidTest/assets/features/StartWaves.feature)
+
 ## 2.2 Alternative Flows
 The first wave has to be started by the described button. All next waves will start automatically with a running timer but by clicking the button they can be started earlier.
 

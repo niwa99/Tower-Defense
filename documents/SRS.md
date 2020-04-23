@@ -100,12 +100,12 @@ The document should be used for internal purposes only.
 
 ### 1.4 References
 
-| Title                                                                                                 | Date       |
-| ----------------------------------------------------------------------------------------------------- | ---------- |
-| [Blog](https://dh-towerdefense.de/)                                                                   | 20/10/2019 |
-| [GitHub](https://github.com/niwa99/Tower-Defense)                                                     | 20/10/2019 |
-| [Jira](http://jira.dh-towerdefense.de)                                                                | 20/10/2019 |
-| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/UCD-2019-10-21.png)            | 21/10/2019 |
+| Title                                                                                                               | Date       |
+| ------------------------------------------------------------------------------------------------------------------- | ---------- |
+| [Blog](https://dh-towerdefense.de/)                                                                                 | 20/10/2019 |
+| [GitHub](https://github.com/niwa99/Tower-Defense)                                                                   | 20/10/2019 |
+| [Jira](http://jira.dh-towerdefense.de)                                                                              | 20/10/2019 |
+| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-04-23.png) | 23/04/2020 |
 
 ### 1.5 Overview
 
@@ -126,7 +126,7 @@ On top of those basic features, custom editing functionalities for enemies, towe
 
 Our Use-Case-Diagram
 
-![UseCaseDiagram](./UCS/UseCaseDiagram-2019-12-07.png)
+![UseCaseDiagram](./UCS/UseCaseDiagram-2020-04-23.png)
 
 ### 2.3 User characteristics
 
@@ -148,6 +148,7 @@ The game should be started from the start screen using a button.
 #### 3.1.2 Build towers on selected area
 
 Towers need to be placed on the game grid in order to kill enemies. Therefore, one can click on a tile which opens a menu for building a tower.
+[UC Specification](./UCS/UCS-Build_Towers_On_Selected_Area/UCS-Build_Towers_On_Selected_Area.md)
 
 #### 3.1.3 Upgrade towers
 
@@ -174,6 +175,7 @@ tbd
 #### 3.1.8 Return to main menu
 
 While being on the game screen, a button can be used in order to go back to the start screen.
+[UC Specification](./UCS/UCS-Return_To_Main_Menu/UCS-Return_To_Main_Menu.md)
 
 #### 3.1.9 Start a randomly generated map
 

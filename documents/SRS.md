@@ -157,6 +157,7 @@ Clicking on a tower, a menu should pop up which lets a user upgrade a tower for 
 #### 3.1.4 Sell towers
 
 Clicking on a tower, a menu should pop up in which one can choose to sell the tower.
+[UC Specification](./UCS/UCS-Sell_Towers/UCS-Sell_Towers.md)
 
 #### 3.1.5 Select between different towers
 

@@ -1,7 +1,10 @@
 # 1 Use-Case Name: Upgrade Towers
 
 ## 1.1 Brief Description
-Every built tower can be sold. When selling a tower this tower disappears, the field is changes to "free" and some of the tower costs are refund
+Every built tower can be sold. When selling a tower, the following steps happen:
+- the tower disappears
+- the field changes to a "free"-field
+- some of the tower costs are refund
 
 # 2 Flow of Events
 ## 2.1 Basic Flow

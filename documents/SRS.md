@@ -172,7 +172,7 @@ Using a button (or after a specific time), a wave can be started which makes ene
 #### 3.1.7 Edit settings
 
 Settings will be editable in an own menu.
-tbd
+[UC Specification](./UCS/UCS-Edit_Settings/UCS-Edit_Settings.md)
 
 #### 3.1.8 Return to main menu
 

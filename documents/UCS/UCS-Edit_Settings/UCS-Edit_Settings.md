@@ -24,7 +24,8 @@ While being in the settings-menu, the game should be paused.
 (n/a)
 
 ## 2.2 Alternative Flows
-The user can open and close the settings-menu without changing any settings.
+The user can open and close the settings menu without changing any settings.
+In the settings menu includes a button to leave game to the main menu
 
 # 3 Special Requirements
 (n/a)

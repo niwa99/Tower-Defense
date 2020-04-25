@@ -1,4 +1,4 @@
-# 1 Use-Case Name: Upgrade Towers
+# 1 Use-Case Name: Sell Towers
 
 ## 1.1 Brief Description
 Every built tower can be sold. When selling a tower, the following steps happen:

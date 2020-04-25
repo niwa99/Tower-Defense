@@ -2,7 +2,8 @@
 
 ## 1.1 Brief Description
 Every built tower can be upgraded in order to increase some of the stats of this tower.
-For upgrading a tower ingame money is needed.
+For upgrading a tower ingame, money is needed.
+Visually, such upgrades should be recognizable by stars which are located on top of a tower.
 
 # 2 Flow of Events
 ## 2.1 Basic Flow
@@ -22,8 +23,8 @@ For upgrading a tower ingame money is needed.
 (n/a)
 
 ## 2.2 Alternative Flows
-- if the tower is already once upgraded there will be a golden star added when upgrading the tower
-- if the tower is upgraded three times the upgrade button will no longer appear, so it is not possible to upgrade it once more
+- if the tower is already once upgraded, there will be a golden star added when upgrading the tower
+- if the tower is upgraded three times, the upgrade button will no longer appear so it is not possible to upgrade the tower once more
 
 # 3 Special Requirements
 (n/a)
@@ -32,7 +33,7 @@ For upgrading a tower ingame money is needed.
 ## 4.1 A tower has to be built
 Before it is possible to upgrade a tower it is necessary to build at least one tower
 
-## 4.1 Necessaty money is needed
+## 4.1 Necessary money is needed
 Before it is possible to upgrade a tower it is necessary to have enough money to buy the upgrade
 
 # 5 Postconditions

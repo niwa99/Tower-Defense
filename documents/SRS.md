@@ -153,6 +153,7 @@ Towers need to be placed on the game grid in order to kill enemies. Therefore, o
 #### 3.1.3 Upgrade towers
 
 Clicking on a tower, a menu should pop up which lets a user upgrade a tower for a specific amount of money. Probably, an upgrade influences the range, the fire rate and the damage of a tower.
+[UC Specification](./UCS/UCS-Upgrade_Towers/UCS-Upgrade_Towers.md)
 
 #### 3.1.4 Sell towers
 

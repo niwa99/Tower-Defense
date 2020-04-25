@@ -14,7 +14,7 @@ By clicking on a free field, there appears a plus symbol. A second click opens a
 - a menu pops up where the type of tower can be selected
 - user can only chose towers, when he has enough money
 - user selects a type
-- the tower is build
+- the tower is built
 - menu is closed
 
 ### 2.1.1 Activity Diagram
@@ -38,7 +38,7 @@ By clicking on a free field, there appears a plus symbol. A second click opens a
 # 4 Preconditions
 ## 4.1 A free field has to be selected
 For opening the tower selection menu, a free field has to be selected. A selected field is displayed by a plus symbol.
-Every tower can only be build, whe the player has enough money.
+Every tower can only be built, when the player has enough money.
 
 # 5 Postconditions
 (n/a)

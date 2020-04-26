@@ -163,6 +163,7 @@ Clicking on a tower, a menu should pop up in which one can choose to sell the to
 #### 3.1.5 Select between different towers
 
 In the future, there will be different kind of towers which have different values and abilities.
+[UC Specification](./UCS/UCS-Select_Between_Different_Towers/UCS-Select_Between_Different_Towers.md)
 
 #### 3.1.6 Start waves
 
@@ -186,6 +187,7 @@ Using a button labeled as "Random", a randomly generated map will be created and
 #### 3.1.10 Toggle sound and animations
 
 There will be two buttons which let a player toggle sounds and animations.
+[UC Specification](./UCS/UCS-Toggle_Sound_And_Animations/UCS-Toggle_Sound_And_Animations.md)
 
 #### 3.1.11 Customize own towers
 
@@ -194,6 +196,7 @@ This functionality allows users to create and design their own tower with given 
 #### 3.1.12 Play multiple levels with different difficulties
 
 One can choose between three difficulties: Easy, Medium and Hard. This choice influences tower- and enemy-attributes.
+[UC Specification](./UCS/UCS-Choose_Difficulties/UCS-Choose_Difficulties.md)
 
 #### 3.1.13 Draw or design own towers or enemies
 

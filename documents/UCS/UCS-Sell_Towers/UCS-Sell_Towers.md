@@ -8,10 +8,10 @@ Every built tower can be sold. When selling a tower, the following steps happen:
 
 # 2 Flow of Events
 ## 2.1 Basic Flow
-- User clicks on a built tower
-- a button for selling this tower appears
-- User clicks on this button
-- the button disappears
+- User clicks twice on a built tower
+- a popup with the tower stats, the upgraded tower stats and the option to sell the tower opens
+- User clicks on the sell button
+- the popup disappears
 - the tower disappears
 - the own ingame money increases a bit
 
@@ -33,6 +33,10 @@ Every built tower can be sold. When selling a tower, the following steps happen:
 # 4 Preconditions
 ## 4.1 A tower has to be built
 Before it is possible to sell a tower it is necessary to build at least one tower
+
+## 4.2 A tower must be selected
+To open the necessary popup for upgrading a tower, this have to be selected by clicking on it.
+Click once more on the selected tower to open the tower information popup.
 
 # 5 Postconditions
 (n/a)

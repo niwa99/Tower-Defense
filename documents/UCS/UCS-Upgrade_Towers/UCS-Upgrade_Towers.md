@@ -7,11 +7,13 @@ Visually, such upgrades should be recognizable by stars which are located on top
 
 # 2 Flow of Events
 ## 2.1 Basic Flow
-- User clicks on a built tower
-- a button for upgrading this tower appears
-- User clicks on this button
-- the button disappears
-- a golden star appears on top of the tower image as sign that this tower is upgraded once
+- User clicks twice on a built tower
+- a popup with the tower stats, the upgraded tower stats and the option to sell the tower opens
+- User clicks on the upgrade button
+- a star appears on top of the clicked tower and on the tower image in the popup
+- the stats of the tower increase
+- the value and the new value of the tower increase
+- the new values are shown in the popup
 
 ### 2.1.1 Activity Diagram
 ![Activity Diagram for UpgradeTowers](./Activity_Diagram-Upgrade_Towers.jpg)
@@ -24,7 +26,7 @@ Visually, such upgrades should be recognizable by stars which are located on top
 
 ## 2.2 Alternative Flows
 - if the tower is already once upgraded, there will be a golden star added when upgrading the tower
-- if the tower is upgraded three times, the upgrade button will no longer appear so it is not possible to upgrade the tower once more
+- if the tower is already upgraded up to its maximum level, the upgrade button will no longer appear so it is not possible to upgrade the tower once more
 
 # 3 Special Requirements
 (n/a)
@@ -33,8 +35,12 @@ Visually, such upgrades should be recognizable by stars which are located on top
 ## 4.1 A tower has to be built
 Before it is possible to upgrade a tower it is necessary to build at least one tower
 
-## 4.1 Necessary money is needed
+## 4.2 Necessary money is needed
 Before it is possible to upgrade a tower it is necessary to have enough money to buy the upgrade
+
+## 4.3 A tower must be selected
+To open the necessary popup for upgrading a tower, this have to be selected by clicking on it.
+Click once more on the selected tower to open the tower information popup.
 
 # 5 Postconditions
 (n/a)

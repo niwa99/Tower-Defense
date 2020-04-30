@@ -16,6 +16,7 @@ import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Constants;
+import de.dhbw.util.ObjectStorage;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.ObjectStorage.*;
@@ -24,6 +25,13 @@ public class Game {
     private LinearLayout.LayoutParams buttonSizeParams;
     private List<Button> mapButtons;
     private Optional<Button> clickedButton = Optional.ofNullable(null);
+    private IStatusBar statusBar = ObjectStorage.getGameActivity();
+
+    //status
+    private int lifePoints = 100;
+    private int money = 25;
+    private int currentWave = 0;
+    private int waveRemainingSeconds = 30;
 
 	public Game() {
 		setMapStructure(new MapStructure());
@@ -34,11 +42,11 @@ public class Game {
 
 	public void runGame() {
 	    generateButtonsOnMap();
-
         addEnemiesToMatchField();
         addTowersToMatchField();
-
     }
+
+
 
     private void generateButtonsOnMap() {
 
@@ -69,9 +77,7 @@ public class Game {
                     }else if(field.getFieldDescription()==FieldDescription.TOWER){
                         Optional<Tower> tower = getMatchField().getTower(field);
                         if(tower.isPresent()){
-                            getMatchField().removeTower(tower.get());
-                            getMapLayout().removeView(((DefTower)tower.get()).getDefTowerImage());
-                            field.setFieldDescription(FieldDescription.FREE);
+                            sellTower(tower.get(), field);
                         }
                     }
                 }
@@ -111,13 +117,20 @@ public class Game {
         });
     }
 
+    public void sellTower(Tower tower, Field field){
+	    addMoney((int)Math.round(tower.getCosts()*0.5));
+        getMatchField().removeTower(tower);
+        getMapLayout().removeView(((DefTower)tower).getDefTowerImage());
+        field.setFieldDescription(FieldDescription.FREE);
+    }
+
     public Position getPositionFromButtonId(String id){
         String[] result = id.split("01230");
 	    return new Position(Integer.valueOf(result[0]), Integer.valueOf(result[1]));
     }
 
     public void createNewTowerOnField(Position pos){
-	    if(getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
+	    if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
             DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
             getMatchField().addTower(newTower);
             getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
@@ -142,4 +155,35 @@ public class Game {
         //getMatchField().addTower(tower);
         //getMatchField().addTower(tower2);
 	}
+
+	private void updateStatusBar(){
+	    statusBar.setLifePoints(String.valueOf(lifePoints));
+	    statusBar.setMoney(String.valueOf(money));
+	    statusBar.setCurrentWave(String.valueOf(currentWave));
+    }
+
+	public void addMoney(int money){
+	    this.money+=money;
+	    updateStatusBar();
+    }
+
+    public boolean subMoney(int money){
+	    if(this.money>=money){
+            this.money-=money;
+            updateStatusBar();
+            return true;
+        }
+	    return false;
+    }
+
+    public boolean decreaseLifePoints(int lifePoints){
+	    if(this.lifePoints > lifePoints){
+            this.lifePoints-=lifePoints;
+            updateStatusBar();
+            return true;
+        }
+	    this.lifePoints=0;
+	    updateStatusBar();
+	    return false;
+    }
 }

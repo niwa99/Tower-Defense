@@ -11,6 +11,8 @@ import java.util.TimerTask;
 public abstract class Enemy {
 	private String label;
 	private UUID uuid;
+	private int value;
+	private int lifePointsCosts;
 	private int healthpoints;
 	private int progress = 0;
 	private int speed;
@@ -22,11 +24,21 @@ public abstract class Enemy {
 	private TimerTask timerTask;
 	private Field actualField;
 	
-	public Enemy(String label, UUID uuid, int hp, int speed) {
+	public Enemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts) {
 		this.label = label;
 		this.uuid = uuid;
 		this.healthpoints = hp;
 		this.speed = speed;
+		this.value=value;
+		this.lifePointsCosts = lifePointsCosts;
+	}
+
+	public int getValue(){
+		return value;
+	}
+
+	public int getLifePointsCosts(){
+		return lifePointsCosts;
 	}
 
 	public TimerTask getTimerTask() {

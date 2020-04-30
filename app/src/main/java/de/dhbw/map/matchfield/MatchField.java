@@ -12,6 +12,7 @@ import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.ObjectStorage;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.ObjectStorage.*;
@@ -19,6 +20,7 @@ import static de.dhbw.util.ObjectStorage.*;
 public class MatchField {
 	private List<Enemy> enemies;
 	private List<Tower> towers;
+	private boolean isGameOver = false;
 	private Timer waveTimer = new Timer();
 	
 	public MatchField() {
@@ -46,9 +48,14 @@ public class MatchField {
 				public void run() {
 					if (enemy.isAlive() && !enemy.reachedTarget()) {
 						enemy.move(getMapStructure());
-						if (isGameOver()){
+						if (isGameOver){
 							stopGame();
 						}
+					}else if(enemy.reachedTarget()){
+						if(!ObjectStorage.getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
+							isGameOver=true;
+						}
+						enemy.getTimerTask().cancel();
 					}
 				}
 			};
@@ -82,6 +89,7 @@ public class MatchField {
 			if (enemy instanceof Tank) {
 				getGameActivity().runOnUiThread(() -> getMapLayout().removeView(((Tank) enemy).getTankImage()));
 			}
+			ObjectStorage.getGame().addMoney(enemy.getValue());
 			enemy.getTimerTask().cancel();
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
@@ -97,16 +105,12 @@ public class MatchField {
 		waveTimer.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
-				if (isGameOver()){
+				if (isGameOver){
 					waveTimer.cancel();
 					System.out.println("Game over, all enemies reached the target");
 				}
 			}
 		},0,5000);
-	}
-
-	private boolean isGameOver() {
-		return !enemies.stream().filter(enemy -> !enemy.reachedTarget()).findAny().isPresent();
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {

@@ -26,7 +26,7 @@ public class Constants {
 
 
     //Def-Tower Parameters
-    public static final int DEF_TOWER_LEVEL_1_COSTS = 100;
+    public static final int DEF_TOWER_LEVEL_1_COSTS = 5;
     public static final int DEF_TOWER_LEVEL_1_DAMAGE = 1;
     public static final int DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS = 450;
     public static final int DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS = 3;
@@ -35,14 +35,21 @@ public class Constants {
 
 
     //Tank Parameters
-    public static final int TANK_LEVEL_1_HEALTHPOINTS = 7;
+    public static final int TANK_LEVEL_1_HEALTHPOINTS = 1;
     public static final int TANK_LEVEL_1_SPEED = 975; //From 0 to 1000
+    public static final int TANK_LEVEL_1_VALUE = 5;
+    public static final int TANK_LEVEL_1_LIFE_POINT_COSTS = 5;
+
 
     public static final int TANK_LEVEL_2_HEALTHPOINTS = 7;
     public static final int TANK_LEVEL_2_SPEED = 980;
+    public static final int TANK_LEVEL_2_VALUE = 10;
+    public static final int TANK_LEVEL_2_LIFE_POINT_COSTS = 5;
 
     public static final int TANK_LEVEL_3_HEALTHPOINTS = 25;
     public static final int TANK_LEVEL_3_SPEED = 985;
+    public static final int TANK_LEVEL_3_VALUE = 25;
+    public static final int TANK_LEVEL_3_LIFE_POINT_COSTS = 5;
 
     public static final LinearLayout.LayoutParams TANK_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 

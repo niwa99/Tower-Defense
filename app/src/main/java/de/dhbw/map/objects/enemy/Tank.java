@@ -16,9 +16,9 @@ public class Tank extends Enemy {
 	private Timer timer;
 
 	public Tank(String label, int level) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level));
-		timer = new Timer();
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level));
 
+		timer = new Timer();
 		tankImage = new ImageView(getContext());
 		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
 		tankImage.setImageResource(DRAWABLE_TANK);
@@ -27,7 +27,7 @@ public class Tank extends Enemy {
 	}
 
 	public Tank(String label, int level, ImageView tankImage) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level));
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankValueByLevel(level));
 		this.tankImage = tankImage;
 	}
 
@@ -86,6 +86,24 @@ public class Tank extends Enemy {
 			case 2: return TANK_LEVEL_2_SPEED;
 			case 3: return TANK_LEVEL_3_SPEED;
 			default: return TANK_LEVEL_1_SPEED;
+		}
+	}
+
+	private static int getTankValueByLevel(int level) {
+		switch (level) {
+			case 1: return TANK_LEVEL_1_VALUE;
+			case 2: return TANK_LEVEL_2_VALUE;
+			case 3: return TANK_LEVEL_3_VALUE;
+			default: return TANK_LEVEL_1_VALUE;
+		}
+	}
+
+	private static int getTankLifePointsCostsByLevel(int level) {
+		switch (level) {
+			case 1: return TANK_LEVEL_1_LIFE_POINT_COSTS;
+			case 2: return TANK_LEVEL_2_LIFE_POINT_COSTS;
+			case 3: return TANK_LEVEL_3_LIFE_POINT_COSTS;
+			default: return TANK_LEVEL_1_LIFE_POINT_COSTS;
 		}
 	}
 }

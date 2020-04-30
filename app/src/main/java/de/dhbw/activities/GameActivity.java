@@ -170,7 +170,6 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
 
         //HERE BEGINS TD CODE

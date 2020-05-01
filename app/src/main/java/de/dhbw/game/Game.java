@@ -1,15 +1,25 @@
 package de.dhbw.game;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.fragment.app.DialogFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import de.dhbw.game.match.AMatch;
+import de.dhbw.game.match.EasyMatch;
+import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
@@ -26,6 +36,9 @@ public class Game {
     private List<Button> mapButtons;
     private Optional<Button> clickedButton = Optional.ofNullable(null);
     private IStatusBar statusBar = ObjectStorage.getGameActivity();
+    private Timer gameTimer = new Timer();
+    private boolean lastWaveOut = false;
+    private boolean lastEnemyOfWaveOut = false;
 
     //status
     private int lifePoints = 100;
@@ -38,18 +51,56 @@ public class Game {
 		buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
 		mapButtons = new ArrayList<>();
 		setMatchField(new MatchField());
+        generateButtonsOnMap();
 	}
 
-	public void runGame() {
-	    generateButtonsOnMap();
-        addEnemiesToMatchField();
-        addTowersToMatchField();
+
+
+	public void startGame(Difficulty difficulty) {
+	    switch (difficulty){
+            case EASY:
+                AMatch easy = new EasyMatch();
+                easy.create();
+                runGame(easy);
+                break;
+        }
     }
 
+    private void runGame(AMatch match){
+	    gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(match.hasNext()) {
+                    lastEnemyOfWaveOut = false;
+                    currentWave=match.waveNumber();
+                    updateStatusBar();
+                    startNextWave(match.next().get());
+                    countDown(30);
+                }else{
+                    lastWaveOut=true;
+                }
+            }
+        }, 0, 30000);
+    }
 
+    private void countDown(int sec){
+    }
+
+    private void startNextWave(AWave wave){
+        gameTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if(wave.hasNext()){
+                    getMatchField().addEnemy(wave.next());
+                }else{
+                    lastEnemyOfWaveOut = true;
+                    cancel();
+                }
+            }
+        }, 0, 1500);
+    }
 
     private void generateButtonsOnMap() {
-
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +138,7 @@ public class Game {
         View.OnClickListener spawnFieldListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addEnemiesToMatchField();
+
             }
         };
 
@@ -137,25 +188,6 @@ public class Game {
         }
     }
 
-    private void addEnemiesToMatchField() {
-        Tank tank1 = new Tank("Tank1", 1);
-        Tank tank2 = new Tank("Tank2", 2);
-        Tank tank3 = new Tank("Tank2", 3);
-
-        getMatchField().addEnemy(tank1);
-        getMatchField().addEnemy(tank2);
-        getMatchField().addEnemy(tank3);
-    }
-
-    private void addTowersToMatchField() {
-        //DefTower tower = new DefTower("tower1", getMapStructure().getField(new Position(2, 3)).getSpawnPoint(), 1);
-        //DefTower tower2 = new DefTower("tower2", getMapStructure().getField(new Position(6, 1)).getSpawnPoint(), 1);
-        createNewTowerOnField(new Position(2,3));
-        createNewTowerOnField(new Position(6,1));
-        //getMatchField().addTower(tower);
-        //getMatchField().addTower(tower2);
-	}
-
 	private void updateStatusBar(){
 	    statusBar.setLifePoints(String.valueOf(lifePoints));
 	    statusBar.setMoney(String.valueOf(money));
@@ -185,5 +217,34 @@ public class Game {
 	    this.lifePoints=0;
 	    updateStatusBar();
 	    return false;
+    }
+
+    public void stop(){
+        DialogFragment dialog = new MyDialogFragment();
+        dialog.show(getGameActivity().getSupportFragmentManager(), "MyDialogFragmentTag");
+    }
+
+    public static class MyDialogFragment extends DialogFragment {
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+            // Use the Builder class for convenient dialog construction
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("App Title");
+            builder.setMessage("You lost the game");
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    ObjectStorage.clear();
+                    getGameActivity().backToMainMenu();
+                }
+            });
+
+            // Create the AlertDialog object and return it
+            return builder.create();
+        }
+    }
+
+    public boolean isGameOver(){
+	    return lastWaveOut && lastEnemyOfWaveOut;
     }
 }

@@ -58,4 +58,10 @@ public class ObjectStorage {
     public static void setGame(Game game){
         ObjectStorage.game=game;
     }
+
+    public static void clear(){
+        ObjectStorage.game=null;
+        ObjectStorage.mapStructure=null;
+        ObjectStorage.matchField=null;
+    }
 }

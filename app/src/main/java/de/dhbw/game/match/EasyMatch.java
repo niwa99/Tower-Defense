@@ -1,0 +1,30 @@
+package de.dhbw.game.match;
+
+import de.dhbw.game.wave.EnemyType;
+import de.dhbw.game.wave.Wave;
+import de.dhbw.game.wave.WaveComposition;
+
+public class EasyMatch extends AMatch {
+    private static WaveComposition firstWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 8);
+    private static WaveComposition firstWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 2);
+    private static WaveComposition secondWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 5);
+    private static WaveComposition secondWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 5);
+    private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
+
+    @Override
+    public void create(){
+        Wave firstWave = new Wave();
+        firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);
+        firstWave.generate();
+
+        Wave secondWave = new Wave();
+        secondWave.addWaveCompositions(secondWaveTankL1, secondWaveTankL2);
+        secondWave.generate();
+
+        Wave thirdWave = new Wave();
+        thirdWave.addWaveCompositions();
+        thirdWave.generate();
+
+        addWaves(firstWave, secondWave, thirdWave);
+    }
+}

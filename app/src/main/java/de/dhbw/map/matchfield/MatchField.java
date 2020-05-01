@@ -52,7 +52,7 @@ public class MatchField {
 							stopGame();
 						}
 					}else if(enemy.reachedTarget()){
-						if(!ObjectStorage.getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
+						if(!getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
 							isGameOver=true;
 						}
 						enemy.getTimerTask().cancel();
@@ -74,7 +74,10 @@ public class MatchField {
 					if (enemies.size() > 0){
 						tower.fire(enemies);
 					} else {
-						stopWave();
+						if(getGame().isGameOver()){
+							waveTimer.cancel();
+							System.out.println("No enemies left, towers are going to sleep");
+						}
 					}
 				}
 			};
@@ -96,21 +99,10 @@ public class MatchField {
 		enemies.removeAll(deadEnemies);
 	}
 	
-	private void stopWave() {
-		waveTimer.cancel();
-		System.out.println("No enemies left, towers are going to sleep");
-	}
-	
 	private void stopGame() {
-		waveTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				if (isGameOver){
-					waveTimer.cancel();
-					System.out.println("Game over, all enemies reached the target");
-				}
-			}
-		},0,5000);
+		getGame().stop();
+		waveTimer.cancel();
+		System.out.println("Game is over, all enemies reached the target");
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {

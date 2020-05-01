@@ -35,7 +35,7 @@ public class Constants {
 
 
     //Tank Parameters
-    public static final int TANK_LEVEL_1_HEALTHPOINTS = 1;
+    public static final int TANK_LEVEL_1_HEALTHPOINTS = 3;
     public static final int TANK_LEVEL_1_SPEED = 975; //From 0 to 1000
     public static final int TANK_LEVEL_1_VALUE = 5;
     public static final int TANK_LEVEL_1_LIFE_POINT_COSTS = 5;

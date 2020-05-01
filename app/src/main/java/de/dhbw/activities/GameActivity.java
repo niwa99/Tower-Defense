@@ -18,11 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
 import de.dhbw.R;
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
 import de.dhbw.util.ObjectStorage;
 
-public class GameActivity extends AppCompatActivity implements IStatusBar{
+public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -191,10 +192,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar{
         buttonBackToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Go to MainAcitivty
-                Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(intentMenu);
-                finish();
+                backToMainMenu();
             }
         });
 
@@ -206,7 +204,13 @@ public class GameActivity extends AppCompatActivity implements IStatusBar{
 
         Game game = new Game();
         ObjectStorage.setGame(game);
-        game.runGame();
+        game.startGame(Difficulty.EASY);
+    }
+
+    public void backToMainMenu(){
+        Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(intentMenu);
+        finish();
     }
 
     @Override

@@ -4,12 +4,14 @@ import android.content.Context;
 import android.widget.FrameLayout;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.Game;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.structure.MapStructure;
 
 public class ObjectStorage {
     private static GameActivity gameActivity;
     private static Context context;
+    private static Game game;
     private static FrameLayout mapLayout;
     private static MapStructure mapStructure;
     private static MatchField matchField;
@@ -48,5 +50,18 @@ public class ObjectStorage {
     }
     public static void setMatchField(MatchField matchField) {
         ObjectStorage.matchField = matchField;
+    }
+
+    public static Game getGame(){
+        return game;
+    }
+    public static void setGame(Game game){
+        ObjectStorage.game=game;
+    }
+
+    public static void clear(){
+        ObjectStorage.game=null;
+        ObjectStorage.mapStructure=null;
+        ObjectStorage.matchField=null;
     }
 }

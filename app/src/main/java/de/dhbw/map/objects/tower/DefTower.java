@@ -49,7 +49,7 @@ public class DefTower extends Tower {
 		return defTowerImage;
 	}
 
-	private static int getDefTowerCostsByLevel(int level) {
+	public static int getDefTowerCostsByLevel(int level) {
 		switch (level) {
 			case 1: return DEF_TOWER_LEVEL_1_COSTS;
 			default: return DEF_TOWER_LEVEL_1_COSTS;

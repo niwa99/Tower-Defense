@@ -11,22 +11,31 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
 import de.dhbw.R;
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
+import de.dhbw.game.IStatusBar;
 import de.dhbw.util.ObjectStorage;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+
+    //status bar
+    private TextView textLifePoints;
+    private TextView textMoney;
+    private TextView textCurrentWave;
+    private TextView textWaveRemaining;
 
     private FrameLayout mapLayout;
 
@@ -170,23 +179,22 @@ public class GameActivity extends AppCompatActivity {
             }
         });
 
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
 
 
         //HERE BEGINS TD CODE
+        this.textLifePoints = findViewById(R.id.textLivePoints);
+        this.textMoney = findViewById(R.id.textMoney);
+        this.textCurrentWave = findViewById(R.id.textCurrentWave);
+        this.textWaveRemaining = findViewById(R.id.textWaveRemaining);
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
         buttonBackToMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Go to MainAcitivty
-                Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
-                startActivity(intentMenu);
-                finish();
+                backToMainMenu();
             }
         });
-
 
         mapLayout = findViewById(R.id.map);
 
@@ -195,6 +203,34 @@ public class GameActivity extends AppCompatActivity {
         ObjectStorage.setMapLayout(mapLayout);
 
         Game game = new Game();
-        game.runGame();
+        ObjectStorage.setGame(game);
+        game.startGame(Difficulty.EASY);
+    }
+
+    public void backToMainMenu(){
+        ObjectStorage.getGame().stop();
+        Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
+        startActivity(intentMenu);
+        finish();
+    }
+
+    @Override
+    public void setLifePoints(String points) {
+        runOnUiThread(() ->textLifePoints.setText(points));
+    }
+
+    @Override
+    public void setMoney(String money) {
+        runOnUiThread(() ->textMoney.setText(money));
+    }
+
+    @Override
+    public void setCurrentWave(String wave) {
+        runOnUiThread(() ->textCurrentWave.setText("Wave: " + wave));
+    }
+
+    @Override
+    public void setWaveTimeRemaining(String sec) {
+        runOnUiThread(() ->textWaveRemaining.setText(sec));
     }
 }

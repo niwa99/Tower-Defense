@@ -12,6 +12,7 @@ import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.ObjectStorage;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.ObjectStorage.*;
@@ -19,6 +20,7 @@ import static de.dhbw.util.ObjectStorage.*;
 public class MatchField {
 	private List<Enemy> enemies;
 	private List<Tower> towers;
+	private boolean isGameOver = false;
 	private Timer waveTimer = new Timer();
 	
 	public MatchField() {
@@ -46,9 +48,14 @@ public class MatchField {
 				public void run() {
 					if (enemy.isAlive() && !enemy.reachedTarget()) {
 						enemy.move(getMapStructure());
-						if (isGameOver()){
+						if (isGameOver){
 							stopGame();
 						}
+					}else if(enemy.reachedTarget()){
+						if(!getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
+							isGameOver=true;
+						}
+						enemy.getTimerTask().cancel();
 					}
 				}
 			};
@@ -67,7 +74,9 @@ public class MatchField {
 					if (enemies.size() > 0){
 						tower.fire(enemies);
 					} else {
-						stopWave();
+						if(getGame().isGameOver()){
+							stopGame();
+						}
 					}
 				}
 			};
@@ -82,31 +91,17 @@ public class MatchField {
 			if (enemy instanceof Tank) {
 				getGameActivity().runOnUiThread(() -> getMapLayout().removeView(((Tank) enemy).getTankImage()));
 			}
+			ObjectStorage.getGame().addMoney(enemy.getValue());
 			enemy.getTimerTask().cancel();
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
 		enemies.removeAll(deadEnemies);
 	}
 	
-	private void stopWave() {
+	public void stopGame() {
 		waveTimer.cancel();
-		System.out.println("No enemies left, towers are going to sleep");
-	}
-	
-	private void stopGame() {
-		waveTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				if (isGameOver()){
-					waveTimer.cancel();
-					System.out.println("Game over, all enemies reached the target");
-				}
-			}
-		},0,5000);
-	}
-
-	private boolean isGameOver() {
-		return !enemies.stream().filter(enemy -> !enemy.reachedTarget()).findAny().isPresent();
+		getGame().loseGame();
+		System.out.println("Game is over, all enemies reached the target");
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {

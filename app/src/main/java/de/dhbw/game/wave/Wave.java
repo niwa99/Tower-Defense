@@ -8,6 +8,10 @@ import de.dhbw.map.objects.enemy.Tank;
 public class Wave extends AWave {
     private List<WaveComposition> waveCompositions = new ArrayList<>();
 
+    public Wave(int speed) {
+        super(speed);
+    }
+
     public void addWaveCompositions(WaveComposition... compositions){
         for (WaveComposition c:compositions) {
             this.waveCompositions.add(c);

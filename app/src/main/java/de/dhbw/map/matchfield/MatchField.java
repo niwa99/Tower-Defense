@@ -75,8 +75,7 @@ public class MatchField {
 						tower.fire(enemies);
 					} else {
 						if(getGame().isGameOver()){
-							waveTimer.cancel();
-							System.out.println("No enemies left, towers are going to sleep");
+							stopGame();
 						}
 					}
 				}
@@ -99,9 +98,9 @@ public class MatchField {
 		enemies.removeAll(deadEnemies);
 	}
 	
-	private void stopGame() {
-		getGame().stop();
+	public void stopGame() {
 		waveTimer.cancel();
+		getGame().loseGame();
 		System.out.println("Game is over, all enemies reached the target");
 	}
 

@@ -9,8 +9,13 @@ import de.dhbw.game.wave.Wave;
 
 public abstract class AMatch {
     private int count = 0;
+    private final int waveTime;
     private boolean extendable = true;
     private List<AWave> waves = new ArrayList<>();
+
+    AMatch(int waveTime) {
+        this.waveTime = waveTime;
+    }
 
     public abstract void create();
 
@@ -33,5 +38,9 @@ public abstract class AMatch {
 
     public int waveNumber(){
         return count+1;
+    }
+
+    public int getWaveTime(){
+        return waveTime;
     }
 }

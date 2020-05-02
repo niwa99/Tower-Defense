@@ -208,6 +208,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     }
 
     public void backToMainMenu(){
+        ObjectStorage.getGame().stop();
         Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
         startActivity(intentMenu);
         finish();

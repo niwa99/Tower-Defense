@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -37,14 +38,16 @@ public class Game {
     private Optional<Button> clickedButton = Optional.ofNullable(null);
     private IStatusBar statusBar = ObjectStorage.getGameActivity();
     private Timer gameTimer = new Timer();
+    private Timer waveTimer =  new Timer();
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveOut = false;
+    private CountDownTimer countDownTimer;
+    private AMatch match;
 
     //status
     private int lifePoints = 100;
     private int money = 25;
     private int currentWave = 0;
-    private int waveRemainingSeconds = 30;
 
 	public Game() {
 		setMapStructure(new MapStructure());
@@ -54,40 +57,53 @@ public class Game {
         generateButtonsOnMap();
 	}
 
-
+	public void stop(){
+	    getMatchField().stopGame();
+	    waveTimer.cancel();
+	    gameTimer.cancel();
+	    ObjectStorage.clear();
+    }
 
 	public void startGame(Difficulty difficulty) {
 	    switch (difficulty){
             case EASY:
-                AMatch easy = new EasyMatch();
-                easy.create();
-                runGame(easy);
+                this.match = new EasyMatch();
+                match.create();
+                runGame();
+                break;
+            case MEDIUM:
+                break;
+            case HARD:
                 break;
         }
     }
 
-    private void runGame(AMatch match){
-	    gameTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if(match.hasNext()) {
-                    lastEnemyOfWaveOut = false;
-                    currentWave=match.waveNumber();
-                    updateStatusBar();
-                    startNextWave(match.next().get());
-                    countDown(30);
-                }else{
-                    lastWaveOut=true;
+    private void runGame(){
+	    if(match.hasNext()) {
+            gameTimer.cancel();;
+            gameTimer = new Timer();
+            prepareCountDown(match.getWaveTime());
+            gameTimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    if (match.hasNext()) {
+                        lastEnemyOfWaveOut = false;
+                        currentWave = match.waveNumber();
+                        updateStatusBar();
+                        countDownTimer.cancel();
+                        startNextWave(match.next().get());
+                    } else {
+                        lastWaveOut = true;
+                    }
                 }
-            }
-        }, 0, 30000);
-    }
-
-    private void countDown(int sec){
+            }, 0, match.getWaveTime() * 1000);
+        }
     }
 
     private void startNextWave(AWave wave){
-        gameTimer.scheduleAtFixedRate(new TimerTask() {
+	    waveTimer = new Timer();
+        countDownTimer.start();
+        waveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if(wave.hasNext()){
@@ -97,7 +113,7 @@ public class Game {
                     cancel();
                 }
             }
-        }, 0, 1500);
+        }, 0, wave.getWaveSpeed());
     }
 
     private void generateButtonsOnMap() {
@@ -108,7 +124,6 @@ public class Game {
                 if(button.isPresent()){
                     Position pos = getPositionFromButtonId(button.get().getTransitionName());
                     Field field = getMapStructure().getField(pos);
-
                     if(field.getFieldDescription()==FieldDescription.FREE){
                         if(clickedButton.isPresent()){
                             if(clickedButton.get().getTransitionName()==button.get().getTransitionName()){
@@ -123,7 +138,6 @@ public class Game {
                         }else{
                             clickedButton = button;
                             button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
-
                         }
                     }else if(field.getFieldDescription()==FieldDescription.TOWER){
                         Optional<Tower> tower = getMatchField().getTower(field);
@@ -138,7 +152,7 @@ public class Game {
         View.OnClickListener spawnFieldListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                runGame();
             }
         };
 
@@ -219,9 +233,27 @@ public class Game {
 	    return false;
     }
 
-    public void stop(){
+    public void loseGame(){
         DialogFragment dialog = new MyDialogFragment();
         dialog.show(getGameActivity().getSupportFragmentManager(), "MyDialogFragmentTag");
+    }
+
+    private void prepareCountDown(int sec){
+	    if(countDownTimer!=null){
+	        countDownTimer.cancel();
+        }
+        this.countDownTimer = new CountDownTimer(sec*1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                statusBar.setWaveTimeRemaining(String.valueOf(Math.round(millisUntilFinished/1000)));
+            }
+
+            public void onFinish() {
+                if(isGameOver()){
+                    statusBar.setWaveTimeRemaining("LAST");
+                }
+            }
+        };
     }
 
     public static class MyDialogFragment extends DialogFragment {
@@ -234,7 +266,6 @@ public class Game {
             builder.setMessage("You lost the game");
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ObjectStorage.clear();
                     getGameActivity().backToMainMenu();
                 }
             });

@@ -1,4 +1,4 @@
-package de.dhbw.game.wave;
+package de.dhbw.game;
 
 public enum EnemyType {
     TANK("tank"),

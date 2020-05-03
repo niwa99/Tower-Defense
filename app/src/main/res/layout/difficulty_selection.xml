@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="174dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@android:drawable/editbox_dropdown_light_frame"
+    android:elevation="5dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/difficulty_switch_left"
+            style="@android:style/Widget.Button"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/left_angle_bracket" />
+
+        <TextView
+            android:id="@+id/difficulty_header"
+            style="@android:style/Widget.TextView.PopupMenu"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/difficulty_easy"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/black"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/difficulty_switch_right"
+            style="@android:style/Widget.Button"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/right_angle_bracket" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/difficulty_description_text"
+        android:layout_width="160dp"
+        android:layout_height="12dp"
+        android:fontFamily="@font/bubblegum_sans"
+        android:text="@string/difficulty_easy_description"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@android:color/black"
+        android:textSize="8sp"
+        tools:ignore="SmallSp" />
+
+    <View
+        android:id="@+id/difficulty_divider"
+        android:layout_width="160dp"
+        android:layout_height="2dp"
+        android:background="#000000"
+        android:backgroundTint="#000000" />
+
+    <GridLayout
+        android:layout_width="160dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/stats_enemiesKilled_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:layout_row="1"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="end"
+            android:text="@string/zero_number"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/stats_builtTowers_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:layout_row="2"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="end"
+            android:text="@string/zero_number"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/stats_upgrades_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:layout_row="3"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="end"
+            android:text="@string/zero_number"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/stats_moneySpent_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:layout_row="4"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="end"
+            android:text="@string/zero_number"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/stats_maxWave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="0"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/stats_maxWave"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stats_maxWave_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="2"
+            android:layout_gravity="end"
+            android:layout_row="0"
+            android:fontFamily="@font/bubblegum_sans"
+            android:gravity="end"
+            android:text="@string/zero_number"
+            android:textAlignment="gravity"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/stats_enemiesKilled"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="1"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/stats_enemiesKilled"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stats_builtTowers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="2"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/stats_builtTowers"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stats_upgrades"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="3"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/stats_upgrades"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/stats_moneySpent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_row="4"
+            android:fontFamily="@font/bubblegum_sans"
+            android:text="@string/stats_moneySpent"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+    </GridLayout>
+
+</LinearLayout>

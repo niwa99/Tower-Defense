@@ -5,6 +5,10 @@ import android.widget.LinearLayout;
 import de.dhbw.R;
 
 public class Constants {
+    //Settings
+    public static final String STATUS_ON = "on";
+    public static final String STATUS_OFF = "off";
+
     //Drawables
     public static final int DRAWABLE_BULLET = R.drawable.bullet;
     public static final int DRAWABLE_TANK = R.drawable.tank;

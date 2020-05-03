@@ -19,6 +19,8 @@ import java.util.TimerTask;
 
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
+import de.dhbw.game.match.HardMatch;
+import de.dhbw.game.match.MediumMatch;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.DefTower;
@@ -65,15 +67,21 @@ public class Game {
     }
 
 	public void startGame(Difficulty difficulty) {
-	    switch (difficulty){
+	    switch (difficulty) {
             case EASY:
                 this.match = new EasyMatch();
                 match.create();
                 runGame();
                 break;
             case MEDIUM:
+                this.match = new MediumMatch();
+                match.create();
+                runGame();
                 break;
             case HARD:
+                this.match = new HardMatch();
+                match.create();
+                runGame();
                 break;
         }
     }
@@ -277,5 +285,21 @@ public class Game {
 
     public boolean isGameOver(){
 	    return lastWaveOut && lastEnemyOfWaveOut;
+    }
+
+    public int getLifePoints() {
+	    return lifePoints;
+    }
+
+    public void setLifePoints(int lifePoints) {
+	    this.lifePoints = lifePoints;
+    }
+
+    public int getMoney() {
+	    return money;
+    }
+
+    public void setMoney(int money) {
+	    this.money = money;
     }
 }

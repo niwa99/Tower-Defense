@@ -16,17 +16,35 @@
         android:orientation="vertical"
         android:visibility="visible">
 
+        <Button
+            android:id="@+id/button_title_sound"
+            style="@style/Widget.AppCompat.Button"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_gravity="end"
+            android:background="@drawable/sound"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:textColor="#ffffff" />
+
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/title_logo"
             android:layout_width="195dp"
             android:layout_height="195dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
+            android:layout_marginTop="40dp"
+            android:contentDescription="@string/startscreen_logo_contentDescription"
             android:cropToPadding="true"
             android:src="@drawable/dhtowerdefenselogo"
             android:visibility="visible"
             app:srcCompat="@drawable/dhtowerdefenselogo" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/difficulty_pager"
+            android:layout_width="165dp"
+            android:layout_height="174dp"
+            android:layout_gravity="center_horizontal" />
 
         <Button
             android:id="@+id/playButtonMain"
@@ -34,33 +52,16 @@
             android:layout_width="192dp"
             android:layout_height="64dp"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
             android:background="@drawable/menubutton"
-            android:paddingTop="20dp"
+            android:fontFamily="@font/bubblegum_sans"
             android:paddingBottom="20dp"
-            android:text="PLAY"
+            android:paddingTop="20dp"
+            android:text="@string/startscreen_play"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#FFEB3B" />
+            android:textColor="#FFEB3B"
+            android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/spinner_choose_difficulties"
-            android:layout_width="192dp"
-            android:layout_height="64dp"
-            android:layout_gravity="center_horizontal"
-            android:foregroundTint="@color/colorPrimaryDark"
-            android:spinnerMode="dropdown"
-            android:textColor="#000000" />
-
-        <Button
-            android:id="@+id/sound"
-
-            style="@style/Widget.AppCompat.Button"
-            android:layout_width="100dp"
-            android:layout_height="80dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@drawable/sound"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
-            android:textColor="#ffffff" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

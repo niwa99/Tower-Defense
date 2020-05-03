@@ -22,6 +22,7 @@ import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
 import de.dhbw.util.ObjectStorage;
+import de.dhbw.util.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
 
@@ -150,7 +151,11 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backToMainMenu();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,14 +175,8 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
-
         // Set up the user interaction to manually show or hide the system UI.
-        mContentView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toggle();
-            }
-        });
+        mContentView.setOnClickListener(view -> toggle());
 
 
 
@@ -189,12 +188,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
-        buttonBackToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToMainMenu();
-            }
-        });
+        buttonBackToMenu.setOnClickListener(view -> backToMainMenu());
 
         mapLayout = findViewById(R.id.map);
 
@@ -204,7 +198,16 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
         Game game = new Game();
         ObjectStorage.setGame(game);
-        game.startGame(Difficulty.EASY);
+        int difficultyNumber = getIntent().getExtras().getInt(getString(R.string.difficulty));
+        if (difficultyNumber == 0) {
+            game.startGame(Difficulty.EASY);
+        } else if (difficultyNumber == 1) {
+            game.startGame(Difficulty.MEDIUM);
+        } else if (difficultyNumber == 2) {
+            game.startGame(Difficulty.HARD);
+        } else {
+            game.startGame(Difficulty.EASY);
+        }
     }
 
     public void backToMainMenu(){
@@ -216,21 +219,21 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     @Override
     public void setLifePoints(String points) {
-        runOnUiThread(() ->textLifePoints.setText(points));
+        runOnUiThread(() -> textLifePoints.setText(points));
     }
 
     @Override
     public void setMoney(String money) {
-        runOnUiThread(() ->textMoney.setText(money));
+        runOnUiThread(() -> textMoney.setText(money));
     }
 
     @Override
     public void setCurrentWave(String wave) {
-        runOnUiThread(() ->textCurrentWave.setText("Wave: " + wave));
+        runOnUiThread(() -> textCurrentWave.setText((getString(R.string.wave_title) + wave)));
     }
 
     @Override
     public void setWaveTimeRemaining(String sec) {
-        runOnUiThread(() ->textWaveRemaining.setText(sec));
+        runOnUiThread(() -> textWaveRemaining.setText(sec));
     }
 }

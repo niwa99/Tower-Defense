@@ -5,7 +5,7 @@ import de.dhbw.game.wave.Wave;
 import de.dhbw.game.wave.WaveComposition;
 import de.dhbw.util.ObjectStorage;
 
-public class EasyMatch extends AMatch {
+public class HardMatch extends AMatch {
     private static final int waveTime = 45;
     private static WaveComposition firstWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 8);
     private static WaveComposition firstWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 2);
@@ -13,14 +13,14 @@ public class EasyMatch extends AMatch {
     private static WaveComposition secondWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 5);
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
 
-    public EasyMatch() {
+    public HardMatch() {
         super(waveTime);
     }
 
     @Override
     public void create(){
-        ObjectStorage.getGame().setLifePoints(100);
-        ObjectStorage.getGame().setMoney(25);
+        ObjectStorage.getGame().setLifePoints(25);
+        ObjectStorage.getGame().setMoney(10);
 
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);

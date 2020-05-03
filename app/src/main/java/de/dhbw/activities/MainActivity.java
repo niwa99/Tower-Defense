@@ -2,91 +2,86 @@ package de.dhbw.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
+import androidx.viewpager.widget.ViewPager;
 import de.dhbw.R;
-import de.dhbw.util.spinnerAdapter;
+import de.dhbw.util.DifficultyFragmentAdapter;
+import de.dhbw.util.PreferenceManager;
+
+import static de.dhbw.util.Constants.STATUS_OFF;
+import static de.dhbw.util.Constants.STATUS_ON;
 
 public class MainActivity extends AppCompatActivity {
+    private static Context context;
     private MediaPlayer mediaPlayer;
-    private static boolean playSound = true;
+    private ViewPager viewPager;
+    private DifficultyFragmentAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
         mediaPlayer = MediaPlayer.create(this, R.raw.tower_defense_title_soundtrack);
 
+        PreferenceManager.init();
+
+        //Initialize ViewPager for Difficulties
+        viewPager = findViewById(R.id.difficulty_pager);
+        pagerAdapter = new DifficultyFragmentAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+
         //Initialize Play-Button
         Button playButton = findViewById(R.id.playButtonMain);
+        playButton.setOnClickListener(view -> {
+            Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+            gameIntent.putExtra(getString(R.string.difficulty), viewPager.getCurrentItem());
+            startActivity(gameIntent);
+        });
 
-        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //go to GameActivity
-                if(parent.getSelectedItem().equals("PLAY"))
-                {
-                    //nothing
-                }
-                else{
-                    Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
-                    startActivity(gameIntent);
+        initTitleSounds();
+    }
 
-                }
-            }
+    public static Context getAppContext() {
+        return context;
+    }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+    private void initTitleSounds() {
+        Button soundButton = findViewById(R.id.button_title_sound);
 
-            }
-        };
-
-        Spinner spinner = findViewById(R.id.spinner_choose_difficulties);
-        spinnerAdapter adapter = new spinnerAdapter(MainActivity.this, R.layout.spinner_item);
-        //adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
-        adapter.addAll("easy", "medium", "hard");
-        adapter.add("PLAY");
-        spinner.setAdapter(adapter);
-        spinner.setSelection(adapter.getCount());
-
-
-        spinner.setOnItemSelectedListener(listener);
-
-
-        Button soundButton = findViewById(R.id.sound);
-        soundButton.setBackgroundResource(R.drawable.sound);
-        soundButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(playSound){
-                    playSound = false;
-                    soundButton.setBackgroundResource(R.drawable.no_sound);
-                    mediaPlayer.pause();
-                }else{
-                    playSound = true;
-                    soundButton.setBackgroundResource(R.drawable.sound);
-                    mediaPlayer.start();
-                }
+        soundButton.setOnClickListener(view -> {
+            if (soundButton.getBackground().getConstantState() == getDrawable(R.drawable.sound).getConstantState() && PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND).equals(STATUS_ON)) {
+                PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_OFF);
+                soundButton.setBackgroundResource(R.drawable.no_sound);
+                mediaPlayer.pause();
+            } else if (soundButton.getBackground().getConstantState() == getDrawable(R.drawable.no_sound).getConstantState() && PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND).equals(STATUS_OFF)) {
+                PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_ON);
+                soundButton.setBackgroundResource(R.drawable.sound);
+                mediaPlayer.start();
             }
         });
-        startMediaplayer();
+
+        String settings_title_sound = PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND);
+        if (settings_title_sound == null) {
+            PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_ON);
+            soundButton.setBackgroundResource(R.drawable.sound);
+            startMediaplayer();
+        } else if (settings_title_sound.equals(STATUS_ON)) {
+            soundButton.setBackgroundResource(R.drawable.sound);
+            startMediaplayer();
+        } else {
+            soundButton.setBackgroundResource(R.drawable.no_sound);
+        }
     }
 
     public void startMediaplayer(){
         mediaPlayer.setLooping(true);
         mediaPlayer.setVolume(100, 100);
-        if(playSound){
-            mediaPlayer.start();
-        }
+        mediaPlayer.start();
     }
 }

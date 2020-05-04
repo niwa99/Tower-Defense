@@ -22,7 +22,6 @@ import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
 import de.dhbw.util.ObjectStorage;
-import de.dhbw.util.PreferenceManager;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
 
@@ -39,6 +38,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private TextView textWaveRemaining;
 
     private FrameLayout mapLayout;
+    private Game game;
 
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -161,10 +161,10 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Initial Layout Stuff
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        //Initial Layout Stuff
         setContentView(R.layout.activity_game);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -180,7 +180,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
 
 
-        //HERE BEGINS TD CODE
+        //HERE BEGINS TOWER DEFENSE CODE
         this.textLifePoints = findViewById(R.id.textLivePoints);
         this.textMoney = findViewById(R.id.textMoney);
         this.textCurrentWave = findViewById(R.id.textCurrentWave);
@@ -196,8 +196,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         ObjectStorage.setContext(this);
         ObjectStorage.setMapLayout(mapLayout);
 
-        Game game = new Game();
-        ObjectStorage.setGame(game);
+        game = new Game(GameActivity.this, mapLayout);
         int difficultyNumber = getIntent().getExtras().getInt(getString(R.string.difficulty));
         if (difficultyNumber == 0) {
             game.startGame(Difficulty.EASY);
@@ -210,8 +209,8 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         }
     }
 
-    public void backToMainMenu(){
-        ObjectStorage.getGame().stop();
+    public void backToMainMenu() {
+        game.stop();
         Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
         startActivity(intentMenu);
         finish();

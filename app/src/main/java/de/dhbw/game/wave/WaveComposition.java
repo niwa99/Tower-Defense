@@ -7,21 +7,21 @@ public class WaveComposition {
     private int level;
     private int amount;
 
-    public WaveComposition(EnemyType type, int level, int amount){
-        this.type=type;
-        this.level=level;
-        this.amount=amount;
+    public WaveComposition(EnemyType type, int level, int amount) {
+        this.type = type;
+        this.level = level;
+        this.amount = amount;
     }
 
-    public EnemyType getEnemyType(){
+    public EnemyType getEnemyType() {
         return type;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
-    public int getAmount(){
+    public int getAmount() {
         return amount;
     }
 }

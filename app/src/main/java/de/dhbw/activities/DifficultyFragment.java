@@ -69,18 +69,8 @@ public class DifficultyFragment extends Fragment {
         textValueUpgrades.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.EASY_UPGRADES));
         textValueMoneySpent.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.EASY_MONEY_SPENT));
 
-        changeLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_HARD);
-            }
-        });
-        changeRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_MEDIUM);
-            }
-        });
+        changeLeftButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_HARD));
+        changeRightButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_MEDIUM));
     }
 
     private void setMediumInformation() {
@@ -92,18 +82,8 @@ public class DifficultyFragment extends Fragment {
         textValueUpgrades.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.MEDIUM_UPGRADES));
         textValueMoneySpent.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.MEDIUM_MONEY_SPENT));
 
-        changeLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_EASY);
-            }
-        });
-        changeRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_HARD);
-            }
-        });
+        changeLeftButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_EASY));
+        changeRightButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_HARD));
     }
 
     private void setHardInformation() {
@@ -115,17 +95,7 @@ public class DifficultyFragment extends Fragment {
         textValueUpgrades.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.HARD_UPGRADES));
         textValueMoneySpent.setText(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.HARD_MONEY_SPENT));
 
-        changeLeftButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_MEDIUM);
-            }
-        });
-        changeRightButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_EASY);
-            }
-        });
+        changeLeftButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_MEDIUM));
+        changeRightButton.setOnClickListener(view -> ((ViewPager) getActivity().findViewById(R.id.difficulty_pager)).setCurrentItem(FRAGMENT_EASY));
     }
 }

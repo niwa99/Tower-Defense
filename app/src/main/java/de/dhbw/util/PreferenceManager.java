@@ -30,9 +30,9 @@ public class PreferenceManager {
         preferenceManager = this;
     }
 
-    public static void init() {
+    public static void init(Context context) {
         preferenceManager = new PreferenceManager();
-        preferenceManager.context = MainActivity.getAppContext();
+        preferenceManager.context = context;
 
         preferenceManager.preferencesStatistics =  preferenceManager.context.getSharedPreferences(pref_DHTD_Statistics, Context.MODE_PRIVATE);
         preferenceManager.preferencesSettings = preferenceManager.context.getSharedPreferences(pref_DHTD_Settings, Context.MODE_PRIVATE);

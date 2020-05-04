@@ -1,5 +1,8 @@
 package de.dhbw.game.match;
 
+import android.widget.FrameLayout;
+
+import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.game.wave.Wave;
 import de.dhbw.game.wave.WaveComposition;
@@ -14,25 +17,23 @@ public class MediumMatch extends AMatch {
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
 
     public MediumMatch() {
-        super(waveTime);
+        super(waveTime, 15);
     }
 
     @Override
-    public void create(){
-        ObjectStorage.getGame().setLifePoints(50);
-        ObjectStorage.getGame().setMoney(15);
+    public void create(FrameLayout mapLayout, GameActivity gameActivity){
 
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);
-        firstWave.generate();
+        firstWave.generate(mapLayout, gameActivity);
 
         Wave secondWave = new Wave(1500);
         secondWave.addWaveCompositions(secondWaveTankL1, secondWaveTankL2);
-        secondWave.generate();
+        secondWave.generate(mapLayout, gameActivity);
 
         Wave thirdWave = new Wave(1500);
         thirdWave.addWaveCompositions(thirdWaveTankL2);
-        thirdWave.generate();
+        thirdWave.generate(mapLayout, gameActivity);
 
         addWaves(firstWave, secondWave, thirdWave);
     }

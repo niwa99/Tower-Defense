@@ -1,11 +1,14 @@
 package de.dhbw.map.objects.enemy;
 
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import de.dhbw.activities.GameActivity;
+import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.MapStructure;
 
 import static de.dhbw.util.Constants.*;
@@ -15,26 +18,26 @@ public class Tank extends Enemy {
 	private ImageView tankImage;
 	private Timer timer;
 
-	public Tank(String label, int level) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level));
+	public Tank(String label, int level, FrameLayout mapLayout, GameActivity gameActivity) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), mapLayout, gameActivity, EnemyType.TANK);
 
 		timer = new Timer();
-		tankImage = new ImageView(getContext());
+		tankImage = new ImageView(gameActivity);
 		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
 		tankImage.setImageResource(DRAWABLE_TANK);
 
-		getMapLayout().addView(tankImage);
+		mapLayout.addView(tankImage);
 	}
 
-	public Tank(String label, int level, ImageView tankImage) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankValueByLevel(level));
+	public Tank(String label, int level, ImageView tankImage, FrameLayout mapLayout, GameActivity gameActivity) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankValueByLevel(level), mapLayout, gameActivity, EnemyType.TANK);
 		this.tankImage = tankImage;
 	}
 
 	@Override
 	public boolean move(MapStructure map) {
 		if (super.move(map)){
-			getGameActivity().runOnUiThread(() -> {
+			gameActivity.runOnUiThread(() -> {
 				tankImage.setX(getPositionX());
 				tankImage.setY(getPositionY());
 				switch (getDirection()) {
@@ -58,11 +61,11 @@ public class Tank extends Enemy {
 
 	public void hit(int damage) {
 		super.reduceHealthPoints(damage);
-		getGameActivity().runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK_HITTED));
+		gameActivity.runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK_HITTED));
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				getGameActivity().runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK));
+				gameActivity.runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK));
 			}
 		}, 100);
 	}

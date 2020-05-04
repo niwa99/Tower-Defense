@@ -1,8 +1,11 @@
 package de.dhbw.game.wave;
 
+import android.widget.FrameLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 
 public abstract class AWave {
@@ -19,7 +22,7 @@ public abstract class AWave {
     }
 
     public boolean hasNext(){
-        return enemies.size()>count;
+        return enemies.size() > count;
     }
 
     void addEnemy(Enemy e){
@@ -30,5 +33,5 @@ public abstract class AWave {
         return speed;
     }
 
-    public abstract void generate();
+    public abstract void generate(FrameLayout mapLayout, GameActivity gameActivity);
 }

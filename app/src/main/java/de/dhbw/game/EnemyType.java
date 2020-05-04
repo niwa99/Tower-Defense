@@ -6,11 +6,11 @@ public enum EnemyType {
 
     private final String label;
 
-    EnemyType(String label){
-        this.label=label;
+    EnemyType(String label) {
+        this.label = label;
     }
 
-    public String getLabel(){
+    public String getLabel() {
         return label;
     }
 }

@@ -1,5 +1,7 @@
 package de.dhbw.map.objects.tower;
 
+import android.widget.FrameLayout;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,8 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.lang.Math;
 
+import de.dhbw.activities.GameActivity;
+import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
@@ -28,8 +32,11 @@ public abstract class Tower {
 	private Field field;
 	private TimerTask task;
 	protected Enemy targetedEnemy;
+	protected GameActivity gameActivity;
+	protected FrameLayout mapLayout;
+	protected MatchField matchField;
 	
-	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field) {
+	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
 		this.label = label;
 		this.id = id;
 		this.costs = costs;
@@ -39,7 +46,9 @@ public abstract class Tower {
 		this.field = field;
 		this.x = field.getSpawnPoint().getX();
 		this.y = field.getSpawnPoint().getY();
-
+		this.gameActivity = gameActivity;
+		this.mapLayout = mapLayout;
+		this.matchField = matchField;
 	}
 
 	/**

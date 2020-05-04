@@ -1,32 +1,40 @@
 package de.dhbw.map.objects.tower;
 
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.activities.GameActivity;
+import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
-import static de.dhbw.util.ObjectStorage.*;
 
 public class Bullet {
     private ImageView bulletImage;
     private int x;
     private int y;
     private Position targetPos;
-    private Enemy targetedEnemy;
+    private Enemy targetEnemy;
     private DefTower tower;
+    private GameActivity gameActivity;
+    private FrameLayout mapLayout;
+    private MatchField matchField;
 
-    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower) {
-        bulletImage = new ImageView(getContext());
+    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
+        this.gameActivity = gameActivity;
+        this.mapLayout = mapLayout;
+        this.matchField = matchField;
+        bulletImage = new ImageView(gameActivity);
         bulletImage.setImageResource(DRAWABLE_BULLET);
         bulletImage.setLayoutParams(BULLET_SIZE_PARAMS);
 
-        this.targetedEnemy = targetedEnemy;
+        this.targetEnemy = targetedEnemy;
         this.tower = tower;
 
         setMidpointOfPositions(targetedEnemy.getPosition(), spawnPosition);
@@ -38,23 +46,23 @@ public class Bullet {
 
     public void visualizeShot(){
         bulletImage.setRotation((float) getBulletRotation());
-        getGameActivity().runOnUiThread(() -> getMapLayout().addView(bulletImage));
+        gameActivity.runOnUiThread(() -> mapLayout.addView(bulletImage));
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (move()) {
-                    getGameActivity().runOnUiThread(() -> {
+                    gameActivity.runOnUiThread(() -> {
                             bulletImage.setX(x);
                             bulletImage.setY(y);
                     });
                 } else {
-                    getGameActivity().runOnUiThread(() -> getMapLayout().removeView(bulletImage));
-                    if (targetedEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde
-                        if (targetedEnemy instanceof Tank) {
-                            ((Tank) targetedEnemy).hit(tower.getDamage());
-                            getMatchField().removeDeadEnemies();
-                            System.out.println(targetedEnemy.getLabel() + " was shot by " + tower.getDamage() + " and has " + targetedEnemy.getHealthPoints() + " hp left");
+                    gameActivity.runOnUiThread(() -> mapLayout.removeView(bulletImage));
+                    if (targetEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde
+                        if (targetEnemy instanceof Tank) {
+                            ((Tank) targetEnemy).hit(tower.getDamage());
+                            matchField.removeDeadEnemy(targetEnemy);
+                            System.out.println(targetEnemy.getLabel() + " was shot by " + tower.getDamage() + " and has " + targetEnemy.getHealthPoints() + " hp left");
                         }
                     }
                     timer.cancel();

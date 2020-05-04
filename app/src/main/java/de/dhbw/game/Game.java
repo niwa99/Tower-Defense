@@ -7,9 +7,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
-import androidx.fragment.app.DialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +16,8 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import androidx.fragment.app.DialogFragment;
+import de.dhbw.activities.GameActivity;
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
 import de.dhbw.game.match.HardMatch;
@@ -32,13 +33,16 @@ import de.dhbw.util.Constants;
 import de.dhbw.util.ObjectStorage;
 import de.dhbw.util.Position;
 
-import static de.dhbw.util.ObjectStorage.*;
-
 public class Game {
     private LinearLayout.LayoutParams buttonSizeParams;
     private List<Button> mapButtons;
     private Optional<Button> clickedButton = Optional.ofNullable(null);
-    private IStatusBar statusBar = ObjectStorage.getGameActivity();
+    private IStatusBar statusBar;
+    private GameActivity gameActivity;
+    //private IStatusBar statusBar = ObjectStorage.getGameActivity();
+    private MapStructure mapStructure;
+    private MatchField matchField;
+    private FrameLayout mapLayout;
     private Timer gameTimer = new Timer();
     private Timer waveTimer =  new Timer();
     private boolean lastWaveOut = false;
@@ -48,21 +52,26 @@ public class Game {
 
     //status
     private int lifePoints = 100;
-    private int money = 25;
+    private int money = 0;
     private int currentWave = 0;
 
-	public Game() {
-		setMapStructure(new MapStructure());
+	public Game(GameActivity gameActivity, FrameLayout mapLayout) {
+	    statusBar = gameActivity;
+	    this.gameActivity = gameActivity;
+	    this.mapLayout = mapLayout;
+	    mapStructure = new MapStructure();
+		//setMapStructure(new MapStructure());
 		buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
 		mapButtons = new ArrayList<>();
-		setMatchField(new MatchField());
+		matchField = new MatchField(this, mapStructure, gameActivity, mapLayout);
+		//setMatchField(new MatchField());
         generateButtonsOnMap();
 	}
 
-	public void stop(){
-	    getMatchField().stopGame();
+	public void stop() {
 	    waveTimer.cancel();
 	    gameTimer.cancel();
+        matchField.stopGame();
 	    ObjectStorage.clear();
     }
 
@@ -70,23 +79,25 @@ public class Game {
 	    switch (difficulty) {
             case EASY:
                 this.match = new EasyMatch();
-                match.create();
+                match.create(mapLayout, gameActivity);
                 runGame();
                 break;
             case MEDIUM:
                 this.match = new MediumMatch();
-                match.create();
+                match.create(mapLayout, gameActivity);
                 runGame();
                 break;
             case HARD:
                 this.match = new HardMatch();
-                match.create();
+                match.create(mapLayout, gameActivity);
                 runGame();
                 break;
         }
     }
 
     private void runGame(){
+	    this.money = match.getStartMoney();
+	    updateStatusBar();
 	    if(match.hasNext()) {
             gameTimer.cancel();;
             gameTimer = new Timer();
@@ -115,7 +126,8 @@ public class Game {
             @Override
             public void run() {
                 if(wave.hasNext()){
-                    getMatchField().addEnemy(wave.next());
+                    matchField.addEnemy(wave.next());
+                    //getMatchField().addEnemy(wave.next());
                 }else{
                     lastEnemyOfWaveOut = true;
                     cancel();
@@ -125,66 +137,72 @@ public class Game {
     }
 
     private void generateButtonsOnMap() {
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Optional<Button> button = mapButtons.stream().filter(e -> v.getTransitionName()==e.getTransitionName()).findFirst();
-                if(button.isPresent()){
-                    Position pos = getPositionFromButtonId(button.get().getTransitionName());
-                    Field field = getMapStructure().getField(pos);
-                    if(field.getFieldDescription()==FieldDescription.FREE){
-                        if(clickedButton.isPresent()){
-                            if(clickedButton.get().getTransitionName()==button.get().getTransitionName()){
-                                clickedButton = Optional.ofNullable(null);
-                                button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                                createNewTowerOnField(getPositionFromButtonId(button.get().getTransitionName()));
-                            }else{
-                                clickedButton.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                                button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
-                                clickedButton = button;
-                            }
+        View.OnClickListener listener = v -> {
+            Optional<Button> button = mapButtons.stream().filter(e -> v.getTransitionName()==e.getTransitionName()).findFirst();
+            if(button.isPresent()){
+                Position pos = getPositionFromButtonId(button.get().getTransitionName());
+                Field field = mapStructure.getField(pos);
+                //Field field = getMapStructure().getField(pos);
+                if(field.getFieldDescription()==FieldDescription.FREE){
+                    if(clickedButton.isPresent()){
+                        if(clickedButton.get().getTransitionName()==button.get().getTransitionName()){
+                            clickedButton = Optional.ofNullable(null);
+                            button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                            //button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                            createNewTowerOnField(getPositionFromButtonId(button.get().getTransitionName()));
                         }else{
+                            clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                            //clickedButton.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                            button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                            //button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
                             clickedButton = button;
-                            button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
                         }
-                    }else if(field.getFieldDescription()==FieldDescription.TOWER){
-                        Optional<Tower> tower = getMatchField().getTower(field);
-                        if(tower.isPresent()){
-                            sellTower(tower.get(), field);
-                        }
+                    }else{
+                        clickedButton = button;
+                        button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                        //button.get().setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                    }
+                }else if(field.getFieldDescription()==FieldDescription.TOWER){
+                    Optional<Tower> tower = matchField.getTower(field);
+                    //Optional<Tower> tower = getMatchField().getTower(field);
+                    if(tower.isPresent()){
+                        sellTower(tower.get(), field);
                     }
                 }
             }
         };
 
-        View.OnClickListener spawnFieldListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runGame();
-            }
-        };
+        View.OnClickListener spawnFieldListener = v -> runGame();
 
         int count = 0;
-        getMapStructure().getFields().stream().forEach(f -> {
-            Button fieldButton = new Button(getContext());
+        mapStructure.getFields().stream().forEach(f -> {
+        //getMapStructure().getFields().stream().forEach(f -> {
+            Button fieldButton = new Button(gameActivity);
+            //Button fieldButton = new Button(getContext());
             fieldButton.setX(f.getSpawnPoint().getX());
             fieldButton.setY(f.getSpawnPoint().getY());
             fieldButton.setLayoutParams(buttonSizeParams);
             fieldButton.setTransitionName(f.getId());
             if (f.getFieldDescription().equals(FieldDescription.PATH)) {
                 fieldButton.setEnabled(false);
-                fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
-                getMapLayout().addView(fieldButton);
+                fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
+                //fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
+                mapLayout.addView(fieldButton);
+                //getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             } else if(f.getFieldDescription().equals(FieldDescription.SPAWN)){
                 fieldButton.setOnClickListener(spawnFieldListener);
-                fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
-                getMapLayout().addView(fieldButton);
+                fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
+                //fieldButton.setBackground(getContext().getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
+                mapLayout.addView(fieldButton);
+                //getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             } else if (f.getFieldDescription().equals(FieldDescription.FREE)) {
                 fieldButton.setOnClickListener(listener);
-                fieldButton.setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                getMapLayout().addView(fieldButton);
+                fieldButton.setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                //fieldButton.setBackground(getContext().getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                mapLayout.addView(fieldButton);
+                //getMapLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             }
         });
@@ -192,8 +210,10 @@ public class Game {
 
     public void sellTower(Tower tower, Field field){
 	    addMoney((int)Math.round(tower.getCosts()*0.5));
-        getMatchField().removeTower(tower);
-        getMapLayout().removeView(((DefTower)tower).getDefTowerImage());
+        matchField.removeTower(tower);
+        //getMatchField().removeTower(tower);
+        mapLayout.removeView(((DefTower)tower).getDefTowerImage());
+        //getMapLayout().removeView(((DefTower)tower).getDefTowerImage());
         field.setFieldDescription(FieldDescription.FREE);
     }
 
@@ -203,10 +223,14 @@ public class Game {
     }
 
     public void createNewTowerOnField(Position pos){
-	    if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
-            DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
-            getMatchField().addTower(newTower);
-            getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
+        if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && mapStructure.getField(pos).getFieldDescription()==FieldDescription.FREE) {
+	    //if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
+            DefTower newTower = new DefTower("tower1", mapStructure.getField(pos), 1, gameActivity, mapLayout, matchField);
+            //DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
+            matchField.addTower(newTower);
+            //getMatchField().addTower(newTower);
+            mapStructure.getField(pos).setFieldDescription(FieldDescription.TOWER);
+            //getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
         }
     }
 
@@ -242,8 +266,23 @@ public class Game {
     }
 
     public void loseGame(){
-        DialogFragment dialog = new MyDialogFragment();
-        dialog.show(getGameActivity().getSupportFragmentManager(), "MyDialogFragmentTag");
+        //gameActivity.runOnUiThread(() -> Toast.makeText(gameActivity, "You lost the game", Toast.LENGTH_LONG));
+        //gameActivity.backToMainMenu();
+
+        waveTimer.cancel();
+        gameTimer.cancel();
+        DialogFragment dialog = new MyDialogFragment("You have lost the game!", gameActivity);
+        dialog.show(gameActivity.getSupportFragmentManager(), "MyDialogFragmentTag");
+    }
+
+    public void winGame(){
+        //gameActivity.runOnUiThread(() -> Toast.makeText(gameActivity, "You won the game", Toast.LENGTH_LONG));
+        //gameActivity.backToMainMenu();
+
+        waveTimer.cancel();
+        gameTimer.cancel();
+        DialogFragment dialog = new MyDialogFragment("You have won the game!", gameActivity);
+        dialog.show(gameActivity.getSupportFragmentManager(), "MyDialogFragmentTag");
     }
 
     private void prepareCountDown(int sec){
@@ -257,7 +296,7 @@ public class Game {
             }
 
             public void onFinish() {
-                if(isGameOver()){
+                if(allEnemiesSpawned()){
                     statusBar.setWaveTimeRemaining("LAST");
                 }
             }
@@ -265,16 +304,25 @@ public class Game {
     }
 
     public static class MyDialogFragment extends DialogFragment {
+
+	    private final String message;
+	    private final GameActivity gameActivity;
+
+        public MyDialogFragment(String message, GameActivity gameActivity) {
+            this.message = message;
+            this.gameActivity = gameActivity;
+        }
+
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
 
             // Use the Builder class for convenient dialog construction
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("App Title");
-            builder.setMessage("You lost the game");
+            builder.setTitle("END");
+            builder.setMessage(message);
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    getGameActivity().backToMainMenu();
+                    gameActivity.backToMainMenu();
                 }
             });
 
@@ -283,7 +331,7 @@ public class Game {
         }
     }
 
-    public boolean isGameOver(){
+    public boolean allEnemiesSpawned(){
 	    return lastWaveOut && lastEnemyOfWaveOut;
     }
 

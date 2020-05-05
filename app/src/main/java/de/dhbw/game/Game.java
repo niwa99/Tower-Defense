@@ -19,6 +19,7 @@ import java.util.TimerTask;
 
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
+import de.dhbw.game.popups.IPopup;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.DefTower;
@@ -37,6 +38,7 @@ public class Game {
     private List<Button> mapButtons;
     private Optional<Button> clickedButton = Optional.ofNullable(null);
     private IStatusBar statusBar = ObjectStorage.getGameActivity();
+    private IPopup popup = ObjectStorage.getGameActivity();
     private Timer gameTimer = new Timer();
     private Timer waveTimer =  new Timer();
     private boolean lastWaveOut = false;
@@ -195,6 +197,7 @@ public class Game {
     }
 
     public void createNewTowerOnField(Position pos){
+	    popup.openWindow();
 	    if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
             DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
             getMatchField().addTower(newTower);

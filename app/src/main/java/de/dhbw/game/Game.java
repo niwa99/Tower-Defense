@@ -3,6 +3,7 @@ package de.dhbw.game;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -17,13 +18,15 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.game.popups.AMenu;
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
-import de.dhbw.game.popups.IPopup;
+import de.dhbw.game.popups.MenuTowerSelection;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 import de.dhbw.map.structure.MapStructure;
@@ -38,7 +41,6 @@ public class Game {
     private List<Button> mapButtons;
     private Optional<Button> clickedButton = Optional.ofNullable(null);
     private IStatusBar statusBar = ObjectStorage.getGameActivity();
-    private IPopup popup = ObjectStorage.getGameActivity();
     private Timer gameTimer = new Timer();
     private Timer waveTimer =  new Timer();
     private boolean lastWaveOut = false;
@@ -197,15 +199,19 @@ public class Game {
     }
 
     public void createNewTowerOnField(Position pos){
-	    popup.openWindow();
-	    if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()==FieldDescription.FREE) {
+        getGameActivity().startActivity(new Intent(getGameActivity(), MenuTowerSelection.class));
+        buildTower(TowerType.ARTILLERY, pos);
+    }
+
+    public void buildTower(TowerType type, Position pos) {
+        if(subMoney(DefTower.getDefTowerCostsByLevel(1)) && getMapStructure().getField(pos).getFieldDescription()== FieldDescription.FREE) {
             DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
             getMatchField().addTower(newTower);
             getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
         }
     }
 
-	private void updateStatusBar(){
+    private void updateStatusBar(){
 	    statusBar.setLifePoints(String.valueOf(lifePoints));
 	    statusBar.setMoney(String.valueOf(money));
 	    statusBar.setCurrentWave(String.valueOf(currentWave));

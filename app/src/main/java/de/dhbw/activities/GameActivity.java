@@ -2,31 +2,18 @@ package de.dhbw.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
-import javax.xml.transform.stream.StreamSource;
-
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
@@ -35,11 +22,11 @@ import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
-import de.dhbw.game.popups.IPopup;
+import de.dhbw.game.popups.AMenu;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.ObjectStorage;
 
-public class GameActivity extends AppCompatActivity implements IStatusBar, IPopup {
+public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -258,9 +245,8 @@ public class GameActivity extends AppCompatActivity implements IStatusBar, IPopu
         runOnUiThread(() ->textWaveRemaining.setText(sec));
     }
 
-    @Override
     public void openWindow() {
-        startActivity(new Intent(GameActivity.this, PopUp.class));
+        startActivity(new Intent(GameActivity.this, AMenu.class));
 
         /*
         for (TowerType t: TowerType.values()) {

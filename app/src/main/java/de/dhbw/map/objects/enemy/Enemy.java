@@ -43,11 +43,11 @@ public abstract class Enemy {
 		this.image = image;
 	}
 
-	public int getValue(){
+	public int getValue() {
 		return value;
 	}
 
-	public int getLifePointsCosts(){
+	public int getLifePointsCosts() {
 		return lifePointsCosts;
 	}
 

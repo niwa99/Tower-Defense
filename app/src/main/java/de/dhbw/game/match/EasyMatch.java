@@ -18,7 +18,7 @@ public class EasyMatch extends AMatch {
     }
 
     @Override
-    public void create(GameActivity gameActivity){
+    public void create(GameActivity gameActivity) {
 
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);

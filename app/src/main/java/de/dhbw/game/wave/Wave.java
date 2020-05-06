@@ -13,7 +13,7 @@ public class Wave extends AWave {
         super(speed);
     }
 
-    public void addWaveCompositions(WaveComposition... compositions){
+    public void addWaveCompositions(WaveComposition... compositions) {
         for (WaveComposition c : compositions) {
             this.waveCompositions.add(c);
         }

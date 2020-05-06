@@ -1,7 +1,5 @@
 package de.dhbw.game.match;
 
-import android.widget.FrameLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +23,7 @@ public abstract class AMatch {
     public abstract void create(GameActivity gameActivity);
 
     void addWaves(Wave... waves){
-        if(extendable){
+        if (extendable) {
             for (Wave w : waves) {
                 this.waves.add(w);
             }
@@ -33,19 +31,19 @@ public abstract class AMatch {
         extendable = false;
     }
 
-    public Optional<AWave> next(){
+    public Optional<AWave> next() {
         return hasNext() ? Optional.of(waves.get(count++)) : Optional.empty();
     }
 
-    public boolean hasNext(){
+    public boolean hasNext() {
         return waves.size() > count;
     }
 
-    public int getCurrentWaveNumber(){
-        return count+1;
+    public int getCurrentWaveNumber() {
+        return count + 1;
     }
 
-    public int getWaveTime(){
+    public int getWaveTime() {
         return waveTime;
     }
 

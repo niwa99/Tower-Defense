@@ -28,7 +28,7 @@ public abstract class AMenu extends Activity {
         getWindow().setLayout(1250, 550);
     }
 
-    public void addViewToPopUp(View child){
+    public void addViewToPopUp(View child) {
         menuLayout.addView(child);
     }
 

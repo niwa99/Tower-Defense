@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,7 +21,6 @@ import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
-import de.dhbw.game.popups.AMenu;
 import de.dhbw.map.objects.tower.TowerType;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
@@ -38,14 +36,9 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private TextView textMoney;
     private TextView textCurrentWave;
     private TextView textWaveRemaining;
-    private TextView towerName;
-    private ImageView towerImage;
-    private TextView towerPrice;
-    private TowerType[] towerTypes;
 
     private FrameLayout mapLayout;
     private Game game;
-
 
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -183,10 +176,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         this.textMoney = findViewById(R.id.textMoney);
         this.textCurrentWave = findViewById(R.id.textCurrentWave);
         this.textWaveRemaining = findViewById(R.id.textWaveRemaining);
-        this.towerName = findViewById(R.id.towerName);
-        this.towerImage = findViewById(R.id.towerImage);
-        this.towerPrice = findViewById(R.id.towerPrice);
-
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
@@ -237,18 +226,4 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     public void setWaveTimeRemaining(String sec) {
         runOnUiThread(() -> textWaveRemaining.setText(sec));
     }
-
-    public void openWindow() {
-        startActivity(new Intent(GameActivity.this, AMenu.class));
-    }
-
-    public void buildTower(View view) {
-
-
-    }
-
-    public void closeWindow(View view) {
-
-    }
-
 }

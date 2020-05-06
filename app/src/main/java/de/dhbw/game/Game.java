@@ -1,11 +1,7 @@
 package de.dhbw.game;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -153,14 +149,15 @@ public class Game {
     public void createNewTowerOnField(Position pos) {
         Intent intent = new Intent(gameActivity, MenuTowerSelection.class);
         intent.putExtra(gameActivity.getString(R.string.position), pos);
+        MenuTowerSelection.game = this;
         gameActivity.startActivity(intent);
     }
 
     public void buildTower(TowerType type, Position pos) {
-        if(subMoney(type.getPrice()) && getMapStructure().getField(pos).getFieldDescription()== FieldDescription.FREE) {
+        if (subMoney(type.getPrice()) && getMapStructure().getField(pos).getFieldDescription() == FieldDescription.FREE) {
             switch(type) {
                 case ARTILLERY:
-                    DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
+                    DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1, gameActivity);
                     getMatchField().addTower(newTower);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
@@ -259,10 +256,10 @@ public class Game {
         if (countDownTimer != null) {
             countDownTimer.cancel();
         }
-        this.countDownTimer = new CountDownTimer(sec*1000, 1000) {
+        this.countDownTimer = new CountDownTimer(sec * 1000, 1000) {
 
             public void onTick(long millisUntilFinished) {
-                gameActivity.setWaveTimeRemaining(String.valueOf(Math.round(millisUntilFinished/1000)));
+                gameActivity.setWaveTimeRemaining(String.valueOf(Math.round(millisUntilFinished / 1000)));
             }
 
             public void onFinish() {
@@ -391,5 +388,4 @@ public class Game {
             }
         });
     }
-
 }

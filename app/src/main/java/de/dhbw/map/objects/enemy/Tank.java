@@ -24,7 +24,7 @@ public class Tank extends Enemy {
 
 	@Override
 	public boolean move(MapStructure map) {
-		if (super.move(map)){
+		if (super.move(map)) {
 			gameActivity.runOnUiThread(() -> {
 				image.setX(getPositionX());
 				image.setY(getPositionY());

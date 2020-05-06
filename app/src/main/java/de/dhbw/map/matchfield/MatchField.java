@@ -58,7 +58,7 @@ public class MatchField {
 						if (isGameOver) {
 							stopActing(false);
 						}
-					} else if(enemy.reachedTarget()) {
+					} else if (enemy.reachedTarget()) {
 						removeEnemiesInTarget(enemy);
 					}
 
@@ -112,7 +112,7 @@ public class MatchField {
 	}
 
 	public void removeEnemiesInTarget(Enemy enemy) {
-		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
+		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())) {
 			isGameOver = true;
 		}
 		removeImageViewOfEnemy(enemy);
@@ -134,7 +134,7 @@ public class MatchField {
 		return towers.stream().filter(tower -> tower.getId() == towerUUID).findAny();
 	}
 
-	public Optional<Tower> getTower(Field field){
+	public Optional<Tower> getTower(Field field) {
 		return towers.stream().filter(t -> t.getField().equals(field)).findAny();
 	}
 

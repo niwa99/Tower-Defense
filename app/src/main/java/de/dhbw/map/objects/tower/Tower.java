@@ -1,7 +1,5 @@
 package de.dhbw.map.objects.tower;
 
-import android.widget.FrameLayout;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,7 +9,6 @@ import java.util.stream.Collectors;
 import java.lang.Math;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
@@ -68,15 +65,15 @@ public abstract class Tower {
 		return getDistance(enemy.getPositionX(), enemy.getPositionY()) < range;
 	}
 
-	public Field getField(){
+	public Field getField() {
 		return field;
 	}
 
-	public TimerTask getTask(){
+	public TimerTask getTask() {
 		return task;
 	}
 
-	public void setTask(TimerTask task){
+	public void setTask(TimerTask task) {
 		this.task = task;
 	}
 
@@ -88,7 +85,7 @@ public abstract class Tower {
 	 */
 	public Enemy getNearestEnemy(List<Enemy> enemies) {
 		if (!enemies.isEmpty()) {
-			Map<Enemy, Integer> distanceToEnemy = new HashMap<Enemy, Integer>();
+			Map<Enemy, Integer> distanceToEnemy = new HashMap<>();
 
 			for (Enemy enemy : enemies) {
 				int distance = getDistance(enemy.getPositionX(), enemy.getPositionY());
@@ -110,10 +107,10 @@ public abstract class Tower {
 	 * Returns the number necessary to rotate the tower image according to the targeted enemy
 	 * @return
 	 */
-	public double rotateImage(List<Enemy> enemies){
+	public double rotateImage(List<Enemy> enemies) {
 		double rotation = 0;
 		Enemy enemy = getNearestEnemy(enemies);
-		if (enemy != null){
+		if (enemy != null) {
 			double a = this.getPositionX() - enemy.getPositionX();
 			double b = this.getPositionY() - enemy.getPositionY();
 			rotation = Math.toDegrees(Math.atan2(b, a));
@@ -164,7 +161,7 @@ public abstract class Tower {
 		return y;
 	}
 
-	public Position getPosition(){
+	public Position getPosition() {
 		return new Position(x, y);
 	}
 }

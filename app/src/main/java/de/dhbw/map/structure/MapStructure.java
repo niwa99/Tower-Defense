@@ -12,7 +12,7 @@ import static de.dhbw.util.Constants.*;
 
 public class MapStructure {
 
-	private Map<String, Field> fields = new HashMap<String, Field>();
+	private Map<String, Field> fields = new HashMap<>();
     private static final Position[] path = new Position[] {
             new Position(0,2), new Position(1,2), new Position(1,1),
             new Position(1,0), new Position(2,0), new Position(3,0),
@@ -44,10 +44,10 @@ public class MapStructure {
             for (int j = 0; j < 6; j++) {
                 for (Position pos : path) {
                     if (pos.equals(new Position(i, j))) {
-                        if(spawn){
+                        if (spawn) {
                             fieldDescription[i][j] = FieldDescription.SPAWN;
-                            spawn=false;
-                        }else{
+                            spawn = false;
+                        } else {
                             fieldDescription[i][j] = FieldDescription.PATH;
                         }
                         break;
@@ -66,7 +66,7 @@ public class MapStructure {
      * @param yCoord
      * @return pathImage
      */
-    public static int calculatePath(float xCoord, float yCoord){
+    public static int calculatePath(float xCoord, float yCoord) {
 
         int pathImage = DRAWABLE_PATH_HORIZONTAL;
         int pathNumber = getPathNumber(xCoord, yCoord);
@@ -77,13 +77,13 @@ public class MapStructure {
                 pathImage = Constants.DRAWABLE_PATH_HORIZONTAL;
             } else if (path[pathNumber].getY() == path[pathNumber - 1].getY()) {
                 if (path[pathNumber].getY() < path[pathNumber + 1].getY()) {
-                    if(path[pathNumber].getX() < path[pathNumber - 1].getX()){
+                    if (path[pathNumber].getX() < path[pathNumber - 1].getX()) {
                         pathImage = Constants.DRAWABLE_PATH_RIGHT_DOWN;
                     } else {
                         pathImage = Constants.DRAWABLE_PATH_LEFT_DOWN;
                     }
                 } else {
-                    if(path[pathNumber].getX() < path[pathNumber - 1].getX()){
+                    if (path[pathNumber].getX() < path[pathNumber - 1].getX()) {
                         pathImage = Constants.DRAWABLE_PATH_RIGHT_UP;
                     } else {
                         pathImage = Constants.DRAWABLE_PATH_LEFT_UP;
@@ -91,7 +91,7 @@ public class MapStructure {
                 }
             } else {
                 if (path[pathNumber].getX() < path[pathNumber + 1].getX()) {
-                    if(path[pathNumber].getY() < path[pathNumber - 1].getY()){
+                    if (path[pathNumber].getY() < path[pathNumber - 1].getY()) {
                         pathImage = Constants.DRAWABLE_PATH_RIGHT_DOWN;
                     } else {
                         pathImage = Constants.DRAWABLE_PATH_RIGHT_UP;
@@ -115,13 +115,13 @@ public class MapStructure {
      * @param yCoord
      * @return path index
      */
-    public static int getPathNumber(float xCoord, float yCoord){
+    public static int getPathNumber(float xCoord, float yCoord) {
 
         int i = 0;
         int x = (int) ((xCoord - 75) / FIELD_SIZE);
         int y = (int) ((yCoord - 75) / FIELD_SIZE);
         for (; i < 20; i++){
-            if (path[i].getX() == x && path[i].getY() == y){
+            if (path[i].getX() == x && path[i].getY() == y) {
                 return i;
             }
         }
@@ -129,8 +129,8 @@ public class MapStructure {
     }
 
 
-    public List<Field> getFields(){
-    	return new ArrayList<Field>(fields.values());
+    public List<Field> getFields() {
+    	return new ArrayList<>(fields.values());
     }
 
     /**
@@ -139,7 +139,7 @@ public class MapStructure {
      * @return Field where the enemy should move to
      */
     public Field getFieldForEnemy(int progress) {
-        return progress<path.length ? fields.get(path[progress].toString()) : null;
+        return progress < path.length ? fields.get(path[progress].toString()) : null;
     }
     
     public Field getField(Position pos) {

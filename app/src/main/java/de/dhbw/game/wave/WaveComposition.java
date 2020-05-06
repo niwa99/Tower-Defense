@@ -3,6 +3,7 @@ package de.dhbw.game.wave;
 import de.dhbw.game.EnemyType;
 
 public class WaveComposition {
+
     private EnemyType type;
     private int level;
     private int amount;

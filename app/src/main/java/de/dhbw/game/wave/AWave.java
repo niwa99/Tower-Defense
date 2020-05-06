@@ -15,19 +15,19 @@ public abstract class AWave {
         this.speed = speed;
     }
 
-    public Enemy next(){
+    public Enemy next() {
         return enemies.get(count++);
     }
 
-    public boolean hasNext(){
+    public boolean hasNext() {
         return enemies.size() > count;
     }
 
-    void addEnemy(Enemy e){
+    void addEnemy(Enemy e) {
         this.enemies.add(e);
     }
 
-    public int getWaveSpeed(){
+    public int getWaveSpeed() {
         return speed;
     }
 

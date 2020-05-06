@@ -23,8 +23,11 @@ public enum TowerType {
     public String getType() {
         return this.type;
     }
-    public int getDrawable() { return this.drawable;}
-    public int getPrice(){
+    public int getDrawable() {
+        return this.drawable;
+    }
+
+    public int getPrice() {
         return this.price;
     }
 }

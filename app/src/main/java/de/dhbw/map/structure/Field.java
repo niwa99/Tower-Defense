@@ -1,7 +1,5 @@
 package de.dhbw.map.structure;
 
-import java.util.UUID;
-
 import de.dhbw.util.Position;
 
 public class Field {
@@ -27,7 +25,7 @@ public class Field {
         this.fieldDescription = FieldDescription.FREE;
     }
 
-    public String getId(){
+    public String getId() {
         return String.valueOf(getFieldPositionX())+"01230"+String.valueOf(getFieldPositionY());
     }
 

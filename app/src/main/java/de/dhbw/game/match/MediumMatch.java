@@ -1,7 +1,5 @@
 package de.dhbw.game.match;
 
-import android.widget.FrameLayout;
-
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.game.wave.Wave;
@@ -20,7 +18,7 @@ public class MediumMatch extends AMatch {
     }
 
     @Override
-    public void create(GameActivity gameActivity){
+    public void create(GameActivity gameActivity) {
 
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);

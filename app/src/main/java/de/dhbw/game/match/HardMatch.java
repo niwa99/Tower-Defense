@@ -6,7 +6,6 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.game.wave.Wave;
 import de.dhbw.game.wave.WaveComposition;
-import de.dhbw.util.ObjectStorage;
 
 public class HardMatch extends AMatch {
     private static final int waveTime = 45;
@@ -21,19 +20,19 @@ public class HardMatch extends AMatch {
     }
 
     @Override
-    public void create(FrameLayout mapLayout, GameActivity gameActivity){
+    public void create(GameActivity gameActivity){
 
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);
-        firstWave.generate(mapLayout, gameActivity);
+        firstWave.generate(gameActivity);
 
         Wave secondWave = new Wave(1500);
         secondWave.addWaveCompositions(secondWaveTankL1, secondWaveTankL2);
-        secondWave.generate(mapLayout, gameActivity);
+        secondWave.generate(gameActivity);
 
         Wave thirdWave = new Wave(1500);
         thirdWave.addWaveCompositions(thirdWaveTankL2);
-        thirdWave.generate(mapLayout, gameActivity);
+        thirdWave.generate(gameActivity);
 
         addWaves(firstWave, secondWave, thirdWave);
     }

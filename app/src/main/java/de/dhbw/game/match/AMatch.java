@@ -22,7 +22,7 @@ public abstract class AMatch {
         this.startMoney = startMoney;
     }
 
-    public abstract void create(FrameLayout mapLayout, GameActivity gameActivity);
+    public abstract void create(GameActivity gameActivity);
 
     void addWaves(Wave... waves){
         if(extendable){
@@ -41,7 +41,7 @@ public abstract class AMatch {
         return waves.size() > count;
     }
 
-    public int waveNumber(){
+    public int getCurrentWaveNumber(){
         return count+1;
     }
 

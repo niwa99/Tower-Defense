@@ -3,8 +3,6 @@ package de.dhbw.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import de.dhbw.activities.MainActivity;
-
 public class PreferenceManager {
 
     public enum Statistics {

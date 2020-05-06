@@ -1,6 +1,6 @@
 package de.dhbw.map.objects.enemy;
 
-import android.widget.FrameLayout;
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Timer;
@@ -12,46 +12,34 @@ import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.MapStructure;
 
 import static de.dhbw.util.Constants.*;
-import static de.dhbw.util.ObjectStorage.*;
 
 public class Tank extends Enemy {
-	private ImageView tankImage;
 	private Timer timer;
 
-	public Tank(String label, int level, FrameLayout mapLayout, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), mapLayout, gameActivity, EnemyType.TANK);
+	public Tank(String label, int level, GameActivity gameActivity) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, getTankImage(gameActivity));
 
 		timer = new Timer();
-		tankImage = new ImageView(gameActivity);
-		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
-		tankImage.setImageResource(DRAWABLE_TANK);
-
-		mapLayout.addView(tankImage);
-	}
-
-	public Tank(String label, int level, ImageView tankImage, FrameLayout mapLayout, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankValueByLevel(level), mapLayout, gameActivity, EnemyType.TANK);
-		this.tankImage = tankImage;
 	}
 
 	@Override
 	public boolean move(MapStructure map) {
 		if (super.move(map)){
 			gameActivity.runOnUiThread(() -> {
-				tankImage.setX(getPositionX());
-				tankImage.setY(getPositionY());
+				image.setX(getPositionX());
+				image.setY(getPositionY());
 				switch (getDirection()) {
 					case UP:
-						tankImage.setRotation(0);
+						image.setRotation(0);
 						break;
 					case RIGHT:
-						tankImage.setRotation(90);
+						image.setRotation(90);
 						break;
 					case DOWN:
-						tankImage.setRotation(180);
+						image.setRotation(180);
 						break;
 					case LEFT:
-						tankImage.setRotation(270);
+						image.setRotation(270);
 						break;
 				}
 			});
@@ -61,17 +49,13 @@ public class Tank extends Enemy {
 
 	public void hit(int damage) {
 		super.reduceHealthPoints(damage);
-		gameActivity.runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK_HITTED));
+		gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK_HITTED));
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				gameActivity.runOnUiThread(() -> tankImage.setImageResource(DRAWABLE_TANK));
+				gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK));
 			}
 		}, 100);
-	}
-
-	public ImageView getTankImage() {
-		return tankImage;
 	}
 
 	private static int getTankHealthpointsByLevel(int level) {
@@ -109,4 +93,14 @@ public class Tank extends Enemy {
 			default: return TANK_LEVEL_1_LIFE_POINT_COSTS;
 		}
 	}
+
+	private static ImageView getTankImage(GameActivity gameActivity) {
+		ImageView tankImage = new ImageView(gameActivity);
+		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
+		tankImage.setImageResource(DRAWABLE_TANK);
+		gameActivity.getMapFrameLayout().addView(tankImage);
+		tankImage.setVisibility(View.INVISIBLE);
+		return tankImage;
+	}
+
 }

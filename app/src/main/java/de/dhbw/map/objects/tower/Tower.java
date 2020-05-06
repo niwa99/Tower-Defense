@@ -33,10 +33,8 @@ public abstract class Tower {
 	private TimerTask task;
 	protected Enemy targetedEnemy;
 	protected GameActivity gameActivity;
-	protected FrameLayout mapLayout;
-	protected MatchField matchField;
 	
-	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
+	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
 		this.label = label;
 		this.id = id;
 		this.costs = costs;
@@ -47,8 +45,6 @@ public abstract class Tower {
 		this.x = field.getSpawnPoint().getX();
 		this.y = field.getSpawnPoint().getY();
 		this.gameActivity = gameActivity;
-		this.mapLayout = mapLayout;
-		this.matchField = matchField;
 	}
 
 	/**

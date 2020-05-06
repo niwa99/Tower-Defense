@@ -1,7 +1,5 @@
 package de.dhbw.game.wave;
 
-import android.widget.FrameLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,5 +31,5 @@ public abstract class AWave {
         return speed;
     }
 
-    public abstract void generate(FrameLayout mapLayout, GameActivity gameActivity);
+    public abstract void generate(GameActivity gameActivity);
 }

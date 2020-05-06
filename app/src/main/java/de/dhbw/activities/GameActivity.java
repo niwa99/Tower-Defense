@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,7 +20,6 @@ import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
-import de.dhbw.util.ObjectStorage;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
 
@@ -42,7 +40,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
 
     private final Runnable mHidePart2Runnable = new Runnable() {
-        @SuppressLint("InlinedApi")
         @Override
         public void run() {
             mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
@@ -70,25 +67,18 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     private boolean mVisible;
 
-    private final Runnable mHideRunnable = new Runnable() {
-        @Override
-        public void run() {
-            hide();
-        }
-    };
+    private final Runnable mHideRunnable = () -> hide();
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
      * system UI. This is to prevent the jarring behavior of controls going away
      * while interacting with activity UI.
      */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
+    @SuppressLint("ClickableViewAccessibility")
+    private final View.OnTouchListener mDelayHideTouchListener = (view, motionEvent) -> {
+        if (AUTO_HIDE) {
+            delayedHide(AUTO_HIDE_DELAY_MILLIS);
         }
+        return false;
     };
 
     @Override
@@ -130,7 +120,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         mHideHandler.postDelayed(mHidePart2Runnable, UI_ANIMATION_DELAY);
     }
 
-    @SuppressLint("InlinedApi")
     private void show() {
         // Show the system bar
         mContentView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
@@ -151,36 +140,35 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        backToMainMenu();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Initial Layout Stuff
+    private void setupAndroidFullscreenAndLayout() {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        setContentView(R.layout.activity_game);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        setContentView(R.layout.activity_game);
         mVisible = true;
         mControlsView = findViewById(R.id.fullscreen_content_controls);
         mContentView = findViewById(R.id.fullscreen_content);
 
         // Set up the user interaction to manually show or hide the system UI.
         mContentView.setOnClickListener(view -> toggle());
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        returnToMainMenu();
+    }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        //HERE BEGINS TOWER DEFENSE CODE
+        setupAndroidFullscreenAndLayout();
+
+        //identify status bar TextViews
         this.textLifePoints = findViewById(R.id.textLivePoints);
         this.textMoney = findViewById(R.id.textMoney);
         this.textCurrentWave = findViewById(R.id.textCurrentWave);
@@ -188,32 +176,32 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
-        buttonBackToMenu.setOnClickListener(view -> backToMainMenu());
+        buttonBackToMenu.setOnClickListener(view -> returnToMainMenu());
 
         mapLayout = findViewById(R.id.map);
 
-        ObjectStorage.setGameActivity(GameActivity.this);
-        ObjectStorage.setContext(this);
-        ObjectStorage.setMapLayout(mapLayout);
+        game = new Game(GameActivity.this);
 
-        game = new Game(GameActivity.this, mapLayout);
-        int difficultyNumber = getIntent().getExtras().getInt(getString(R.string.difficulty));
-        if (difficultyNumber == 0) {
-            game.startGame(Difficulty.EASY);
-        } else if (difficultyNumber == 1) {
-            game.startGame(Difficulty.MEDIUM);
-        } else if (difficultyNumber == 2) {
-            game.startGame(Difficulty.HARD);
-        } else {
-            game.startGame(Difficulty.EASY);
+        Difficulty chosenDifficulty = (Difficulty) getIntent().getSerializableExtra(getString(R.string.difficulty));
+        if (chosenDifficulty != null) {
+            game.init(chosenDifficulty);
+            game.start();
         }
     }
 
-    public void backToMainMenu() {
-        game.stop();
+    public void returnToMainMenu() {
+        game.stop(false);
         Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
         startActivity(intentMenu);
         finish();
+    }
+
+    public FrameLayout getMapFrameLayout() {
+        return mapLayout;
+    }
+
+    public Game getGame() {
+        return game;
     }
 
     @Override
@@ -227,7 +215,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     }
 
     @Override
-    public void setCurrentWave(String wave) {
+    public void setCurrentWaveNumber(String wave) {
         runOnUiThread(() -> textCurrentWave.setText((getString(R.string.wave_title) + wave)));
     }
 

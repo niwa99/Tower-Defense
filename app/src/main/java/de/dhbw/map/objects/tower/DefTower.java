@@ -1,26 +1,22 @@
 package de.dhbw.map.objects.tower;
 
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
-import static de.dhbw.util.ObjectStorage.*;
 import de.dhbw.map.structure.Field;
 
 public class DefTower extends Tower {
 	private ImageView defTowerImage;
 
-	public DefTower(String label, Field field, int level, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
+	public DefTower(String label, Field field, int level, GameActivity gameActivity) {
 		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity, mapLayout, matchField);
+				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity);
 
 		defTowerImage = new ImageView(gameActivity);
 		defTowerImage.setLayoutParams(DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS);
@@ -28,20 +24,20 @@ public class DefTower extends Tower {
 		defTowerImage.setX(getPositionX());
 		defTowerImage.setY(getPositionY());
 
-		mapLayout.addView(defTowerImage);
+		gameActivity.getMapFrameLayout().addView(defTowerImage);
 	}
 
-	public DefTower(String label, Field field, int level, ImageView defTowerImage, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
+	public DefTower(String label, Field field, int level, ImageView defTowerImage, GameActivity gameActivity) {
 		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity, mapLayout, matchField);
+				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity);
 		this.defTowerImage = defTowerImage;
 	}
 
 	@Override
 	public boolean fire(List<Enemy> enemies) {
 		defTowerImage.setRotation((float)rotateImage(enemies));
-		if (super.fire(enemies)){
-			new Bullet(getPosition(), super.targetedEnemy, DefTower.this, gameActivity, mapLayout, matchField);
+		if (super.fire(enemies)) {
+			new Bullet(getPosition(), super.targetedEnemy, DefTower.this, gameActivity);
 			return true;
 		}
 		return false;

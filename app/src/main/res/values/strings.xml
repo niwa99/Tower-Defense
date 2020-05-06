@@ -26,6 +26,6 @@
     <string name="startscreen_play">PLAY</string>
     <string name="startscreen_logo_contentDescription">Tower Defense Logo</string>
 
-    <string name="wave_title">Wave: </string>
+    <string name="wave_title">Wave:&#160;</string>
     <string name="difficulty">difficulty</string>
 </resources>

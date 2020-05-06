@@ -29,6 +29,10 @@ public class DifficultyFragment extends Fragment {
         this.difficulty = difficulty;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

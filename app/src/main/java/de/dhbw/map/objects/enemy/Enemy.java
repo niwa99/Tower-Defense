@@ -1,6 +1,6 @@
 package de.dhbw.map.objects.enemy;
 
-import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.util.UUID;
 
@@ -28,19 +28,19 @@ public abstract class Enemy {
 	private TimerTask timerTask;
 	private Field actualField;
 	private final EnemyType enemyType;
-	protected FrameLayout mapLayout;
+	protected ImageView image;
 	protected GameActivity gameActivity;
 	
-	public Enemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, FrameLayout mapLayout, GameActivity gameActivity, EnemyType enemyType) {
+	public Enemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, ImageView image) {
 		this.label = label;
 		this.uuid = uuid;
 		this.healthpoints = hp;
 		this.speed = speed;
 		this.value=value;
 		this.lifePointsCosts = lifePointsCosts;
-		this.mapLayout = mapLayout;
 		this.gameActivity = gameActivity;
 		this.enemyType = enemyType;
+		this.image = image;
 	}
 
 	public int getValue(){
@@ -69,6 +69,10 @@ public abstract class Enemy {
 
 	public EnemyType getType() {
 		return enemyType;
+	}
+
+	public ImageView getImage() {
+		return image;
 	}
 	
 	public void reduceHealthPoints(int damage) {

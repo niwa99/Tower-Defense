@@ -1,13 +1,11 @@
 package de.dhbw.map.objects.tower;
 
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
@@ -23,13 +21,9 @@ public class Bullet {
     private Enemy targetEnemy;
     private DefTower tower;
     private GameActivity gameActivity;
-    private FrameLayout mapLayout;
-    private MatchField matchField;
 
-    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, GameActivity gameActivity, FrameLayout mapLayout, MatchField matchField) {
+    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
-        this.mapLayout = mapLayout;
-        this.matchField = matchField;
         bulletImage = new ImageView(gameActivity);
         bulletImage.setImageResource(DRAWABLE_BULLET);
         bulletImage.setLayoutParams(BULLET_SIZE_PARAMS);
@@ -46,7 +40,7 @@ public class Bullet {
 
     public void visualizeShot(){
         bulletImage.setRotation((float) getBulletRotation());
-        gameActivity.runOnUiThread(() -> mapLayout.addView(bulletImage));
+        gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -57,11 +51,11 @@ public class Bullet {
                             bulletImage.setY(y);
                     });
                 } else {
-                    gameActivity.runOnUiThread(() -> mapLayout.removeView(bulletImage));
+                    gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(bulletImage));
                     if (targetEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde
                         if (targetEnemy instanceof Tank) {
                             ((Tank) targetEnemy).hit(tower.getDamage());
-                            matchField.removeDeadEnemy(targetEnemy);
+                            gameActivity.getGame().getMatchField().removeDeadEnemy(targetEnemy);
                             System.out.println(targetEnemy.getLabel() + " was shot by " + tower.getDamage() + " and has " + targetEnemy.getHealthPoints() + " hp left");
                         }
                     }

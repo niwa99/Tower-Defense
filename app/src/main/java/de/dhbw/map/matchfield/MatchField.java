@@ -1,6 +1,6 @@
 package de.dhbw.map.matchfield;
 
-import android.widget.FrameLayout;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,39 +11,36 @@ import java.util.stream.Collectors;
 import java.util.Optional;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.game.Game;
 import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
-import de.dhbw.map.structure.MapStructure;
 
 public class MatchField {
+
+	private final GameActivity gameActivity;
+
 	private List<Enemy> enemies;
 	private List<Tower> towers;
+
 	private boolean isGameOver = false;
-	private Timer waveTimer = new Timer();
-	private final Game game;
-	private final MapStructure mapStructure;
-	private final GameActivity gameActivity;
-	private final FrameLayout mapLayout;
+
+	//responsible for all enemy movements
+	private Timer enemiesTimer = new Timer();
 	
-	public MatchField(Game game, MapStructure mapStructure, GameActivity gameActivity, FrameLayout mapLayout) {
-		this.game = game;
-		this.mapStructure = mapStructure;
+	public MatchField(GameActivity gameActivity) {
 		this.gameActivity = gameActivity;
-		this.mapLayout = mapLayout;
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
-
 	}
 	
 	public void addTower(Tower tower) {
 		towers.add(tower);
 		startTowerFire(tower);
+		gameActivity.getGame().increaseNumberOfBuiltTowers(1);
 	}
 	
 	public void addEnemy(Enemy enemy) {
+		gameActivity.runOnUiThread(() -> enemy.getImage().setVisibility(View.VISIBLE));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 	}
@@ -57,18 +54,18 @@ public class MatchField {
 				@Override
 				public void run() {
 					if (enemy.isAlive() && !enemy.reachedTarget()) {
-						enemy.move(mapStructure);
-						if (isGameOver){
-							lose();
+						enemy.move(gameActivity.getGame().getMapStructure());
+						if (isGameOver) {
+							stopActing(false);
 						}
-					}else if(enemy.reachedTarget()){
+					} else if(enemy.reachedTarget()) {
 						removeEnemiesInTarget(enemy);
 					}
 
 				}
 			};
 			enemy.setTimerTask(timerTask);
-			waveTimer.scheduleAtFixedRate(timerTask, 0, 1000-enemy.getSpeed());
+			enemiesTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
 	}
 
 	/**
@@ -79,29 +76,44 @@ public class MatchField {
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
-					if (enemies.size() > 0){
+					if (enemies.size() > 0) {
 						tower.fire(enemies);
 					}
 				}
 			};
 			tower.setTask(timerTask);
-			waveTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate()*1000);
+			enemiesTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate() * 1000);
 	}
-	
-	
+
+	public void stopActing(boolean isWinner) {
+		enemiesTimer.cancel();
+		System.out.println("Game is over");
+		if (isWinner) {
+			gameActivity.getGame().winActions();
+		} else {
+			gameActivity.getGame().loseActions();
+		}
+	}
+
+	public void stopActing() {
+		enemiesTimer.cancel();
+		System.out.println("Game is over");
+	}
+
 	public void removeDeadEnemy(Enemy enemy) {
 		if (!enemy.isAlive()) {
 			removeImageViewOfEnemy(enemy);
-			game.addMoney(enemy.getValue());
+			gameActivity.getGame().addMoney(enemy.getValue());
 			enemy.getTimerTask().cancel();
 			enemies.remove(enemy);
+			gameActivity.getGame().increaseNumberOfEnemiesKilled(1);
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
 	}
 
 	public void removeEnemiesInTarget(Enemy enemy) {
-		if(!game.decreaseLifePoints(enemy.getLifePointsCosts())){
-			isGameOver=true;
+		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())){
+			isGameOver = true;
 		}
 		removeImageViewOfEnemy(enemy);
 		enemy.getTimerTask().cancel();
@@ -110,17 +122,12 @@ public class MatchField {
 	}
 
 	private void removeImageViewOfEnemy(Enemy enemy) {
-		if (enemies.size() <= 1 && game.allEnemiesSpawned()) {
-			win();
+		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
+			stopActing(true);
 		}
 		switch (enemy.getType()) {
-			case TANK: gameActivity.runOnUiThread(() -> mapLayout.removeView(((Tank) enemy).getTankImage()));
+			case TANK: gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getImage()));
 		}
-	}
-	
-	public void stopGame() {
-		waveTimer.cancel();
-		System.out.println("Game is over, all enemies reached the target");
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {
@@ -131,20 +138,6 @@ public class MatchField {
 		return towers.stream().filter(t -> t.getField().equals(field)).findAny();
 	}
 
-	private Optional<Enemy> getEnemy(UUID enemyUUID) {
-		return enemies.stream().filter(enemy -> enemy.getUuid() == enemyUUID).findAny();
-	}
-
-	private List<UUID> getEnemyUUIDs(){
-		return enemies.stream().map(Enemy::getUuid).collect(Collectors.toList());
-	}
-
-	public void removeTower(Tower tower){
-		towers.remove(tower);
-		tower.getTask().cancel();
-	}
-
-	//not in use yet
 	private boolean removeTower(UUID towerUUID) {
 		Optional<Tower> tower = getTower(towerUUID);
 		if (tower.isPresent()) {
@@ -154,7 +147,19 @@ public class MatchField {
 		return false;
 	}
 
-	//not in use yet
+	public void removeTower(Tower tower) {
+		towers.remove(tower);
+		tower.getTask().cancel();
+	}
+
+	private Optional<Enemy> getEnemy(UUID enemyUUID) {
+		return enemies.stream().filter(enemy -> enemy.getUuid() == enemyUUID).findAny();
+	}
+
+	private List<UUID> getEnemyUUIDs() {
+		return enemies.stream().map(Enemy::getUuid).collect(Collectors.toList());
+	}
+
 	private boolean removeEnemy(UUID enemyUUID) {
 		Optional<Enemy> enemy = getEnemy(enemyUUID);
 		if (enemy.isPresent()) {
@@ -162,15 +167,5 @@ public class MatchField {
 			return true;
 		}
 		return false;
-	}
-
-	public void lose() {
-		stopGame();
-		game.loseGame();
-	}
-
-	public void win() {
-		stopGame();
-		game.winGame();
 	}
 }

@@ -1,7 +1,5 @@
 package de.dhbw.game.wave;
 
-import android.widget.FrameLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,12 +20,12 @@ public class Wave extends AWave {
     }
 
     @Override
-    public void generate(FrameLayout mapLayout, GameActivity gameActivity) {
+    public void generate(GameActivity gameActivity) {
         waveCompositions.stream().forEach(wave -> {
             switch (wave.getEnemyType()) {
                 case TANK:
                     for (int i = 0; i < wave.getAmount(); i++) {
-                        addEnemy(new Tank(wave.getEnemyType().getLabel(), wave.getLevel(), mapLayout, gameActivity));
+                        addEnemy(new Tank(wave.getEnemyType().getLabel(), wave.getLevel(), gameActivity));
                     }
                     break;
                 case FREEZER:

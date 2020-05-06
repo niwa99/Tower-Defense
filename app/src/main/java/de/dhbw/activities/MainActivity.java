@@ -2,17 +2,13 @@ package de.dhbw.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import de.dhbw.R;
 import de.dhbw.util.spinnerAdapter;
@@ -53,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = findViewById(R.id.spinner_choose_difficulties);
         spinnerAdapter adapter = new spinnerAdapter(MainActivity.this, R.layout.spinner_item);
-        //adapter.setDropDownViewResource(android.R.layout.simple_list_item_1);
         adapter.addAll("easy", "medium", "hard");
         adapter.add("PLAY");
         spinner.setAdapter(adapter);

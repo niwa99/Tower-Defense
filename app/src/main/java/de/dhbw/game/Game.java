@@ -1,6 +1,11 @@
 package de.dhbw.game;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
@@ -13,14 +18,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.R;
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
 import de.dhbw.game.match.HardMatch;
 import de.dhbw.game.match.MediumMatch;
+import de.dhbw.game.popups.MenuTowerSelection;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 import de.dhbw.map.structure.MapStructure;
@@ -47,6 +55,7 @@ public class Game {
 
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
+    private IMoneyListener moneyListener = null;
 
 
     private int lifePoints = 100;
@@ -142,10 +151,25 @@ public class Game {
     }
 
     public void createNewTowerOnField(Position pos) {
-        if (subMoney(DefTower.getDefTowerCostsByLevel(1)) && mapStructure.getField(pos).getFieldDescription() == FieldDescription.FREE) {
-            DefTower newTower = new DefTower("tower1", mapStructure.getField(pos), 1, gameActivity);
-            matchField.addTower(newTower);
-            mapStructure.getField(pos).setFieldDescription(FieldDescription.TOWER);
+        Intent intent = new Intent(gameActivity, MenuTowerSelection.class);
+        intent.putExtra(gameActivity.getString(R.string.position), pos);
+        gameActivity.startActivity(intent);
+    }
+
+    public void buildTower(TowerType type, Position pos) {
+        if(subMoney(type.getPrice()) && getMapStructure().getField(pos).getFieldDescription()== FieldDescription.FREE) {
+            switch(type) {
+                case ARTILLERY:
+                    DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1);
+                    getMatchField().addTower(newTower);
+                    getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
+                    break;
+                case FREEZER:
+                case BOOMBASTIC:
+                case PLASMARIZER:
+                case ASSAULTLASER:
+                    break;
+            }
         }
     }
 
@@ -192,6 +216,9 @@ public class Game {
 	public void addMoney(int money) {
 	    this.money += money;
 	    updateStatusBar();
+	    if (moneyListener != null) {
+	        moneyListener.performMoneyUpdate(this.money);
+        }
     }
 
     public boolean subMoney(int money) {
@@ -244,6 +271,10 @@ public class Game {
                 }
             }
         };
+    }
+
+    public void setMenu(IMoneyListener listener) {
+	    moneyListener = listener;
     }
 
     public void increaseNumberOfEnemiesKilled(int increase) {

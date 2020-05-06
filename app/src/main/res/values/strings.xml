@@ -28,4 +28,5 @@
 
     <string name="wave_title">Wave:&#160;</string>
     <string name="difficulty">difficulty</string>
+    <string name="position">position</string>
 </resources>

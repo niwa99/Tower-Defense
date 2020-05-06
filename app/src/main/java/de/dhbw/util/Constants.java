@@ -30,7 +30,7 @@ public class Constants {
 
 
     //Def-Tower Parameters
-    public static final int DEF_TOWER_LEVEL_1_COSTS = 5;
+    public static final int DEF_TOWER_LEVEL_1_COSTS = 10;
     public static final int DEF_TOWER_LEVEL_1_DAMAGE = 1;
     public static final int DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS = 450;
     public static final int DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS = 3;

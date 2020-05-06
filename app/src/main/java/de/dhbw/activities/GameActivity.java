@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,6 +22,8 @@ import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
+import de.dhbw.game.popups.AMenu;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.ObjectStorage;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
@@ -36,6 +39,10 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private TextView textMoney;
     private TextView textCurrentWave;
     private TextView textWaveRemaining;
+    private TextView towerName;
+    private ImageView towerImage;
+    private TextView towerPrice;
+    private TowerType[] towerTypes;
 
     private FrameLayout mapLayout;
 
@@ -186,6 +193,10 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         this.textMoney = findViewById(R.id.textMoney);
         this.textCurrentWave = findViewById(R.id.textCurrentWave);
         this.textWaveRemaining = findViewById(R.id.textWaveRemaining);
+        this.towerName = findViewById(R.id.towerName);
+        this.towerImage = findViewById(R.id.towerImage);
+        this.towerPrice = findViewById(R.id.towerPrice);
+
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
@@ -233,4 +244,44 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     public void setWaveTimeRemaining(String sec) {
         runOnUiThread(() ->textWaveRemaining.setText(sec));
     }
+
+    public void openWindow() {
+        startActivity(new Intent(GameActivity.this, AMenu.class));
+
+        /*
+        for (TowerType t: TowerType.values()) {
+            TableRow rowView = findViewById(R.id.header_row);
+            TextView text = new TextView(this);
+            text.setText(t.getType());
+            text.setWidth(150);
+            text.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            text.setTextColor(Color.WHITE);
+            text.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            text.setTypeface(Typeface.createFromAsset(getAssets(),
+                    "fonts/bubblegum_sans.ttf"));
+            rowView.addView(text);
+
+            rowView = findViewById(R.id.middle_row);
+            ImageView image = new ImageView(this);
+            image.setImageResource(t.getDrawable());
+            rowView.addView(image);
+
+            rowView = findViewById(R.id.bottom_row);
+            LinearLayout linearLayout = new LinearLayout(this);
+            linearLayout.addView(text);
+            linearLayout.addView(image);
+            rowView.addView(linearLayout);
+
+        }*/
+    }
+
+    public void buildTower(View view) {
+
+
+    }
+
+    public void closeWindow(View view) {
+
+    }
+
 }

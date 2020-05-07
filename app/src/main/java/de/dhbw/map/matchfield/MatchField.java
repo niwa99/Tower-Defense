@@ -10,15 +10,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
+import pl.droidsonroids.gif.GifImageView;
 
 public class MatchField {
 
 	private final GameActivity gameActivity;
-
 	private List<Enemy> enemies;
 	private List<Tower> towers;
 
@@ -40,7 +41,7 @@ public class MatchField {
 	}
 	
 	public void addEnemy(Enemy enemy) {
-		gameActivity.runOnUiThread(() -> enemy.getImage().setVisibility(View.VISIBLE));
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemy.getImage()));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 	}
@@ -56,7 +57,7 @@ public class MatchField {
 					if (enemy.isAlive() && !enemy.reachedTarget()) {
 						enemy.move(gameActivity.getGame().getMapStructure());
 						if (isGameOver) {
-							stopActing(false);
+							stopTimer(false);
 						}
 					} else if (enemy.reachedTarget()) {
 						removeEnemiesInTarget(enemy);
@@ -85,9 +86,8 @@ public class MatchField {
 			enemiesTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate() * 1000);
 	}
 
-	public void stopActing(boolean isWinner) {
-		enemiesTimer.cancel();
-		System.out.println("Game is over");
+	public void stopTimer(boolean isWinner) {
+		stopTimer();
 		if (isWinner) {
 			gameActivity.getGame().winActions();
 		} else {
@@ -95,7 +95,7 @@ public class MatchField {
 		}
 	}
 
-	public void stopActing() {
+	public void stopTimer() {
 		enemiesTimer.cancel();
 		System.out.println("Game is over");
 	}
@@ -103,6 +103,7 @@ public class MatchField {
 	public void removeDeadEnemy(Enemy enemy) {
 		if (!enemy.isAlive()) {
 			removeImageViewOfEnemy(enemy);
+			explode(enemy);
 			gameActivity.getGame().addMoney(enemy.getValue());
 			enemy.getTimerTask().cancel();
 			enemies.remove(enemy);
@@ -123,11 +124,27 @@ public class MatchField {
 
 	private void removeImageViewOfEnemy(Enemy enemy) {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
-			stopActing(true);
+			stopTimer(true);
 		}
 		switch (enemy.getType()) {
 			case TANK: gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getImage()));
 		}
+	}
+
+	private void explode(Enemy enemy) {
+		GifImageView gif = new GifImageView(gameActivity);
+		gif.setX(enemy.getPositionX()-800);
+		gif.setY(enemy.getPositionY()-450);
+		gif.setScaleX(0.2f);
+		gif.setScaleY(0.2f);
+		gif.setImageResource(R.drawable.explosion_gif);
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
+		new Timer().schedule(new TimerTask() {
+			@Override
+			public void run() {
+				gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
+			}
+		}, 500);
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {

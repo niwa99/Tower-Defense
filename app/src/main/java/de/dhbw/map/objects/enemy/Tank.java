@@ -17,8 +17,7 @@ public class Tank extends Enemy {
 	private Timer timer;
 
 	public Tank(String label, int level, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, getTankImage(gameActivity));
-
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, createTankImage(gameActivity));
 		timer = new Timer();
 	}
 
@@ -94,12 +93,10 @@ public class Tank extends Enemy {
 		}
 	}
 
-	private static ImageView getTankImage(GameActivity gameActivity) {
+	private static ImageView createTankImage(GameActivity gameActivity) {
 		ImageView tankImage = new ImageView(gameActivity);
 		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
 		tankImage.setImageResource(DRAWABLE_TANK);
-		gameActivity.getMapFrameLayout().addView(tankImage);
-		tankImage.setVisibility(View.INVISIBLE);
 		return tankImage;
 	}
 

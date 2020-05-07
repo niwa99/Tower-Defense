@@ -1,25 +1,25 @@
 package de.dhbw.game;
 
 public enum Difficulty {
-    EASY,
-    MEDIUM,
-    HARD;
+    EASY(0),
+    MEDIUM(1),
+    HARD(2);
 
+    private final int difficultyAsNumber;
+    
+    Difficulty(int difficultyAsNumber){
+        this.difficultyAsNumber = difficultyAsNumber;
+    }
     public static Difficulty asDifficulty(int number) {
-        switch (number) {
-            case 0: return EASY;
-            case 1: return MEDIUM;
-            case 2: return HARD;
-            default: return null;
+        for (Difficulty d : Difficulty.values()) {
+            if(d.difficultyAsNumber==number){
+                return d;
+            }
         }
+        return null;
     }
 
-    public static int asNumber(Difficulty difficulty) {
-        switch (difficulty) {
-            case EASY: return 0;
-            case MEDIUM: return 1;
-            case HARD: return 2;
-            default: return -1;
-        }
+    public int asNumber() {
+        return difficultyAsNumber;
     }
 }

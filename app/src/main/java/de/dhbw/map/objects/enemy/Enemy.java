@@ -74,6 +74,10 @@ public abstract class Enemy {
 	public ImageView getImage() {
 		return image;
 	}
+
+	public void setImage(){
+		this.image=image;
+	}
 	
 	public void reduceHealthPoints(int damage) {
 		if (damage >= healthpoints) {

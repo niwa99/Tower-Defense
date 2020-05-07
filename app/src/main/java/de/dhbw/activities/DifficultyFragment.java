@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 public class DifficultyFragment extends Fragment {
 
-    private static final int FRAGMENT_EASY = 0;
-    private static final int FRAGMENT_MEDIUM = 1;
-    private static final int FRAGMENT_HARD = 2;
+    private static final int FRAGMENT_EASY = Difficulty.EASY.asNumber();
+    private static final int FRAGMENT_MEDIUM = Difficulty.MEDIUM.asNumber();
+    private static final int FRAGMENT_HARD = Difficulty.HARD.asNumber();
 
     private Difficulty difficulty;
 

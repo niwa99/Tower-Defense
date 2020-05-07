@@ -126,7 +126,7 @@ public class Game {
 	    waveTimer.cancel();
 	    gameTimer.cancel();
 	    if (!isRegularStop) {
-            matchField.stopActing();
+            matchField.stopTimer();
         }
     }
 

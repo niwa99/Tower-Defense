@@ -1,7 +1,5 @@
 package de.dhbw.map.matchfield;
 
-import android.view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -26,7 +24,7 @@ public class MatchField {
 	private boolean isGameOver = false;
 
 	//responsible for all enemy movements
-	private Timer enemiesTimer = new Timer();
+	private Timer matchFieldTimer = new Timer();
 	
 	public MatchField(GameActivity gameActivity) {
 		this.gameActivity = gameActivity;
@@ -66,7 +64,7 @@ public class MatchField {
 				}
 			};
 			enemy.setTimerTask(timerTask);
-			enemiesTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
+			matchFieldTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
 	}
 
 	/**
@@ -79,11 +77,24 @@ public class MatchField {
 				public void run() {
 					if (enemies.size() > 0) {
 						tower.fire(enemies);
+						tower.setLastTimeActionMillis(System.currentTimeMillis());
 					}
 				}
 			};
 			tower.setTask(timerTask);
-			enemiesTimer.scheduleAtFixedRate(timerTask, 1000, tower.getFireRate() * 1000);
+			matchFieldTimer.scheduleAtFixedRate(timerTask, tower.getDelay(), tower.getFireRate() * 1000);
+	}
+
+	public void pauseTimers(){
+		final long time = System.currentTimeMillis();
+		towers.stream().forEach(t -> t.calculateDelay(time));
+		matchFieldTimer.cancel();
+	}
+
+	public void continueTimers(){
+		matchFieldTimer = new Timer();
+		enemies.stream().forEach(e -> startEnemyMovement(e));
+		towers.stream().forEach(t -> startTowerFire(t));
 	}
 
 	public void stopTimer(boolean isWinner) {
@@ -96,7 +107,7 @@ public class MatchField {
 	}
 
 	public void stopTimer() {
-		enemiesTimer.cancel();
+		matchFieldTimer.cancel();
 		System.out.println("Game is over");
 	}
 

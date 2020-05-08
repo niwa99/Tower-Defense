@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.ATimerUsage;
 import de.dhbw.map.objects.enemy.Enemy;
 
-public abstract class AWave {
+public abstract class AWave extends ATimerUsage {
     private int count = 0;
     private final int speed;
     private List<Enemy> enemies = new ArrayList<>();
@@ -32,4 +33,9 @@ public abstract class AWave {
     }
 
     public abstract void generate(GameActivity gameActivity);
+
+    @Override
+    public void calculateDelay(long time){
+        setDelay(speed - (time-lastTimeActionMillis));
+    }
 }

@@ -5,10 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.ATimerUsage;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.game.wave.Wave;
 
-public abstract class AMatch {
+public abstract class AMatch extends ATimerUsage {
     private int count = 0;
     private final int waveTime;
     private boolean extendable = true;
@@ -35,12 +36,16 @@ public abstract class AMatch {
         return hasNext() ? Optional.of(waves.get(count++)) : Optional.empty();
     }
 
+    public AWave getCurrent(){
+        return hasNext()? waves.get(count):waves.get(waves.size()-1);
+    }
+
     public boolean hasNext() {
         return waves.size() > count;
     }
 
     public int getCurrentWaveNumber() {
-        return count + 1;
+        return count;
     }
 
     public int getWaveTime() {
@@ -49,5 +54,13 @@ public abstract class AMatch {
 
     public int getStartMoney() {
         return startMoney;
+    }
+
+    @Override
+    public void calculateDelay(long time){
+        setDelay(waveTime*1000 - (time-lastTimeActionMillis));
+        if(hasNext()){
+            waves.get(count).calculateDelay(time);
+        }
     }
 }

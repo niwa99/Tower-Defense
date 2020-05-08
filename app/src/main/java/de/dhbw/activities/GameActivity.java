@@ -179,7 +179,12 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
-        buttonBackToMenu.setOnClickListener(view -> returnToMainMenu());
+        buttonBackToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                game.openSettings();
+            }
+        });
 
         mapLayout = findViewById(R.id.map);
 
@@ -191,6 +196,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
             game.start();
         }
     }
+
 
     public void returnToMainMenu() {
         game.stop(false);

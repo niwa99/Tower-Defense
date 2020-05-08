@@ -9,13 +9,14 @@ import java.util.stream.Collectors;
 import java.lang.Math;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.ATimerUsage;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 import de.dhbw.util.SortingUtil;
 import de.dhbw.map.structure.Field;
 
-public abstract class Tower {
+public abstract class Tower extends ATimerUsage {
 	private SortingUtil sortingUtil = new SortingUtil();
 	
 	private String label;
@@ -163,5 +164,10 @@ public abstract class Tower {
 
 	public Position getPosition() {
 		return new Position(x, y);
+	}
+
+	@Override
+	public void calculateDelay(long time){
+		setDelay(fireRate*1000 - (time-lastTimeActionMillis));
 	}
 }

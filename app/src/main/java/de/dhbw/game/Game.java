@@ -81,6 +81,7 @@ public class Game {
     public void stop(boolean isRegularStop) {
         waveTimer.cancel();
         gameTimer.cancel();
+        countDownTimer.stopTimer();
         if (!isRegularStop) {
             matchField.stopTimer();
         }
@@ -134,32 +135,34 @@ public class Game {
             gameTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (match.hasNext()) {
+                    Optional<AWave> wave = match.next();
+                    if(wave.isPresent()){
                         startWave(match.next().get(), match.getWaveTime());
-                        if (!match.hasNext()) {
-                            lastWaveOut = true;
-                        }
-                    } else {
+                    }
+                    if (!match.hasNext()) {
                         lastWaveOut = true;
                     }
                 }
             }, delay);
+        }else{
+            lastWaveOut = true;
         }
     }
 
     private void startWave(AWave wave, int seconds) {
+	    System.out.println("test ------------>" + seconds);
         //timer
 	    waveTimer.cancel();
 	    waveTimer = new Timer();
         countDownTimer.timer(seconds);
         
         //status
-        currentWaveNumber = match.getCurrentWaveNumber();
+        currentWaveNumber = match.getCurrentWaveNumber()+1;
         updateStatusBar();
 
         //pause actions
         match.setLastTimeActionMillis(System.currentTimeMillis());
-        match.setDelay(0);
+        match.setDelay(seconds*1000);
 
         //next wave
         startNextWave(seconds*1000);
@@ -377,7 +380,11 @@ public class Game {
             }
         };
 
-        View.OnClickListener spawnFieldListener = view -> startNextWave(0);
+        View.OnClickListener spawnFieldListener = view -> {
+            if(lastEnemyOfWaveSpawned && !lastWaveOut){
+                startNextWave(0);
+            }
+        };
 
         LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
         mapStructure.getFields().stream().forEach(field -> {

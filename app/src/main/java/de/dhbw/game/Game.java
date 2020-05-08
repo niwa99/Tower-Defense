@@ -49,6 +49,7 @@ public class Game {
     //responsible for status bar timer
     private final StatusBarCountDownTimer countDownTimer;
 
+    private boolean toggleSound = false;
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
     private IMoneyListener moneyListener = null;
@@ -89,7 +90,7 @@ public class Game {
 
     public void openSettings(){
         Intent intent = new Intent(gameActivity, MenuSettings.class);
-        MenuSettings.game = this;
+        MenuSettings.gameActivity = gameActivity;
         matchField.pauseTimers();
         pauseTimers();
         gameActivity.startActivity(intent);
@@ -307,6 +308,14 @@ public class Game {
 
     public void increaseMoneySpent(int increase) {
 	    moneySpent += increase;
+    }
+
+    public void setToggleSound(boolean toggle){
+	    this.toggleSound=toggle;
+    }
+
+    public boolean getToggleSound(){
+	    return toggleSound;
     }
 
     public void updateStatisticsIfHighScore() {

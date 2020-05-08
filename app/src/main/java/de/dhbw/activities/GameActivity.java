@@ -2,6 +2,7 @@ package de.dhbw.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
     private View mContentView;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     //status bar
     private TextView textLifePoints;
@@ -203,6 +205,10 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         Intent intentMenu = new Intent(GameActivity.this, MainActivity.class);
         startActivity(intentMenu);
         finish();
+    }
+
+    public MediaPlayer getMediaPlayer(){
+        return mediaPlayer;
     }
 
     public FrameLayout getMapFrameLayout() {

@@ -12,7 +12,7 @@ public class PreferenceManager {
     }
 
     public enum Settings {
-        TITLE_SOUND, INGAME_SOUND, ANIMATIONS;
+        MUSIC, INGAME_SOUND, ANIMATIONS;
     }
 
     private static PreferenceManager preferenceManager;

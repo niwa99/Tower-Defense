@@ -7,15 +7,17 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
+import java.util.Collections;
 
+import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.DefTower;
 import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.structure.Field;
 import de.dhbw.util.Position;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -23,33 +25,34 @@ import static org.mockito.Mockito.mock;
 public class TowerTest {
 
     @Mock
-    ImageView imageDummy = mock(ImageView.class);
+    private ImageView imageDummy = mock(ImageView.class);
+    private GameActivity dummyGameActivity = mock(GameActivity.class);
 
     @Test
-    public void towerKillsEnemyIfItsInRange() {
+    public void towerRecognizesEnemyIfItsInRange() {
         //arrange
-        Tower tower = new DefTower("t1", new Position(0, 0), 1);
-        Enemy enemy = new Tank("tank", 1);
+        Tower tower = new DefTower("t1", new Field(), 1, imageDummy, dummyGameActivity);
+        Enemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
         enemy.moveToPosition(new Position(50, 50));
 
         //act
-        tower.fire(Arrays.asList(enemy));
+        Enemy recognizedEnemy = tower.getNearestEnemy(Collections.singletonList(enemy));
 
         //assert
-        assertFalse(enemy.isAlive());
+        assertEquals(enemy, recognizedEnemy);
     }
 
     @Test
     public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        Tower tower = new DefTower("t1", new Position(0, 0), 1);
-        Enemy enemy = new Tank("tank", 1);
+        Tower tower = new DefTower("t1", new Field(), 1, imageDummy, dummyGameActivity);
+        Enemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
         enemy.moveToPosition(new Position(150, 150));
 
         //act
-        tower.fire(Arrays.asList(enemy));
+        Enemy recognizedEnemy = tower.getNearestEnemy(Collections.singletonList(enemy));
 
         //assert
-        assertTrue(enemy.isAlive());
+        assertEquals(enemy, recognizedEnemy);
     }
 }

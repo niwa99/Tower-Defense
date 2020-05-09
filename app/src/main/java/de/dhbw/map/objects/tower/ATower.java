@@ -1,5 +1,7 @@
 package de.dhbw.map.objects.tower;
 
+import android.widget.ImageView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,7 @@ import de.dhbw.util.Position;
 import de.dhbw.util.SortingUtil;
 import de.dhbw.map.structure.Field;
 
-public abstract class Tower extends ATimerUsage {
+public abstract class ATower extends ATimerUsage {
 	private SortingUtil sortingUtil = new SortingUtil();
 	
 	private String label;
@@ -25,6 +27,7 @@ public abstract class Tower extends ATimerUsage {
 	protected int damage;
 	private int range;
 	private int fireRate;
+	private ImageView baseImage;
 	private int x;
 	private int y;
 	private Field field;
@@ -32,7 +35,7 @@ public abstract class Tower extends ATimerUsage {
 	protected Enemy targetedEnemy;
 	protected GameActivity gameActivity;
 	
-	public Tower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
+	public ATower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
 		this.label = label;
 		this.id = id;
 		this.costs = costs;
@@ -64,6 +67,14 @@ public abstract class Tower extends ATimerUsage {
 	
 	public boolean isEnemyInRange(Enemy enemy) {	
 		return getDistance(enemy.getPositionX(), enemy.getPositionY()) < range;
+	}
+
+	public void setBaseImage(ImageView image){
+		this.baseImage=image;
+	}
+
+	public ImageView getBaseImage(){
+		return baseImage;
 	}
 
 	public Field getField() {

@@ -11,9 +11,13 @@ public class Constants {
 
     //Drawables
     public static final int DRAWABLE_BULLET = R.drawable.bullet;
+    public static final int DRAWABLE_BULLET_BOOMBASTIC = R.drawable.tower_boombastic_bullet;
     public static final int DRAWABLE_TANK = R.drawable.tank;
     public static final int DRAWABLE_TANK_HITTED = R.drawable.tank_hitted;
-    public static final int DRAWABLE_TOWER = R.drawable.tower;
+    public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower;
+    public static final int DRAWABLE_TOWER_BOOMBASTIC = R.drawable.tower_boombastic_complete;
+    public static final int DRAWABLE_TOWER_BOOMBASTIC_BASE = R.drawable.tower_boombastic_base;
+    public static final int DRAWABLE_TOWER_BOOMBASTIC_HEAD = R.drawable.tower_boombastic_head;
     public static final int DRAWABLE_FIELD_TRANSPARENT = R.drawable.transparent_background;
     public static final int DRAWABLE_FIELD_ON_CLICK_PLUS = R.drawable.button_plus_background;
     public static final int DRAWABLE_PATH_HORIZONTAL = R.drawable.path_horizontal;
@@ -38,13 +42,19 @@ public class Constants {
     public static final int AMOUNT_COLUMNS = 11;
 
 
-    //Def-Tower Parameters
-    public static final int DEF_TOWER_LEVEL_1_COSTS = 10;
-    public static final int DEF_TOWER_LEVEL_1_DAMAGE = 1;
-    public static final int DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS = 450;
-    public static final int DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS = 3;
+    //TowerArtillery Parameters
+    public static final int TOWER_ARTILLERY_LEVEL_1_COSTS = 10;
+    public static final int TOWER_ARTILLERY_LEVEL_1_DAMAGE = 1;
+    public static final int TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS = 450;
+    public static final int TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS = 3;
+    public static final LinearLayout.LayoutParams TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
-    public static final LinearLayout.LayoutParams DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
+    //TowerBoombastic Parameters
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_COSTS = 50;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_DAMAGE = 5;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS = 600;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS = 5;
+    public static final LinearLayout.LayoutParams TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 
     //Tank Parameters

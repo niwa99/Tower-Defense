@@ -7,6 +7,7 @@ import de.dhbw.game.wave.WaveComposition;
 
 public class EasyMatch extends AMatch {
     private static final int waveTime = 45;
+    private static final int startMoney = 100;
     private static WaveComposition firstWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 8);
     private static WaveComposition firstWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 2);
     private static WaveComposition secondWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 5);
@@ -14,7 +15,7 @@ public class EasyMatch extends AMatch {
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
 
     public EasyMatch() {
-        super(waveTime, 25);
+        super(waveTime, startMoney);
     }
 
     @Override

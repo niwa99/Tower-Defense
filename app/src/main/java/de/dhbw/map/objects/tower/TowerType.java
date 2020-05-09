@@ -1,14 +1,16 @@
 package de.dhbw.map.objects.tower;
 
-import static de.dhbw.util.Constants.DRAWABLE_TOWER;
-import static de.dhbw.util.Constants.DEF_TOWER_LEVEL_1_COSTS;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC;
+import static de.dhbw.util.Constants.TOWER_ARTILLERY_LEVEL_1_COSTS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_COSTS;
 
 public enum TowerType {
-    ARTILLERY("Artillery", DRAWABLE_TOWER, DEF_TOWER_LEVEL_1_COSTS),
-    FREEZER("Freezer", DRAWABLE_TOWER, 200),
-    BOOMBASTIC("Gun", DRAWABLE_TOWER, 50),
-    PLASMARIZER("Plasmarizer", DRAWABLE_TOWER, DEF_TOWER_LEVEL_1_COSTS),
-    ASSAULTLASER("Assaultlaser", DRAWABLE_TOWER, DEF_TOWER_LEVEL_1_COSTS);
+    ARTILLERY("Artillery", DRAWABLE_TOWER_ARTILLERY, TOWER_ARTILLERY_LEVEL_1_COSTS),
+    FREEZER("Freezer", DRAWABLE_TOWER_ARTILLERY, 20),
+    BOOMBASTIC("Boombastic", DRAWABLE_TOWER_BOOMBASTIC, TOWER_BOOMBASTIC_LEVEL_1_COSTS),
+    PLASMARIZER("Plasmarizer", DRAWABLE_TOWER_ARTILLERY, TOWER_ARTILLERY_LEVEL_1_COSTS),
+    ASSAULTLASER("Assaultlaser", DRAWABLE_TOWER_ARTILLERY, TOWER_ARTILLERY_LEVEL_1_COSTS);
 
     private String type;
     private int drawable;

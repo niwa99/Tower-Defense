@@ -11,7 +11,7 @@ import java.util.Optional;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -19,7 +19,7 @@ public class MatchField {
 
 	private final GameActivity gameActivity;
 	private List<Enemy> enemies;
-	private List<Tower> towers;
+	private List<ATower> towers;
 
 	private boolean isGameOver = false;
 
@@ -32,7 +32,8 @@ public class MatchField {
 		towers = new ArrayList<>();
 	}
 	
-	public void addTower(Tower tower) {
+	public void addTower(ATower tower) {
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(tower.getBaseImage()));
 		towers.add(tower);
 		startTowerFire(tower);
 		gameActivity.getGame().increaseNumberOfBuiltTowers(1);
@@ -71,7 +72,7 @@ public class MatchField {
 	 * all towers are shooting in an own thread. The speed is defined by the time this task is repeated.
 	 * int fireRate defines how much seconds the tower sleeps between two shoots
 	 */
-	public void startTowerFire(Tower tower) {
+	public void startTowerFire(ATower tower) {
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
@@ -160,16 +161,16 @@ public class MatchField {
 		}
 	}
 
-	private Optional<Tower> getTower(UUID towerUUID) {
+	private Optional<ATower> getTower(UUID towerUUID) {
 		return towers.stream().filter(tower -> tower.getId() == towerUUID).findAny();
 	}
 
-	public Optional<Tower> getTower(Field field) {
+	public Optional<ATower> getTower(Field field) {
 		return towers.stream().filter(t -> t.getField().equals(field)).findAny();
 	}
 
 	private boolean removeTower(UUID towerUUID) {
-		Optional<Tower> tower = getTower(towerUUID);
+		Optional<ATower> tower = getTower(towerUUID);
 		if (tower.isPresent()) {
 			towers.remove(tower.get());
 			return true;
@@ -177,7 +178,7 @@ public class MatchField {
 		return false;
 	}
 
-	public void removeTower(Tower tower) {
+	public void removeTower(ATower tower) {
 		towers.remove(tower);
 		tower.getTask().cancel();
 	}

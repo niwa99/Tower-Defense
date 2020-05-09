@@ -13,8 +13,8 @@ import java.util.List;
 
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
-import de.dhbw.map.objects.tower.DefTower;
-import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.TowerArtillery;
+import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.util.Position;
 
 import static org.junit.Assert.assertTrue;
@@ -31,7 +31,7 @@ public class TowerRotationTest {
         //arrange
         List<Enemy> enemy = new ArrayList<>();
         enemy.add(new Tank("tank1",1, dummyImage));
-        Tower tower = new DefTower("t1", new Position(2, 3), 1, dummyImage);
+        ATower tower = new TowerArtillery("t1", new Position(2, 3), 1, dummyImage);
 
         //act
         enemy.get(0).moveTo(3,3);

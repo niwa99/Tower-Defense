@@ -11,8 +11,8 @@ import java.util.Arrays;
 
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
-import de.dhbw.map.objects.tower.DefTower;
-import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.ATower;
+import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.util.Position;
 
 import static org.junit.Assert.assertFalse;
@@ -28,7 +28,7 @@ public class TowerTest {
     @Test
     public void towerKillsEnemyIfItsInRange() {
         //arrange
-        Tower tower = new DefTower("t1", new Position(0, 0), 1);
+        ATower tower = new TowerArtillery("t1", new Position(0, 0), 1);
         Enemy enemy = new Tank("tank", 1);
         enemy.moveToPosition(new Position(50, 50));
 
@@ -42,7 +42,7 @@ public class TowerTest {
     @Test
     public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        Tower tower = new DefTower("t1", new Position(0, 0), 1);
+        ATower tower = new TowerArtillery("t1", new Position(0, 0), 1);
         Enemy enemy = new Tank("tank", 1);
         enemy.moveToPosition(new Position(150, 150));
 

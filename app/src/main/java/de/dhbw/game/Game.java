@@ -22,8 +22,9 @@ import de.dhbw.game.popups.MenuSettings;
 import de.dhbw.game.popups.MenuTowerSelection;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.map.objects.tower.DefTower;
-import de.dhbw.map.objects.tower.Tower;
+import de.dhbw.map.objects.tower.ATower;
+import de.dhbw.map.objects.tower.TowerArtillery;
+import de.dhbw.map.objects.tower.TowerBoombastic;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
@@ -196,12 +197,17 @@ public class Game {
         if (subMoney(type.getPrice()) && getMapStructure().getField(pos).getFieldDescription() == FieldDescription.FREE) {
             switch(type) {
                 case ARTILLERY:
-                    DefTower newTower = new DefTower("tower1", getMapStructure().getField(pos), 1, gameActivity);
-                    getMatchField().addTower(newTower);
+                    TowerArtillery newArtillery = new TowerArtillery("tower1", getMapStructure().getField(pos), 1, gameActivity);
+                    getMatchField().addTower(newArtillery);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
                 case FREEZER:
                 case BOOMBASTIC:
+                    TowerBoombastic newBoombastic = new TowerBoombastic("boombastic", getMapStructure().getField(pos), 1, gameActivity);
+                    getMatchField().addTower(newBoombastic);
+                    getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
+                    break;
+
                 case PLASMARIZER:
                 case ASSAULTLASER:
                     break;
@@ -209,10 +215,10 @@ public class Game {
         }
     }
 
-    public void sellTower(Tower tower, Field field) {
+    public void sellTower(ATower tower, Field field) {
 	    addMoney((int) Math.round(tower.getCosts() * 0.5));
         matchField.removeTower(tower);
-        gameActivity.getMapFrameLayout().removeView(((DefTower) tower).getDefTowerImage());
+        gameActivity.getMapFrameLayout().removeView(tower.getBaseImage());
         field.setFieldDescription(FieldDescription.FREE);
     }
 
@@ -391,7 +397,7 @@ public class Game {
                         button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
                     }
                 } else if (field.getFieldDescription() == FieldDescription.TOWER) {
-                    Optional<Tower> tower = matchField.getTower(field);
+                    Optional<ATower> tower = matchField.getTower(field);
                     if (tower.isPresent()) {
                         sellTower(tower.get(), field);
                     }

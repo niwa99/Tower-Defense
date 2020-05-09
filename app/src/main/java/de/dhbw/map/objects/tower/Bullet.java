@@ -19,13 +19,13 @@ public class Bullet {
     private int y;
     private Position targetPos;
     private Enemy targetEnemy;
-    private DefTower tower;
+    private ATower tower;
     private GameActivity gameActivity;
 
-    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, GameActivity gameActivity) {
+    public Bullet(Position spawnPosition, Enemy targetedEnemy, ATower tower, int bulletImageID, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
         bulletImage = new ImageView(gameActivity);
-        bulletImage.setImageResource(DRAWABLE_BULLET);
+        bulletImage.setImageResource(bulletImageID);
         bulletImage.setLayoutParams(BULLET_SIZE_PARAMS);
 
         this.targetEnemy = targetedEnemy;

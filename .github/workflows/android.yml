@@ -9,5 +9,5 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Gradle Build
-      run: ./gradlew build
+    - name: Android Github Action
+      uses: Vukan-Markovic/Github-Android-Action@1.2

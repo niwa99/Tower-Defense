@@ -143,19 +143,21 @@ public class MatchField {
 	}
 
 	private void explode(Enemy enemy) {
-		GifImageView gif = new GifImageView(gameActivity);
-		gif.setX(enemy.getPositionX()-800);
-		gif.setY(enemy.getPositionY()-450);
-		gif.setScaleX(0.2f);
-		gif.setScaleY(0.2f);
-		gif.setImageResource(R.drawable.explosion_gif);
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
-			}
-		}, 500);
+		if(gameActivity.getGame().isAnimationOn()) {
+			GifImageView gif = new GifImageView(gameActivity);
+			gif.setX(enemy.getPositionX() - 800);
+			gif.setY(enemy.getPositionY() - 450);
+			gif.setScaleX(0.2f);
+			gif.setScaleY(0.2f);
+			gif.setImageResource(R.drawable.explosion_gif);
+			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
+			new Timer().schedule(new TimerTask() {
+				@Override
+				public void run() {
+					gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
+				}
+			}, 500);
+		}
 	}
 
 	private Optional<Tower> getTower(UUID towerUUID) {

@@ -9,14 +9,17 @@ import android.widget.Button;
 
 import androidx.viewpager.widget.ViewPager;
 import de.dhbw.R;
+import static de.dhbw.util.Constants.ICON_MUSIC_OFF;
+import static de.dhbw.util.Constants.ICON_MUSIC_ON;
 import de.dhbw.game.Difficulty;
-import de.dhbw.game.buttons.ToggleMusicButton;
+import de.dhbw.game.settings.ISettingsManager;
+import de.dhbw.game.settings.SettingsToggleButton;
 import de.dhbw.util.DifficultyFragmentAdapter;
 import de.dhbw.util.PreferenceManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ISettingsManager{
 
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +35,26 @@ public class MainActivity extends AppCompatActivity {
         Button playButton = findViewById(R.id.playButtonMain);
         playButton.setOnClickListener(view -> {
             Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+            mediaPlayer.reset();
             gameIntent.putExtra(getString(R.string.difficulty), Difficulty.asDifficulty(viewPager.getCurrentItem()));
             startActivity(gameIntent);
+            finish();
         });
 
         //Setup MediaPlayer for music on the MainActivity
         mediaPlayer = MediaPlayer.create(this, R.raw.tower_defense_title_soundtrack);
-        Button soundButton = findViewById(R.id.button_title_sound);
-        new ToggleMusicButton(this, soundButton, mediaPlayer);
+        Button toggleMusicButton = findViewById(R.id.button_title_sound);
+        new SettingsToggleButton(this, toggleMusicButton , PreferenceManager.Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
+    }
+
+    @Override
+    public void toggle(PreferenceManager.Settings setting, boolean on) {
+        if(setting==PreferenceManager.Settings.MUSIC){
+            if(on){
+                mediaPlayer.start();
+            }else{
+                mediaPlayer.pause();
+            }
+        }
     }
 }

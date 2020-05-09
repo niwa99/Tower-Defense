@@ -9,9 +9,20 @@ import androidx.annotation.Nullable;
 
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
-import de.dhbw.game.buttons.ToggleMusicButton;
+import de.dhbw.game.settings.ISettingsManager;
+import de.dhbw.game.settings.SettingsToggleButton;
+import de.dhbw.util.PreferenceManager;
 
-public class MenuSettings extends AMenu {
+import static de.dhbw.util.Constants.ICON_ANIMATION_OFF;
+import static de.dhbw.util.Constants.ICON_ANIMATION_ON;
+import static de.dhbw.util.Constants.ICON_MUSIC_OFF;
+import static de.dhbw.util.Constants.ICON_MUSIC_ON;
+import static de.dhbw.util.Constants.ICON_SOUND_OFF;
+import static de.dhbw.util.Constants.ICON_SOUND_ON;
+import static de.dhbw.util.Constants.STATUS_OFF;
+import static de.dhbw.util.Constants.STATUS_ON;
+
+public class MenuSettings extends AMenu implements ISettingsManager {
     public static GameActivity gameActivity;
     private static LinearLayout menuSettingsLayout;
 
@@ -40,14 +51,32 @@ public class MenuSettings extends AMenu {
         textToggleAnimation.setText("Animation");
         textBackToMainMenu.setText("Main Menu");
 
-        new ToggleMusicButton(gameActivity, buttonToggleMusic, gameActivity.getMediaPlayer());
-
-
+        new SettingsToggleButton(this, buttonToggleMusic, PreferenceManager.Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
+        new SettingsToggleButton(this, buttonToggleSound, PreferenceManager.Settings.INGAME_SOUND, ICON_SOUND_ON, ICON_SOUND_OFF);
+        new SettingsToggleButton(this, buttonToggleAnimation, PreferenceManager.Settings.ANIMATIONS, ICON_ANIMATION_ON, ICON_ANIMATION_OFF);
 
         buttonBackToMainMenu.setOnClickListener( view -> {
             gameActivity.returnToMainMenu();
         });
+    }
 
+    @Override
+    public void toggle(PreferenceManager.Settings setting, boolean on){
+        switch (setting){
+            case MUSIC:
+                if(on){
+                    gameActivity.getMediaPlayer().start();
+                }else{
+                    gameActivity.getMediaPlayer().start();
+                }
+                break;
+            case INGAME_SOUND:
+                gameActivity.getGame().setIngameSound(on);
+                break;
+            case ANIMATIONS:
+                gameActivity.getGame().setAnimationOn(on);
+                break;
+        }
     }
 
     @Override

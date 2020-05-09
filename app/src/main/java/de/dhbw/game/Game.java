@@ -49,7 +49,8 @@ public class Game {
     //responsible for status bar timer
     private final StatusBarCountDownTimer countDownTimer;
 
-    private boolean toggleSound = false;
+    private boolean isSoundOn = false;
+    private boolean isAnimationOn = false;
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
     private IMoneyListener moneyListener = null;
@@ -310,13 +311,22 @@ public class Game {
 	    moneySpent += increase;
     }
 
-    public void setToggleSound(boolean toggle){
-	    this.toggleSound=toggle;
+    public void setIngameSound(boolean on){
+	    this.isSoundOn = on;
     }
 
-    public boolean getToggleSound(){
-	    return toggleSound;
+    public boolean isSoundOn(){
+	    return isSoundOn;
     }
+
+    public void setAnimationOn(boolean on){
+	    this.isAnimationOn=on;
+    }
+
+    public boolean isAnimationOn(){
+	    return isAnimationOn;
+    }
+
 
     public void updateStatisticsIfHighScore() {
         if (match instanceof EasyMatch) {

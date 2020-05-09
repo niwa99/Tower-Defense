@@ -33,7 +33,7 @@ public class EnemyTest {
         Enemy enemy = new Tank("tank1",1, imageDummy, dummyGameActivity);
 
         //act
-        enemy.reduceHealthPoints(5);
+        enemy.reduceHealthPoints(2);
 
         //assert
         assertTrue(enemy.isAlive());

@@ -2,7 +2,6 @@ package de.dhbw.game;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -19,6 +18,7 @@ import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
 import de.dhbw.game.match.HardMatch;
 import de.dhbw.game.match.MediumMatch;
+import de.dhbw.game.popups.MenuSettings;
 import de.dhbw.game.popups.MenuTowerSelection;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
@@ -47,12 +47,13 @@ public class Game {
     //responsible for spawning enemies in waves
     private Timer waveTimer =  new Timer();
     //responsible for status bar timer
-    private CountDownTimer countDownTimer;
+    private final StatusBarCountDownTimer countDownTimer;
 
+    private boolean isSoundOn = false;
+    private boolean isAnimationOn = false;
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
     private IMoneyListener moneyListener = null;
-
 
     private int lifePoints = 100;
     private int money = 0;
@@ -65,10 +66,9 @@ public class Game {
 
 	public Game(GameActivity gameActivity) {
 	    this.gameActivity = gameActivity;
-
 	    mapStructure = new MapStructure();
         matchField = new MatchField(gameActivity);
-
+        countDownTimer = new StatusBarCountDownTimer(gameActivity);
         generateButtonsOnMap();
 	}
 
@@ -78,6 +78,35 @@ public class Game {
 
     public MatchField getMatchField() {
 	    return matchField;
+    }
+
+    public void stop(boolean isRegularStop) {
+        waveTimer.cancel();
+        gameTimer.cancel();
+        countDownTimer.stopTimer();
+        if (!isRegularStop) {
+            matchField.stopTimer();
+        }
+    }
+
+    public void openSettings(){
+        Intent intent = new Intent(gameActivity, MenuSettings.class);
+        MenuSettings.gameActivity = gameActivity;
+        matchField.pauseTimers();
+        pauseTimers();
+        gameActivity.startActivity(intent);
+    }
+
+    public void pauseTimers(){
+        final long time = System.currentTimeMillis();
+        match.calculateDelay(time);
+        countDownTimer.stopTimer();
+        waveTimer.cancel();
+        gameTimer.cancel();
+    }
+
+    public void continueTimers(){
+        startWave(match.getCurrent(), Math.round(match.getDelay()/1000));
     }
 
 	public void init(Difficulty difficulty) {
@@ -98,52 +127,62 @@ public class Game {
     public void start() {
 	    this.money = match.getStartMoney();
 	    updateStatusBar();
-	    if (match.hasNext()) {
+	    startNextWave(0);
+    }
+
+    public void startNextWave(long delay){
+        if (match.hasNext()) {
             gameTimer.cancel();
             gameTimer = new Timer();
-            prepareCountDown(match.getWaveTime());
-            gameTimer.scheduleAtFixedRate(new TimerTask() {
+            gameTimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (match.hasNext()) {
-                        lastEnemyOfWaveSpawned = false;
-                        currentWaveNumber = match.getCurrentWaveNumber();
-                        updateStatusBar();
-                        countDownTimer.cancel();
-                        startNextWave(match.next().get());
-                        if (!match.hasNext()) {
-                            lastWaveOut = true;
-                        }
-                    } else {
+                    Optional<AWave> wave = match.next();
+                    if(wave.isPresent()){
+                        startWave(match.next().get(), match.getWaveTime());
+                    }
+                    if (!match.hasNext()) {
                         lastWaveOut = true;
                     }
                 }
-            }, 0, match.getWaveTime() * 1000);
+            }, delay);
+        }else{
+            lastWaveOut = true;
         }
     }
 
-	public void stop(boolean isRegularStop) {
+    private void startWave(AWave wave, int seconds) {
+	    System.out.println("test ------------>" + seconds);
+        //timer
 	    waveTimer.cancel();
-	    gameTimer.cancel();
-	    if (!isRegularStop) {
-            matchField.stopTimer();
-        }
-    }
-
-    private void startNextWave(AWave wave) {
 	    waveTimer = new Timer();
-        countDownTimer.start();
+        countDownTimer.timer(seconds);
+        
+        //status
+        currentWaveNumber = match.getCurrentWaveNumber()+1;
+        updateStatusBar();
+
+        //pause actions
+        match.setLastTimeActionMillis(System.currentTimeMillis());
+        match.setDelay(seconds*1000);
+
+        //next wave
+        startNextWave(seconds*1000);
+        
         waveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                lastEnemyOfWaveSpawned = false;
+                
                 if (wave.hasNext()) {
                     matchField.addEnemy(wave.next());
                 } else {
                     lastEnemyOfWaveSpawned = true;
-                    this.cancel();
+                    cancel();
                 }
+                wave.setLastTimeActionMillis(System.currentTimeMillis());
             }
-        }, 0, wave.getWaveSpeed());
+        }, wave.getDelay(), wave.getWaveSpeed());
     }
 
     public void createNewTowerOnField(Position pos) {
@@ -252,24 +291,6 @@ public class Game {
 	    gameActivity.runOnUiThread(() -> builder.create().show());
     }
 
-    private void prepareCountDown(int sec) {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-        }
-        this.countDownTimer = new CountDownTimer(sec * 1000, 1000) {
-
-            public void onTick(long millisUntilFinished) {
-                gameActivity.setWaveTimeRemaining(String.valueOf(Math.round(millisUntilFinished / 1000)));
-            }
-
-            public void onFinish() {
-                if (allEnemiesSpawned()) {
-                    gameActivity.setWaveTimeRemaining("LAST");
-                }
-            }
-        };
-    }
-
     public void setMenu(IMoneyListener listener) {
 	    moneyListener = listener;
     }
@@ -289,6 +310,23 @@ public class Game {
     public void increaseMoneySpent(int increase) {
 	    moneySpent += increase;
     }
+
+    public void setIngameSound(boolean on){
+	    this.isSoundOn = on;
+    }
+
+    public boolean isSoundOn(){
+	    return isSoundOn;
+    }
+
+    public void setAnimationOn(boolean on){
+	    this.isAnimationOn=on;
+    }
+
+    public boolean isAnimationOn(){
+	    return isAnimationOn;
+    }
+
 
     public void updateStatisticsIfHighScore() {
         if (match instanceof EasyMatch) {
@@ -361,7 +399,11 @@ public class Game {
             }
         };
 
-        View.OnClickListener spawnFieldListener = view -> start();
+        View.OnClickListener spawnFieldListener = view -> {
+            if(lastEnemyOfWaveSpawned && !lastWaveOut){
+                startNextWave(0);
+            }
+        };
 
         LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
         mapStructure.getFields().stream().forEach(field -> {

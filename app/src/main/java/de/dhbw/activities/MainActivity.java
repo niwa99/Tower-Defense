@@ -7,20 +7,19 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.Button;
 
-import java.util.Objects;
-
 import androidx.viewpager.widget.ViewPager;
 import de.dhbw.R;
+import static de.dhbw.util.Constants.ICON_MUSIC_OFF;
+import static de.dhbw.util.Constants.ICON_MUSIC_ON;
 import de.dhbw.game.Difficulty;
+import de.dhbw.game.settings.ISettingsManager;
+import de.dhbw.game.settings.SettingsToggleButton;
 import de.dhbw.util.DifficultyFragmentAdapter;
 import de.dhbw.util.PreferenceManager;
 
-import static de.dhbw.util.Constants.STATUS_OFF;
-import static de.dhbw.util.Constants.STATUS_ON;
+public class MainActivity extends AppCompatActivity implements ISettingsManager{
 
-public class MainActivity extends AppCompatActivity {
-
-    private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayer = new MediaPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,47 +35,26 @@ public class MainActivity extends AppCompatActivity {
         Button playButton = findViewById(R.id.playButtonMain);
         playButton.setOnClickListener(view -> {
             Intent gameIntent = new Intent(MainActivity.this, GameActivity.class);
+            mediaPlayer.reset();
             gameIntent.putExtra(getString(R.string.difficulty), Difficulty.asDifficulty(viewPager.getCurrentItem()));
             startActivity(gameIntent);
+            finish();
         });
 
         //Setup MediaPlayer for music on the MainActivity
         mediaPlayer = MediaPlayer.create(this, R.raw.tower_defense_title_soundtrack);
-        initTitleSounds();
+        Button toggleMusicButton = findViewById(R.id.button_title_sound);
+        new SettingsToggleButton(this, toggleMusicButton , PreferenceManager.Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
     }
 
-    private void initTitleSounds() {
-
-        Button soundButton = findViewById(R.id.button_title_sound);
-        soundButton.setOnClickListener(view -> {
-            if (soundButton.getBackground().getConstantState() == Objects.requireNonNull(getDrawable(R.drawable.sound)).getConstantState() && PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND).equals(STATUS_ON)) {
-                PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_OFF);
-                soundButton.setBackgroundResource(R.drawable.no_sound);
-                mediaPlayer.pause();
-            } else if (soundButton.getBackground().getConstantState() == Objects.requireNonNull(getDrawable(R.drawable.no_sound)).getConstantState() && PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND).equals(STATUS_OFF)) {
-                PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_ON);
-                soundButton.setBackgroundResource(R.drawable.sound);
+    @Override
+    public void toggle(PreferenceManager.Settings setting, boolean on) {
+        if(setting==PreferenceManager.Settings.MUSIC){
+            if(on){
                 mediaPlayer.start();
+            }else{
+                mediaPlayer.pause();
             }
-        });
-
-        //Initial check on MainActivity-Creation if sound should be played
-        String settings_title_sound = PreferenceManager.getSettingsValue(PreferenceManager.Settings.TITLE_SOUND);
-        if (settings_title_sound == null) {
-            PreferenceManager.setSettingsValue(PreferenceManager.Settings.TITLE_SOUND, STATUS_ON);
-            soundButton.setBackgroundResource(R.drawable.sound);
-            startMediaplayer();
-        } else if (settings_title_sound.equals(STATUS_ON)) {
-            soundButton.setBackgroundResource(R.drawable.sound);
-            startMediaplayer();
-        } else if (settings_title_sound.equals(STATUS_OFF)) {
-            soundButton.setBackgroundResource(R.drawable.no_sound);
         }
-    }
-
-    public void startMediaplayer() {
-        mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(100, 100);
-        mediaPlayer.start();
     }
 }

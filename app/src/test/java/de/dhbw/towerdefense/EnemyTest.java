@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
@@ -23,12 +24,13 @@ import static org.mockito.Mockito.mock;
 @RunWith(MockitoJUnitRunner.class)
 public class EnemyTest {
     @Mock
-    ImageView imageDummy = mock(ImageView.class);
+    private ImageView imageDummy = mock(ImageView.class);
+    private GameActivity dummyGameActivity = mock(GameActivity.class);
 
     @Test
     public void ifDamageToEnemyIsLowerThanHP_EnemyShouldBeAlive() {
         //arrange
-        Enemy enemy = new Tank("tank1",1);
+        Enemy enemy = new Tank("tank1",1, imageDummy, dummyGameActivity);
 
         //act
         enemy.reduceHealthPoints(5);
@@ -40,7 +42,7 @@ public class EnemyTest {
     @Test
     public void ifDamageToEnemyHigherThanHP_EnemyShouldBeDead() {
         //arrange
-        Enemy enemy = new Tank("tank1", 1);
+        Enemy enemy = new Tank("tank1", 1, imageDummy, dummyGameActivity);
 
         //act
         enemy.reduceHealthPoints(10);
@@ -51,7 +53,7 @@ public class EnemyTest {
 
     @Test
     public void whenEnemyMoves_ThePositionShouldChange() {
-        Enemy enemy = new Tank("tank", 1);
+        Enemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
         MapStructure map = new MapStructure();
 
         //act

@@ -1,4 +1,4 @@
-package de.dhbw.map.objects.tower;
+package de.dhbw.map.objects.bullet;
 
 import android.widget.ImageView;
 
@@ -7,29 +7,28 @@ import java.util.TimerTask;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
-import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
 
-public class Bullet {
+public abstract class ABullet {
     private ImageView bulletImage;
     private int x;
     private int y;
     private Position targetPos;
-    private Enemy targetEnemy;
-    private ATower tower;
+    protected Enemy targetEnemy;
+    protected int damage;
     private GameActivity gameActivity;
 
-    public Bullet(Position spawnPosition, Enemy targetedEnemy, ATower tower, int bulletImageID, GameActivity gameActivity) {
+    public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
         bulletImage = new ImageView(gameActivity);
         bulletImage.setImageResource(bulletImageID);
         bulletImage.setLayoutParams(BULLET_SIZE_PARAMS);
 
         this.targetEnemy = targetedEnemy;
-        this.tower = tower;
+        this.damage = damage;
 
         setMidpointOfPositions(targetedEnemy.getPosition(), spawnPosition);
         bulletImage.setX(x);
@@ -47,22 +46,24 @@ public class Bullet {
             public void run() {
                 if (move()) {
                     gameActivity.runOnUiThread(() -> {
-                            bulletImage.setX(x);
-                            bulletImage.setY(y);
+                        bulletImage.setX(x);
+                        bulletImage.setY(y);
                     });
                 } else {
                     gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(bulletImage));
                     if (targetEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde
-                        if (targetEnemy instanceof Tank) {
-                            ((Tank) targetEnemy).hit(tower.getDamage());
-                            gameActivity.getGame().getMatchField().removeDeadEnemy(targetEnemy);
-                            System.out.println(targetEnemy.getLabel() + " was shot by " + tower.getDamage() + " and has " + targetEnemy.getHealthPoints() + " hp left");
-                        }
+                        hitEnemy();
+                        //gameActivity.getGame().getMatchField().removeDeadEnemy(targetEnemy);
+                        System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");
                     }
                     timer.cancel();
                 }
             }
             },0, 1000-BULLET_SPEED);
+    }
+
+    protected void hitEnemy(){
+        targetEnemy.hit(damage);
     }
 
     /**

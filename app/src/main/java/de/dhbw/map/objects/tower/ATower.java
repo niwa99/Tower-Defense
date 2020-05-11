@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -28,6 +29,7 @@ public abstract class ATower extends ATimerUsage {
 	private int range;
 	private int fireRate;
 	private ImageView baseImage;
+	protected Optional<ImageView> headImage = Optional.empty();
 	private int x;
 	private int y;
 	private Field field;
@@ -71,6 +73,14 @@ public abstract class ATower extends ATimerUsage {
 
 	public void setBaseImage(ImageView image){
 		this.baseImage=image;
+	}
+
+	public void setHeadImage(ImageView image){
+		this.headImage= Optional.of(image);
+	}
+
+	public Optional<ImageView> getHeadImage(){
+		return headImage;
 	}
 
 	public ImageView getBaseImage(){

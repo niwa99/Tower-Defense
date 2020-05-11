@@ -79,6 +79,6 @@ public class Constants {
 
     //Bullet Parameters
     public static final int BULLET_SPEED = 995; //From 0 to 1000
-
+    public static final int BOMB_RANGE = 100;
     public static final LinearLayout.LayoutParams BULLET_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE/4, FIELD_SIZE/4);
 }

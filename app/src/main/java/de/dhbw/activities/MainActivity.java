@@ -19,7 +19,7 @@ import de.dhbw.util.PreferenceManager;
 
 public class MainActivity extends AppCompatActivity implements ISettingsManager{
 
-    private MediaPlayer mediaPlayer = new MediaPlayer();
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements ISettingsManager{
             if(on){
                 mediaPlayer.start();
             }else{
-                mediaPlayer.pause();
+                if(mediaPlayer.isPlaying()){
+                    mediaPlayer.pause();
+                }
             }
         }
     }

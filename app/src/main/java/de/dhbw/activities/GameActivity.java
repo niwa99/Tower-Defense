@@ -170,7 +170,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setupAndroidFullscreenAndLayout();
 
         //identify status bar TextViews

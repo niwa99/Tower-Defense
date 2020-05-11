@@ -218,7 +218,6 @@ public class Game {
     public void sellTower(ATower tower, Field field) {
 	    addMoney((int) Math.round(tower.getCosts() * 0.5));
         matchField.removeTower(tower);
-        gameActivity.getMapFrameLayout().removeView(tower.getBaseImage());
         field.setFieldDescription(FieldDescription.FREE);
     }
 

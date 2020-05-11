@@ -113,7 +113,7 @@ title __Project TowerDefense - Class Diagram__\n
         }
 
         package de.dhbw.map.objects.tower {
-          class de.dhbw.map.objects.tower.Bullet #orange {
+          class de.dhbw.map.objects.bullet.ABullet #orange {
             - bulletImage : ImageView
             - x : int
             - y : int
@@ -285,9 +285,9 @@ title __Project TowerDefense - Class Diagram__\n
   de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.map.structure.Field : actualField
   de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.util.Direction : direction
   de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.Enemy
-  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.util.Position : targetPos
-  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
-  de.dhbw.map.objects.tower.Bullet o-- de.dhbw.map.objects.tower.TowerArtillery : tower
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.util.Position : targetPos
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.tower.TowerArtillery : tower
   de.dhbw.map.objects.tower.TowerArtillery -up-|> de.dhbw.map.objects.tower.ATower
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.util.SortingUtil : sortingUtil

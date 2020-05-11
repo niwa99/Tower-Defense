@@ -41,28 +41,16 @@
             android:theme="@style/AppTheme.PopUp"
             android:configChanges="orientation"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".game.popups.MenuTowerSelection"
             android:parentActivityName=".game.popups.AMenu"
             android:theme="@style/AppTheme.PopUp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".game.popups.MenuSettings"
             android:parentActivityName=".game.popups.AMenu"
             android:theme="@style/AppTheme.PopUp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

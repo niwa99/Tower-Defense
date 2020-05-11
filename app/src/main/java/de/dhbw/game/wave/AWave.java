@@ -21,7 +21,7 @@ public abstract class AWave extends ATimerUsage {
     }
 
     public boolean hasNext() {
-        return enemies.size() > count;
+        return count<enemies.size();
     }
 
     void addEnemy(Enemy e) {

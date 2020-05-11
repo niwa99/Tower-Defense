@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.bullet.ABullet;
+import de.dhbw.map.objects.bullet.Projectile;
 import de.dhbw.map.objects.enemy.Enemy;
 
 import static de.dhbw.util.Constants.*;
@@ -36,7 +38,7 @@ public class TowerArtillery extends ATower {
 	public boolean fire(List<Enemy> enemies) {
 		defTowerImage.setRotation((float)rotateImage(enemies));
 		if (super.fire(enemies)) {
-			new Bullet(getPosition(), super.targetedEnemy, this, DRAWABLE_BULLET, gameActivity);
+			new Projectile(getPosition(), super.targetedEnemy, this.getDamage(), DRAWABLE_BULLET, gameActivity);
 			return true;
 		}
 		return false;

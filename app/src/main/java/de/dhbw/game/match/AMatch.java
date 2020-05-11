@@ -33,7 +33,7 @@ public abstract class AMatch extends ATimerUsage {
     }
 
     public Optional<AWave> next() {
-        if(!waves.get(count).hasNext()){
+        if(!waves.get(count).hasNext() && hasNext()){
             count++;
         }
         return hasNext() ? Optional.of(waves.get(count)) : Optional.empty();
@@ -44,7 +44,7 @@ public abstract class AMatch extends ATimerUsage {
     }
 
     public boolean hasNext() {
-        return waves.size() > count;
+        return count<waves.size();
     }
 
     public int getCurrentWaveNumber() {
@@ -62,6 +62,6 @@ public abstract class AMatch extends ATimerUsage {
     @Override
     public void calculateDelay(long time){
         setDelay(getDelay() - (time-lastTimeActionMillis));
-        waves.get(count).calculateDelay(time);
+        getCurrent().calculateDelay(time);
     }
 }

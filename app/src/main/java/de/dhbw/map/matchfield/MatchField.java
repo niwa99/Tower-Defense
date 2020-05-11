@@ -1,5 +1,8 @@
 package de.dhbw.map.matchfield;
 
+import android.graphics.Path;
+import android.widget.ImageView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -13,6 +16,7 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
+import de.dhbw.map.structure.MapStructure;
 import pl.droidsonroids.gif.GifImageView;
 
 public class MatchField {
@@ -33,7 +37,15 @@ public class MatchField {
 	}
 	
 	public void addTower(ATower tower) {
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(tower.getBaseImage()));
+		ImageView baseImage = tower.getBaseImage();
+		Optional<ImageView> headImage = tower.getHeadImage();
+		gameActivity.runOnUiThread(() -> {
+			gameActivity.getMapFrameLayout().addView(baseImage);
+			if(headImage.isPresent()){
+				gameActivity.getMapFrameLayout().addView(headImage.get());
+
+			}
+		});
 		towers.add(tower);
 		startTowerFire(tower);
 		gameActivity.getGame().increaseNumberOfBuiltTowers(1);
@@ -60,6 +72,8 @@ public class MatchField {
 						}
 					} else if (enemy.reachedTarget()) {
 						removeEnemiesInTarget(enemy);
+					} else if(!enemy.isAlive()){
+						removeDeadEnemy(enemy);
 					}
 
 				}
@@ -146,8 +160,9 @@ public class MatchField {
 	private void explode(Enemy enemy) {
 		if(gameActivity.getGame().isAnimationOn()) {
 			GifImageView gif = new GifImageView(gameActivity);
-			gif.setX(enemy.getPositionX() - 800);
-			gif.setY(enemy.getPositionY() - 450);
+			gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
+			gif.setX(enemy.getImage().getX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2.2));
+			gif.setY(enemy.getImage().getY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2.2));
 			gif.setScaleX(0.2f);
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
@@ -179,8 +194,18 @@ public class MatchField {
 	}
 
 	public void removeTower(ATower tower) {
-		towers.remove(tower);
 		tower.getTask().cancel();
+		towers.remove(tower);
+
+		ImageView baseImage = tower.getBaseImage();
+		Optional<ImageView> headImage = tower.getHeadImage();
+		gameActivity.runOnUiThread(() -> {
+			gameActivity.getMapFrameLayout().removeView(baseImage);
+			if(headImage.isPresent()){
+				gameActivity.getMapFrameLayout().removeView(headImage.get());
+
+			}
+		});
 	}
 
 	private Optional<Enemy> getEnemy(UUID enemyUUID) {

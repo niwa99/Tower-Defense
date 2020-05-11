@@ -87,6 +87,8 @@ public abstract class Enemy {
 			healthpoints -= damage;
 		}
 	}
+
+	public abstract void hit(int damage);
 	
 	public boolean isAlive() {
 		return isAlive;

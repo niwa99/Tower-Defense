@@ -46,6 +46,7 @@ public class Tank extends Enemy {
 		return false;
 	}
 
+	@Override
 	public void hit(int damage) {
 		super.reduceHealthPoints(damage);
 		gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK_HITTED));

@@ -22,6 +22,7 @@ import de.dhbw.game.match.HardMatch;
 import de.dhbw.game.match.MediumMatch;
 import de.dhbw.game.popups.MenuSettings;
 import de.dhbw.game.popups.MenuTowerSelection;
+import de.dhbw.game.popups.MenuUpgradeAndSell;
 import de.dhbw.game.settings.Settings;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
@@ -182,7 +183,7 @@ public class Game {
 	    waveTimer.cancel();
 	    waveTimer = new Timer();
         countDownTimer.timer(seconds);
-        
+
         //status
         currentWaveNumber = match.getCurrentWaveNumber()+1;
         updateStatusBar();
@@ -193,12 +194,12 @@ public class Game {
 
         //next wave
         startNextWave(seconds*1000);
-        
+
         waveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 lastEnemyOfWaveSpawned = false;
-                
+
                 if (wave.hasNext()) {
                     matchField.addEnemy(wave.next());
                 } else {
@@ -217,17 +218,17 @@ public class Game {
         gameActivity.startActivity(intent);
     }
 
-    public void buildTower(TowerType type, Position pos) {
+    public void buildTower(TowerType type, int level, Position pos) {
         if (subMoney(type.getPrice()) && getMapStructure().getField(pos).getFieldDescription() == FieldDescription.FREE) {
             switch(type) {
                 case ARTILLERY:
-                    TowerArtillery newArtillery = new TowerArtillery("tower1", getMapStructure().getField(pos), 1, gameActivity);
+                    TowerArtillery newArtillery = new TowerArtillery(getMapStructure().getField(pos), level, gameActivity);
                     getMatchField().addTower(newArtillery);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
                 case FREEZER:
                 case BOOMBASTIC:
-                    TowerBoombastic newBoombastic = new TowerBoombastic("boombastic", getMapStructure().getField(pos), 1, gameActivity);
+                    TowerBoombastic newBoombastic = new TowerBoombastic(getMapStructure().getField(pos), level, gameActivity);
                     getMatchField().addTower(newBoombastic);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
@@ -239,10 +240,15 @@ public class Game {
         }
     }
 
-    public void sellTower(ATower tower, Field field) {
-	    addMoney((int) Math.round(tower.getCosts() * 0.5));
-        matchField.removeTower(tower);
-        field.setFieldDescription(FieldDescription.FREE);
+    public void sellTower(Position pos) {
+        Field field = mapStructure.getField(pos);
+        Optional<ATower> tower = matchField.getTower(field);
+        if (tower.isPresent()) {
+            addMoney((int) Math.round(tower.get().getCosts() * 0.5));
+            matchField.removeTower(tower.get());
+            mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
+
+        }
     }
 
 	private void updateStatusBar() {
@@ -424,7 +430,7 @@ public class Game {
                 } else if (field.getFieldDescription() == FieldDescription.TOWER) {
                     Optional<ATower> tower = matchField.getTower(field);
                     if (tower.isPresent()) {
-                        sellTower(tower.get(), field);
+                        openTowerPopup(tower.get(), field);
                     }
                 }
             }
@@ -460,5 +466,31 @@ public class Game {
                 mapButtons.add(fieldButton);
             }
         });
+    }
+
+    public void openTowerPopup(ATower tower, Field field) {
+        Intent intent = new Intent(gameActivity, MenuUpgradeAndSell.class);
+        intent.putExtra(gameActivity.getString(R.string.position), field.getFieldPosition());
+        intent.putExtra(gameActivity.getString(R.string.towerDamage), tower.getDamage());
+        intent.putExtra(gameActivity.getString(R.string.towerRange), tower.getRange());
+        intent.putExtra(gameActivity.getString(R.string.towerFireRate), tower.getFireRate());
+        intent.putExtra(gameActivity.getString(R.string.towerCost), tower.getCosts());
+        intent.putExtra(gameActivity.getString(R.string.towerLevel), tower.getLevel());
+        intent.putExtra(gameActivity.getString(R.string.towerDrawable), tower.getTowerType().getDrawable());
+        intent.putExtra(gameActivity.getString(R.string.towerType), tower.getTowerType().getType());
+        MenuUpgradeAndSell.game = this;
+        gameActivity.startActivity(intent);
+
+    }
+
+    public void upgradeTower(Position pos, int level) {
+        Field field = mapStructure.getField(pos);
+        Optional<ATower> tower = matchField.getTower(field);
+        if (tower.isPresent()) {
+            TowerType type = tower.get().getTowerType();
+            matchField.removeTower(tower.get());
+            mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
+            buildTower(type, level, pos);
+        }
     }
 }

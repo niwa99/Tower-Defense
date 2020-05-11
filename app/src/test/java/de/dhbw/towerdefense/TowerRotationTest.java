@@ -15,7 +15,6 @@ import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.ATower;
-import de.dhbw.util.Position;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 
@@ -35,7 +34,7 @@ public class TowerRotationTest {
         List<Enemy> enemy = new ArrayList<>();
 
         enemy.add(new Tank("tank1",1, dummyImage, dummyGameActivity));
-        ATower tower = new TowerArtillery("t1", new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        ATower tower = new TowerArtillery(new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         //act
         enemy.get(0).moveTo(3,3);
         double rotation = tower.rotateImage(enemy);

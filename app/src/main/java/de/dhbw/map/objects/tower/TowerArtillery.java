@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.bullet.ABullet;
 import de.dhbw.map.objects.bullet.Projectile;
 import de.dhbw.map.objects.enemy.Enemy;
 
@@ -14,29 +13,29 @@ import static de.dhbw.util.Constants.*;
 import de.dhbw.map.structure.Field;
 
 public class TowerArtillery extends ATower {
-	private ImageView defTowerImage;
+	private ImageView artilleryTowerImage;
 
-	public TowerArtillery(String label, Field field, int level, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity);
+	public TowerArtillery(Field field, int level, GameActivity gameActivity) {
+		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity, getTowerArtilleryCostsByLevel(level),
+				getTowerArtilleryDamageByLevel(level));
 
-		defTowerImage = new ImageView(gameActivity);
-		defTowerImage.setLayoutParams(TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS);
-		defTowerImage.setImageResource(DRAWABLE_TOWER_ARTILLERY);
-		defTowerImage.setX(getPositionX());
-		defTowerImage.setY(getPositionY());
-		setBaseImage(defTowerImage);
+		artilleryTowerImage = new ImageView(gameActivity);
+		artilleryTowerImage.setLayoutParams(TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS);
+		artilleryTowerImage.setImageResource(DRAWABLE_TOWER_ARTILLERY);
+		artilleryTowerImage.setX(getPositionX());
+		artilleryTowerImage.setY(getPositionY());
+		setBaseImage(artilleryTowerImage);
 	}
 
-	public TowerArtillery(String label, Field field, int level, ImageView defTowerImage, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getDefTowerCostsByLevel(level), getDefTowerDamageByLevel(level),
-				getDefTowerRangeByLevel(level), getDefTowerFirerateByLevel(level), field, gameActivity);
-		this.defTowerImage = defTowerImage;
+	public TowerArtillery(Field field, int level, ImageView artilleryTowerImage, GameActivity gameActivity) {
+		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity, getTowerArtilleryCostsByLevel(level),
+				getTowerArtilleryDamageByLevel(level));
+		this.artilleryTowerImage = artilleryTowerImage;
 	}
 
 	@Override
 	public boolean fire(List<Enemy> enemies) {
-		defTowerImage.setRotation((float)rotateImage(enemies));
+		artilleryTowerImage.setRotation((float)rotateImage(enemies));
 		if (super.fire(enemies)) {
 			new Projectile(getPosition(), super.targetedEnemy, this.getDamage(), DRAWABLE_BULLET, gameActivity);
 			return true;
@@ -45,30 +44,34 @@ public class TowerArtillery extends ATower {
 
 	}
 
-	public static int getDefTowerCostsByLevel(int level) {
+	public static int getTowerArtilleryCostsByLevel(int level) {
 		switch (level) {
-			case 1: return TOWER_ARTILLERY_LEVEL_1_COSTS;
+			case 2: return TOWER_ARTILLERY_LEVEL_2_COSTS;
+			case 3: return TOWER_ARTILLERY_LEVEL_3_COSTS;
 			default: return TOWER_ARTILLERY_LEVEL_1_COSTS;
 		}
 	}
 
-	private static int getDefTowerDamageByLevel(int level) {
+	private static int getTowerArtilleryDamageByLevel(int level) {
 		switch (level) {
-			case 1: return TOWER_ARTILLERY_LEVEL_1_DAMAGE;
+			case 2: return TOWER_ARTILLERY_LEVEL_2_DAMAGE;
+			case 3: return TOWER_ARTILLERY_LEVEL_3_DAMAGE;
 			default: return TOWER_ARTILLERY_LEVEL_1_DAMAGE;
 		}
 	}
 
-	private static int getDefTowerRangeByLevel(int level) {
+	private static int getTowerArtilleryRangeByLevel(int level) {
 		switch (level) {
-			case 1: return TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS;
+			case 2: return TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS;
+			case 3: return TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS;
 			default: return TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS;
 		}
 	}
 
-	private static int getDefTowerFirerateByLevel(int level) {
+	private static int getTowerArtilleryFirerateByLevel(int level) {
 		switch (level) {
-			case 1: return TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS;
+			case 2: return TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS;
+			case 3: return TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS;
 			default: return TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS;
 		}
 	}

@@ -45,7 +45,7 @@ public class MenuTowerSelection extends AMenu implements IMoneyListener {
 
     public void buildTower(View view) {
         if (((TowerType) view.getTag()).getPrice() <= game.getMoney()) {
-            game.buildTower((TowerType) view.getTag(), position);
+            game.buildTower((TowerType) view.getTag(), 1, position);
             finish();
         }
     }

@@ -31,7 +31,7 @@ public class BulletTest {
     public void shootBulletFromSpawnPositionToTargetPosition() {
         //arrange
         final int field_size = 150;
-        TowerArtillery tower = new TowerArtillery("t1", new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        TowerArtillery tower = new TowerArtillery(new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size * 5, field_size * 1);
 

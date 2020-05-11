@@ -21,9 +21,10 @@ import de.dhbw.map.structure.Field;
 
 public abstract class ATower extends ATimerUsage {
 	private SortingUtil sortingUtil = new SortingUtil();
-	
-	private String label;
+
 	private UUID id;
+	private TowerType towerType;
+	private int level;
 	private int costs;
 	protected int damage;
 	private int range;
@@ -37,9 +38,10 @@ public abstract class ATower extends ATimerUsage {
 	protected Enemy targetedEnemy;
 	protected GameActivity gameActivity;
 	
-	public ATower(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
-		this.label = label;
+	public ATower(UUID id, TowerType towerType, int level, int range, int fireRate, Field field, GameActivity gameActivity, int costs, int damage) {
 		this.id = id;
+		this.towerType = towerType;
+		this.level = level;
 		this.costs = costs;
 		this.damage = damage;
 		this.range = range;
@@ -151,13 +153,13 @@ public abstract class ATower extends ATimerUsage {
 		return (int) Math.round(Math.sqrt(Math.pow(Math.abs(xEnemy-x), 2) + Math.pow(Math.abs(yEnemy-y), 2)));
 	}
 
-	public String getLabel() {
-		return label;
-	}
-
 	public UUID getId() {
 		return id;
 	}
+
+	public TowerType getTowerType() { return this.towerType; }
+
+	public int getLevel() { return this.level; }
 
 	public int getCosts() {
 		return costs;

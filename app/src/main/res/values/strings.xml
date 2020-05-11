@@ -29,4 +29,12 @@
     <string name="wave_title">Wave:&#160;</string>
     <string name="difficulty">difficulty</string>
     <string name="position">position</string>
+
+    <string name="towerDamage">towerDamage</string>
+    <string name="towerRange">towerRange</string>
+    <string name="towerFireRate">towerFireRate</string>
+    <string name="towerCost">towerCost</string>
+    <string name="towerDrawable">towerDrawable</string>
+    <string name="towerLevel">towerLevel</string>
+    <string name="towerType">towerType</string>
 </resources>

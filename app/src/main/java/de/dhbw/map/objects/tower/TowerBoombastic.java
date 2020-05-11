@@ -21,10 +21,10 @@ import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerBoombastic extends ATower {
 
-    public TowerBoombastic(String label, Field field, int level, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getTowerBoombasticCostsByLevel(level),
-                getTowerBoombasticDamageByLevel(level), getTowerBoombasticRangeByLevel(level),
-                getTowerBoombasticFirerateByLevel(level), field, gameActivity);
+    public TowerBoombastic(Field field, int level, GameActivity gameActivity) {
+        super(UUID.randomUUID(), TowerType.BOOMBASTIC,
+                level, getTowerBoombasticRangeByLevel(level), getTowerBoombasticFirerateByLevel(level), field, gameActivity, getTowerBoombasticCostsByLevel(level),
+                getTowerBoombasticDamageByLevel(level));
 
         ImageView baseImage = new ImageView(gameActivity);
         baseImage.setLayoutParams(TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS);

@@ -1,5 +1,7 @@
 package de.dhbw.map.structure;
 
+import java.io.Serializable;
+
 import de.dhbw.util.Position;
 
 public class Field {
@@ -27,6 +29,10 @@ public class Field {
 
     public String getId() {
         return String.valueOf(getFieldPositionX())+"01230"+String.valueOf(getFieldPositionY());
+    }
+
+    public Position getFieldPosition() {
+        return new Position(xCoord, yCoord);
     }
 
     /**

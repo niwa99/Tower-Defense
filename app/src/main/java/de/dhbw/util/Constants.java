@@ -47,6 +47,16 @@ public class Constants {
     public static final int TOWER_ARTILLERY_LEVEL_1_DAMAGE = 1;
     public static final int TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS = 450;
     public static final int TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS = 3;
+
+    public static final int TOWER_ARTILLERY_LEVEL_2_COSTS = 25;
+    public static final int TOWER_ARTILLERY_LEVEL_2_DAMAGE = 2;
+    public static final int TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS = 460;
+    public static final int TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS = 2;
+
+    public static final int TOWER_ARTILLERY_LEVEL_3_COSTS = 50;
+    public static final int TOWER_ARTILLERY_LEVEL_3_DAMAGE = 3;
+    public static final int TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS = 500;
+    public static final int TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS = 1;
     public static final LinearLayout.LayoutParams TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //TowerBoombastic Parameters

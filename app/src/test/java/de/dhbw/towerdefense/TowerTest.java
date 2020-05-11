@@ -32,7 +32,7 @@ public class TowerTest {
     public void towerRecognizesEnemyIfItsInRange() {
         //arrange
 
-        ATower tower = new TowerArtillery("t1", new Field(), 1, imageDummy, dummyGameActivity);
+        ATower tower = new TowerArtillery(new Field(), 1, imageDummy, dummyGameActivity);
         Enemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
         enemy.moveToPosition(new Position(50, 50));
 
@@ -46,7 +46,7 @@ public class TowerTest {
     @Test
     public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
-        ATower tower = new TowerArtillery("t1", new Field(), 1, imageDummy, dummyGameActivity);
+        ATower tower = new TowerArtillery(new Field(), 1, imageDummy, dummyGameActivity);
         Enemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
         enemy.moveToPosition(new Position(150, 150));
 

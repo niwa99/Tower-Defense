@@ -8,10 +8,11 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.bullet.ABullet;
+import de.dhbw.map.objects.bullet.Projectile;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
-import de.dhbw.map.objects.tower.Bullet;
-import de.dhbw.map.objects.tower.DefTower;
+import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 
@@ -30,12 +31,12 @@ public class BulletTest {
     public void shootBulletFromSpawnPositionToTargetPosition() {
         //arrange
         final int field_size = 150;
-        DefTower tower = new DefTower("t1", new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        TowerArtillery tower = new TowerArtillery("t1", new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size * 5, field_size * 1);
 
         //act
-        Bullet bullet = new Bullet(tower.getPosition(), enemy, tower, dummyImage, dummyGameActivity);
+        ABullet bullet = new Projectile(tower.getPosition(), enemy, tower.getDamage(), dummyImage.getId(), dummyGameActivity);
 
         boolean targetReached = false;
         int nMoves = 0;

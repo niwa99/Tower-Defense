@@ -10,20 +10,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
-<<<<<<< HEAD
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.util.Position;
-=======
-import de.dhbw.map.objects.tower.DefTower;
-import de.dhbw.map.objects.tower.Tower;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
->>>>>>> master
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -39,14 +33,9 @@ public class TowerRotationTest {
     public void checkRotationIsOnCorrectAngle() {
         //arrange
         List<Enemy> enemy = new ArrayList<>();
-<<<<<<< HEAD
-        enemy.add(new Tank("tank1",1, dummyImage));
-        ATower tower = new TowerArtillery("t1", new Position(2, 3), 1, dummyImage);
-=======
-        enemy.add(new Tank("tank1",1, dummyImage, dummyGameActivity));
-        Tower tower = new DefTower("t1", new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
->>>>>>> master
 
+        enemy.add(new Tank("tank1",1, dummyImage, dummyGameActivity));
+        ATower tower = new TowerArtillery("t1", new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         //act
         enemy.get(0).moveTo(3,3);
         double rotation = tower.rotateImage(enemy);

@@ -40,12 +40,11 @@ public abstract class ABullet {
     /**
      * Bullet Constructor for Test-Purpose only!
      */
-    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, ImageView image, GameActivity gameActivity) {
+    public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, ImageView image, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
         this.bulletImage = image;
-
+        this.damage = damage;
         this.targetEnemy = targetedEnemy;
-        this.tower = tower;
 
         setMidpointOfPositions(targetedEnemy.getPosition(), spawnPosition);
         bulletImage.setX(x);

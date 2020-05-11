@@ -1,6 +1,5 @@
 package de.dhbw.map.objects.enemy;
 
-import android.view.View;
 import android.widget.ImageView;
 
 import java.util.Timer;
@@ -18,6 +17,11 @@ public class Tank extends Enemy {
 
 	public Tank(String label, int level, GameActivity gameActivity) {
 		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, createTankImage(gameActivity));
+		timer = new Timer();
+	}
+
+	public Tank(String label, int level, ImageView image, GameActivity gameActivity) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, image);
 		timer = new Timer();
 	}
 

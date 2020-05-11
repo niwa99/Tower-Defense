@@ -37,6 +37,21 @@ public abstract class ABullet {
         visualizeShot();
     }
 
+    /**
+     * Bullet Constructor for Test-Purpose only!
+     */
+    public Bullet(Position spawnPosition, Enemy targetedEnemy, DefTower tower, ImageView image, GameActivity gameActivity) {
+        this.gameActivity = gameActivity;
+        this.bulletImage = image;
+
+        this.targetEnemy = targetedEnemy;
+        this.tower = tower;
+
+        setMidpointOfPositions(targetedEnemy.getPosition(), spawnPosition);
+        bulletImage.setX(x);
+        bulletImage.setY(y);
+    }
+
     public void visualizeShot(){
         bulletImage.setRotation((float) getBulletRotation());
         gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));

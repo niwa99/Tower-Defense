@@ -36,7 +36,7 @@ public class BulletTest {
         enemy.moveTo(field_size * 5, field_size * 1);
 
         //act
-        ABullet bullet = new Projectile(tower.getPosition(), enemy, tower.getDamage(), dummyImage.getId(), dummyGameActivity);
+        ABullet bullet = new Projectile(tower.getPosition(), enemy, tower.getDamage(), dummyImage, dummyGameActivity);
 
         boolean targetReached = false;
         int nMoves = 0;

@@ -171,7 +171,7 @@ With the ongoing progress, tests become more important in order to keep our prev
 
 ## 3. Target Test Items
 
-The listing below identifies those test itemssoftware, hardware, and supporting product elements that have been identified as targets for testing. This list represents what items will be tested.
+The listing below identifies those test items software, hardware, and supporting product elements that have been identified as targets for testing. This list represents what items will be tested.
 
 -   Android/Java backend
 -   User Interface in combination with the Java backend

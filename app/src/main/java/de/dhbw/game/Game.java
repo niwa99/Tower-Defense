@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,6 +22,7 @@ import de.dhbw.game.match.HardMatch;
 import de.dhbw.game.match.MediumMatch;
 import de.dhbw.game.popups.MenuSettings;
 import de.dhbw.game.popups.MenuTowerSelection;
+import de.dhbw.game.settings.Settings;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.ATower;
@@ -32,6 +35,9 @@ import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 import de.dhbw.util.PreferenceManager;
+
+import static de.dhbw.util.Constants.STATUS_OFF;
+import static de.dhbw.util.Constants.STATUS_ON;
 
 public class Game {
 
@@ -50,8 +56,11 @@ public class Game {
     //responsible for status bar timer
     private final StatusBarCountDownTimer countDownTimer;
 
+    private Map<Settings, Boolean> gameSettings = new HashMap<Settings, Boolean>();
     private boolean isSoundOn = false;
     private boolean isAnimationOn = false;
+    private boolean isMusicOn = false;
+
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
     private IMoneyListener moneyListener = null;
@@ -71,7 +80,22 @@ public class Game {
         matchField = new MatchField(gameActivity);
         countDownTimer = new StatusBarCountDownTimer(gameActivity);
         generateButtonsOnMap();
+        loadSettings();
 	}
+
+	private void loadSettings(){
+        for (Settings setting: Settings.values()) {
+            String settings = PreferenceManager.getSettingsValue(setting);
+            if (settings == null) {
+                PreferenceManager.setSettingsValue(setting, STATUS_ON);
+                gameSettings.put(setting, true);
+            }else if(settings.equals(STATUS_ON)){
+                gameSettings.put(setting, true);
+            } else if(settings.equals(STATUS_OFF)) {
+                gameSettings.put(setting, false);
+            }
+        }
+    }
 
 	public MapStructure getMapStructure() {
 	    return mapStructure;
@@ -317,19 +341,21 @@ public class Game {
     }
 
     public void setIngameSound(boolean on){
-	    this.isSoundOn = on;
+        gameSettings.remove(Settings.INGAME_SOUND);
+        gameSettings.put(Settings.INGAME_SOUND, on);
     }
 
     public boolean isSoundOn(){
-	    return isSoundOn;
+	    return gameSettings.get(Settings.INGAME_SOUND);
     }
 
     public void setAnimationOn(boolean on){
-	    this.isAnimationOn=on;
+	    gameSettings.remove(Settings.ANIMATIONS);
+	    gameSettings.put(Settings.ANIMATIONS, on);
     }
 
     public boolean isAnimationOn(){
-	    return isAnimationOn;
+	    return gameSettings.get(Settings.ANIMATIONS);
     }
 
 

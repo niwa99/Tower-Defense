@@ -3,16 +3,14 @@ package de.dhbw.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import de.dhbw.game.settings.Settings;
+
 public class PreferenceManager {
 
     public enum Statistics {
         EASY_MAX_WAVE, EASY_ENEMIES_KILLED, EASY_BUILT_TOWERS, EASY_UPGRADES, EASY_MONEY_SPENT,
         MEDIUM_MAX_WAVE, MEDIUM_ENEMIES_KILLED, MEDIUM_BUILT_TOWERS, MEDIUM_UPGRADES, MEDIUM_MONEY_SPENT,
         HARD_MAX_WAVE, HARD_ENEMIES_KILLED, HARD_BUILT_TOWERS, HARD_UPGRADES, HARD_MONEY_SPENT;
-    }
-
-    public enum Settings {
-        MUSIC, INGAME_SOUND, ANIMATIONS;
     }
 
     private static PreferenceManager preferenceManager;

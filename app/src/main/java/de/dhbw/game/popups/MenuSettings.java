@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.settings.ISettingsManager;
+import de.dhbw.game.settings.Settings;
 import de.dhbw.game.settings.SettingsToggleButton;
 import de.dhbw.util.PreferenceManager;
 
@@ -51,9 +52,9 @@ public class MenuSettings extends AMenu implements ISettingsManager {
         textToggleAnimation.setText("Animation");
         textBackToMainMenu.setText("Main Menu");
 
-        new SettingsToggleButton(this, buttonToggleMusic, PreferenceManager.Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
-        new SettingsToggleButton(this, buttonToggleSound, PreferenceManager.Settings.INGAME_SOUND, ICON_SOUND_ON, ICON_SOUND_OFF);
-        new SettingsToggleButton(this, buttonToggleAnimation, PreferenceManager.Settings.ANIMATIONS, ICON_ANIMATION_ON, ICON_ANIMATION_OFF);
+        new SettingsToggleButton(this, buttonToggleMusic, Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
+        new SettingsToggleButton(this, buttonToggleSound, Settings.INGAME_SOUND, ICON_SOUND_ON, ICON_SOUND_OFF);
+        new SettingsToggleButton(this, buttonToggleAnimation, Settings.ANIMATIONS, ICON_ANIMATION_ON, ICON_ANIMATION_OFF);
 
         buttonBackToMainMenu.setOnClickListener( view -> {
             gameActivity.returnToMainMenu();
@@ -61,7 +62,7 @@ public class MenuSettings extends AMenu implements ISettingsManager {
     }
 
     @Override
-    public void toggle(PreferenceManager.Settings setting, boolean on){
+    public void toggle(Settings setting, boolean on){
         switch (setting){
             case MUSIC:
                 if(on){

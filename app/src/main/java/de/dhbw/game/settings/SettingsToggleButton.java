@@ -9,7 +9,7 @@ import static de.dhbw.util.Constants.STATUS_ON;
 
 public class SettingsToggleButton {
 
-    public SettingsToggleButton(ISettingsManager settingsManager, Button button, PreferenceManager.Settings prefSettings, int idIconOn, int idIconOff){
+    public SettingsToggleButton(ISettingsManager settingsManager, Button button, Settings prefSettings, int idIconOn, int idIconOff){
         String settings = PreferenceManager.getSettingsValue(prefSettings);
         if (settings == null) {
             PreferenceManager.setSettingsValue(prefSettings, STATUS_ON);

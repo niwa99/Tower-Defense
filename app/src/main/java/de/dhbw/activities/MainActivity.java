@@ -13,6 +13,7 @@ import static de.dhbw.util.Constants.ICON_MUSIC_OFF;
 import static de.dhbw.util.Constants.ICON_MUSIC_ON;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.settings.ISettingsManager;
+import de.dhbw.game.settings.Settings;
 import de.dhbw.game.settings.SettingsToggleButton;
 import de.dhbw.util.DifficultyFragmentAdapter;
 import de.dhbw.util.PreferenceManager;
@@ -44,12 +45,12 @@ public class MainActivity extends AppCompatActivity implements ISettingsManager{
         //Setup MediaPlayer for music on the MainActivity
         mediaPlayer = MediaPlayer.create(this, R.raw.tower_defense_title_soundtrack);
         Button toggleMusicButton = findViewById(R.id.button_title_sound);
-        new SettingsToggleButton(this, toggleMusicButton , PreferenceManager.Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
+        new SettingsToggleButton(this, toggleMusicButton , Settings.MUSIC, ICON_MUSIC_ON, ICON_MUSIC_OFF);
     }
 
     @Override
-    public void toggle(PreferenceManager.Settings setting, boolean on) {
-        if(setting==PreferenceManager.Settings.MUSIC){
+    public void toggle(Settings setting, boolean on) {
+        if(setting==Settings.MUSIC){
             if(on){
                 mediaPlayer.start();
             }else{

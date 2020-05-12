@@ -67,7 +67,6 @@ public abstract class ABullet {
                     gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(bulletImage));
                     if (targetEnemy != null) { //Abfrage, falls in der Zwischenzeit der Tank getötet wurde
                         hitEnemy();
-                        //gameActivity.getGame().getMatchField().removeDeadEnemy(targetEnemy);
                         System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");
                     }
                     timer.cancel();

@@ -82,6 +82,33 @@ public class MatchField {
 			matchFieldTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
 	}
 
+	public void slowEnemy(Enemy enemy){
+		enemy.getTimerTask().cancel();
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				if (enemy.isAlive() && !enemy.reachedTarget()) {
+					enemy.move(gameActivity.getGame().getMapStructure());
+					if(enemy.isFullSpeed()){
+						cancel();
+						startEnemyMovement(enemy);
+					}else{
+						slowEnemy(enemy);
+					}
+					if (isGameOver) {
+						stopTimer(false);
+					}
+				} else if (enemy.reachedTarget()) {
+					removeEnemiesInTarget(enemy);
+				} else if(!enemy.isAlive()){
+					removeDeadEnemy(enemy);
+				}
+			}
+		};
+		enemy.setTimerTask(timerTask);
+		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getSlowness());
+	}
+
 	/**
 	 * all towers are shooting in an own thread. The speed is defined by the time this task is repeated.
 	 * int fireRate defines how much seconds the tower sleeps between two shoots
@@ -128,10 +155,10 @@ public class MatchField {
 
 	public void removeDeadEnemy(Enemy enemy) {
 		if (!enemy.isAlive()) {
+			enemy.getTimerTask().cancel();
 			removeImageViewOfEnemy(enemy);
 			explode(enemy);
 			gameActivity.getGame().addMoney(enemy.getValue());
-			enemy.getTimerTask().cancel();
 			enemies.remove(enemy);
 			gameActivity.getGame().increaseNumberOfEnemiesKilled(1);
 			System.out.println(enemy.getLabel() + " is dead now");

@@ -176,6 +176,14 @@ public abstract class ATower extends ATimerUsage {
 	public int getFireRate() {
 		return fireRate;
 	}
+
+	public abstract int getCosts(int level);
+
+	public abstract int getDamage(int level);
+
+	public abstract int getRange(int level);
+
+	public abstract int getFireRate(int level);
 	
 	public int getPositionX() {
 		return x;

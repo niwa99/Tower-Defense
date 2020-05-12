@@ -32,6 +32,10 @@ public abstract class AMenu extends Activity {
         menuLayout.addView(child);
     }
 
+    public void removeViewFromPopUp(View child) {
+        menuLayout.removeView(child);
+    }
+
     public void closeWindow(View view) {
         finish();
     }

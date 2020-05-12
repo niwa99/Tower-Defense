@@ -1,7 +1,6 @@
 package de.dhbw.game.popups;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import androidx.annotation.Nullable;
 import de.dhbw.R;
 import de.dhbw.game.Game;
 import de.dhbw.game.IMoneyListener;
+import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.util.Position;
 
 
@@ -24,14 +24,31 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     private int towerRange;
     private int towerFireRate;
     private int towerCost;
-    private int upgradeCost = 10;
+    private int upgradeCost;
+    private int upgradeDamage;
+    private int upgradeRange;
+    private int upgradeFireRate;
     private int towerDrawable;
     public static Game game;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        updatePopup();
+        pos = (Position) getIntent().getSerializableExtra(getString(R.string.position));
+        towerDamage =  (int) getIntent().getSerializableExtra(getString(R.string.towerDamage));
+        towerRange =  (int) getIntent().getSerializableExtra(getString(R.string.towerRange));
+        towerFireRate =  (int) getIntent().getSerializableExtra(getString(R.string.towerFireRate));
+        towerCost =  (int) getIntent().getSerializableExtra(getString(R.string.towerCost));
+        towerDrawable =  (int) getIntent().getSerializableExtra(getString(R.string.towerDrawable));
+        level =  (int) getIntent().getSerializableExtra(getString(R.string.towerLevel));
+        towerType = (String) getIntent().getSerializableExtra(getString(R.string.towerType));
+        upgradeCost =  (int) getIntent().getSerializableExtra(getString(R.string.towerUpgrCost));
+        upgradeDamage =  (int) getIntent().getSerializableExtra(getString(R.string.towerUpgrDamage));
+        upgradeRange =  (int) getIntent().getSerializableExtra(getString(R.string.towerUpgrRange));
+        upgradeFireRate =  (int) getIntent().getSerializableExtra(getString(R.string.towerUpgrFireRate));
+        addViewToPopUp(initializeView());
+        performMoneyUpdate(game.getMoney());
+        game.setMenu(this);
 
     }
 
@@ -53,22 +70,26 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
 
     public void upgradeTower(View view) {
         if (level < 3) {
-            level = level + 1;
-            game.upgradeTower(pos, level);
+            level += 1;
             game.setMoney(game.getMoney()-upgradeCost);
-            updatePopup();
+            performMoneyUpdate(game.getMoney());
+            towerDamage = upgradeDamage;
+            towerRange = upgradeRange;
+            towerFireRate = upgradeFireRate;
+            towerCost = upgradeCost;
+            int[] data = game.upgradeTower(pos, level);
+            upgradeDamage = data[0];
+            upgradeRange = data[1];
+            upgradeFireRate = data[2];
+            upgradeCost = data[3];
+            removeViewFromPopUp(findViewById(R.id.upgradeAndSell));
+            addViewToPopUp(initializeView());
+            game.setMenu(this);
         }
     }
 
-    public void updatePopup() {
-        pos = (Position) getIntent().getSerializableExtra(getString(R.string.position));
-        towerDamage =  (int) getIntent().getSerializableExtra(getString(R.string.towerDamage));
-        towerRange =  (int) getIntent().getSerializableExtra(getString(R.string.towerRange));
-        towerFireRate =  (int) getIntent().getSerializableExtra(getString(R.string.towerFireRate));
-        towerCost =  (int) getIntent().getSerializableExtra(getString(R.string.towerCost));
-        towerDrawable =  (int) getIntent().getSerializableExtra(getString(R.string.towerDrawable));
-        level =  (int) getIntent().getSerializableExtra(getString(R.string.towerLevel));
-        towerType = (String) getIntent().getSerializableExtra(getString(R.string.towerType));
+    public LinearLayout initializeView() {
+
         LinearLayout layout = (LinearLayout) getLayoutInflater().inflate(R.layout.menu_upgrade_and_sell, null);
 
         setHeader(towerType + " lvl " + level);
@@ -90,9 +111,9 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
         TextView towerUpgrFireRate = layout.findViewById(R.id.fireRateAfterUpgr);
         TextView upgrade = layout.findViewById(R.id.upgradeAmount);
 
-        towerUpgrDamage.setText(String.valueOf(towerDamage));
-        towerUpgrRange.setText(String.valueOf(towerRange));
-        towerUpgrFireRate.setText(String.valueOf(towerFireRate));
+        towerUpgrDamage.setText(String.valueOf(upgradeDamage));
+        towerUpgrRange.setText(String.valueOf(upgradeRange));
+        towerUpgrFireRate.setText(String.valueOf(upgradeFireRate));
         upgrade.setText(String.valueOf(upgradeCost));
 
         if (level == 3) {
@@ -100,8 +121,6 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
             upgradeButton.setText("Max Reached");
             runOnUiThread(() -> upgradeButton.setBackgroundColor(getColor(R.color.red)));
         }
-        runOnUiThread(() ->  addViewToPopUp(layout));
-        performMoneyUpdate(game.getMoney());
-        game.setMenu(this);
+        return layout;
     }
 }

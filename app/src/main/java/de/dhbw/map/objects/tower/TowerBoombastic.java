@@ -51,6 +51,26 @@ public class TowerBoombastic extends ATower {
         return false;
     }
 
+    @Override
+    public int getCosts(int level) {
+        return getTowerBoombasticCostsByLevel(level);
+    }
+
+    @Override
+    public int getDamage(int level) {
+        return getTowerBoombasticDamageByLevel(level);
+    }
+
+    @Override
+    public int getRange(int level) {
+        return getTowerBoombasticRangeByLevel(level);
+    }
+
+    @Override
+    public int getFireRate(int level) {
+        return getTowerBoombasticFirerateByLevel(level);
+    }
+
     public static int getTowerBoombasticCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_COSTS;

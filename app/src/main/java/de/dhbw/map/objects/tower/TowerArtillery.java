@@ -44,35 +44,55 @@ public class TowerArtillery extends ATower {
 
 	}
 
+	@Override
+	public int getCosts(int level) {
+		return getTowerArtilleryCostsByLevel(level);
+	}
+
+	@Override
+	public int getDamage(int level) {
+		return getTowerArtilleryDamageByLevel(level);
+	}
+
+	@Override
+	public int getRange(int level) {
+		return getTowerArtilleryRangeByLevel(level);
+	}
+
+	@Override
+	public int getFireRate(int level) {
+		return getTowerArtilleryFirerateByLevel(level);
+	}
+
 	public static int getTowerArtilleryCostsByLevel(int level) {
 		switch (level) {
+			case 1: return TOWER_ARTILLERY_LEVEL_1_COSTS;
 			case 2: return TOWER_ARTILLERY_LEVEL_2_COSTS;
-			case 3: return TOWER_ARTILLERY_LEVEL_3_COSTS;
-			default: return TOWER_ARTILLERY_LEVEL_1_COSTS;
+			default: return TOWER_ARTILLERY_LEVEL_3_COSTS;
 		}
 	}
 
 	private static int getTowerArtilleryDamageByLevel(int level) {
 		switch (level) {
+			case 1: return TOWER_ARTILLERY_LEVEL_1_DAMAGE;
 			case 2: return TOWER_ARTILLERY_LEVEL_2_DAMAGE;
-			case 3: return TOWER_ARTILLERY_LEVEL_3_DAMAGE;
-			default: return TOWER_ARTILLERY_LEVEL_1_DAMAGE;
+			default: return TOWER_ARTILLERY_LEVEL_3_DAMAGE;
 		}
 	}
 
 	private static int getTowerArtilleryRangeByLevel(int level) {
 		switch (level) {
+			case 1: return TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS;
 			case 2: return TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS;
-			case 3: return TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS;
-			default: return TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS;
+			default: return TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS;
 		}
 	}
 
 	private static int getTowerArtilleryFirerateByLevel(int level) {
 		switch (level) {
+			case 1: return TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS;
 			case 2: return TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS;
-			case 3: return TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS;
-			default: return TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS;
+			default: return TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS;
 		}
 	}
 }

@@ -166,7 +166,7 @@
                 android:id="@+id/upgrade"
                 android:layout_width="85dp"
                 android:layout_height="wrap_content"
-                android:background="#4C4C4C"
+                android:background="@color/red"
                 android:fontFamily="@font/bubblegum_sans"
                 android:onClick="upgradeTower"
                 android:text="Upgrade"

@@ -1,15 +1,19 @@
 package de.dhbw.game;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -61,6 +65,9 @@ public class Game {
     private boolean isSoundOn = false;
     private boolean isAnimationOn = false;
     private boolean isMusicOn = false;
+
+    private boolean showCircle = false;
+    private Position circleField = new Position(-1, -1);
 
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
@@ -413,6 +420,12 @@ public class Game {
                 Position pos = getPositionFromButtonId(button.get().getTransitionName());
                 Field field = mapStructure.getField(pos);
                 if (field.getFieldDescription() == FieldDescription.FREE) {
+                    if (showCircle && circleField != null) {
+                        ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.circle).getParent());
+                        vg.removeView(gameActivity.findViewById(R.id.circle));
+                        circleField = new Position(-1, -1);
+                        showCircle = false;
+                    }
                     if (clickedButton.isPresent()) {
                         if (clickedButton.get().getTransitionName().equals(button.get().getTransitionName())) {
                             clickedButton = Optional.ofNullable(null);
@@ -430,7 +443,31 @@ public class Game {
                 } else if (field.getFieldDescription() == FieldDescription.TOWER) {
                     Optional<ATower> tower = matchField.getTower(field);
                     if (tower.isPresent()) {
-                        openTowerPopup(tower.get(), field);
+                        if (field.getFieldPositionX() != circleField.getX() || field.getFieldPositionY() != circleField.getY()) {
+                            try {
+                                clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                            } catch (NoSuchElementException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (showCircle) {
+                                ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.circle).getParent());
+                                vg.removeView(gameActivity.findViewById(R.id.circle));
+                            }
+                            circleField = field.getFieldPosition();
+                            setCircle(tower.get(), field);
+                            showCircle = true;
+                        } else {
+                            try {
+                                ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.circle).getParent());
+                                vg.removeView(gameActivity.findViewById(R.id.circle));
+                                circleField = new Position(-1, -1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            openTowerPopup(tower.get(), field);
+                            showCircle = false;
+                        }
                     }
                 }
             }
@@ -468,6 +505,16 @@ public class Game {
         });
     }
 
+   public void setCircle(ATower tower, Field field) {
+        ImageView image = new ImageView(gameActivity);
+        image.setId(R.id.circle);
+        image.setImageResource(R.drawable.circle);
+        image.setX(field.getSpawnPoint().getX() + field.getSizeInPx()/2 - tower.getRange());
+        image.setY(field.getSpawnPoint().getY() + field.getSizeInPx()/2 - tower.getRange());
+        image.setLayoutParams(new LinearLayout.LayoutParams(tower.getRange()*2, tower.getRange()*2));
+        gameActivity.getMapFrameLayout().addView(image);
+    }
+
     public void openTowerPopup(ATower tower, Field field) {
         Intent intent = new Intent(gameActivity, MenuUpgradeAndSell.class);
         intent.putExtra(gameActivity.getString(R.string.position), field.getFieldPosition());
@@ -478,19 +525,26 @@ public class Game {
         intent.putExtra(gameActivity.getString(R.string.towerLevel), tower.getLevel());
         intent.putExtra(gameActivity.getString(R.string.towerDrawable), tower.getTowerType().getDrawable());
         intent.putExtra(gameActivity.getString(R.string.towerType), tower.getTowerType().getType());
+        intent.putExtra(gameActivity.getString(R.string.towerUpgrCost), tower.getCosts(tower.getLevel() + 1));
+        intent.putExtra(gameActivity.getString(R.string.towerUpgrDamage), tower.getDamage(tower.getLevel() + 1));
+        intent.putExtra(gameActivity.getString(R.string.towerUpgrRange), tower.getRange(tower.getLevel() + 1));
+        intent.putExtra(gameActivity.getString(R.string.towerUpgrFireRate), tower.getFireRate(tower.getLevel() + 1));
+        intent.putExtra(gameActivity.getString(R.string.towerUpgrCost), tower.getCosts(tower.getLevel() + 1));
         MenuUpgradeAndSell.game = this;
         gameActivity.startActivity(intent);
-
     }
 
-    public void upgradeTower(Position pos, int level) {
+    public int[] upgradeTower(Position pos, int level) {
         Field field = mapStructure.getField(pos);
         Optional<ATower> tower = matchField.getTower(field);
         if (tower.isPresent()) {
             TowerType type = tower.get().getTowerType();
             matchField.removeTower(tower.get());
             mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
+            setMoney(getMoney()+tower.get().getCosts(1));
             buildTower(type, level, pos);
+            return new int[]{tower.get().getDamage(level+1), tower.get().getRange(level+1), tower.get().getFireRate(level+1), tower.get().getCosts(level+1)};
         }
+        return null;
     }
 }

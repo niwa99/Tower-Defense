@@ -37,4 +37,8 @@
     <string name="towerDrawable">towerDrawable</string>
     <string name="towerLevel">towerLevel</string>
     <string name="towerType">towerType</string>
+    <string name="towerUpgrCost">towerUpgrCost</string>
+    <string name="towerUpgrDamage">towerUpgrDamage</string>
+    <string name="towerUpgrRange">towerUpgrRange</string>
+    <string name="towerUpgrFireRate">towerUpgrFireRate</string>
 </resources>

@@ -251,4 +251,16 @@ public class MatchField {
 		}
 		return false;
 	}
+
+	/**
+	 * Calculate the distance between two points (x1, y1) and (x2, y2)
+	 * @param firstX
+	 * @param firstY
+	 * @param secondX
+	 * @param secondY
+	 * @return the distance in px
+	 */
+	public static int getDistance(int firstX, int firstY, int secondX, int secondY) {
+		return (int) Math.round(Math.sqrt(Math.pow(Math.abs(firstX-secondX), 2) + Math.pow(Math.abs(firstY-secondY), 2)));
+	}
 }

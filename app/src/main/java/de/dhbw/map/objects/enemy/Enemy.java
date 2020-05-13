@@ -63,6 +63,10 @@ public abstract class Enemy {
 	public int getHealthPoints() {
 		return healthpoints;
 	}
+
+	public void setHealthpoints(int healthpoints) {
+		this.healthpoints = healthpoints;
+	}
 	
 	public int getSpeed() {
 		return speed;

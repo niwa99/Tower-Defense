@@ -5,21 +5,27 @@ import java.util.List;
 import java.util.Map;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.util.Position;
 import static de.dhbw.util.Constants.BOMB_RANGE;
+import static de.dhbw.util.Constants.FIELD_SIZE;
 
 public class Bomb extends ABullet {
     private List<Enemy> allEnemies;
     private final int range = BOMB_RANGE;
 
+    public Bomb(Position spawnPosition, Enemy targetedEnemy, List<Enemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
+        super(spawnPosition, targetedEnemy, damage, bulletImageID, gameActivity, offset);
+        this.allEnemies = allEnemies;
+    }
+
     public Bomb(Position spawnPosition, Enemy targetedEnemy, List<Enemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity) {
-        super(spawnPosition, targetedEnemy, damage, bulletImageID, gameActivity);
-        this.allEnemies =allEnemies;
+        this(spawnPosition, targetedEnemy, allEnemies, damage, bulletImageID, gameActivity, 0);
     }
 
     @Override
-    protected void hitEnemy(){
+    protected void hitEnemy() {
         super.hitEnemy();
         getEnemiesToHit().entrySet().stream().forEach(e -> e.getKey().hit(e.getValue()));
     }
@@ -28,7 +34,7 @@ public class Bomb extends ABullet {
         Map<Enemy, Integer> enemiesInExplosionRange = new HashMap<Enemy, Integer>();
         targetEnemy.getPosition();
         for (Enemy e : allEnemies) {
-            int distance = getDistance(targetEnemy.getPosition(), e.getPosition());
+            int distance = MatchField.getDistance(targetEnemy.getPositionX(), targetEnemy.getPositionY(), e.getPositionX(), e.getPositionY());
             if(distance < range){
                 if(distance < range/2){
                     enemiesInExplosionRange.put(e, Math.round(damage/2));
@@ -38,9 +44,5 @@ public class Bomb extends ABullet {
             }
         }
         return enemiesInExplosionRange;
-    }
-
-    public int getDistance(Position pos, Position enemyPos) {
-        return (int) Math.round(Math.sqrt(Math.pow(Math.abs(enemyPos.getX()-pos.getX()), 2) + Math.pow(Math.abs(enemyPos.getY()-pos.getY()), 2)));
     }
 }

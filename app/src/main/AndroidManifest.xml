@@ -57,6 +57,11 @@
             android:parentActivityName=".game.popups.AMenu"
             android:theme="@style/AppTheme.PopUp">
         </activity>
+        <activity
+            android:name=".game.popups.MenuUpgradeAndSell"
+            android:parentActivityName=".game.popups.AMenu"
+            android:theme="@style/AppTheme.PopUp">
+        </activity>
 
         <meta-data
             android:name="preloaded_fonts"

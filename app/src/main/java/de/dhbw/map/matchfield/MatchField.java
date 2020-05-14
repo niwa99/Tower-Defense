@@ -54,7 +54,7 @@ public class MatchField {
 		});
 		towers.add(tower);
 		startTowerFire(tower);
-		gameActivity.getGame().increaseNumberOfBuiltTowers(1);
+		gameActivity.getGame().increaseNumberOfBuiltTowers();
 	}
 	
 	public void addEnemy(Enemy enemy) {
@@ -166,7 +166,7 @@ public class MatchField {
 			explode(enemy);
 			gameActivity.getGame().addMoney(enemy.getValue());
 			enemies.remove(enemy);
-			gameActivity.getGame().increaseNumberOfEnemiesKilled(1);
+			gameActivity.getGame().increaseNumberOfEnemiesKilled();
 			System.out.println(enemy.getLabel() + " is dead now");
 		}
 	}

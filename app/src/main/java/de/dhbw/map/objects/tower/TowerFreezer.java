@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.SnowFlake;
@@ -25,7 +26,6 @@ import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_SLOWNESS;
 import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerFreezer extends ATower {
-    private ImageView imageShoot;
     private int slowness;
 
     public TowerFreezer(UUID id, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
@@ -36,18 +36,12 @@ public class TowerFreezer extends ATower {
         super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
                 getFreezerRangeByLevel(level), getFreezerFirerateByLevel(level), field, gameActivity);
 
-        ImageView image = new ImageView(gameActivity);
-        image.setLayoutParams(TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS);
-        image.setImageResource(DRAWABLE_TOWER_FREEZER_BASE);
-        image.setX(getPositionX());
-        image.setY(getPositionY());
-        setBaseImage(image);
-
-        imageShoot = new ImageView(gameActivity);
-        imageShoot.setLayoutParams(TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS);
-        imageShoot.setImageResource(DRAWABLE_TOWER_FREEZER_HEAD);
-        imageShoot.setX(getPositionX());
-        imageShoot.setY(getPositionY());
+        ImageView baseImage = new ImageView(gameActivity);
+        baseImage.setLayoutParams(TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS);
+        baseImage.setImageResource(DRAWABLE_TOWER_FREEZER_BASE);
+        baseImage.setX(getPositionX());
+        baseImage.setY(getPositionY());
+        setBaseImage(baseImage);
 
         this.slowness=getFreezerSlownessByLevel(level);
     }
@@ -56,19 +50,19 @@ public class TowerFreezer extends ATower {
     public boolean fire(List<Enemy> enemies) {
         if (super.fire(enemies)) {
             gameActivity.runOnUiThread(() -> {
-                gameActivity.getMapFrameLayout().addView(imageShoot);
+                this.getBaseImage().setImageResource(DRAWABLE_TOWER_FREEZER_HEAD);
             });
 
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     gameActivity.runOnUiThread(() -> {
-                        gameActivity.getMapFrameLayout().removeView(imageShoot);
+                        getBaseImage().setImageResource(DRAWABLE_TOWER_FREEZER_BASE);
                     });
                 }
             }, 500);
 
-            new SnowFlake(getPosition(), super.targetedEnemy, this.getDamage(),this.getSlowness(), DRAWABLE_BULLET_FREEZER,  gameActivity);
+            new SnowFlake(getPosition(), super.targetedEnemy, this.getDamage(),this.getSlowness(), DRAWABLE_BULLET_FREEZER, gameActivity);
             return true;
         }
         return false;

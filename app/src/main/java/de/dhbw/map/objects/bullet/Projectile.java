@@ -16,6 +16,9 @@ public class Projectile extends ABullet {
         this(spawnPosition, targetedEnemy, damage, bulletImageID, gameActivity, 0);
     }
 
+    /**
+     * Constructor for test purpose only!
+     */
     public Projectile(Position spawnPosition, Enemy targetedEnemy, int damage, ImageView bulletImage, GameActivity gameActivity) {
         super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
     }

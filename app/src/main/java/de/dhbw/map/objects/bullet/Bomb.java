@@ -9,7 +9,6 @@ import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.util.Position;
 import static de.dhbw.util.Constants.BOMB_RANGE;
-import static de.dhbw.util.Constants.FIELD_SIZE;
 
 public class Bomb extends ABullet {
     private List<Enemy> allEnemies;
@@ -27,6 +26,7 @@ public class Bomb extends ABullet {
     @Override
     protected void hitEnemy() {
         super.hitEnemy();
+        allEnemies.remove(targetEnemy);
         getEnemiesToHit().entrySet().stream().forEach(e -> e.getKey().hit(e.getValue()));
     }
 

@@ -186,7 +186,6 @@ public class Game {
     }
 
     private void startWave(AWave wave, int seconds) {
-	    System.out.println("test ------------>" + seconds);
         //timer
 	    waveTimer.cancel();
 	    waveTimer = new Timer();
@@ -341,16 +340,12 @@ public class Game {
 	    moneyListener = listener;
     }
 
-    public void increaseNumberOfEnemiesKilled(int increase) {
-	    numberOfEnemiesKilled += increase;
+    public void increaseNumberOfEnemiesKilled() {
+	    numberOfEnemiesKilled++;
     }
 
-    public void increaseNumberOfBuiltTowers(int increase) {
-	    numberOfBuiltTowers += increase;
-    }
-
-    public void increaseNumberOfUpgrades(int increase) {
-	    numberOfUpgrades += increase;
+    public void increaseNumberOfBuiltTowers() {
+	    numberOfBuiltTowers++;
     }
 
     public void increaseMoneySpent(int increase) {
@@ -424,25 +419,26 @@ public class Game {
                 Position pos = getPositionFromButtonId(button.get().getTransitionName());
                 Field field = mapStructure.getField(pos);
                 if (field.getFieldDescription() == FieldDescription.FREE) {
-                    if (showCircle && circleField != null) {
+                    if (showCircle) {
                         ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.circle).getParent());
                         vg.removeView(gameActivity.findViewById(R.id.circle));
                         circleField = new Position(-1, -1);
                         showCircle = false;
-                    }
-                    if (clickedButton.isPresent()) {
-                        if (clickedButton.get().getTransitionName().equals(button.get().getTransitionName())) {
-                            clickedButton = Optional.empty();
-                            button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                            createNewTowerOnField(getPositionFromButtonId(button.get().getTransitionName()));
-                        } else {
-                            clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                            button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
-                            clickedButton = button;
-                        }
                     } else {
-                        clickedButton = button;
-                        button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                        if (clickedButton.isPresent()) {
+                            if (clickedButton.get().getTransitionName().equals(button.get().getTransitionName())) {
+                                clickedButton = Optional.empty();
+                                button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                                createNewTowerOnField(getPositionFromButtonId(button.get().getTransitionName()));
+                            } else {
+                                clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                                button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                                clickedButton = button;
+                            }
+                        } else {
+                            clickedButton = button;
+                            button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_ON_CLICK_PLUS, null));
+                        }
                     }
                 } else if (field.getFieldDescription() == FieldDescription.TOWER) {
                     Optional<ATower> tower = matchField.getTower(field);
@@ -548,6 +544,7 @@ public class Game {
             mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
             setMoney(getMoney()+tower.get().getCosts(1));
             buildTower(type, level, pos);
+            numberOfUpgrades++;
 
             return new int[]{tower.get().getDamage(level+1), tower.get().getRange(level+1), tower.get().getFireRate(level+1), tower.get().getCosts(level+1)};
         }

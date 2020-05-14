@@ -1,7 +1,5 @@
 package de.dhbw.map.structure;
 
-import java.io.Serializable;
-
 import de.dhbw.util.Position;
 
 public class Field {

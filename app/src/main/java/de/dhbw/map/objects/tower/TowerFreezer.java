@@ -28,12 +28,12 @@ public class TowerFreezer extends ATower {
     private ImageView imageShoot;
     private int slowness;
 
-    public TowerFreezer(String label, UUID id, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
-        super(label, id, costs, damage, range, fireRate, field, gameActivity);
+    public TowerFreezer(UUID id, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
+        super(id, TowerType.FREEZER, level, costs, damage, range, fireRate, field, gameActivity);
     }
 
-    public TowerFreezer(String label, Field field, int level, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
+    public TowerFreezer(Field field, int level, GameActivity gameActivity) {
+        super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
                 getFreezerRangeByLevel(level), getFreezerFirerateByLevel(level), field, gameActivity);
 
         ImageView image = new ImageView(gameActivity);
@@ -72,6 +72,26 @@ public class TowerFreezer extends ATower {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public int getCosts(int level) {
+        return getFreezerCostsByLevel(level);
+    }
+
+    @Override
+    public int getDamage(int level) {
+        return getFreezerDamageByLevel(level);
+    }
+
+    @Override
+    public int getRange(int level) {
+        return getFreezerRangeByLevel(level);
+    }
+
+    @Override
+    public int getFireRate(int level) {
+        return getFreezerFirerateByLevel(level);
     }
 
     public int getSlowness(){

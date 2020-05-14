@@ -25,8 +25,8 @@ public class TowerBoombastic extends ATower {
 
     public TowerBoombastic(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.BOOMBASTIC,
-                level, getTowerBoombasticRangeByLevel(level), getTowerBoombasticFirerateByLevel(level), field, gameActivity, getTowerBoombasticCostsByLevel(level),
-                getTowerBoombasticDamageByLevel(level));
+                level, getTowerBoombasticCostsByLevel(level),
+                getTowerBoombasticDamageByLevel(level), getTowerBoombasticRangeByLevel(level), getTowerBoombasticFirerateByLevel(level), field, gameActivity);
 
         ImageView baseImage = new ImageView(gameActivity);
         baseImage.setLayoutParams(TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS);

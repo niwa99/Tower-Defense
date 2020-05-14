@@ -19,8 +19,8 @@ public class TowerArtillery extends ATower {
 	private ImageView artilleryTowerImage;
 
 	public TowerArtillery(Field field, int level, GameActivity gameActivity) {
-		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity, getTowerArtilleryCostsByLevel(level),
-				getTowerArtilleryDamageByLevel(level));
+		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryCostsByLevel(level),
+				getTowerArtilleryDamageByLevel(level), getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity);
 
 		artilleryTowerImage = new ImageView(gameActivity);
 		artilleryTowerImage.setLayoutParams(TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS);
@@ -33,8 +33,8 @@ public class TowerArtillery extends ATower {
 	}
 
 	public TowerArtillery(Field field, int level, ImageView artilleryTowerImage, GameActivity gameActivity) {
-		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity, getTowerArtilleryCostsByLevel(level),
-				getTowerArtilleryDamageByLevel(level));
+		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryCostsByLevel(level),
+				getTowerArtilleryDamageByLevel(level), getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity);
 		this.artilleryTowerImage = artilleryTowerImage;
 	}
 

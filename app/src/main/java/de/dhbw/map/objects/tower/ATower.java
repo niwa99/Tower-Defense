@@ -44,7 +44,7 @@ public abstract class ATower extends ATimerUsage {
 	protected Enemy targetedEnemy;
 	protected GameActivity gameActivity;
 	
-	public ATower(UUID id, TowerType towerType, int level, int range, int fireRate, Field field, GameActivity gameActivity, int costs, int damage) {
+	public ATower(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
 		this.id = id;
 		this.towerType = towerType;
 		this.level = level;

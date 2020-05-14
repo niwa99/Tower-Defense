@@ -56,10 +56,6 @@
             android:name=".game.popups.MenuUpgradeAndSell"
             android:parentActivityName=".game.popups.AMenu"
             android:theme="@style/AppTheme.PopUp">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <meta-data

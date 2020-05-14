@@ -45,6 +45,12 @@ public class MatchField {
 				gameActivity.getMapFrameLayout().addView(headImage.get());
 
 			}
+			if(tower.getLevel()>1) {
+				gameActivity.getMapFrameLayout().addView(tower.getStarlvlTwo());
+			}
+			if(tower.getLevel()>2) {
+				gameActivity.getMapFrameLayout().addView(tower.getStarlvlThree());
+			}
 		});
 		towers.add(tower);
 		startTowerFire(tower);
@@ -206,6 +212,12 @@ public class MatchField {
 
 			}
 		});
+		if(tower.getLevel()>1) {
+			gameActivity.getMapFrameLayout().removeView(tower.getStarlvlTwo());
+		}
+		if(tower.getLevel()>2) {
+			gameActivity.getMapFrameLayout().removeView(tower.getStarlvlThree());
+		}
 	}
 
 	private Optional<Enemy> getEnemy(UUID enemyUUID) {

@@ -29,6 +29,7 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     private int upgradeRange;
     private int upgradeFireRate;
     private int towerDrawable;
+    private int maxLevel = 3;
     public static Game game;
 
     @Override
@@ -55,7 +56,7 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     @Override
     public void performMoneyUpdate(int money) {
         Button linearLayout = findViewById(R.id.upgrade);
-        if (upgradeCost < money && level < 3) {
+        if (upgradeCost <= money && level < maxLevel) {
             runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.green)));
         } else {
             runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.red)));
@@ -69,10 +70,9 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     }
 
     public void upgradeTower(View view) {
-        if (level < 3) {
+        if (level < maxLevel && upgradeCost <= game.getMoney()) {
             level += 1;
             game.setMoney(game.getMoney()-upgradeCost);
-            performMoneyUpdate(game.getMoney());
             towerDamage = upgradeDamage;
             towerRange = upgradeRange;
             towerFireRate = upgradeFireRate;
@@ -84,6 +84,7 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
             upgradeCost = data[3];
             removeViewFromPopUp(findViewById(R.id.upgradeAndSell));
             addViewToPopUp(initializeView());
+            performMoneyUpdate(game.getMoney());
             game.setMenu(this);
         }
     }

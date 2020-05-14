@@ -14,7 +14,7 @@ public class Constants {
     public static final int DRAWABLE_BULLET_BOOMBASTIC = R.drawable.tower_boombastic_bullet;
     public static final int DRAWABLE_TANK = R.drawable.tank;
     public static final int DRAWABLE_TANK_HITTED = R.drawable.tank_hitted;
-    public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower;
+    public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower_artillery;
     public static final int DRAWABLE_TOWER_BOOMBASTIC = R.drawable.tower_boombastic_complete;
     public static final int DRAWABLE_TOWER_BOOMBASTIC_BASE = R.drawable.tower_boombastic_base;
     public static final int DRAWABLE_TOWER_BOOMBASTIC_HEAD = R.drawable.tower_boombastic_head;

@@ -1,6 +1,8 @@
 package de.dhbw.map.objects.tower;
 
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.lang.Math;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
 import de.dhbw.map.objects.enemy.Enemy;
@@ -31,6 +34,8 @@ public abstract class ATower extends ATimerUsage {
 	private int fireRate;
 	private ImageView baseImage;
 	protected Optional<ImageView> headImage = Optional.empty();
+	private ImageView starlvlTwo;
+	private ImageView starlvlThree;
 	private int x;
 	private int y;
 	private Field field;
@@ -50,6 +55,21 @@ public abstract class ATower extends ATimerUsage {
 		this.x = field.getSpawnPoint().getX();
 		this.y = field.getSpawnPoint().getY();
 		this.gameActivity = gameActivity;
+
+		switch (level) {
+			case 3:
+				starlvlThree = new ImageView(gameActivity);
+				starlvlThree.setImageResource(R.drawable.star);
+				starlvlThree.setX(field.getSpawnPoint().getX() + 50);
+				starlvlThree.setY(field.getSpawnPoint().getY());
+				starlvlThree.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+			case 2:
+				starlvlTwo= new ImageView(gameActivity);
+				starlvlTwo.setImageResource(R.drawable.star);
+				starlvlTwo.setX(field.getSpawnPoint().getX());
+				starlvlTwo.setY(field.getSpawnPoint().getY());
+				starlvlTwo.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+		}
 	}
 
 	/**
@@ -195,6 +215,14 @@ public abstract class ATower extends ATimerUsage {
 
 	public Position getPosition() {
 		return new Position(x, y);
+	}
+
+	public ImageView getStarlvlTwo() {
+		return starlvlTwo;
+	}
+
+	public ImageView getStarlvlThree() {
+		return starlvlThree;
 	}
 
 	@Override

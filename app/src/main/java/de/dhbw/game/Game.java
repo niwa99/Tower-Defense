@@ -254,6 +254,14 @@ public class Game {
             addMoney((int) Math.round(tower.get().getCosts() * 0.5));
             matchField.removeTower(tower.get());
             mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
+            /*try {
+                ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.starTwo).getParent());
+                vg.removeView(gameActivity.findViewById(R.id.starTwo));
+                ViewGroup viewGroup = (ViewGroup)(gameActivity.findViewById(R.id.starThree).getParent());
+                viewGroup.removeView(gameActivity.findViewById(R.id.starThree));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }*/
 
         }
     }
@@ -428,7 +436,7 @@ public class Game {
                     }
                     if (clickedButton.isPresent()) {
                         if (clickedButton.get().getTransitionName().equals(button.get().getTransitionName())) {
-                            clickedButton = Optional.ofNullable(null);
+                            clickedButton = Optional.empty();
                             button.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
                             createNewTowerOnField(getPositionFromButtonId(button.get().getTransitionName()));
                         } else {
@@ -446,6 +454,7 @@ public class Game {
                         if (field.getFieldPositionX() != circleField.getX() || field.getFieldPositionY() != circleField.getY()) {
                             try {
                                 clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                                clickedButton = Optional.empty();
                             } catch (NoSuchElementException e) {
                                 e.printStackTrace();
                             }
@@ -543,6 +552,30 @@ public class Game {
             mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
             setMoney(getMoney()+tower.get().getCosts(1));
             buildTower(type, level, pos);
+            /*ImageView starTwo = new ImageView(gameActivity);
+            ImageView starThree = new ImageView(gameActivity);
+            switch (level) {
+                case 3:
+                    try {
+                        ViewGroup vg = (ViewGroup)(gameActivity.findViewById(R.id.starTwo).getParent());
+                        vg.removeView(gameActivity.findViewById(R.id.starTwo));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    starThree.setImageResource(R.drawable.star);
+                    starThree.setId(R.id.starThree);
+                    starThree.setX(field.getSpawnPoint().getX() + 50);
+                    starThree.setY(field.getSpawnPoint().getY());
+                    starThree.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                    gameActivity.getMapFrameLayout().addView(starThree);
+                case 2:
+                    starTwo.setImageResource(R.drawable.star);
+                    starTwo.setId(R.id.starTwo);
+                    starTwo.setX(field.getSpawnPoint().getX());
+                    starTwo.setY(field.getSpawnPoint().getY());
+                    starTwo.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
+                    gameActivity.getMapFrameLayout().addView(starTwo);
+            }*/
             return new int[]{tower.get().getDamage(level+1), tower.get().getRange(level+1), tower.get().getFireRate(level+1), tower.get().getCosts(level+1)};
         }
         return null;

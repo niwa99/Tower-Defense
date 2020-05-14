@@ -1,10 +1,13 @@
 package de.dhbw.map.objects.tower;
 
+import android.text.Layout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.util.List;
 import java.util.UUID;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Projectile;
 import de.dhbw.map.objects.enemy.Enemy;
@@ -25,6 +28,8 @@ public class TowerArtillery extends ATower {
 		artilleryTowerImage.setX(getPositionX());
 		artilleryTowerImage.setY(getPositionY());
 		setBaseImage(artilleryTowerImage);
+
+
 	}
 
 	public TowerArtillery(Field field, int level, ImageView artilleryTowerImage, GameActivity gameActivity) {

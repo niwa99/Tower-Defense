@@ -173,7 +173,7 @@ public class Game {
                 public void run() {
                     Optional<AWave> wave = match.next();
                     if(wave.isPresent()){
-                        startWave(match.next().get(), match.getWaveTime());
+                        startWave(wave.get(), match.getWaveTime());
                     }
                     if (!match.hasNext()) {
                         lastWaveOut = true;

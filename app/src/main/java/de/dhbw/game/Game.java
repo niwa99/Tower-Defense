@@ -33,6 +33,7 @@ import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.TowerBoombastic;
+import de.dhbw.map.objects.tower.TowerFreezer;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
@@ -234,6 +235,10 @@ public class Game {
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
                 case FREEZER:
+                    TowerFreezer newFreezer = new TowerFreezer("freezer", getMapStructure().getField(pos), 1, gameActivity);
+                    getMatchField().addTower(newFreezer);
+                    getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
+                    break;
                 case BOOMBASTIC:
                     TowerBoombastic newBoombastic = new TowerBoombastic(getMapStructure().getField(pos), level, gameActivity);
                     getMatchField().addTower(newBoombastic);

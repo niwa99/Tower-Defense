@@ -12,12 +12,15 @@ public class Constants {
     //Drawables
     public static final int DRAWABLE_BULLET = R.drawable.bullet;
     public static final int DRAWABLE_BULLET_BOOMBASTIC = R.drawable.tower_boombastic_bullet;
+    public static final int DRAWABLE_BULLET_FREEZER = R.drawable.tower_freezer_bullet;
     public static final int DRAWABLE_TANK = R.drawable.tank;
     public static final int DRAWABLE_TANK_HITTED = R.drawable.tank_hitted;
     public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower_artillery;
     public static final int DRAWABLE_TOWER_BOOMBASTIC = R.drawable.tower_boombastic_complete;
     public static final int DRAWABLE_TOWER_BOOMBASTIC_BASE = R.drawable.tower_boombastic_base;
     public static final int DRAWABLE_TOWER_BOOMBASTIC_HEAD = R.drawable.tower_boombastic_head;
+    public static final int DRAWABLE_TOWER_FREEZER_BASE = R.drawable.tower_freezer_idle;
+    public static final int DRAWABLE_TOWER_FREEZER_HEAD = R.drawable.tower_freezer_shoot;
     public static final int DRAWABLE_FIELD_TRANSPARENT = R.drawable.transparent_background;
     public static final int DRAWABLE_FIELD_ON_CLICK_PLUS = R.drawable.button_plus_background;
     public static final int DRAWABLE_PATH_HORIZONTAL = R.drawable.path_horizontal;
@@ -66,6 +69,13 @@ public class Constants {
     public static final int TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS = 5;
     public static final LinearLayout.LayoutParams TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
+    //TowerFreezer Parameters
+    public static final int TOWER_FREEZER_LEVEL_1_COSTS = 50;
+    public static final int TOWER_FREEZER_LEVEL_1_DAMAGE = 1;
+    public static final int TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS = 600;
+    public static final int TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS = 5;
+    public static final int TOWER_FREEZER_LEVEL_1_SLOWNESS = 75;
+    public static final LinearLayout.LayoutParams TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //Tank Parameters
     public static final int TANK_LEVEL_1_HEALTHPOINTS = 3;
@@ -88,7 +98,7 @@ public class Constants {
 
 
     //Bullet Parameters
-    public static final int BULLET_SPEED = 995; //From 0 to 1000
+    public static final int BULLET_SPEED = 2; //if the number is low, the bullet will be quick
     public static final int BOMB_RANGE = 100;
     public static final LinearLayout.LayoutParams BULLET_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE/4, FIELD_SIZE/4);
 }

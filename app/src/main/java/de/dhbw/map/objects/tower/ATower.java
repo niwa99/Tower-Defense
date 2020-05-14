@@ -16,6 +16,7 @@ import java.lang.Math;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
+import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
@@ -90,7 +91,7 @@ public abstract class ATower extends ATimerUsage {
 	}
 	
 	public boolean isEnemyInRange(Enemy enemy) {	
-		return getDistance(enemy.getPositionX(), enemy.getPositionY()) < range;
+		return MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), x, y) < range;
 	}
 
 	public void setBaseImage(ImageView image){
@@ -132,7 +133,7 @@ public abstract class ATower extends ATimerUsage {
 			Map<Enemy, Integer> distanceToEnemy = new HashMap<>();
 
 			for (Enemy enemy : enemies) {
-				int distance = getDistance(enemy.getPositionX(), enemy.getPositionY());
+				int distance = MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), x, y);
 				distanceToEnemy.put(enemy, distance);
 			}
 
@@ -204,7 +205,7 @@ public abstract class ATower extends ATimerUsage {
 	public abstract int getRange(int level);
 
 	public abstract int getFireRate(int level);
-	
+
 	public int getPositionX() {
 		return x;
 	}

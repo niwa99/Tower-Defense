@@ -10,9 +10,11 @@ import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.structure.Field;
 
+import static de.dhbw.util.Constants.BULLET_SIZE_PARAMS;
 import static de.dhbw.util.Constants.DRAWABLE_BULLET_BOOMBASTIC;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_BASE;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_HEAD;
+import static de.dhbw.util.Constants.FIELD_SIZE;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_COSTS;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;
@@ -45,7 +47,7 @@ public class TowerBoombastic extends ATower {
     public boolean fire(List<Enemy> enemies) {
         headImage.get().setRotation((float)rotateImage(enemies));
         if (super.fire(enemies)) {
-            new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity);
+            new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity, FIELD_SIZE/2);
             return true;
         }
         return false;
@@ -98,5 +100,4 @@ public class TowerBoombastic extends ATower {
             default: return TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;
         }
     }
-
 }

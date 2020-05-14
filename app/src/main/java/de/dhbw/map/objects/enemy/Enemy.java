@@ -22,6 +22,7 @@ public abstract class Enemy {
 	private int speed;
 	private int x;
 	private int y;
+	private int slowness;
 	private boolean isAlive = true;
 	private boolean reachedTarget = false;
 	private Direction direction = Direction.RIGHT;
@@ -61,6 +62,10 @@ public abstract class Enemy {
 	
 	public int getHealthPoints() {
 		return healthpoints;
+	}
+
+	public void setHealthpoints(int healthpoints) {
+		this.healthpoints = healthpoints;
 	}
 	
 	public int getSpeed() {
@@ -177,5 +182,18 @@ public abstract class Enemy {
 
 	public Direction getDirection() {
 		return direction;
+	}
+
+	public void slowDown(int slowness){
+		this.slowness = slowness;
+		gameActivity.getGame().getMatchField().slowEnemy(this);
+	}
+
+	public int getSlowness(){
+		return slowness>0? slowness--:slowness;
+	}
+
+	public boolean isFullSpeed(){
+		return slowness==0;
 	}
 }

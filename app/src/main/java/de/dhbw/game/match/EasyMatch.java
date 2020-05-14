@@ -13,6 +13,10 @@ public class EasyMatch extends AMatch {
     private static WaveComposition secondWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 5);
     private static WaveComposition secondWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 5);
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
+    private static WaveComposition fourthWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 5);
+    private static WaveComposition fourthWaveTankL3 = new WaveComposition(EnemyType.TANK, 3, 5);
+    private static WaveComposition fithhWaveTankL3 = new WaveComposition(EnemyType.TANK, 3, 10);
+
 
     public EasyMatch() {
         super(waveTime, startMoney);
@@ -33,6 +37,14 @@ public class EasyMatch extends AMatch {
         thirdWave.addWaveCompositions(thirdWaveTankL2);
         thirdWave.generate(gameActivity);
 
-        addWaves(firstWave, secondWave, thirdWave);
+        Wave fourthWave = new Wave(1500);
+        fourthWave.addWaveCompositions(fourthWaveTankL2, fourthWaveTankL3);
+        fourthWave.generate(gameActivity);
+
+        Wave fithWave = new Wave(1500);
+        fithWave.addWaveCompositions(fithhWaveTankL3);
+        fithWave.generate(gameActivity);
+
+        addWaves(firstWave, secondWave, fithWave, fourthWave, fithWave);
     }
 }

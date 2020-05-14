@@ -445,8 +445,10 @@ public class Game {
                     if (tower.isPresent()) {
                         if (field.getFieldPositionX() != circleField.getX() || field.getFieldPositionY() != circleField.getY()) {
                             try {
-                                clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                                clickedButton = Optional.empty();
+                                if(clickedButton.isPresent()){
+                                    clickedButton.get().setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
+                                    clickedButton = Optional.empty();
+                                }
                             } catch (NoSuchElementException e) {
                                 e.printStackTrace();
                             }

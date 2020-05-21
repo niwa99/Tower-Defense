@@ -80,7 +80,7 @@ public abstract class ATower extends ATimerUsage {
 	 */
 	public boolean fire(List<Enemy> enemies) {
 		List<Enemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
-		Enemy enemy = getNearestEnemy(enemiesInRange);
+		Enemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
 		if (enemy != null) {
 			if (enemy instanceof Tank) {
 				targetedEnemy = enemy;
@@ -128,12 +128,12 @@ public abstract class ATower extends ATimerUsage {
 	 * @param enemies
 	 * @return
 	 */
-	public Enemy getNearestEnemy(List<Enemy> enemies) {
+	public Enemy getNearestEnemy(Position actualPosition, List<Enemy> enemies) {
 		if (!enemies.isEmpty()) {
 			Map<Enemy, Integer> distanceToEnemy = new HashMap<>();
 
 			for (Enemy enemy : enemies) {
-				int distance = MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), x, y);
+				int distance = MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), actualPosition.getX(), actualPosition.getY());
 				distanceToEnemy.put(enemy, distance);
 			}
 
@@ -154,7 +154,7 @@ public abstract class ATower extends ATimerUsage {
 	 */
 	public double rotateImage(List<Enemy> enemies) {
 		double rotation = 0;
-		Enemy enemy = getNearestEnemy(enemies);
+		Enemy enemy = getNearestEnemy(getPosition(), enemies);
 		if (enemy != null) {
 			double a = this.getPositionX() - enemy.getPositionX();
 			double b = this.getPositionY() - enemy.getPositionY();

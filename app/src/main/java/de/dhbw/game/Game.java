@@ -34,6 +34,7 @@ import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.TowerBoombastic;
 import de.dhbw.map.objects.tower.TowerFreezer;
+import de.dhbw.map.objects.tower.TowerPlasmarizer;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
@@ -245,6 +246,10 @@ public class Game {
                     break;
 
                 case PLASMARIZER:
+                    TowerPlasmarizer newPlasmarizer = new TowerPlasmarizer(getMapStructure().getField(pos), level, gameActivity);
+                    getMatchField().addTower(newPlasmarizer);
+                    getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
+                    break;
                 case ASSAULTLASER:
                     break;
             }

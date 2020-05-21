@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import de.dhbw.map.objects.enemy.Enemy;
 
@@ -37,6 +38,19 @@ public class SortingUtil {
         }
 
         return result;
+    }
+
+    public static List<Enemy> sortListByProgress(List<Enemy> enemies, Enemy enemy, boolean greater){
+	    if(greater){
+	        return enemies.stream()//
+                .filter(e -> e.getProgress()>enemy.getProgress())//
+                .sorted(Comparator.comparingInt(Enemy::getProgress))
+                .collect(Collectors.toList());
+        }
+	    return enemies.stream()//
+            .filter(e -> e.getProgress()<=enemy.getProgress())//
+            .sorted(Comparator.comparingInt(Enemy::getProgress).reversed())
+            .collect(Collectors.toList());
     }
 	
 	

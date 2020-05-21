@@ -171,6 +171,10 @@ public abstract class Enemy {
 	public UUID getUuid() {
 		return uuid;
 	}
+
+	public int getProgress(){
+		return progress;
+	}
 	
 	public int getPositionX() {
 		return x;

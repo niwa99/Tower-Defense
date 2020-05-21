@@ -10,6 +10,7 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.PlasmaBall;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.SortingUtil;
 
 import static de.dhbw.util.Constants.DRAWABLE_BULLET_FREEZER;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_PLASMARIZER_BASE;
@@ -40,41 +41,37 @@ public class TowerPlasmarizer extends ATower {
 
     @Override
     public boolean fire(List<Enemy> enemies){
-        ArrayList<Enemy> targetEnemies = new ArrayList();
+        List<Enemy> targetEnemies = new ArrayList();
         if(super.fire(enemies)){
                 Enemy nextTarget = getNearestEnemy(targetedEnemy.getPosition(), enemies);
-                targetedEnemy = nextTarget;
-                if (targetedEnemy.getPosition().getX() < nextTarget.getPosition().getX()) {
-                    for(Enemy e: enemies) {
-
-                    }
-
+                if (targetedEnemy.getProgress() < nextTarget.getProgress()) {
+                    targetEnemies = SortingUtil.sortListByProgress(enemies, nextTarget, true);
                 } else {
-
+                    targetEnemies = SortingUtil.sortListByProgress(enemies, nextTarget, false);
                 }
-            new PlasmaBall(getPosition(), targetedEnemy, this.getDamage(), gameActivity, 0);
+            new PlasmaBall(getPosition(), targetedEnemy, this.getDamage(), plasmaRange, targetEnemies, gameActivity, 0);
         }
         return false;
     }
 
     @Override
     public int getCosts(int level) {
-        return 0;
+        return getPlasmarizerCostsByLevel(level);
     }
 
     @Override
     public int getDamage(int level) {
-        return 0;
+        return getPlasmarizerDamageByLevel(level);
     }
 
     @Override
     public int getRange(int level) {
-        return 0;
+        return getPlasmarizerRangeByLevel(level);
     }
 
     @Override
     public int getFireRate(int level) {
-        return 0;
+        return getPlasmarizerFirerateByLevel(level);
     }
 
     public static int getPlasmarizerCostsByLevel(int level) {

@@ -1,6 +1,5 @@
 package de.dhbw.game;
 
-import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.view.View;
@@ -32,6 +31,7 @@ import de.dhbw.game.wave.AWave;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
+import de.dhbw.map.objects.tower.TowerLaser;
 import de.dhbw.map.objects.tower.TowerBoombastic;
 import de.dhbw.map.objects.tower.TowerFreezer;
 import de.dhbw.map.objects.tower.TowerPlasmarizer;
@@ -244,13 +244,15 @@ public class Game {
                     getMatchField().addTower(newBoombastic);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
-
                 case PLASMARIZER:
                     TowerPlasmarizer newPlasmarizer = new TowerPlasmarizer(getMapStructure().getField(pos), level, gameActivity);
                     getMatchField().addTower(newPlasmarizer);
                     getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
                 case ASSAULTLASER:
+                    TowerLaser newAssaultLaser = new TowerLaser(getMapStructure().getField(pos), level, gameActivity);
+                    getMatchField().addTower(newAssaultLaser);
+                    getMapStructure().getField(pos).setFieldDescription(FieldDescription.TOWER);
                     break;
             }
         }

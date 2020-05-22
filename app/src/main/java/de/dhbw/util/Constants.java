@@ -27,7 +27,7 @@ public class Constants {
     public static final int DRAWABLE_TOWER_BOOMBASTIC_HEAD = R.drawable.tower_boombastic_head;
     public static final int DRAWABLE_TOWER_FREEZER_BASE = R.drawable.tower_freezer_idle;
     public static final int DRAWABLE_TOWER_FREEZER_HEAD = R.drawable.tower_freezer_shoot;
-    public static final int DRAWABLE_TOWER_PLASMARIZER_BASE = R.drawable.tower_freezer_idle;
+    public static final int DRAWABLE_TOWER_PLASMARIZER_BASE = R.drawable.tower_plasmarizer;
     public static final int DRAWABLE_TOWER_PLASMARIZER_HEAD = R.drawable.tower_freezer_shoot;
 
     //Drawables

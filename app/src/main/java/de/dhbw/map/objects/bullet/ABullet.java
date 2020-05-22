@@ -16,12 +16,12 @@ import static de.dhbw.util.Constants.*;
 public abstract class ABullet {
 
     private ImageView bulletImage;
-    private int x;
-    private int y;
-    private Position targetPos;
-    protected Enemy targetEnemy;
+    protected int x;
+    protected int y;
+    Position targetPos;
+    Enemy targetEnemy;
     protected int damage;
-    private GameActivity gameActivity;
+    protected GameActivity gameActivity;
 
     public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         this.gameActivity = gameActivity;

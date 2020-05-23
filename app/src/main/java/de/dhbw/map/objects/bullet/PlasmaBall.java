@@ -1,5 +1,7 @@
 package de.dhbw.map.objects.bullet;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 import de.dhbw.activities.GameActivity;
@@ -20,6 +22,13 @@ public class PlasmaBall extends ABullet {
         this.range = range;
     }
 
+    /**
+     * Constructor for test purpose only!
+     */
+    public PlasmaBall(Position spawnPosition, Enemy targetedEnemy, int damage, ImageView bulletImage, GameActivity gameActivity) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+    }
+
     @Override
     protected void hitEnemy(){
         super.hitEnemy();
@@ -33,16 +42,18 @@ public class PlasmaBall extends ABullet {
                 break;
             }
         }
-        if (nextEnemy != null && damage/2 != 0) {
+        if (nextEnemy != null && Math.round(damage/2) != 0) {
             int newSpawnPositionX = targetPos.getX() - FIELD_SIZE/2 + BULLET_SIZE_PARAMS.height/2;
             int newSpawnPositionY = targetPos.getY() - FIELD_SIZE/2 + BULLET_SIZE_PARAMS.height/2;
             Position newSpawnPosition = new Position(newSpawnPositionX, newSpawnPositionY);
-            new PlasmaBall(newSpawnPosition, nextEnemy, damage/2, range, targetEnemies, gameActivity, 0);
+            ABullet plasmaBall = new PlasmaBall(newSpawnPosition, nextEnemy, damage/2, range, targetEnemies, gameActivity, 0);
+            plasmaBall.setBulletSpeed(plasmaBall.getBulletSpeed()*2);
+            plasmaBall.start();
         }
 
     }
 
     private boolean isNextEnemyInRange(Enemy oldEnemy, Enemy nextEnemy) {
-        return (Math.abs(oldEnemy.getProgress() - nextEnemy.getProgress()) < range);
+        return Math.abs(oldEnemy.getMovedSteps() - nextEnemy.getMovedSteps()) < range;
     }
 }

@@ -47,7 +47,7 @@ public class TowerBoombastic extends ATower {
     public boolean fire(List<Enemy> enemies) {
         headImage.get().setRotation((float)rotateImage(enemies));
         if (super.fire(enemies)) {
-            new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity, FIELD_SIZE/2);
+            new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity, FIELD_SIZE/2).start();
             return true;
         }
         return false;

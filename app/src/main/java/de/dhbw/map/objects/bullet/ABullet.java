@@ -22,6 +22,7 @@ public abstract class ABullet {
     Enemy targetEnemy;
     protected int damage;
     protected GameActivity gameActivity;
+    private int bulletSpeed = BULLET_SPEED;
 
     public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         this.gameActivity = gameActivity;
@@ -39,10 +40,6 @@ public abstract class ABullet {
         if (offset != 0) {
             applyBulletOffset(offset);
         }
-
-        int distanceToEnemy = MatchField.getDistance(x, y, targetPos.getX(), targetPos.getY());
-        startAnimation(distanceToEnemy);
-        startLogicalShooting(distanceToEnemy);
     }
 
     /**
@@ -64,12 +61,18 @@ public abstract class ABullet {
         startLogicalShooting(distanceToEnemy);
     }
 
+    public void start() {
+        int distanceToEnemy = MatchField.getDistance(x, y, targetPos.getX(), targetPos.getY());
+        startAnimation(distanceToEnemy);
+        startLogicalShooting(distanceToEnemy);
+    }
+
     private void startAnimation(int distanceToEnemy) {
         gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
-        animatorX.setDuration(BULLET_SPEED * distanceToEnemy);
-        animatorY.setDuration(BULLET_SPEED * distanceToEnemy);
+        animatorX.setDuration(bulletSpeed * distanceToEnemy);
+        animatorY.setDuration(bulletSpeed * distanceToEnemy);
         gameActivity.runOnUiThread(() -> {
             animatorX.start();
             animatorY.start();
@@ -87,7 +90,15 @@ public abstract class ABullet {
                     System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");
                 }
             }
-        }, BULLET_SPEED * distanceToEnemy);
+        }, bulletSpeed * distanceToEnemy);
+    }
+
+    public void setBulletSpeed(int speed) {
+        this.bulletSpeed = speed;
+    }
+
+    public int getBulletSpeed() {
+        return this.bulletSpeed;
     }
 
     protected void hitEnemy() {

@@ -62,7 +62,7 @@ public class TowerFreezer extends ATower {
                 }
             }, 500);
 
-            new SnowFlake(getPosition(), super.targetedEnemy, this.getDamage(),this.getSlowness(), DRAWABLE_BULLET_FREEZER, gameActivity);
+            new SnowFlake(getPosition(), super.targetedEnemy, this.getDamage(),this.getSlowness(), DRAWABLE_BULLET_FREEZER, gameActivity).start();
             return true;
         }
         return false;

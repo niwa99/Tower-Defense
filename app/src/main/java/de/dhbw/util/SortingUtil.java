@@ -40,16 +40,18 @@ public class SortingUtil {
         return result;
     }
 
-    public static List<Enemy> sortListByProgress(List<Enemy> enemies, Enemy enemy, boolean greater){
+    public static List<Enemy> sortListByMovedSteps(List<Enemy> enemies, Enemy enemy, boolean greater){
 	    if(greater){
 	        return enemies.stream()//
-                .filter(e -> e.getProgress()>enemy.getProgress())//
-                .sorted(Comparator.comparingInt(Enemy::getProgress))
+                .filter(e -> e.getMovedSteps()>enemy.getMovedSteps())//
+                .filter(e -> e.getMovedSteps() > 0)//
+                .sorted(Comparator.comparingInt(Enemy::getMovedSteps))
                 .collect(Collectors.toList());
         }
 	    return enemies.stream()//
-            .filter(e -> e.getProgress()<=enemy.getProgress())//
-            .sorted(Comparator.comparingInt(Enemy::getProgress).reversed())
+            .filter(e -> e.getMovedSteps()<=enemy.getMovedSteps())//
+            .filter(e -> e.getMovedSteps() > 0)//
+            .sorted(Comparator.comparingInt(Enemy::getMovedSteps).reversed())
             .collect(Collectors.toList());
     }
 	

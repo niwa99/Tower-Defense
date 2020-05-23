@@ -19,6 +19,7 @@ public abstract class Enemy {
 	private int lifePointsCosts;
 	private int healthpoints;
 	private int progress = 0;
+	private int movedSteps = 0;
 	private int speed;
 	private int x;
 	private int y;
@@ -155,13 +156,13 @@ public abstract class Enemy {
 	}
 	
 	public void moveToPosition(Position pos) {
-		this.x = pos.getX();
-		this.y = pos.getY();
+		moveTo(pos.getX(), pos.getY());
 	}
 	
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;
+		movedSteps++;
 	}
 	
 	public String getLabel() {
@@ -174,6 +175,10 @@ public abstract class Enemy {
 
 	public int getProgress(){
 		return progress;
+	}
+
+	public int getMovedSteps() {
+		return movedSteps;
 	}
 	
 	public int getPositionX() {

@@ -10,6 +10,7 @@ import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.structure.Field;
 
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_COSTS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;
@@ -17,6 +18,7 @@ import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerLaser extends ATower {
+
     public TowerLaser(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
         super(id, towerType, level, costs, damage, range, fireRate, field, gameActivity);
     }
@@ -27,7 +29,7 @@ public class TowerLaser extends ATower {
 
         ImageView baseImage = new ImageView(gameActivity);
         baseImage.setLayoutParams(TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS);
-        baseImage.setImageResource(DRAWABLE_TOWER_ARTILLERY);
+        baseImage.setImageResource(DRAWABLE_TOWER_ASSAULTLASER);
         baseImage.setX(getPositionX());
         baseImage.setY(getPositionY());
         setBaseImage(baseImage);

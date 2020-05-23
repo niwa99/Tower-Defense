@@ -28,7 +28,9 @@ public class Constants {
     public static final int DRAWABLE_TOWER_FREEZER_BASE = R.drawable.tower_freezer_idle;
     public static final int DRAWABLE_TOWER_FREEZER_HEAD = R.drawable.tower_freezer_shoot;
     public static final int DRAWABLE_TOWER_PLASMARIZER_BASE = R.drawable.tower_plasmarizer;
-    public static final int DRAWABLE_TOWER_PLASMARIZER_HEAD = R.drawable.tower_freezer_shoot;
+    public static final int DRAWABLE_TOWER_ASSAULTLASER_BASE = R.drawable.tower_assaultlaser_base;
+    public static final int DRAWABLE_TOWER_ASSAULTLASER_HEAD = R.drawable.tower_assaultlaser_head;
+    public static final int DRAWABLE_TOWER_ASSAULTLASER = R.drawable.tower_assaultlaser_complete;
 
     //Drawables
     public static final int DRAWABLE_FIELD_TRANSPARENT = R.drawable.transparent_background;

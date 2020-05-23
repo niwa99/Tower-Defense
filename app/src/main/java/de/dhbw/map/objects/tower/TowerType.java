@@ -1,6 +1,7 @@
 package de.dhbw.map.objects.tower;
 
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_FREEZER_BASE;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_PLASMARIZER_BASE;
@@ -13,7 +14,7 @@ public enum TowerType {
     FREEZER("Freezer", DRAWABLE_TOWER_FREEZER_BASE, TOWER_FREEZER_LEVEL_1_COSTS),
     BOOMBASTIC("Boombastic", DRAWABLE_TOWER_BOOMBASTIC, TOWER_BOOMBASTIC_LEVEL_1_COSTS),
     PLASMARIZER("Plasmarizer", DRAWABLE_TOWER_PLASMARIZER_BASE, TOWER_ARTILLERY_LEVEL_1_COSTS),
-    ASSAULTLASER("Assaultlaser", DRAWABLE_TOWER_ARTILLERY, TOWER_ARTILLERY_LEVEL_1_COSTS);
+    ASSAULTLASER("Assaultlaser", DRAWABLE_TOWER_ASSAULTLASER, TOWER_ARTILLERY_LEVEL_1_COSTS);
 
     private String type;
     private int drawable;

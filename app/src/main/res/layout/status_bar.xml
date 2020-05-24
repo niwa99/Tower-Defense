@@ -10,18 +10,18 @@
         android:layout_width="25dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@drawable/icon_heart" />
+        android:background="@drawable/icon_lifepoints" />
 
     <TextView
         android:id="@+id/textLivePoints"
         android:layout_width="25dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="10dp"
         android:text="100" />
 
     <ImageView
         android:id="@+id/imageCurrency"
-        android:layout_width="35dp"
+        android:layout_width="30dp"
         android:layout_height="match_parent"
         android:background="@drawable/icon_currency" />
 

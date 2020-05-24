@@ -5,33 +5,47 @@ title __ENEMY's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.enemy {
       abstract class de.dhbw.map.objects.enemy.Enemy {
+          # image : ImageView
           - healthpoints : int
           - isAlive : boolean
           - label : String
+          - lifePointsCosts : int
           - progress : int
           - reachedTarget : boolean
+          - slowness : int
           - speed : int
           - timerTask : TimerTask
           - uuid : UUID
+          - value : int
           - x : int
           - y : int
           + Enemy()
           + getDirection()
           + getHealthPoints()
+          + getImage()
           + getLabel()
+          + getLifePointsCosts()
           + getPosition()
           + getPositionX()
           + getPositionY()
+          + getSlowness()
           + getSpeed()
           + getTimerTask()
+          + getType()
           + getUuid()
+          + getValue()
+          {abstract} + hit()
           + isAlive()
+          + isFullSpeed()
           + move()
           + moveTo()
           + moveToPosition()
           + reachedTarget()
           + reduceHealthPoints()
+          + setHealthpoints()
+          + setImage()
           + setTimerTask()
+          + slowDown()
       }
     }
   }
@@ -40,21 +54,25 @@ title __ENEMY's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.enemy {
       class de.dhbw.map.objects.enemy.Tank {
-          - tankImage : ImageView
           - timer : Timer
           + Tank()
-          + getTankImage()
+          + Tank()
           + hit()
           + move()
+          {static} - createTankImage()
           {static} - getTankHealthpointsByLevel()
+          {static} - getTankLifePointsCostsByLevel()
           {static} - getTankSpeedByLevel()
+          {static} - getTankValueByLevel()
       }
     }
   }
   
 
+  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.map.structure.Field : actualField
   de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.util.Direction : direction
+  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.game.EnemyType : enemyType
   de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.Enemy
 
 

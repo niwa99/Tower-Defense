@@ -4,17 +4,50 @@ title __TOWER's Class Diagram__\n
 
   namespace de.dhbw {
     namespace map.objects.tower {
-      class de.dhbw.map.objects.bullet.ABullet {
-          - bulletImage : ImageView
+      abstract class de.dhbw.map.objects.tower.ATower {
+          # damage : int
+          # headImage : Optional<ImageView>
+          - baseImage : ImageView
+          - costs : int
+          - fireRate : int
+          - id : UUID
+          - level : int
+          - range : int
+          - starlvlThree : ImageView
+          - starlvlTwo : ImageView
+          - task : TimerTask
           - x : int
           - y : int
-          + Bullet()
+          + ATower()
+          + calculateDelay()
+          + fire()
+          + getBaseImage()
+          + getCosts()
+          {abstract} + getCosts()
+          + getDamage()
+          {abstract} + getDamage()
+          + getDistance()
+          + getField()
+          + getFireRate()
+          {abstract} + getFireRate()
+          + getHeadImage()
+          + getId()
+          + getLevel()
+          + getNearestEnemy()
           + getPosition()
-          + move()
-          + moveTo()
-          + visualizeShot()
-          - getBulletRotation()
-          - setMidpointOfPositions()
+          + getPositionX()
+          + getPositionY()
+          + getRange()
+          {abstract} + getRange()
+          + getStarlvlThree()
+          + getStarlvlTwo()
+          + getTask()
+          + getTowerType()
+          + isEnemyInRange()
+          + rotateImage()
+          + setBaseImage()
+          + setHeadImage()
+          + setTask()
       }
     }
   }
@@ -23,13 +56,18 @@ title __TOWER's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.tower {
       class de.dhbw.map.objects.tower.TowerArtillery {
-          - defTowerImage : ImageView
-          + DefTower()
+          - artilleryTowerImage : ImageView
+          + TowerArtillery()
+          + TowerArtillery()
           + fire()
-          {static} - getDefTowerCostsByLevel()
-          {static} - getDefTowerDamageByLevel()
-          {static} - getDefTowerFirerateByLevel()
-          {static} - getDefTowerRangeByLevel()
+          + getCosts()
+          + getDamage()
+          + getFireRate()
+          + getRange()
+          {static} + getTowerArtilleryCostsByLevel()
+          {static} - getTowerArtilleryDamageByLevel()
+          {static} - getTowerArtilleryFirerateByLevel()
+          {static} - getTowerArtilleryRangeByLevel()
       }
     }
   }
@@ -37,44 +75,69 @@ title __TOWER's Class Diagram__\n
 
   namespace de.dhbw {
     namespace map.objects.tower {
-      abstract class de.dhbw.map.objects.tower.ATower {
-          # damage : int
-          - costs : int
-          - fireRate : int
-          - id : UUID
-          - label : String
-          - range : int
-          - task : TimerTask
-          - x : int
-          - y : int
-          + Tower()
+      class de.dhbw.map.objects.tower.TowerBoombastic {
+          + TowerBoombastic()
           + fire()
           + getCosts()
           + getDamage()
-          + getDistance()
           + getFireRate()
-          + getId()
-          + getLabel()
-          + getNearestEnemy()
-          + getPosition()
-          + getPositionX()
-          + getPositionY()
           + getRange()
-          + getTask()
-          + isEnemyInRange()
-          + rotateImage()
-          + setTask()
+          {static} + getTowerBoombasticCostsByLevel()
+          {static} - getTowerBoombasticDamageByLevel()
+          {static} - getTowerBoombasticFirerateByLevel()
+          {static} - getTowerBoombasticRangeByLevel()
       }
     }
   }
   
 
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.util.Position : targetPos
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.tower.TowerArtillery : tower
-  de.dhbw.map.objects.tower.TowerArtillery -up-|> de.dhbw.map.objects.tower.ATower
+  namespace de.dhbw {
+    namespace map.objects.tower {
+      class de.dhbw.map.objects.tower.TowerFreezer {
+          - slowness : int
+          + TowerFreezer()
+          + TowerFreezer()
+          + fire()
+          + getCosts()
+          + getDamage()
+          + getFireRate()
+          {static} + getFreezerCostsByLevel()
+          + getRange()
+          + getSlowness()
+          {static} - getFreezerDamageByLevel()
+          {static} - getFreezerFirerateByLevel()
+          {static} - getFreezerRangeByLevel()
+          {static} - getFreezerSlownessByLevel()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.tower {
+      enum TowerType {
+        ARTILLERY
+        ASSAULTLASER
+        BOOMBASTIC
+        FREEZER
+        PLASMARIZER
+        drawable
+        price
+        type
+      }
+    }
+  }
+  
+
+  de.dhbw.map.objects.tower.ATower -up-|> de.dhbw.game.ATimerUsage
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.structure.Field : field
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.util.SortingUtil : sortingUtil
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.tower.TowerType : towerType
+  de.dhbw.map.objects.tower.TowerArtillery -up-|> de.dhbw.map.objects.tower.ATower
+  de.dhbw.map.objects.tower.TowerBoombastic -up-|> de.dhbw.map.objects.tower.ATower
+  de.dhbw.map.objects.tower.TowerFreezer -up-|> de.dhbw.map.objects.tower.ATower
 
 
 right footer

@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Projectile;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
@@ -31,7 +31,7 @@ public class BulletTest {
         //arrange
         final int field_size = 150;
         ATower tower = new TowerArtillery(new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size * 5, field_size * 1);
         enemy.setHealthpoints(1);
 

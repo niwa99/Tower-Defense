@@ -1,6 +1,5 @@
 package de.dhbw.map.matchfield;
 
-import android.graphics.Path;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -13,16 +12,15 @@ import java.util.Optional;
 
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
-import de.dhbw.map.structure.MapStructure;
 import pl.droidsonroids.gif.GifImageView;
 
 public class MatchField {
 
 	private final GameActivity gameActivity;
-	private List<Enemy> enemies;
+	private List<AEnemy> enemies;
 	private List<ATower> towers;
 
 	private boolean isGameOver = false;
@@ -57,7 +55,7 @@ public class MatchField {
 		gameActivity.getGame().increaseNumberOfBuiltTowers();
 	}
 	
-	public void addEnemy(Enemy enemy) {
+	public void addEnemy(AEnemy enemy) {
 		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemy.getImage()));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
@@ -67,7 +65,7 @@ public class MatchField {
 	 * all enemies are moving in an own thread. The speed is defined by the time this task is repeated.
 	 * An enemy moves only one pixel each time. Speed is 1 second - (int) speed of the enemy
 	 */
-	public void startEnemyMovement(Enemy enemy) {
+	public void startEnemyMovement(AEnemy enemy) {
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
@@ -88,7 +86,7 @@ public class MatchField {
 			matchFieldTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
 	}
 
-	public void slowEnemy(Enemy enemy){
+	public void slowEnemy(AEnemy enemy){
 		enemy.getTimerTask().cancel();
 		TimerTask timerTask = new TimerTask() {
 			@Override
@@ -159,7 +157,7 @@ public class MatchField {
 		System.out.println("Game is over");
 	}
 
-	public void removeDeadEnemy(Enemy enemy) {
+	public void removeDeadEnemy(AEnemy enemy) {
 		if (!enemy.isAlive()) {
 			enemy.getTimerTask().cancel();
 			removeImageViewOfEnemy(enemy);
@@ -171,7 +169,7 @@ public class MatchField {
 		}
 	}
 
-	public void removeEnemiesInTarget(Enemy enemy) {
+	public void removeEnemiesInTarget(AEnemy enemy) {
 		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())) {
 			isGameOver = true;
 		}
@@ -181,7 +179,7 @@ public class MatchField {
 		System.out.println(enemy.getLabel() + " reached the target");
 	}
 
-	private void removeImageViewOfEnemy(Enemy enemy) {
+	private void removeImageViewOfEnemy(AEnemy enemy) {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
@@ -190,7 +188,7 @@ public class MatchField {
 		}
 	}
 
-	private void explode(Enemy enemy) {
+	private void explode(AEnemy enemy) {
 		if(gameActivity.getGame().isAnimationOn()) {
 			GifImageView gif = new GifImageView(gameActivity);
 			gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
@@ -247,16 +245,16 @@ public class MatchField {
 		}
 	}
 
-	private Optional<Enemy> getEnemy(UUID enemyUUID) {
+	private Optional<AEnemy> getEnemy(UUID enemyUUID) {
 		return enemies.stream().filter(enemy -> enemy.getUuid() == enemyUUID).findAny();
 	}
 
 	private List<UUID> getEnemyUUIDs() {
-		return enemies.stream().map(Enemy::getUuid).collect(Collectors.toList());
+		return enemies.stream().map(AEnemy::getUuid).collect(Collectors.toList());
 	}
 
 	private boolean removeEnemy(UUID enemyUUID) {
-		Optional<Enemy> enemy = getEnemy(enemyUUID);
+		Optional<AEnemy> enemy = getEnemy(enemyUUID);
 		if (enemy.isPresent()) {
 			enemies.remove(enemy.get());
 			return true;

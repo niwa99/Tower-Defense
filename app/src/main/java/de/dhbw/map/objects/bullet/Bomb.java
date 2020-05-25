@@ -6,20 +6,20 @@ import java.util.Map;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Position;
 import static de.dhbw.util.Constants.BOMB_RANGE;
 
 public class Bomb extends ABullet {
-    private List<Enemy> allEnemies;
+    private List<AEnemy> allEnemies;
     private final int range = BOMB_RANGE;
 
-    public Bomb(Position spawnPosition, Enemy targetedEnemy, List<Enemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
+    public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, bulletImageID, gameActivity, offset);
         this.allEnemies = allEnemies;
     }
 
-    public Bomb(Position spawnPosition, Enemy targetedEnemy, List<Enemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity) {
+    public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity) {
         this(spawnPosition, targetedEnemy, allEnemies, damage, bulletImageID, gameActivity, 0);
     }
 
@@ -30,10 +30,10 @@ public class Bomb extends ABullet {
         getEnemiesToHit().entrySet().stream().forEach(e -> e.getKey().hit(e.getValue()));
     }
 
-    public Map<Enemy, Integer> getEnemiesToHit() {
-        Map<Enemy, Integer> enemiesInExplosionRange = new HashMap<Enemy, Integer>();
+    public Map<AEnemy, Integer> getEnemiesToHit() {
+        Map<AEnemy, Integer> enemiesInExplosionRange = new HashMap<AEnemy, Integer>();
         targetEnemy.getPosition();
-        for (Enemy e : allEnemies) {
+        for (AEnemy e : allEnemies) {
             int distance = MatchField.getDistance(targetEnemy.getPositionX(), targetEnemy.getPositionY(), e.getPositionX(), e.getPositionY());
             if(distance < range){
                 if(distance < range/2){

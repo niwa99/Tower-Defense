@@ -131,7 +131,7 @@ title __TOWER's Class Diagram__\n
 
   de.dhbw.map.objects.tower.ATower -up-|> de.dhbw.game.ATimerUsage
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.activities.GameActivity : gameActivity
-  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.AEnemy : targetedEnemy
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.structure.Field : field
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.util.SortingUtil : sortingUtil
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.tower.TowerType : towerType

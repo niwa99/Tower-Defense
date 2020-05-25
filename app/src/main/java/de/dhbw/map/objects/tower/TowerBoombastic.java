@@ -7,10 +7,9 @@ import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Bomb;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.structure.Field;
 
-import static de.dhbw.util.Constants.BULLET_SIZE_PARAMS;
 import static de.dhbw.util.Constants.DRAWABLE_BULLET_BOOMBASTIC;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_BASE;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_HEAD;
@@ -44,7 +43,7 @@ public class TowerBoombastic extends ATower {
     }
 
     @Override
-    public boolean fire(List<Enemy> enemies) {
+    public boolean fire(List<AEnemy> enemies) {
         headImage.get().setRotation((float)rotateImage(enemies));
         if (super.fire(enemies)) {
             new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity, FIELD_SIZE/2);

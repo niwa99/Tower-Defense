@@ -59,7 +59,7 @@ title __BULLET's Class Diagram__\n
   }
   
 
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.Enemy : targetEnemy
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.AEnemy : targetEnemy
   de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.util.Position : targetPos
   de.dhbw.map.objects.bullet.Bomb -up-|> de.dhbw.map.objects.bullet.ABullet

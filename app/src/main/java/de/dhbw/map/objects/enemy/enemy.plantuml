@@ -4,7 +4,7 @@ title __ENEMY's Class Diagram__\n
 
   namespace de.dhbw {
     namespace map.objects.enemy {
-      abstract class de.dhbw.map.objects.enemy.Enemy {
+      abstract class de.dhbw.map.objects.enemy.AEnemy {
           # image : ImageView
           - healthpoints : int
           - isAlive : boolean
@@ -69,11 +69,11 @@ title __ENEMY's Class Diagram__\n
   }
   
 
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.activities.GameActivity : gameActivity
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.map.structure.Field : actualField
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.util.Direction : direction
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.game.EnemyType : enemyType
-  de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.Enemy
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.map.structure.Field : actualField
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.util.Direction : direction
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.game.EnemyType : enemyType
+  de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.AEnemy
 
 
 right footer

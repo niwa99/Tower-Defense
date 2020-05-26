@@ -67,7 +67,7 @@ public abstract class ABullet {
         startLogicalShooting(distanceToEnemy);
     }
 
-    private void startAnimation(int distanceToEnemy) {
+    protected void startAnimation(int distanceToEnemy) {
         gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
@@ -79,7 +79,7 @@ public abstract class ABullet {
         });
     }
 
-    private void startLogicalShooting(int distanceToEnemy) {
+    protected void startLogicalShooting(int distanceToEnemy) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -105,21 +105,21 @@ public abstract class ABullet {
         targetEnemy.hit(damage);
     }
 
-    private void applyBulletOffset(float offset) {
+    void applyBulletOffset(float offset) {
         float vector_y = (float) Math.cos(Math.toRadians(bulletImage.getRotation() - 90));
         float vector_x = (float) -Math.sin(Math.toRadians(bulletImage.getRotation() - 90));
         bulletImage.setX(bulletImage.getX() + (vector_x * offset));
         bulletImage.setY(bulletImage.getY() + (vector_y * offset));
     }
 
-    private double getBulletRotation() {
+    double getBulletRotation() {
         double a = this.x - targetPos.getX();
         double b = this.y - targetPos.getY();
         double rotation = Math.toDegrees(Math.atan2(b, a));
         return rotation + 180;
     }
 
-    private void setMidpointOfPositions(Position targetPos, Position spawnPosition) {
+    protected void setMidpointOfPositions(Position targetPos, Position spawnPosition) {
         int mid_x = targetPos.getX() + (FIELD_SIZE/2) - (BULLET_SIZE_PARAMS.height/2);
         int mid_y = targetPos.getY() + (FIELD_SIZE/2) - (BULLET_SIZE_PARAMS.height/2);
         this.targetPos = new Position(mid_x, mid_y);

@@ -8,6 +8,7 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.MapStructure;
+import de.dhbw.util.Constants;
 import de.dhbw.util.Direction;
 import de.dhbw.util.Position;
 import java.util.TimerTask;
@@ -15,6 +16,7 @@ import java.util.TimerTask;
 public abstract class Enemy {
 	private String label;
 	private UUID uuid;
+	private boolean isPaused = false;
 	private int value;
 	private int lifePointsCosts;
 	private int healthpoints;
@@ -202,7 +204,19 @@ public abstract class Enemy {
 		return slowness>0? slowness--:slowness;
 	}
 
+	public void setPaused(boolean paused) {
+		isPaused = paused;
+	}
+
 	public boolean isFullSpeed(){
 		return slowness==0;
+	}
+
+	public boolean isHittedOnPosition(Position pos){
+		int size = Constants.FIELD_SIZE/2;
+		if(Math.abs(x-pos.getX())<=size && Math.abs(y-pos.getY())<=size &&!isPaused){
+			return true;
+		}
+		return false;
 	}
 }

@@ -136,12 +136,16 @@ public class MatchField {
 	public void pauseTimers(){
 		final long time = System.currentTimeMillis();
 		towers.stream().forEach(t -> t.calculateDelay(time));
+		enemies.stream().forEach(e -> e.setPaused(true));
 		matchFieldTimer.cancel();
 	}
 
 	public void continueTimers(){
 		matchFieldTimer = new Timer();
-		enemies.stream().forEach(e -> startEnemyMovement(e));
+		enemies.stream().forEach(e -> {
+			startEnemyMovement(e);
+			e.setPaused(false);
+		});
 		towers.stream().forEach(t -> startTowerFire(t));
 	}
 

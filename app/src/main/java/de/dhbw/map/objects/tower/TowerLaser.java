@@ -6,11 +6,19 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.bullet.Bomb;
+import de.dhbw.map.objects.bullet.LaserRay;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.structure.Field;
 
+import static de.dhbw.util.Constants.DRAWABLE_BULLET_BOOMBASTIC;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER_BASE;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER_HEAD;
+import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_HEAD;
+import static de.dhbw.util.Constants.FIELD_SIZE;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_COSTS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;
@@ -29,15 +37,30 @@ public class TowerLaser extends ATower {
 
         ImageView baseImage = new ImageView(gameActivity);
         baseImage.setLayoutParams(TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS);
-        baseImage.setImageResource(DRAWABLE_TOWER_ASSAULTLASER);
+        baseImage.setImageResource(DRAWABLE_TOWER_ASSAULTLASER_BASE);
         baseImage.setX(getPositionX());
         baseImage.setY(getPositionY());
         setBaseImage(baseImage);
+
+        ImageView headImage = new ImageView(gameActivity);
+        headImage.setLayoutParams(TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS);
+        headImage.setImageResource(DRAWABLE_TOWER_ASSAULTLASER_HEAD);
+        headImage.setX(getPositionX());
+        headImage.setY(getPositionY());
+        setHeadImage(headImage);
+
+
     }
 
     @Override
     public boolean fire(List<Enemy> enemies){
-        return super.fire(enemies);
+        headImage.get().setRotation((float)rotateImage(enemies));
+
+        if(super.fire(enemies)){
+            new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(),  gameActivity, (FIELD_SIZE/3)).start();
+            return true;
+        }
+        return false;
     }
 
     @Override

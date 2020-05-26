@@ -74,7 +74,7 @@ public class Game {
     private boolean lastWaveOut = false;
     private boolean lastEnemyOfWaveSpawned = false;
     private IMoneyListener moneyListener = null;
-
+    private boolean isMenuOpen = false;
     private int lifePoints = 100;
     private int money = 0;
 
@@ -125,11 +125,18 @@ public class Game {
     }
 
     public void openSettings(){
-        Intent intent = new Intent(gameActivity, MenuSettings.class);
-        MenuSettings.gameActivity = gameActivity;
-        matchField.pauseTimers();
-        pauseTimers();
-        gameActivity.startActivity(intent);
+	    if(!isMenuOpen){
+            isMenuOpen = true;
+            Intent intent = new Intent(gameActivity, MenuSettings.class);
+            MenuSettings.gameActivity = gameActivity;
+            matchField.pauseTimers();
+            pauseTimers();
+            gameActivity.startActivity(intent);
+        }
+    }
+
+    public void closeMenu(){
+	    this.isMenuOpen=false;
     }
 
     public void pauseTimers(){

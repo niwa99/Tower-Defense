@@ -211,12 +211,4 @@ public abstract class Enemy {
 	public boolean isFullSpeed(){
 		return slowness==0;
 	}
-
-	public boolean isHittedOnPosition(Position pos){
-		int size = Constants.FIELD_SIZE/2;
-		if(Math.abs(x-pos.getX())<=size && Math.abs(y-pos.getY())<=size &&!isPaused){
-			return true;
-		}
-		return false;
-	}
 }

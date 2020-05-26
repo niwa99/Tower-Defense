@@ -10,6 +10,8 @@ import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.LaserRay;
 import de.dhbw.map.objects.enemy.Enemy;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.Constants;
+import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.DRAWABLE_BULLET_BOOMBASTIC;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
@@ -57,7 +59,7 @@ public class TowerLaser extends ATower {
         headImage.get().setRotation((float)rotateImage(enemies));
 
         if(super.fire(enemies)){
-            new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(),  gameActivity, (FIELD_SIZE/3)).start();
+            new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(),  gameActivity, (int)(FIELD_SIZE/2)).start();
             return true;
         }
         return false;

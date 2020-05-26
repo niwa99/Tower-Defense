@@ -83,6 +83,7 @@ public class MenuSettings extends AMenu implements ISettingsManager {
     @Override
     public void finish(){
         super.finish();
+        gameActivity.getGame().closeMenu();
         gameActivity.getGame().getMatchField().continueTimers();
         gameActivity.getGame().continueTimers();
     }

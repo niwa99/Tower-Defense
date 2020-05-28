@@ -124,7 +124,7 @@ public class MatchField {
 				@Override
 				public void run() {
 					if (enemies.size() > 0) {
-						tower.fire(enemies);
+						tower.fire(new ArrayList<>(enemies));
 						tower.setLastTimeActionMillis(System.currentTimeMillis());
 					}
 				}

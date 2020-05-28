@@ -208,6 +208,10 @@ public abstract class Enemy {
 		isPaused = paused;
 	}
 
+	public boolean isPaused(){
+		return isPaused;
+	}
+
 	public boolean isFullSpeed(){
 		return slowness==0;
 	}

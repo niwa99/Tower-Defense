@@ -19,7 +19,7 @@ public abstract class ABullet {
     protected int x;
     protected int y;
     Position targetPos;
-    Enemy targetEnemy;
+    final Enemy targetEnemy;
     protected int damage;
     protected GameActivity gameActivity;
     private int bulletSpeed = BULLET_SPEED;

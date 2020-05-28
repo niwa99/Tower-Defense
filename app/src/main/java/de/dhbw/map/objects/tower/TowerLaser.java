@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.bullet.ABullet;
 import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.LaserRay;
 import de.dhbw.map.objects.enemy.Enemy;
@@ -28,6 +29,7 @@ import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerLaser extends ATower {
+    private LaserRay bullet = null;
 
     public TowerLaser(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
         super(id, towerType, level, costs, damage, range, fireRate, field, gameActivity);
@@ -56,11 +58,13 @@ public class TowerLaser extends ATower {
 
     @Override
     public boolean fire(List<Enemy> enemies){
-        headImage.get().setRotation((float)rotateImage(enemies));
-
-        if(super.fire(enemies)){
-            new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(),  gameActivity, (int)(FIELD_SIZE/2)).start();
-            return true;
+        if(bullet==null || !bullet.isAlive()) {
+            headImage.get().setRotation((float)rotateImage(enemies));
+            if (super.fire(enemies)) {
+                bullet = new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(), gameActivity, (int) (FIELD_SIZE / 2));
+                bullet.start();
+                return true;
+            }
         }
         return false;
     }

@@ -10,7 +10,6 @@ import android.view.View;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.Vector;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.Enemy;
@@ -22,6 +21,7 @@ import static de.dhbw.util.Constants.FIELD_SIZE;
 public class LaserRay extends ABullet {
     private Canvas canvas;
     private LaserView laserView;
+    private boolean isAlive = true;
 
     public LaserRay(Position spawnPosition, Enemy targetedEnemy, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
@@ -45,16 +45,20 @@ public class LaserRay extends ABullet {
             gameActivity.getMapFrameLayout().addView(laserView);
         });
 
+        Position bulletStartPos = new Position(x,y);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(!isEnemyHittedOnPosition(new Position(x,y), targetPos,targetEnemy)){
+                if(!targetEnemy.isAlive() || targetEnemy.isPaused() || !isEnemyHitOnPosition(bulletStartPos, targetPos,targetEnemy)){
                     gameActivity.runOnUiThread(() -> {
                         gameActivity.getMapFrameLayout().removeView(laserView);
                     });
+                    isAlive=false;
                     cancel();
                 }else{
-                    laserView.reDraw(canvas, Color.RED);
+                    targetEnemy.hit(1);
+                    //laserView.reDraw(canvas, Color.RED);
+                    //laserView.invalidate();
                 }
             }
         }, 0,250);
@@ -76,9 +80,29 @@ public class LaserRay extends ABullet {
         return (float) Math.cos(Math.toRadians(getBulletRotation() - 90));
     }
 
-    public boolean isEnemyHittedOnPosition(Position bulletStartPosition, Position bulletEndPosition, Enemy enemy){
-        int size = Constants.FIELD_SIZE/2;
-        return lineRect(bulletStartPosition.getX(), bulletStartPosition.getY(), bulletEndPosition.getX(), bulletEndPosition.getY(), enemy.getPositionX()-size, enemy.getPositionY()-size, enemy.getPositionX()+size, enemy.getPositionY()+size);
+    public static boolean isEnemyHitOnPosition(Position bulletStartPosition, Position bulletEndPosition, Enemy enemy){
+        int halfSize = Constants.FIELD_SIZE/2;
+        int enemyX = enemy.getPositionX();
+        int enemyY = enemy.getPositionY();
+
+        int FIELD_SIZE = 100;
+
+        boolean left =   doIntersect(bulletStartPosition, bulletEndPosition, new Position(enemyX, enemyY),new Position(enemyX, enemyY+FIELD_SIZE));
+        boolean right =  doIntersect(bulletStartPosition, bulletEndPosition, new Position(enemyX+FIELD_SIZE, enemyY),new Position(enemyX+FIELD_SIZE, enemyY+FIELD_SIZE));
+        boolean top =   doIntersect(bulletStartPosition, bulletEndPosition, new Position(enemyX, enemyY),new Position(enemyX+FIELD_SIZE, enemyY));
+        boolean bottom =  doIntersect(bulletStartPosition, bulletEndPosition, new Position(enemyX, enemyY+FIELD_SIZE),new Position(enemyX+FIELD_SIZE, enemyY+FIELD_SIZE));
+
+        // if ANY of the above are true, the line
+        // has hit the rectangle
+        if (left || right || top || bottom) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public boolean isAlive(){
+        return isAlive;
     }
 
 
@@ -92,33 +116,51 @@ public class LaserRay extends ABullet {
         this.y = spawnPosition.getY() + (FIELD_SIZE/2);
     }
 
-    boolean lineRect(float x1, float y1, float x2, float y2, float rx, float ry, float rw, float rh) {
+    static boolean doIntersect(Position p1, Position q1, Position p2, Position q2)
+    {
+        // Find the four orientations needed for general and
+        // special cases
+        int o1 = orientation(p1, q1, p2);
+        int o2 = orientation(p1, q1, q2);
+        int o3 = orientation(p2, q2, p1);
+        int o4 = orientation(p2, q2, q1);
 
-        // check if the line has hit any of the rectangle's sides
-        // uses the Line/Line function below
-        boolean left =   lineLine(x1,y1,x2,y2, rx,ry,rx, ry+rh);
-        boolean right =  lineLine(x1,y1,x2,y2, rx+rw,ry, rx+rw,ry+rh);
-        boolean top =    lineLine(x1,y1,x2,y2, rx,ry, rx+rw,ry);
-        boolean bottom = lineLine(x1,y1,x2,y2, rx,ry+rh, rx+rw,ry+rh);
-
-        // if ANY of the above are true, the line
-        // has hit the rectangle
-        if (left || right || top || bottom) {
+        // General case
+        if (o1 != o2 && o3 != o4)
             return true;
-        }
-        return false;
+
+        // Special Cases
+        // p1, q1 and p2 are colinear and p2 lies on segment p1q1
+        if (o1 == 0 && onSegment(p1, p2, q1)) return true;
+
+        // p1, q1 and q2 are colinear and q2 lies on segment p1q1
+        if (o2 == 0 && onSegment(p1, q2, q1)) return true;
+
+        // p2, q2 and p1 are colinear and p1 lies on segment p2q2
+        if (o3 == 0 && onSegment(p2, p1, q2)) return true;
+
+        // p2, q2 and q1 are colinear and q1 lies on segment p2q2
+        if (o4 == 0 && onSegment(p2, q1, q2)) return true;
+
+        return false; // Doesn't fall in any of the above cases
     }
 
-    boolean lineLine(float x1, float y1, float x2, float y2, float x3, float y3, float x4, float y4) {
+    static int orientation(Position p, Position q, Position r)
+    {
+        int val = (q.getY()- p.getY()) * (r.getX() - q.getX()) -
+                (q.getX() - p.getX()) * (r.getY() - q.getY());
 
-        // calculate the direction of the lines
-        float uA = ((x4-x3)*(y1-y3) - (y4-y3)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
-        float uB = ((x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)) / ((y4-y3)*(x2-x1) - (x4-x3)*(y2-y1));
+        if (val == 0) return 0;  // colinear
 
-        // if uA and uB are between 0-1, lines are colliding
-        if (uA >= 0 && uA <= 1 && uB >= 0 && uB <= 1) {
+        return (val > 0)? 1: 2; // clock or counterclock wise
+    }
+
+    static boolean onSegment(Position p, Position q, Position r)
+    {
+        if (q.getX() <= Math.max(p.getX(), r.getX()) && q.getX() >= Math.min(p.getX(), r.getX()) &&
+                q.getY() <= Math.max(p.getY(), r.getY()) && q.getY() >= Math.min(p.getY(), r.getY()))
             return true;
-        }
+
         return false;
     }
 

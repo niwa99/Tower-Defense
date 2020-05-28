@@ -2,37 +2,90 @@
 
 title __ACTIVITIES's Class Diagram__\n
 
-  package de.dhbw {
-    package activities {
-      class de.dhbw.activities.MainActivity {
-          # onCreate()
+  namespace de.dhbw {
+    namespace activities {
+      class de.dhbw.activities.DifficultyFragment {
+          {static} - FRAGMENT_EASY : int
+          {static} - FRAGMENT_HARD : int
+          {static} - FRAGMENT_MEDIUM : int
+          - changeLeftButton : Button
+          - changeRightButton : Button
+          - textDifficultyDescription : TextView
+          - textDifficultyHeader : TextView
+          - textValueBuiltTowers : TextView
+          - textValueEnemiesKilled : TextView
+          - textValueMaxWave : TextView
+          - textValueMoneySpent : TextView
+          - textValueUpgrades : TextView
+          + DifficultyFragment()
+          + onCreateView()
+          - setEasyInformation()
+          - setHardInformation()
+          - setMediumInformation()
       }
-
-      class de.dhbw.activities.GameActivity {
-                  {static} - AUTO_HIDE : boolean
-                  {static} - AUTO_HIDE_DELAY_MILLIS : int
-                  {static} - UI_ANIMATION_DELAY : int
-                  - mContentView : View
-                  - mControlsView : View
-                  - mDelayHideTouchListener : OnTouchListener
-                  - mHideHandler : Handler
-                  - mHidePart2Runnable : Runnable
-                  - mHideRunnable : Runnable
-                  - mShowPart2Runnable : Runnable
-                  - mVisible : boolean
-                  - mapLayout : FrameLayout
-                  + onOptionsItemSelected()
-                  # onCreate()
-                  # onPostCreate()
-                  - delayedHide()
-                  - hide()
-                  - show()
-                  - toggle()
-              }
     }
   }
+  
 
+  namespace de.dhbw {
+    namespace activities {
+      class de.dhbw.activities.GameActivity {
+          {static} - AUTO_HIDE : boolean
+          {static} - AUTO_HIDE_DELAY_MILLIS : int
+          {static} - UI_ANIMATION_DELAY : int
+          - mContentView : View
+          - mControlsView : View
+          - mDelayHideTouchListener : OnTouchListener
+          - mHideHandler : Handler
+          - mHidePart2Runnable : Runnable
+          - mHideRunnable : Runnable
+          - mShowPart2Runnable : Runnable
+          - mVisible : boolean
+          - mapLayout : FrameLayout
+          - mediaPlayer : MediaPlayer
+          - textCurrentWave : TextView
+          - textLifePoints : TextView
+          - textMoney : TextView
+          - textWaveRemaining : TextView
+          + getGame()
+          + getMapFrameLayout()
+          + getMediaPlayer()
+          + onBackPressed()
+          + onOptionsItemSelected()
+          + returnToMainMenu()
+          + setCurrentWaveNumber()
+          + setLifePoints()
+          + setMoney()
+          + setWaveTimeRemaining()
+          # onCreate()
+          # onPostCreate()
+          - delayedHide()
+          - hide()
+          - setupAndroidFullscreenAndLayout()
+          - show()
+          - toggle()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace activities {
+      class de.dhbw.activities.MainActivity {
+          - mediaPlayer : MediaPlayer
+          + toggle()
+          # onCreate()
+      }
+    }
+  }
+  
+
+  de.dhbw.activities.DifficultyFragment -up-|> androidx.fragment.app.Fragment
+  de.dhbw.activities.DifficultyFragment o-- de.dhbw.game.Difficulty : difficulty
+  de.dhbw.activities.GameActivity .up.|> de.dhbw.game.IStatusBar
   de.dhbw.activities.GameActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  de.dhbw.activities.GameActivity o-- de.dhbw.game.Game : game
+  de.dhbw.activities.MainActivity .up.|> de.dhbw.game.settings.ISettingsManager
   de.dhbw.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
 
 

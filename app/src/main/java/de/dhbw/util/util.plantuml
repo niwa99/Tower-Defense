@@ -7,23 +7,86 @@ title __UTIL's Class Diagram__\n
       class de.dhbw.util.Constants {
           {static} + AMOUNT_COLUMNS : int
           {static} + AMOUNT_ROWS : int
+          {static} + BOMB_RANGE : int
           {static} + BULLET_SIZE_PARAMS : LayoutParams
           {static} + BULLET_SPEED : int
-          {static} + DEF_TOWER_LEVEL_1_COSTS : int
-          {static} + DEF_TOWER_LEVEL_1_DAMAGE : int
-          {static} + DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS : int
-          {static} + DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS : int
-          {static} + DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
           {static} + DRAWABLE_BULLET : int
+          {static} + DRAWABLE_BULLET_BOOMBASTIC : int
+          {static} + DRAWABLE_BULLET_FREEZER : int
+          {static} + DRAWABLE_FIELD_ON_CLICK_PLUS : int
+          {static} + DRAWABLE_FIELD_TRANSPARENT : int
+          {static} + DRAWABLE_PATH_HORIZONTAL : int
+          {static} + DRAWABLE_PATH_LEFT_DOWN : int
+          {static} + DRAWABLE_PATH_LEFT_UP : int
+          {static} + DRAWABLE_PATH_RIGHT_DOWN : int
+          {static} + DRAWABLE_PATH_RIGHT_UP : int
+          {static} + DRAWABLE_PATH_VERTICAL : int
           {static} + DRAWABLE_TANK : int
           {static} + DRAWABLE_TANK_HITTED : int
-          {static} + DRAWABLE_TOWER : int
+          {static} + DRAWABLE_TOWER_ARTILLERY : int
+          {static} + DRAWABLE_TOWER_BOOMBASTIC : int
+          {static} + DRAWABLE_TOWER_BOOMBASTIC_BASE : int
+          {static} + DRAWABLE_TOWER_BOOMBASTIC_HEAD : int
+          {static} + DRAWABLE_TOWER_FREEZER_BASE : int
+          {static} + DRAWABLE_TOWER_FREEZER_HEAD : int
           {static} + FIELD_SIZE : int
+          {static} + ICON_ANIMATION_OFF : int
+          {static} + ICON_ANIMATION_ON : int
+          {static} + ICON_MUSIC_OFF : int
+          {static} + ICON_MUSIC_ON : int
+          {static} + ICON_SOUND_OFF : int
+          {static} + ICON_SOUND_ON : int
+          {static} + STATUS_OFF : String
+          {static} + STATUS_ON : String
           {static} + TANK_ENEMY_SIZE_PARAMS : LayoutParams
           {static} + TANK_LEVEL_1_HEALTHPOINTS : int
+          {static} + TANK_LEVEL_1_LIFE_POINT_COSTS : int
           {static} + TANK_LEVEL_1_SPEED : int
+          {static} + TANK_LEVEL_1_VALUE : int
           {static} + TANK_LEVEL_2_HEALTHPOINTS : int
+          {static} + TANK_LEVEL_2_LIFE_POINT_COSTS : int
           {static} + TANK_LEVEL_2_SPEED : int
+          {static} + TANK_LEVEL_2_VALUE : int
+          {static} + TANK_LEVEL_3_HEALTHPOINTS : int
+          {static} + TANK_LEVEL_3_LIFE_POINT_COSTS : int
+          {static} + TANK_LEVEL_3_SPEED : int
+          {static} + TANK_LEVEL_3_VALUE : int
+          {static} + TOWER_ARTILLERY_LEVEL_1_COSTS : int
+          {static} + TOWER_ARTILLERY_LEVEL_1_DAMAGE : int
+          {static} + TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS : int
+          {static} + TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_ARTILLERY_LEVEL_2_COSTS : int
+          {static} + TOWER_ARTILLERY_LEVEL_2_DAMAGE : int
+          {static} + TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS : int
+          {static} + TOWER_ARTILLERY_LEVEL_3_COSTS : int
+          {static} + TOWER_ARTILLERY_LEVEL_3_DAMAGE : int
+          {static} + TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_1_COSTS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_1_DAMAGE : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_FREEZER_LEVEL_1_COSTS : int
+          {static} + TOWER_FREEZER_LEVEL_1_DAMAGE : int
+          {static} + TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS : int
+          {static} + TOWER_FREEZER_LEVEL_1_SLOWNESS : int
+          {static} + TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace util {
+      class de.dhbw.util.DifficultyFragmentAdapter {
+          {static} - NUM_PAGES : int
+          + DifficultyFragmentAdapter()
+          + getCount()
+          + getItem()
       }
     }
   }
@@ -36,29 +99,6 @@ title __UTIL's Class Diagram__\n
         LEFT
         RIGHT
         UP
-      }
-    }
-  }
-  
-
-  namespace de.dhbw {
-    namespace util {
-      class de.dhbw.util.ObjectStorage {
-          {static} - context : Context
-          {static} - gameActivity : GameActivity
-          {static} - mapLayout : FrameLayout
-          {static} - mapStructure : MapStructure
-          {static} - matchField : MatchField
-          {static} + getContext()
-          {static} + getGameActivity()
-          {static} + getMapLayout()
-          {static} + getMapStructure()
-          {static} + getMatchField()
-          {static} + setContext()
-          {static} + setGameActivity()
-          {static} + setMapLayout()
-          {static} + setMapStructure()
-          {static} + setMatchField()
       }
     }
   }
@@ -81,6 +121,53 @@ title __UTIL's Class Diagram__\n
 
   namespace de.dhbw {
     namespace util {
+      class de.dhbw.util.PreferenceManager {
+          - context : Context
+          - editorSettings : Editor
+          - editorStatistics : Editor
+          {static} - pref_DHTD_Settings : String
+          {static} - pref_DHTD_Statistics : String
+          {static} - preferenceManager : PreferenceManager
+          - preferencesSettings : SharedPreferences
+          - preferencesStatistics : SharedPreferences
+          {static} + getSettingsValue()
+          {static} + getStatisticsValue()
+          {static} + init()
+          {static} + removeSettingsValue()
+          {static} + removeStatisticsValue()
+          {static} + setSettingsValue()
+          {static} + setStatisticsValue()
+          - PreferenceManager()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace util {
+      enum Statistics {
+        EASY_BUILT_TOWERS
+        EASY_ENEMIES_KILLED
+        EASY_MAX_WAVE
+        EASY_MONEY_SPENT
+        EASY_UPGRADES
+        HARD_BUILT_TOWERS
+        HARD_ENEMIES_KILLED
+        HARD_MAX_WAVE
+        HARD_MONEY_SPENT
+        HARD_UPGRADES
+        MEDIUM_BUILT_TOWERS
+        MEDIUM_ENEMIES_KILLED
+        MEDIUM_MAX_WAVE
+        MEDIUM_MONEY_SPENT
+        MEDIUM_UPGRADES
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace util {
       class de.dhbw.util.SortingUtil {
           + SortingUtil()
           {static} + getSortedListBySortingMapByValue()
@@ -90,6 +177,9 @@ title __UTIL's Class Diagram__\n
   }
   
 
+  de.dhbw.util.DifficultyFragmentAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  de.dhbw.util.Position .up.|> java.io.Serializable
+  de.dhbw.util.PreferenceManager +-down- de.dhbw.util.PreferenceManager.Statistics
 
 
 right footer

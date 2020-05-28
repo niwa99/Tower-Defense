@@ -1,6 +1,5 @@
 package de.dhbw.map.objects.tower;
 
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -17,7 +16,7 @@ import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 import de.dhbw.util.SortingUtil;
@@ -41,7 +40,7 @@ public abstract class ATower extends ATimerUsage {
 	private int y;
 	private Field field;
 	private TimerTask task;
-	protected Enemy targetedEnemy;
+	protected AEnemy targetedEnemy;
 	protected GameActivity gameActivity;
 	
 	public ATower(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
@@ -78,9 +77,9 @@ public abstract class ATower extends ATimerUsage {
 	 * @param enemies
 	 * @return true if there is an enemy to shoot at
 	 */
-	public boolean fire(List<Enemy> enemies) {
-		List<Enemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
-		Enemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
+	public boolean fire(List<AEnemy> enemies) {
+		List<AEnemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
+		AEnemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
 		if (enemy != null) {
 			if (enemy instanceof Tank) {
 				targetedEnemy = enemy;
@@ -90,7 +89,7 @@ public abstract class ATower extends ATimerUsage {
 		return false;
 	}
 	
-	public boolean isEnemyInRange(Enemy enemy) {	
+	public boolean isEnemyInRange(AEnemy enemy) {
 		return MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), x, y) < range;
 	}
 
@@ -128,18 +127,18 @@ public abstract class ATower extends ATimerUsage {
 	 * @param enemies
 	 * @return
 	 */
-	public Enemy getNearestEnemy(Position actualPosition, List<Enemy> enemies) {
+	public Enemy getNearestEnemy(Position actualPosition, List<AEnemy> enemies) {
 		if (!enemies.isEmpty()) {
-			Map<Enemy, Integer> distanceToEnemy = new HashMap<>();
+			Map<AEnemy, Integer> distanceToEnemy = new HashMap<>();
 
-			for (Enemy enemy : enemies) {
+			for (AEnemy enemy : enemies) {
 				int distance = MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), actualPosition.getX(), actualPosition.getY());
 				distanceToEnemy.put(enemy, distance);
 			}
 
-			List<Enemy> sortedByDistance = SortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
+			List<AEnemy> sortedByDistance = SortingUtil.getSortedListBySortingMapByValue(distanceToEnemy);
 
-			for (Enemy enemy : sortedByDistance) {
+			for (AEnemy enemy : sortedByDistance) {
 				if (enemy.isAlive()) {
 					return enemy;
 				}
@@ -152,9 +151,9 @@ public abstract class ATower extends ATimerUsage {
 	 * Returns the number necessary to rotate the tower image according to the targeted enemy
 	 * @return
 	 */
-	public double rotateImage(List<Enemy> enemies) {
+	public double rotateImage(List<AEnemy> enemies) {
 		double rotation = 0;
-		Enemy enemy = getNearestEnemy(getPosition(), enemies);
+		AEnemy enemy = getNearestEnemy(getPosition(), enemies);
 		if (enemy != null) {
 			double a = this.getPositionX() - enemy.getPositionX();
 			double b = this.getPositionY() - enemy.getPositionY();
@@ -168,7 +167,7 @@ public abstract class ATower extends ATimerUsage {
 	 *
 	 * @param xEnemy
 	 * @param yEnemy
-	 * @return distance between Enemy or other Object and Tower
+	 * @return distance between AEnemy or other Object and Tower
 	 */
 	public int getDistance(int xEnemy, int yEnemy) {
 		return (int) Math.round(Math.sqrt(Math.pow(Math.abs(xEnemy-x), 2) + Math.pow(Math.abs(yEnemy-y), 2)));

@@ -5,18 +5,18 @@ import java.util.List;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 
 public abstract class AWave extends ATimerUsage {
     private int count = 0;
     private final int speed;
-    private List<Enemy> enemies = new ArrayList<>();
+    private List<AEnemy> enemies = new ArrayList<>();
 
     AWave(int speed) {
         this.speed = speed;
     }
 
-    public Enemy next() {
+    public AEnemy next() {
         return enemies.get(count++);
     }
 
@@ -24,7 +24,7 @@ public abstract class AWave extends ATimerUsage {
         return count<enemies.size();
     }
 
-    void addEnemy(Enemy e) {
+    void addEnemy(AEnemy e) {
         this.enemies.add(e);
     }
 

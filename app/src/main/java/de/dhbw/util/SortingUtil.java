@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 
 public class SortingUtil {
 	
@@ -18,22 +18,22 @@ public class SortingUtil {
 	}
 
     /**
-     * The given map is sorted by value. We need this to get the nearest Enemy for the towers to shoot.
+     * The given map is sorted by value. We need this to get the nearest AEnemy for the towers to shoot.
      * @param unsortMap
      * @return sorted List of enemies
      */
-	public static List<Enemy> getSortedListBySortingMapByValue(Map<Enemy, Integer> unsortMap) {
-        List<Map.Entry<Enemy, Integer>> list =
-                new LinkedList<Map.Entry<Enemy, Integer>>(unsortMap.entrySet());
+	public static List<AEnemy> getSortedListBySortingMapByValue(Map<AEnemy, Integer> unsortMap) {
+        List<Map.Entry<AEnemy, Integer>> list =
+                new LinkedList<Map.Entry<AEnemy, Integer>>(unsortMap.entrySet());
 
-        Collections.sort(list, new Comparator<Map.Entry<Enemy, Integer>>() {
-            public int compare(Map.Entry<Enemy, Integer> o1, Map.Entry<Enemy, Integer> o2) {
+        Collections.sort(list, new Comparator<Map.Entry<AEnemy, Integer>>() {
+            public int compare(Map.Entry<AEnemy, Integer> o1, Map.Entry<AEnemy, Integer> o2) {
                 return (o1.getValue()).compareTo(o2.getValue());
             }
         });
 
-        List<Enemy> result = new ArrayList<Enemy>();  
-        for (Map.Entry<Enemy, Integer> entry : list) {
+        List<AEnemy> result = new ArrayList<AEnemy>();
+        for (Map.Entry<AEnemy, Integer> entry : list) {
             result.add(entry.getKey());
         }
 

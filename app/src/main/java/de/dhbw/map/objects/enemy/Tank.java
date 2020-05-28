@@ -12,7 +12,7 @@ import de.dhbw.map.structure.MapStructure;
 
 import static de.dhbw.util.Constants.*;
 
-public class Tank extends Enemy {
+public class Tank extends AEnemy {
 	private Timer timer;
 
 	public Tank(String label, int level, GameActivity gameActivity) {

@@ -11,7 +11,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.ATower;
@@ -31,7 +31,7 @@ public class TowerRotationTest {
     @Test
     public void checkRotationIsOnCorrectAngle() {
         //arrange
-        List<Enemy> enemy = new ArrayList<>();
+        List<AEnemy> enemy = new ArrayList<>();
 
         enemy.add(new Tank("tank1",1, dummyImage, dummyGameActivity));
         ATower tower = new TowerArtillery(new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);

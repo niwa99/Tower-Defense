@@ -8,7 +8,7 @@ import java.util.TimerTask;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.matchfield.MatchField;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
@@ -16,6 +16,10 @@ import static de.dhbw.util.Constants.*;
 public abstract class ABullet {
 
     private ImageView bulletImage;
+    private int x;
+    private int y;
+    private Position targetPos;
+    protected AEnemy targetEnemy;
     protected int x;
     protected int y;
     Position targetPos;
@@ -24,7 +28,7 @@ public abstract class ABullet {
     protected GameActivity gameActivity;
     private int bulletSpeed = BULLET_SPEED;
 
-    public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
+    public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         this.gameActivity = gameActivity;
         bulletImage = new ImageView(gameActivity);
         bulletImage.setImageResource(bulletImageID);
@@ -45,7 +49,7 @@ public abstract class ABullet {
     /**
      * Bullet Constructor for Test-Purpose only!
      */
-    public ABullet(Position spawnPosition, Enemy targetedEnemy, int damage, ImageView image, GameActivity gameActivity) {
+    public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, ImageView image, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
         this.bulletImage = image;
 
@@ -85,7 +89,7 @@ public abstract class ABullet {
             @Override
             public void run() {
                 gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(bulletImage));
-                if (targetEnemy != null) { //Check if Enemy got killed in the meantime
+                if (targetEnemy != null) { //Check if AEnemy got killed in the meantime
                     hitEnemy();
                     System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");
                 }

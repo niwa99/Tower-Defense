@@ -4,19 +4,150 @@ title __GAME's Class Diagram__\n
 
   namespace de.dhbw {
     namespace game {
-      class de.dhbw.game.Game {
-          - buttonSizeParams : LayoutParams
-          - mapButtons : List<Button>
-          + Game()
-          + runGame()
-          - addEnemiesToMatchField()
-          - addTowersToMatchField()
-          - generateButtonsOnMap()
+      abstract class de.dhbw.game.ATimerUsage {
+          # lastTimeActionMillis : long
+          - delay : long
+          {abstract} + calculateDelay()
+          + getDelay()
+          + setLastTimeActionMillis()
+          # setDelay()
       }
     }
   }
   
 
+  namespace de.dhbw {
+    namespace game {
+      enum Difficulty {
+        EASY
+        HARD
+        MEDIUM
+        difficultyAsNumber
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
+      enum EnemyType {
+        FREEZER
+        TANK
+        label
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
+      class de.dhbw.game.Game {
+          - clickedButton : Optional<Button>
+          - currentWaveNumber : int
+          - gameSettings : Map<Settings, Boolean>
+          - gameTimer : Timer
+          - isAnimationOn : boolean
+          - isMusicOn : boolean
+          - isSoundOn : boolean
+          - lastEnemyOfWaveSpawned : boolean
+          - lastWaveOut : boolean
+          - lifePoints : int
+          - money : int
+          - moneySpent : int
+          - numberOfBuiltTowers : int
+          - numberOfEnemiesKilled : int
+          - numberOfUpgrades : int
+          - showCircle : boolean
+          - waveTimer : Timer
+          + Game()
+          + addMoney()
+          + allEnemiesSpawned()
+          + buildTower()
+          + continueTimers()
+          + createNewTowerOnField()
+          + decreaseLifePoints()
+          + getLifePoints()
+          + getMapStructure()
+          + getMatchField()
+          + getMoney()
+          + getPositionFromButtonId()
+          + increaseMoneySpent()
+          + increaseNumberOfBuiltTowers()
+          + increaseNumberOfEnemiesKilled()
+          + init()
+          + isAnimationOn()
+          + isSoundOn()
+          + loseActions()
+          + openSettings()
+          + openTowerPopup()
+          + pauseTimers()
+          + sellTower()
+          + setAnimationOn()
+          + setCircle()
+          + setIngameSound()
+          + setLifePoints()
+          + setMenu()
+          + setMoney()
+          + start()
+          + startNextWave()
+          + stop()
+          + subMoney()
+          + updateStatisticsIfHighScore()
+          + upgradeTower()
+          + winActions()
+          - generateButtonsOnMap()
+          - loadSettings()
+          - showGameFinishedDialog()
+          - startWave()
+          - updateStatusBar()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
+      interface de.dhbw.game.IMoneyListener {
+          {abstract} + performMoneyUpdate()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
+      interface de.dhbw.game.IStatusBar {
+          {abstract} + setCurrentWaveNumber()
+          {abstract} + setLifePoints()
+          {abstract} + setMoney()
+          {abstract} + setWaveTimeRemaining()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
+      class de.dhbw.game.StatusBarCountDownTimer {
+          - seconds : int
+          - timer : Timer
+          + StatusBarCountDownTimer()
+          + stopTimer()
+          + timer()
+          - setTime()
+      }
+    }
+  }
+  
+
+  de.dhbw.game.Game o-- de.dhbw.util.Position : circleField
+  de.dhbw.game.Game o-- de.dhbw.game.StatusBarCountDownTimer : countDownTimer
+  de.dhbw.game.Game o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.game.Game o-- de.dhbw.map.structure.MapStructure : mapStructure
+  de.dhbw.game.Game o-- de.dhbw.game.match.AMatch : match
+  de.dhbw.game.Game o-- de.dhbw.map.matchfield.MatchField : matchField
+  de.dhbw.game.Game o-- de.dhbw.game.IMoneyListener : moneyListener
+  de.dhbw.game.StatusBarCountDownTimer o-- de.dhbw.game.IStatusBar : status
 
 
 right footer

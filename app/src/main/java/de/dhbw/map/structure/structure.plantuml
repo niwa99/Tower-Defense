@@ -12,8 +12,10 @@ title __STRUCTURE's Class Diagram__\n
           + Field()
           + equals()
           + getFieldDescription()
+          + getFieldPosition()
           + getFieldPositionX()
           + getFieldPositionY()
+          + getId()
           + getPixelCoordX()
           + getPixelCoordY()
           + getSizeInPx()
@@ -30,6 +32,7 @@ title __STRUCTURE's Class Diagram__\n
       enum FieldDescription {
         FREE
         PATH
+        SPAWN
         TOWER
         label
       }
@@ -43,9 +46,11 @@ title __STRUCTURE's Class Diagram__\n
           - fields : Map<String, Field>
           {static} - path : Position[]
           + MapStructure()
+          {static} + calculatePath()
           + getField()
           + getFieldForEnemy()
           + getFields()
+          {static} + getPathNumber()
           {static} + getSizeField()
           - createPath()
       }

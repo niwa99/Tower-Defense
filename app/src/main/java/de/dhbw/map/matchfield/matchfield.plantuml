@@ -6,28 +6,37 @@ title __MATCHFIELD's Class Diagram__\n
     namespace map.matchfield {
       class de.dhbw.map.matchfield.MatchField {
           - enemies : List<Enemy>
-          - towers : List<Tower>
-          - waveTimer : Timer
+          - isGameOver : boolean
+          - matchFieldTimer : Timer
+          - towers : List<ATower>
           + MatchField()
           + addEnemy()
           + addTower()
-          + removeDeadEnemies()
+          + continueTimers()
+          {static} + getDistance()
+          + getTower()
+          + pauseTimers()
+          + removeDeadEnemy()
+          + removeEnemiesInTarget()
+          + removeTower()
+          + slowEnemy()
           + startEnemyMovement()
           + startTowerFire()
+          + stopTimer()
+          + stopTimer()
+          - explode()
           - getEnemy()
           - getEnemyUUIDs()
           - getTower()
-          - getTowerUUIDs()
-          - isGameOver()
           - removeEnemy()
+          - removeImageViewOfEnemy()
           - removeTower()
-          - stopGame()
-          - stopWave()
       }
     }
   }
   
 
+  de.dhbw.map.matchfield.MatchField o-- de.dhbw.activities.GameActivity : gameActivity
 
 
 right footer

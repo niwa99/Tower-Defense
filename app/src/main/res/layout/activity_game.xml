@@ -20,7 +20,7 @@
         android:id="@+id/buttonBackToMenu"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/homeicon" />
+        android:background="@drawable/icon_pause" />
 
     <TextView
         android:id="@+id/fullscreen_content"

@@ -43,12 +43,12 @@ public class Constants {
     public static final int DRAWABLE_PATH_RIGHT_UP = R.drawable.path_right_up;
 
     //Icons
-    public static final int ICON_SOUND_ON = R.drawable.sound;
-    public static final int ICON_SOUND_OFF = R.drawable.no_sound;
-    public static final int ICON_MUSIC_ON = R.drawable.icon_music;
-    public static final int ICON_MUSIC_OFF = R.drawable.no_sound;
-    public static final int ICON_ANIMATION_ON = R.drawable.bullet;
-    public static final int ICON_ANIMATION_OFF = R.drawable.no_sound;
+    public static final int ICON_SOUND_ON = R.drawable.icon_sound_on;
+    public static final int ICON_SOUND_OFF = R.drawable.icon_sound_off;
+    public static final int ICON_MUSIC_ON = R.drawable.icon_music_on;
+    public static final int ICON_MUSIC_OFF = R.drawable.icon_music_off;
+    public static final int ICON_ANIMATION_ON = R.drawable.icon_animations_on;
+    public static final int ICON_ANIMATION_OFF = R.drawable.icon_animations_off;
 
 
     //Map Parameters

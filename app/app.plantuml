@@ -1,14 +1,18 @@
 @startuml
-title __Project TowerDefense - Class Diagram__\n
+
+title __Tower Defense Class Diagram__\n
 
   package de.dhbw {
+
     package de.dhbw.activities {
 
-      class de.dhbw.activities.MainActivity #lightblue {
+      class de.dhbw.activities.MainActivity {
+        - mediaPlayer : MediaPlayer
+        + toggle()
         # onCreate()
       }
 
-      class de.dhbw.activities.GameActivity #lightblue {
+      class de.dhbw.activities.GameActivity {
         {static} - AUTO_HIDE : boolean
         {static} - AUTO_HIDE_DELAY_MILLIS : int
         {static} - UI_ANIMATION_DELAY : int
@@ -21,153 +25,572 @@ title __Project TowerDefense - Class Diagram__\n
         - mShowPart2Runnable : Runnable
         - mVisible : boolean
         - mapLayout : FrameLayout
+        - mediaPlayer : MediaPlayer
+        - textCurrentWave : TextView
+        - textLifePoints : TextView
+        - textMoney : TextView
+        - textWaveRemaining : TextView
+        + getGame()
+        + getMapFrameLayout()
+        + getMediaPlayer()
+        + onBackPressed()
         + onOptionsItemSelected()
+        + returnToMainMenu()
+        + setCurrentWaveNumber()
+        + setLifePoints()
+        + setMoney()
+        + setWaveTimeRemaining()
         # onCreate()
         # onPostCreate()
         - delayedHide()
         - hide()
+        - setupAndroidFullscreenAndLayout()
         - show()
         - toggle()
       }
+
+      class de.dhbw.activities.DifficultyFragment {
+        {static} - FRAGMENT_EASY : int
+        {static} - FRAGMENT_HARD : int
+        {static} - FRAGMENT_MEDIUM : int
+        - changeLeftButton : Button
+        - changeRightButton : Button
+        - textDifficultyDescription : TextView
+        - textDifficultyHeader : TextView
+        - textValueBuiltTowers : TextView
+        - textValueEnemiesKilled : TextView
+        - textValueMaxWave : TextView
+        - textValueMoneySpent : TextView
+        - textValueUpgrades : TextView
+        + DifficultyFragment()
+        + onCreateView()
+        - setEasyInformation()
+        - setHardInformation()
+        - setMediumInformation()
+      }
+
     }
 
     package de.dhbw.game {
-      class de.dhbw.game.Game #lightgreen {
-        - buttonSizeParams : LayoutParams
-        - mapButtons : List<Button>
-        + Game()
-        + runGame()
-        - addEnemiesToMatchField()
-        - addTowersToMatchField()
-        - generateButtonsOnMap()
+
+      package de.dhbw.game.match {
+
+        abstract class de.dhbw.game.match.AMatch {
+          - count : int
+          - extendable : boolean
+          - startMoney : int
+          - waveTime : int
+          - waves : List<AWave>
+          + calculateDelay()
+          {abstract} + create()
+          + getCurrent()
+          + getCurrentWaveNumber()
+          + getStartMoney()
+          + getWaveTime()
+          + hasNext()
+          + next()
+          ~ AMatch()
+          ~ addWaves()
+        }
+
+        class de.dhbw.game.match.EasyMatch {
+          {static} - firstWaveTankL1 : WaveComposition
+          {static} - firstWaveTankL2 : WaveComposition
+          {static} - fithhWaveTankL3 : WaveComposition
+          {static} - fourthWaveTankL2 : WaveComposition
+          {static} - fourthWaveTankL3 : WaveComposition
+          {static} - secondWaveTankL1 : WaveComposition
+          {static} - secondWaveTankL2 : WaveComposition
+          {static} - startMoney : int
+          {static} - thirdWaveTankL2 : WaveComposition
+          {static} - waveTime : int
+          + EasyMatch()
+          + create()
+        }
+
+        class de.dhbw.game.match.MediumMatch {
+          {static} - firstWaveTankL1 : WaveComposition
+          {static} - firstWaveTankL2 : WaveComposition
+          {static} - secondWaveTankL1 : WaveComposition
+          {static} - secondWaveTankL2 : WaveComposition
+          {static} - thirdWaveTankL2 : WaveComposition
+          {static} - waveTime : int
+          + MediumMatch()
+          + create()
+        }
+
+        class de.dhbw.game.match.HardMatch {
+          {static} - firstWaveTankL1 : WaveComposition
+          {static} - firstWaveTankL2 : WaveComposition
+          {static} - secondWaveTankL1 : WaveComposition
+          {static} - secondWaveTankL2 : WaveComposition
+          {static} - thirdWaveTankL2 : WaveComposition
+          {static} - waveTime : int
+          + HardMatch()
+          + create()
+        }
+
       }
+
+      package de.dhbw.game.popups {
+
+        abstract class de.dhbw.game.popups.AMenu {
+          - mainLayout : LinearLayout
+          - menuLayout : LinearLayout
+          + addViewToPopUp()
+          + closeWindow()
+          + removeViewFromPopUp()
+          + setHeader()
+          # getMenuLayout()
+          # onCreate()
+        }
+
+        class de.dhbw.game.popups.MenuSettings {
+          {static} + gameActivity : GameActivity
+          {static} - menuSettingsLayout : LinearLayout
+          + finish()
+          + initViews()
+          + toggle()
+          # onCreate()
+        }
+
+        class de.dhbw.game.popups.MenuTowerSelection {
+          {static} + game : Game
+          + buildTower()
+          + closeWindow()
+          + performMoneyUpdate()
+          # onCreate()
+        }
+
+        class de.dhbw.game.popups.MenuUpgradeAndSell {
+          {static} + game : Game
+          - level : int
+          - maxLevel : int
+          - towerCost : int
+          - towerDamage : int
+          - towerDrawable : int
+          - towerFireRate : int
+          - towerRange : int
+          - towerType : String
+          - upgradeCost : int
+          - upgradeDamage : int
+          - upgradeFireRate : int
+          - upgradeRange : int
+          + initializeView()
+          + performMoneyUpdate()
+          + sellTower()
+          + upgradeTower()
+          # onCreate()
+        }
+
+      }
+
+      package de.dhbw.game.settings {
+
+        interface de.dhbw.game.settings.ISettingsManager {
+          {abstract} + toggle()
+        }
+
+        enum de.dhbw.game.settings.Settings {
+          ANIMATIONS
+          INGAME_SOUND
+          MUSIC
+        }
+
+        class de.dhbw.game.settings.SettingsToggleButton {
+          + SettingsToggleButton()
+        }
+
+      }
+
+      package de.dhbw.game.wave {
+
+        abstract class de.dhbw.game.wave.AWave {
+          - count : int
+          - enemies : List<Enemy>
+          - speed : int
+          + calculateDelay()
+          {abstract} + generate()
+          + getWaveSpeed()
+          + hasNext()
+          + next()
+          ~ AWave()
+          ~ addEnemy()
+        }
+
+        class de.dhbw.game.wave.Wave {
+          - waveCompositions : List<WaveComposition>
+          + Wave()
+          + addWaveCompositions()
+          + generate()
+        }
+
+        class de.dhbw.game.wave.WaveComposition {
+          - amount : int
+          - level : int
+          + WaveComposition()
+          + getAmount()
+          + getEnemyType()
+          + getLevel()
+        }
+
+      }
+
+      abstract class de.dhbw.game.ATimerUsage {
+        # lastTimeActionMillis : long
+        - delay : long
+        {abstract} + calculateDelay()
+        + getDelay()
+        + setLastTimeActionMillis()
+        # setDelay()
+      }
+
+      enum de.dhbw.game.Difficulty {
+        EASY
+        HARD
+        MEDIUM
+        difficultyAsNumber
+      }
+
+      enum de.dhbw.game.EnemyType {
+        FREEZER
+        TANK
+        label
+      }
+
+      class de.dhbw.game.Game {
+        - clickedButton : Optional<Button>
+        - currentWaveNumber : int
+        - gameSettings : Map<Settings, Boolean>
+        - gameTimer : Timer
+        - isAnimationOn : boolean
+        - isMusicOn : boolean
+        - isSoundOn : boolean
+        - lastEnemyOfWaveSpawned : boolean
+        - lastWaveOut : boolean
+        - lifePoints : int
+        - money : int
+        - moneySpent : int
+        - numberOfBuiltTowers : int
+        - numberOfEnemiesKilled : int
+        - numberOfUpgrades : int
+        - showCircle : boolean
+        - waveTimer : Timer
+        + Game()
+        + addMoney()
+        + allEnemiesSpawned()
+        + buildTower()
+        + continueTimers()
+        + createNewTowerOnField()
+        + decreaseLifePoints()
+        + getLifePoints()
+        + getMapStructure()
+        + getMatchField()
+        + getMoney()
+        + getPositionFromButtonId()
+        + increaseMoneySpent()
+        + increaseNumberOfBuiltTowers()
+        + increaseNumberOfEnemiesKilled()
+        + init()
+        + isAnimationOn()
+        + isSoundOn()
+        + loseActions()
+        + openSettings()
+        + openTowerPopup()
+        + pauseTimers()
+        + sellTower()
+        + setAnimationOn()
+        + setCircle()
+        + setIngameSound()
+        + setLifePoints()
+        + setMenu()
+        + setMoney()
+        + start()
+        + startNextWave()
+        + stop()
+        + subMoney()
+        + updateStatisticsIfHighScore()
+        + upgradeTower()
+        + winActions()
+        - generateButtonsOnMap()
+        - loadSettings()
+        - showGameFinishedDialog()
+        - startWave()
+        - updateStatusBar()
+      }
+
+      interface de.dhbw.game.IMoneyListener {
+        {abstract} + performMoneyUpdate()
+      }
+
+      interface de.dhbw.game.IStatusBar {
+        {abstract} + setCurrentWaveNumber()
+        {abstract} + setLifePoints()
+        {abstract} + setMoney()
+        {abstract} + setWaveTimeRemaining()
+      }
+
+      class de.dhbw.game.StatusBarCountDownTimer {
+        - seconds : int
+        - timer : Timer
+        + StatusBarCountDownTimer()
+        + stopTimer()
+        + timer()
+        - setTime()
+      }
+
     }
 
     package de.dhbw.map {
+
       package de.dhbw.map.matchfield {
-        class de.dhbw.map.matchfield.MatchField #orange {
+
+        class de.dhbw.map.matchfield.MatchField {
           - enemies : List<Enemy>
-          - towers : List<Tower>
-          - waveTimer : Timer
+          - isGameOver : boolean
+          - matchFieldTimer : Timer
+          - towers : List<ATower>
           + MatchField()
           + addEnemy()
           + addTower()
-          + removeDeadEnemies()
+          + continueTimers()
+          {static} + getDistance()
+          + getTower()
+          + pauseTimers()
+          + removeDeadEnemy()
+          + removeEnemiesInTarget()
+          + removeTower()
+          + slowEnemy()
           + startEnemyMovement()
           + startTowerFire()
+          + stopTimer()
+          + stopTimer()
+          - explode()
           - getEnemy()
           - getEnemyUUIDs()
           - getTower()
-          - getTowerUUIDs()
-          - isGameOver()
           - removeEnemy()
+          - removeImageViewOfEnemy()
           - removeTower()
-          - stopGame()
-          - stopWave()
         }
+
       }
 
       package de.dhbw.map.objects {
+
+        package de.dhbw.map.objects.bullet {
+
+          abstract class de.dhbw.map.objects.bullet.ABullet {
+            # damage : int
+            - bulletImage : ImageView
+            - x : int
+            - y : int
+            + ABullet()
+            + ABullet()
+            # hitEnemy()
+            - applyBulletOffset()
+            - getBulletRotation()
+            - setMidpointOfPositions()
+            - startAnimation()
+            - startLogicalShooting()
+          }
+
+          class de.dhbw.map.objects.bullet.Bomb {
+            - allEnemies : List<Enemy>
+            - range : int
+            + Bomb()
+            + Bomb()
+            + getEnemiesToHit()
+            # hitEnemy()
+          }
+
+          class de.dhbw.map.objects.bullet.Projectile {
+            + Projectile()
+            + Projectile()
+            + Projectile()
+          }
+
+          class de.dhbw.map.objects.bullet.SnowFlake {
+            - slowness : int
+            + SnowFlake()
+            + SnowFlake()
+            # hitEnemy()
+          }
+
+        }
+
         package de.dhbw.map.objects.enemy {
-          abstract class de.dhbw.map.objects.enemy.Enemy #orange {
+
+          abstract class de.dhbw.map.objects.enemy.AEnemy {
+            # image : ImageView
             - healthpoints : int
             - isAlive : boolean
             - label : String
+            - lifePointsCosts : int
             - progress : int
             - reachedTarget : boolean
+            - slowness : int
             - speed : int
             - timerTask : TimerTask
             - uuid : UUID
+            - value : int
             - x : int
             - y : int
             + Enemy()
             + getDirection()
             + getHealthPoints()
+            + getImage()
             + getLabel()
+            + getLifePointsCosts()
             + getPosition()
             + getPositionX()
             + getPositionY()
+            + getSlowness()
             + getSpeed()
             + getTimerTask()
+            + getType()
             + getUuid()
+            + getValue()
+            {abstract} + hit()
             + isAlive()
+            + isFullSpeed()
             + move()
             + moveTo()
             + moveToPosition()
             + reachedTarget()
             + reduceHealthPoints()
+            + setHealthpoints()
+            + setImage()
             + setTimerTask()
+            + slowDown()
           }
 
-          class de.dhbw.map.objects.enemy.Tank #orange {
-            - tankImage : ImageView
+          class de.dhbw.map.objects.enemy.Tank {
             - timer : Timer
             + Tank()
-            + getTankImage()
+            + Tank()
             + hit()
             + move()
+            {static} - createTankImage()
             {static} - getTankHealthpointsByLevel()
+            {static} - getTankLifePointsCostsByLevel()
             {static} - getTankSpeedByLevel()
+            {static} - getTankValueByLevel()
           }
+
         }
 
         package de.dhbw.map.objects.tower {
-          class de.dhbw.map.objects.bullet.ABullet #orange {
-            - bulletImage : ImageView
-            - x : int
-            - y : int
-            + Bullet()
-            + getPosition()
-            + move()
-            + moveTo()
-            + visualizeShot()
-            - getBulletRotation()
-            - setMidpointOfPositions()
-          }
 
-          class de.dhbw.map.objects.tower.TowerArtillery #orange {
-            - defTowerImage : ImageView
-            + DefTower()
-            + fire()
-            {static} - getDefTowerCostsByLevel()
-            {static} - getDefTowerDamageByLevel()
-            {static} - getDefTowerFirerateByLevel()
-            {static} - getDefTowerRangeByLevel()
-          }
-
-          abstract class de.dhbw.map.objects.tower.ATower #orange {
+          abstract class de.dhbw.map.objects.tower.ATower {
             # damage : int
+            # headImage : Optional<ImageView>
+            - baseImage : ImageView
             - costs : int
             - fireRate : int
             - id : UUID
-            - label : String
+            - level : int
             - range : int
+            - starlvlThree : ImageView
+            - starlvlTwo : ImageView
             - task : TimerTask
             - x : int
             - y : int
-            + Tower()
+            + ATower()
+            + calculateDelay()
             + fire()
+            + getBaseImage()
             + getCosts()
+            {abstract} + getCosts()
             + getDamage()
+            {abstract} + getDamage()
             + getDistance()
+            + getField()
             + getFireRate()
+            {abstract} + getFireRate()
+            + getHeadImage()
             + getId()
-            + getLabel()
+            + getLevel()
             + getNearestEnemy()
             + getPosition()
             + getPositionX()
             + getPositionY()
             + getRange()
+            {abstract} + getRange()
+            + getStarlvlThree()
+            + getStarlvlTwo()
             + getTask()
+            + getTowerType()
             + isEnemyInRange()
             + rotateImage()
+            + setBaseImage()
+            + setHeadImage()
             + setTask()
           }
+
+          class de.dhbw.map.objects.tower.TowerArtillery {
+            - artilleryTowerImage : ImageView
+            + TowerArtillery()
+            + TowerArtillery()
+            + fire()
+            + getCosts()
+            + getDamage()
+            + getFireRate()
+            + getRange()
+            {static} + getTowerArtilleryCostsByLevel()
+            {static} - getTowerArtilleryDamageByLevel()
+            {static} - getTowerArtilleryFirerateByLevel()
+            {static} - getTowerArtilleryRangeByLevel()
+          }
+
+          class de.dhbw.map.objects.tower.TowerBoombastic {
+            + TowerBoombastic()
+            + fire()
+            + getCosts()
+            + getDamage()
+            + getFireRate()
+            + getRange()
+            {static} + getTowerBoombasticCostsByLevel()
+            {static} - getTowerBoombasticDamageByLevel()
+            {static} - getTowerBoombasticFirerateByLevel()
+            {static} - getTowerBoombasticRangeByLevel()
+          }
+
+          class de.dhbw.map.objects.tower.TowerFreezer {
+            - slowness : int
+            + TowerFreezer()
+            + TowerFreezer()
+            + fire()
+            + getCosts()
+            + getDamage()
+            + getFireRate()
+            {static} + getFreezerCostsByLevel()
+            + getRange()
+            + getSlowness()
+            {static} - getFreezerDamageByLevel()
+            {static} - getFreezerFirerateByLevel()
+            {static} - getFreezerRangeByLevel()
+            {static} - getFreezerSlownessByLevel()
+          }
+
+          enum de.dhbw.map.objects.tower.TowerType {
+            ARTILLERY
+            ASSAULTLASER
+            BOOMBASTIC
+            FREEZER
+            PLASMARIZER
+            drawable
+            price
+            type
+          }
+
         }
+
       }
 
       package de.dhbw.map.structure {
-        class de.dhbw.map.structure.Field #orange {
+
+        class de.dhbw.map.structure.Field {
           - sizeInPx : int
           - xCoord : int
           - yCoord : int
@@ -175,8 +598,10 @@ title __Project TowerDefense - Class Diagram__\n
           + Field()
           + equals()
           + getFieldDescription()
+          + getFieldPosition()
           + getFieldPositionX()
           + getFieldPositionY()
+          + getId()
           + getPixelCoordX()
           + getPixelCoordY()
           + getSizeInPx()
@@ -185,75 +610,121 @@ title __Project TowerDefense - Class Diagram__\n
           + setFieldDescription()
         }
 
-        enum de.dhbw.map.structure.FieldDescription #orange {
+        enum de.dhbw.map.structure.FieldDescription {
           FREE
           PATH
+          SPAWN
           TOWER
           label
         }
 
-        class de.dhbw.map.structure.MapStructure #orange {
+        class de.dhbw.map.structure.MapStructure {
           - fields : Map<String, Field>
           {static} - path : Position[]
           + MapStructure()
+          {static} + calculatePath()
           + getField()
           + getFieldForEnemy()
           + getFields()
+          {static} + getPathNumber()
           {static} + getSizeField()
           - createPath()
         }
+
       }
+
     }
 
     package de.dhbw.util {
-      class de.dhbw.util.Constants #orange {
+
+      class de.dhbw.util.Constants {
         {static} + AMOUNT_COLUMNS : int
         {static} + AMOUNT_ROWS : int
+        {static} + BOMB_RANGE : int
         {static} + BULLET_SIZE_PARAMS : LayoutParams
         {static} + BULLET_SPEED : int
-        {static} + DEF_TOWER_LEVEL_1_COSTS : int
-        {static} + DEF_TOWER_LEVEL_1_DAMAGE : int
-        {static} + DEF_TOWER_LEVEL_1_FIRERATE_IN_SECONDS : int
-        {static} + DEF_TOWER_LEVEL_1_RANGE_IN_PIXELS : int
-        {static} + DEF_TOWER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
         {static} + DRAWABLE_BULLET : int
+        {static} + DRAWABLE_BULLET_BOOMBASTIC : int
+        {static} + DRAWABLE_BULLET_FREEZER : int
+        {static} + DRAWABLE_FIELD_ON_CLICK_PLUS : int
+        {static} + DRAWABLE_FIELD_TRANSPARENT : int
+        {static} + DRAWABLE_PATH_HORIZONTAL : int
+        {static} + DRAWABLE_PATH_LEFT_DOWN : int
+        {static} + DRAWABLE_PATH_LEFT_UP : int
+        {static} + DRAWABLE_PATH_RIGHT_DOWN : int
+        {static} + DRAWABLE_PATH_RIGHT_UP : int
+        {static} + DRAWABLE_PATH_VERTICAL : int
         {static} + DRAWABLE_TANK : int
         {static} + DRAWABLE_TANK_HITTED : int
-        {static} + DRAWABLE_TOWER : int
+        {static} + DRAWABLE_TOWER_ARTILLERY : int
+        {static} + DRAWABLE_TOWER_BOOMBASTIC : int
+        {static} + DRAWABLE_TOWER_BOOMBASTIC_BASE : int
+        {static} + DRAWABLE_TOWER_BOOMBASTIC_HEAD : int
+        {static} + DRAWABLE_TOWER_FREEZER_BASE : int
+        {static} + DRAWABLE_TOWER_FREEZER_HEAD : int
         {static} + FIELD_SIZE : int
+        {static} + ICON_ANIMATION_OFF : int
+        {static} + ICON_ANIMATION_ON : int
+        {static} + ICON_MUSIC_OFF : int
+        {static} + ICON_MUSIC_ON : int
+        {static} + ICON_SOUND_OFF : int
+        {static} + ICON_SOUND_ON : int
+        {static} + STATUS_OFF : String
+        {static} + STATUS_ON : String
         {static} + TANK_ENEMY_SIZE_PARAMS : LayoutParams
         {static} + TANK_LEVEL_1_HEALTHPOINTS : int
+        {static} + TANK_LEVEL_1_LIFE_POINT_COSTS : int
         {static} + TANK_LEVEL_1_SPEED : int
+        {static} + TANK_LEVEL_1_VALUE : int
         {static} + TANK_LEVEL_2_HEALTHPOINTS : int
+        {static} + TANK_LEVEL_2_LIFE_POINT_COSTS : int
         {static} + TANK_LEVEL_2_SPEED : int
+        {static} + TANK_LEVEL_2_VALUE : int
+        {static} + TANK_LEVEL_3_HEALTHPOINTS : int
+        {static} + TANK_LEVEL_3_LIFE_POINT_COSTS : int
+        {static} + TANK_LEVEL_3_SPEED : int
+        {static} + TANK_LEVEL_3_VALUE : int
+        {static} + TOWER_ARTILLERY_LEVEL_1_COSTS : int
+        {static} + TOWER_ARTILLERY_LEVEL_1_DAMAGE : int
+        {static} + TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS : int
+        {static} + TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS : int
+        {static} + TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+        {static} + TOWER_ARTILLERY_LEVEL_2_COSTS : int
+        {static} + TOWER_ARTILLERY_LEVEL_2_DAMAGE : int
+        {static} + TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS : int
+        {static} + TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS : int
+        {static} + TOWER_ARTILLERY_LEVEL_3_COSTS : int
+        {static} + TOWER_ARTILLERY_LEVEL_3_DAMAGE : int
+        {static} + TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS : int
+        {static} + TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS : int
+        {static} + TOWER_BOOMBASTIC_LEVEL_1_COSTS : int
+        {static} + TOWER_BOOMBASTIC_LEVEL_1_DAMAGE : int
+        {static} + TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS : int
+        {static} + TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS : int
+        {static} + TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+        {static} + TOWER_FREEZER_LEVEL_1_COSTS : int
+        {static} + TOWER_FREEZER_LEVEL_1_DAMAGE : int
+        {static} + TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS : int
+        {static} + TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS : int
+        {static} + TOWER_FREEZER_LEVEL_1_SLOWNESS : int
+        {static} + TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
       }
 
-      enum de.dhbw.util.Direction #orange {
+      class de.dhbw.util.DifficultyFragmentAdapter {
+        {static} - NUM_PAGES : int
+        + DifficultyFragmentAdapter()
+        + getCount()
+        + getItem()
+      }
+
+      enum de.dhbw.util.Direction {
         DOWN
         LEFT
         RIGHT
         UP
       }
 
-      class de.dhbw.util.ObjectStorage #orange {
-        {static} - context : Context
-        {static} - gameActivity : GameActivity
-        {static} - mapLayout : FrameLayout
-        {static} - mapStructure : MapStructure
-        {static} - matchField : MatchField
-        {static} + getContext()
-        {static} + getGameActivity()
-        {static} + getMapLayout()
-        {static} + getMapStructure()
-        {static} + getMatchField()
-        {static} + setContext()
-        {static} + setGameActivity()
-        {static} + setMapLayout()
-        {static} + setMapStructure()
-        {static} + setMatchField()
-      }
-
-      class de.dhbw.util.Position #orange {
+      class de.dhbw.util.Position {
         - x : int
         - y : int
         + Position()
@@ -263,41 +734,110 @@ title __Project TowerDefense - Class Diagram__\n
         + toString()
       }
 
-      class de.dhbw.util.SortingUtil #orange {
+      class de.dhbw.util.PreferenceManager {
+        - context : Context
+        - editorSettings : Editor
+        - editorStatistics : Editor
+        {static} - pref_DHTD_Settings : String
+        {static} - pref_DHTD_Statistics : String
+        {static} - preferenceManager : PreferenceManager
+        - preferencesSettings : SharedPreferences
+        - preferencesStatistics : SharedPreferences
+        {static} + getSettingsValue()
+        {static} + getStatisticsValue()
+        {static} + init()
+        {static} + removeSettingsValue()
+        {static} + removeStatisticsValue()
+        {static} + setSettingsValue()
+        {static} + setStatisticsValue()
+        - PreferenceManager()
+      }
+
+      enum de.dhbw.util.PreferenceManager.Statistics {
+        EASY_BUILT_TOWERS
+        EASY_ENEMIES_KILLED
+        EASY_MAX_WAVE
+        EASY_MONEY_SPENT
+        EASY_UPGRADES
+        HARD_BUILT_TOWERS
+        HARD_ENEMIES_KILLED
+        HARD_MAX_WAVE
+        HARD_MONEY_SPENT
+        HARD_UPGRADES
+        MEDIUM_BUILT_TOWERS
+        MEDIUM_ENEMIES_KILLED
+        MEDIUM_MAX_WAVE
+        MEDIUM_MONEY_SPENT
+        MEDIUM_UPGRADES
+      }
+
+      class de.dhbw.util.SortingUtil {
         + SortingUtil()
         {static} + getSortedListBySortingMapByValue()
         + sortMapByValue()
       }
+
     }
+
   }
 
-  legend
-  |= |= Type |
-  |<back:lightblue>   </back>| View |
-  |<back:lightgreen>   </back>| Controller |
-  |<back:orange>   </back>| Model |
-  endlegend
-  
 
+  de.dhbw.activities.DifficultyFragment -up-|> androidx.fragment.app.Fragment
+  de.dhbw.activities.DifficultyFragment o-- de.dhbw.game.Difficulty : difficulty
+  de.dhbw.activities.GameActivity .up.|> de.dhbw.game.IStatusBar
   de.dhbw.activities.GameActivity -up-|> androidx.appcompat.app.AppCompatActivity
+  de.dhbw.activities.GameActivity o-- de.dhbw.game.Game : game
+  de.dhbw.activities.MainActivity .up.|> de.dhbw.game.settings.ISettingsManager
   de.dhbw.activities.MainActivity -up-|> androidx.appcompat.app.AppCompatActivity
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.map.structure.Field : actualField
-  de.dhbw.map.objects.enemy.Enemy o-- de.dhbw.util.Direction : direction
-  de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.Enemy
+  de.dhbw.game.Game o-- de.dhbw.util.Position : circleField
+  de.dhbw.game.Game o-- de.dhbw.game.StatusBarCountDownTimer : countDownTimer
+  de.dhbw.game.Game o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.game.Game o-- de.dhbw.map.structure.MapStructure : mapStructure
+  de.dhbw.game.Game o-- de.dhbw.game.match.AMatch : match
+  de.dhbw.game.Game o-- de.dhbw.map.matchfield.MatchField : matchField
+  de.dhbw.game.Game o-- de.dhbw.game.IMoneyListener : moneyListener
+  de.dhbw.game.StatusBarCountDownTimer o-- de.dhbw.game.IStatusBar : status
+  de.dhbw.game.match.AMatch -up-|> de.dhbw.game.ATimerUsage
+  de.dhbw.game.match.EasyMatch -up-|> de.dhbw.game.match.AMatch
+  de.dhbw.game.match.HardMatch -up-|> de.dhbw.game.match.AMatch
+  de.dhbw.game.match.MediumMatch -up-|> de.dhbw.game.match.AMatch
+  de.dhbw.game.popups.AMenu -up-|> android.app.Activity
+  de.dhbw.game.popups.MenuSettings .up.|> de.dhbw.game.settings.ISettingsManager
+  de.dhbw.game.popups.MenuSettings -up-|> de.dhbw.game.popups.AMenu
+  de.dhbw.game.popups.MenuTowerSelection .up.|> de.dhbw.game.IMoneyListener
+  de.dhbw.game.popups.MenuTowerSelection -up-|> de.dhbw.game.popups.AMenu
+  de.dhbw.game.popups.MenuTowerSelection o-- de.dhbw.util.Position : position
+  de.dhbw.game.popups.MenuUpgradeAndSell .up.|> de.dhbw.game.IMoneyListener
+  de.dhbw.game.popups.MenuUpgradeAndSell -up-|> de.dhbw.game.popups.AMenu
+  de.dhbw.game.popups.MenuUpgradeAndSell o-- de.dhbw.util.Position : pos
+  de.dhbw.game.wave.AWave -up-|> de.dhbw.game.ATimerUsage
+  de.dhbw.game.wave.Wave -up-|> de.dhbw.game.wave.AWave
+  de.dhbw.game.wave.WaveComposition o-- de.dhbw.game.EnemyType : type
+  de.dhbw.map.matchfield.MatchField o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.AEnemy : targetEnemy
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.util.Position : targetPos
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.tower.TowerArtillery : tower
-  de.dhbw.map.objects.tower.TowerArtillery -up-|> de.dhbw.map.objects.tower.ATower
-  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.Enemy : targetedEnemy
+  de.dhbw.map.objects.bullet.Bomb -up-|> de.dhbw.map.objects.bullet.ABullet
+  de.dhbw.map.objects.bullet.Projectile -up-|> de.dhbw.map.objects.bullet.ABullet
+  de.dhbw.map.objects.bullet.SnowFlake -up-|> de.dhbw.map.objects.bullet.ABullet
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.map.structure.Field : actualField
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.util.Direction : direction
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.game.EnemyType : enemyType
+  de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.AEnemy
+  de.dhbw.map.objects.tower.ATower -up-|> de.dhbw.game.ATimerUsage
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.enemy.AEnemy : targetedEnemy
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.structure.Field : field
   de.dhbw.map.objects.tower.ATower o-- de.dhbw.util.SortingUtil : sortingUtil
+  de.dhbw.map.objects.tower.ATower o-- de.dhbw.map.objects.tower.TowerType : towerType
+  de.dhbw.map.objects.tower.TowerArtillery -up-|> de.dhbw.map.objects.tower.ATower
+  de.dhbw.map.objects.tower.TowerBoombastic -up-|> de.dhbw.map.objects.tower.ATower
+  de.dhbw.map.objects.tower.TowerFreezer -up-|> de.dhbw.map.objects.tower.ATower
   de.dhbw.map.structure.Field o-- de.dhbw.map.structure.FieldDescription : fieldDescription
+  de.dhbw.util.DifficultyFragmentAdapter -up-|> androidx.fragment.app.FragmentPagerAdapter
+  de.dhbw.util.Position .up.|> java.io.Serializable
 
 
-right footer
-
-
-PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
-For more information about this tool, please contact philippe.mesmeur@gmail.com
-endfooter
 
 @enduml

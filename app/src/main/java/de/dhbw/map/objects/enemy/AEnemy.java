@@ -13,7 +13,7 @@ import de.dhbw.util.Direction;
 import de.dhbw.util.Position;
 import java.util.TimerTask;
 
-public abstract class Enemy {
+public abstract class AEnemy {
 	private String label;
 	private UUID uuid;
 	private boolean isPaused = false;
@@ -35,7 +35,7 @@ public abstract class Enemy {
 	protected ImageView image;
 	protected GameActivity gameActivity;
 	
-	public Enemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, ImageView image) {
+	public AEnemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, ImageView image) {
 		this.label = label;
 		this.uuid = uuid;
 		this.healthpoints = hp;

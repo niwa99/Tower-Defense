@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -22,6 +23,7 @@ public class LaserRay extends ABullet {
     private Canvas canvas;
     private LaserView laserView;
     private boolean isAlive = true;
+    private boolean killBullet = false;
 
     public LaserRay(Position spawnPosition, Enemy targetedEnemy, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
@@ -38,6 +40,10 @@ public class LaserRay extends ABullet {
     protected void startLogicalShooting(int distanceToEnemy) {
     }
 
+    public void killBullet(){
+        this.killBullet=true;
+    }
+
     @Override
     protected void startAnimation(int distanceToEnemy) {
         gameActivity.runOnUiThread(() -> {
@@ -49,7 +55,7 @@ public class LaserRay extends ABullet {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(!targetEnemy.isAlive() || targetEnemy.isPaused() || !isEnemyHitOnPosition(bulletStartPos, targetPos,targetEnemy)){
+                if(!targetEnemy.isAlive() || targetEnemy.isPaused() || killBullet || !isEnemyHitOnPosition(bulletStartPos, targetPos,targetEnemy)){
                     gameActivity.runOnUiThread(() -> {
                         gameActivity.getMapFrameLayout().removeView(laserView);
                     });
@@ -197,7 +203,23 @@ public class LaserRay extends ABullet {
         @Override
         public void onDraw(Canvas canvas) {
             paint.setStrokeWidth(7);
-            paint.setColor(Color.BLUE);
+            switch(new Random().nextInt(5)){
+                case 0:
+                    paint.setColor(Color.BLUE);
+                    break;
+                case 1:
+                    paint.setColor(Color.RED);
+                    break;
+                case 2:
+                    paint.setColor(Color.YELLOW);
+                    break;
+                case 3:
+                    paint.setColor(Color.GREEN);
+                    break;
+                case 4:
+                    paint.setColor(Color.WHITE);
+                    break;
+            }
             canvas.drawLine(from.getX(), from.getY(), to.getX(), to.getY(), paint);
         }
 

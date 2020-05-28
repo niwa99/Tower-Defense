@@ -69,6 +69,12 @@ public class TowerLaser extends ATower {
         return false;
     }
 
+    public void removeBullet(){
+        if(bullet!=null){
+            bullet.killBullet();
+        }
+    }
+
     @Override
     public int getCosts(int level) {
         return getLaserCostsByLevel(level);

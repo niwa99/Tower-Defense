@@ -104,18 +104,18 @@ public class Constants {
     public static final LinearLayout.LayoutParams TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //Tank Parameters
-    public static final int TANK_LEVEL_1_HEALTHPOINTS = 3;
+    public static final int TANK_LEVEL_1_HEALTHPOINTS = 20;
     public static final int TANK_LEVEL_1_SPEED = 975; //From 0 to 1000
     public static final int TANK_LEVEL_1_VALUE = 5;
     public static final int TANK_LEVEL_1_LIFE_POINT_COSTS = 5;
 
 
-    public static final int TANK_LEVEL_2_HEALTHPOINTS = 7;
+    public static final int TANK_LEVEL_2_HEALTHPOINTS = 30;
     public static final int TANK_LEVEL_2_SPEED = 980;
     public static final int TANK_LEVEL_2_VALUE = 10;
     public static final int TANK_LEVEL_2_LIFE_POINT_COSTS = 5;
 
-    public static final int TANK_LEVEL_3_HEALTHPOINTS = 25;
+    public static final int TANK_LEVEL_3_HEALTHPOINTS = 50;
     public static final int TANK_LEVEL_3_SPEED = 985;
     public static final int TANK_LEVEL_3_VALUE = 25;
     public static final int TANK_LEVEL_3_LIFE_POINT_COSTS = 5;

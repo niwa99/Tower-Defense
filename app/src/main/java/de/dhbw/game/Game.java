@@ -269,8 +269,12 @@ public class Game {
         Field field = mapStructure.getField(pos);
         Optional<ATower> tower = matchField.getTower(field);
         if (tower.isPresent()) {
-            addMoney((int) Math.round(tower.get().getCosts() * 0.5));
-            matchField.removeTower(tower.get());
+            ATower currrentTower = tower.get();
+            if(currrentTower instanceof TowerLaser){
+                ((TowerLaser) currrentTower).removeBullet();
+            }
+            addMoney((int) Math.round(currrentTower.getCosts() * 0.5));
+            matchField.removeTower(currrentTower);
             mapStructure.getField(field.getFieldPosition()).setFieldDescription(FieldDescription.FREE);
         }
     }

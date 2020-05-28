@@ -9,7 +9,7 @@ import java.util.UUID;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.ABullet;
 import de.dhbw.map.objects.bullet.PlasmaBall;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.structure.Field;
 
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_PLASMARIZER_BASE;
@@ -39,9 +39,9 @@ public class TowerPlasmarizer extends ATower {
     }
 
     @Override
-    public boolean fire(List<Enemy> enemies){
+    public boolean fire(List<AEnemy> enemies){
         if(super.fire(enemies)){
-            ABullet plasmaBall = new PlasmaBall(getPosition(), targetedEnemy, this.getDamage(), plasmaRange, new ArrayList<>(enemies), gameActivity, 0);
+            ABullet plasmaBall = new PlasmaBall(getPosition(), targetedEnemy, this.getDamage(), plasmaRange, enemies, gameActivity, 0);
             plasmaBall.setBulletSpeed((int) (plasmaBall.getBulletSpeed()*1.5));
             plasmaBall.start();
             return true;

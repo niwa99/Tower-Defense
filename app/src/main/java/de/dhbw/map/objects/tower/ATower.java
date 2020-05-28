@@ -127,7 +127,7 @@ public abstract class ATower extends ATimerUsage {
 	 * @param enemies
 	 * @return
 	 */
-	public Enemy getNearestEnemy(Position actualPosition, List<AEnemy> enemies) {
+	public AEnemy getNearestEnemy(Position actualPosition, List<AEnemy> enemies) {
 		if (!enemies.isEmpty()) {
 			Map<AEnemy, Integer> distanceToEnemy = new HashMap<>();
 

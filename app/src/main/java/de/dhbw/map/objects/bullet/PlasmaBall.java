@@ -3,7 +3,7 @@ package de.dhbw.map.objects.bullet;
 import java.util.List;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
@@ -11,10 +11,10 @@ import static de.dhbw.util.Constants.BULLET_SIZE_PARAMS;
 import static de.dhbw.util.Constants.FIELD_SIZE;
 
 public class PlasmaBall extends ABullet {
-    private List<Enemy> enemies;
+    private List<AEnemy> enemies;
     private int range;
 
-    public PlasmaBall(Position spawnPosition, Enemy targetedEnemy, int damage, int range,  List<Enemy> enemies, GameActivity gameActivity, int offset) {
+    public PlasmaBall(Position spawnPosition, AEnemy targetedEnemy, int damage, int range,  List<AEnemy> enemies, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, Constants.DRAWABLE_BULLET_PLASMARIZER, gameActivity, offset);
         this.enemies = enemies;
         this.range = range;
@@ -26,7 +26,7 @@ public class PlasmaBall extends ABullet {
 
         enemies.remove(targetEnemy);
 
-        Enemy nextEnemy = null;
+        AEnemy nextEnemy = null;
         for (int i = 0; i < enemies.size(); i++) {
             if (enemies.get(i) != null && isNextEnemyInRange(targetEnemy, enemies.get(i))) {
                 if (nextEnemy == null) {
@@ -48,7 +48,7 @@ public class PlasmaBall extends ABullet {
 
     }
 
-    private boolean isNextEnemyInRange(Enemy oldEnemy, Enemy nextEnemy) {
+    private boolean isNextEnemyInRange(AEnemy oldEnemy, AEnemy nextEnemy) {
         return Math.abs(oldEnemy.getMovedSteps() - nextEnemy.getMovedSteps()) < range;
     }
 }

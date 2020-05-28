@@ -16,14 +16,10 @@ import static de.dhbw.util.Constants.*;
 public abstract class ABullet {
 
     private ImageView bulletImage;
-    private int x;
-    private int y;
-    private Position targetPos;
+    Position targetPos;
     protected AEnemy targetEnemy;
     protected int x;
     protected int y;
-    Position targetPos;
-    final Enemy targetEnemy;
     protected int damage;
     protected GameActivity gameActivity;
     private int bulletSpeed = BULLET_SPEED;

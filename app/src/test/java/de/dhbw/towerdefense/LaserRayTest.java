@@ -7,7 +7,7 @@ import org.mockito.Mock;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.LaserRay;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 
@@ -25,7 +25,7 @@ public class LaserRayTest {
     public void detectIfEnemyIsHitWhenEnemyMovesFromLeftToRight_SHOULD_BE_FalseWhenEnemyXGreater226() throws InterruptedException {
         //arrange
         final int field_size = 150;
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size,field_size);
         enemy.setHealthpoints(10000);
 
@@ -43,7 +43,7 @@ public class LaserRayTest {
     public void detectIfEnemyIsHitWhenEnemyMovesThroughLaserStartPosition_SHOULD_AlwaysBeTrue() throws InterruptedException {
         //arrange
         final int field_size = 150;
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size,field_size);
         enemy.setHealthpoints(10000);
 
@@ -58,7 +58,7 @@ public class LaserRayTest {
     public void detectIfEnemyIsHitWhenEnemyMovesOppositeDirectionOfLaserStartPosition_SHOULD_BE_TrueUntilOutOfRange() throws InterruptedException {
         //arrange
         final int field_size = 150;
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(field_size,200);
         enemy.setHealthpoints(10000);
 
@@ -75,7 +75,7 @@ public class LaserRayTest {
     public void test2() throws InterruptedException {
         //arrange
         final int field_size = 150;
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(300,field_size);
         enemy.setHealthpoints(10000);
 
@@ -90,7 +90,7 @@ public class LaserRayTest {
 
     @Test
     public void test(){
-        Enemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(626,229);
         enemy.setHealthpoints(10000);
         System.out.println(LaserRay.isEnemyHitOnPosition(new Position(657,150),new Position(626,229),enemy));

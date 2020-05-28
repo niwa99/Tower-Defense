@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
@@ -25,7 +25,7 @@ public class LaserRay extends ABullet {
     private boolean isAlive = true;
     private boolean killBullet = false;
 
-    public LaserRay(Position spawnPosition, Enemy targetedEnemy, int damage, GameActivity gameActivity, int offset) {
+    public LaserRay(Position spawnPosition, AEnemy targetedEnemy, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
         canvas = new Canvas();
         laserView = new LaserView(gameActivity, new Position(x,y), targetPos);
@@ -86,7 +86,7 @@ public class LaserRay extends ABullet {
         return (float) Math.cos(Math.toRadians(getBulletRotation() - 90));
     }
 
-    public static boolean isEnemyHitOnPosition(Position bulletStartPosition, Position bulletEndPosition, Enemy enemy){
+    public static boolean isEnemyHitOnPosition(Position bulletStartPosition, Position bulletEndPosition, AEnemy enemy){
         int halfSize = Constants.FIELD_SIZE/2;
         int enemyX = enemy.getPositionX();
         int enemyY = enemy.getPositionY();

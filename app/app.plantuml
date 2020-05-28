@@ -207,7 +207,7 @@ title __Tower Defense Class Diagram__\n
 
         abstract class de.dhbw.game.wave.AWave {
           - count : int
-          - enemies : List<Enemy>
+          - enemies : List<AEnemy>
           - speed : int
           + calculateDelay()
           {abstract} + generate()
@@ -346,7 +346,7 @@ title __Tower Defense Class Diagram__\n
       package de.dhbw.map.matchfield {
 
         class de.dhbw.map.matchfield.MatchField {
-          - enemies : List<Enemy>
+          - enemies : List<AEnemy>
           - isGameOver : boolean
           - matchFieldTimer : Timer
           - towers : List<ATower>
@@ -396,7 +396,7 @@ title __Tower Defense Class Diagram__\n
           }
 
           class de.dhbw.map.objects.bullet.Bomb {
-            - allEnemies : List<Enemy>
+            - allEnemies : List<AEnemy>
             - range : int
             + Bomb()
             + Bomb()

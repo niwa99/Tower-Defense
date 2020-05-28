@@ -9,7 +9,7 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.ABullet;
 import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.LaserRay;
-import de.dhbw.map.objects.enemy.Enemy;
+import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.structure.Field;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
@@ -57,7 +57,7 @@ public class TowerLaser extends ATower {
     }
 
     @Override
-    public boolean fire(List<Enemy> enemies){
+    public boolean fire(List<AEnemy> enemies){
         if(bullet==null || !bullet.isAlive()) {
             headImage.get().setRotation((float)rotateImage(enemies));
             if (super.fire(enemies)) {

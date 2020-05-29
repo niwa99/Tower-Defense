@@ -1,5 +1,7 @@
 package de.dhbw.map.objects.bullet;
 
+import android.widget.ImageView;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +23,14 @@ public class Bomb extends ABullet {
 
     public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity) {
         this(spawnPosition, targetedEnemy, allEnemies, damage, bulletImageID, gameActivity, 0);
+    }
+
+    /**
+     * Constructor for test purpose only!
+     */
+    public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, ImageView bulletImage, GameActivity gameActivity) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+        this.allEnemies = allEnemies;
     }
 
     @Override

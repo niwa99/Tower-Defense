@@ -42,6 +42,17 @@ public class TowerBoombastic extends ATower {
         setHeadImage(headImage);
     }
 
+    /**
+     * Constructor for test purpose only!
+     */
+    public TowerBoombastic(Field field, int level, ImageView image, GameActivity gameActivity) {
+        super(UUID.randomUUID(), TowerType.BOOMBASTIC,
+                level, getTowerBoombasticCostsByLevel(level),
+                getTowerBoombasticDamageByLevel(level), getTowerBoombasticRangeByLevel(level), getTowerBoombasticFirerateByLevel(level), field, gameActivity);
+        setBaseImage(image);
+        setHeadImage(image);
+    }
+
     @Override
     public boolean fire(List<AEnemy> enemies) {
         headImage.get().setRotation((float)rotateImage(enemies));

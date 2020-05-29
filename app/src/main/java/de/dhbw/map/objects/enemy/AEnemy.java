@@ -200,8 +200,12 @@ public abstract class AEnemy {
 		gameActivity.getGame().getMatchField().slowEnemy(this);
 	}
 
-	public int getSlowness(){
-		return slowness>0? slowness--:slowness;
+	public int getAndReduceSlowness(){
+		return slowness > 0 ? slowness-- : slowness;
+	}
+
+	public int getSlowness() {
+		return slowness;
 	}
 
 	public void setPaused(boolean paused) {

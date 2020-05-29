@@ -110,7 +110,7 @@ public class MatchField {
 			}
 		};
 		enemy.setTimerTask(timerTask);
-		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getSlowness());
+		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getAndReduceSlowness());
 	}
 
 	/**

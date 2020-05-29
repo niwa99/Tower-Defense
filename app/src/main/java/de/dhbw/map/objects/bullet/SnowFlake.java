@@ -1,5 +1,7 @@
 package de.dhbw.map.objects.bullet;
 
+import android.widget.ImageView;
+
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Position;
@@ -15,6 +17,14 @@ public class SnowFlake extends ABullet {
 
     public SnowFlake(Position spawnPosition, AEnemy targetedEnemy, int damage, int slowness, int bulletImageID, GameActivity gameActivity) {
         this(spawnPosition, targetedEnemy, damage, slowness, bulletImageID, gameActivity, 0);
+    }
+
+    /**
+     * Constructor for test purpose only!
+     */
+    public SnowFlake(Position spawnPosition, AEnemy targetedEnemy, int damage, int slowness, ImageView bulletImage, GameActivity gameActivity) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+        this.slowness = slowness;
     }
 
     @Override

@@ -13,11 +13,13 @@ import java.util.List;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.Projectile;
+import de.dhbw.map.objects.bullet.SnowFlake;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.TowerBoombastic;
+import de.dhbw.map.objects.tower.TowerFreezer;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 
@@ -76,6 +78,24 @@ public class BulletTest {
         assertNotEquals(enemySideshot.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
         assertNotEquals(enemySideshot2.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
         assertEquals(enemyNotInRange.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+    }
+
+    @Test
+    public void shootSnowFlakeFromSpawnPositionToEnemy_SHOULD_decreaseEnemySpeed() throws InterruptedException {
+        //arrange
+        TowerFreezer tower = new TowerFreezer(new Field(FIELD_SIZE, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1", 1, dummyImage, dummyGameActivity);
+
+        enemy.moveTo(375, 300);
+
+        //act
+        new SnowFlake(tower.getPosition(), enemy, tower.getDamage(), tower.getSlowness(), dummyImage, dummyGameActivity);
+        //NullPointerException will come up because of not intantiated game
+
+        Thread.sleep(2000);
+
+        //assert
+        assertTrue(enemy.getSlowness() > 0);
     }
 
 }

@@ -25,10 +25,6 @@ import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS;
 public class TowerFreezer extends ATower {
     private int slowness;
 
-    public TowerFreezer(UUID id, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
-        super(id, TowerType.FREEZER, level, costs, damage, range, fireRate, field, gameActivity);
-    }
-
     public TowerFreezer(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
                 getFreezerRangeByLevel(level), getFreezerFirerateByLevel(level), field, gameActivity);
@@ -41,6 +37,17 @@ public class TowerFreezer extends ATower {
         setBaseImage(baseImage);
 
         this.slowness=getFreezerSlownessByLevel(level);
+    }
+
+    /**
+     * Constructor for test purpose only!
+     */
+    public TowerFreezer(Field field, int level, ImageView image, GameActivity gameActivity) {
+        super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
+                getFreezerRangeByLevel(level), getFreezerFirerateByLevel(level), field, gameActivity);
+        setBaseImage(image);
+
+        this.slowness = getFreezerSlownessByLevel(level);
     }
 
     @Override

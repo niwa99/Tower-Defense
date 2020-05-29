@@ -43,6 +43,7 @@ import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 import de.dhbw.util.PreferenceManager;
 
+import static de.dhbw.util.Constants.FIELD_SIZE;
 import static de.dhbw.util.Constants.STATUS_OFF;
 import static de.dhbw.util.Constants.STATUS_ON;
 
@@ -479,7 +480,7 @@ public class Game {
             }
         };
 
-        LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
+        LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
         mapStructure.getFields().stream().forEach(field -> {
             Button fieldButton = new Button(gameActivity);
             fieldButton.setX(field.getSpawnPoint().getX());

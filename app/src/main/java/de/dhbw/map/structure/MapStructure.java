@@ -13,6 +13,10 @@ import static de.dhbw.util.Constants.*;
 public class MapStructure {
 
 	private Map<String, Field> fields = new HashMap<>();
+
+    /**
+     * Contains the positions of all path-fields.
+     */
     private static final Position[] path = new Position[] {
             new Position(0,2), new Position(1,2), new Position(1,1),
             new Position(1,0), new Position(2,0), new Position(3,0),
@@ -22,6 +26,9 @@ public class MapStructure {
             new Position(6,3), new Position(6,2), new Position(7,2),
             new Position(8,2), new Position(9,2), new Position(10,2)};
 
+    /**
+     * Constructor
+     */
     public MapStructure() {
         FieldDescription[][] fieldDescription = createPath();
         for (int x = 0; x < AMOUNT_COLUMNS; x++) {
@@ -33,7 +40,7 @@ public class MapStructure {
     }
 
     /**
-     * Sets the FieldDescriptions for the Map (says which Field belongs to the Path and which not)
+     * Sets the FieldDescriptions for the Map (says which Field belongs to the Path and which not).
      * @return 2D-FieldDescription-Array
      */
     private FieldDescription[][] createPath() {
@@ -61,7 +68,7 @@ public class MapStructure {
     }
 
     /**
-     * This Method calculates the needed path picture
+     * This Method calculates the needed path picture.
      * @param xCoord
      * @param yCoord
      * @return pathImage
@@ -110,7 +117,7 @@ public class MapStructure {
 
 
     /**
-     * This Method return the index of the path with the Coordinates from the parameters
+     * This Method returns the index of the path with the Coordinates from the parameters
      * @param xCoord
      * @param yCoord
      * @return path index
@@ -129,6 +136,10 @@ public class MapStructure {
     }
 
 
+    /**
+     * Read all fields.
+     * @return list of fields
+     */
     public List<Field> getFields() {
     	return new ArrayList<>(fields.values());
     }
@@ -141,12 +152,14 @@ public class MapStructure {
     public Field getFieldForEnemy(int progress) {
         return progress < path.length ? fields.get(path[progress].toString()) : null;
     }
-    
+
+    /**
+     *
+     * @param pos
+     * @return corresponding field to passed position
+     */
     public Field getField(Position pos) {
     	return fields.get(pos.toString());
     }
-    
-    public static int getSizeField() {
-    	return FIELD_SIZE;
-    }
+
 }

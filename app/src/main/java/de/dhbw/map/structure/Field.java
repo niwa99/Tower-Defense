@@ -10,6 +10,13 @@ public class Field {
 
     private FieldDescription fieldDescription;
 
+    /**
+     * Constructor
+     * @param sizeInPx
+     * @param xCoord
+     * @param yCoord
+     * @param fieldDescription
+     */
     public Field(int sizeInPx, int xCoord, int yCoord, FieldDescription fieldDescription) {
     	this.sizeInPx = sizeInPx;
         this.xCoord = xCoord;
@@ -17,7 +24,9 @@ public class Field {
         this.fieldDescription = fieldDescription;
     }
 
-    //Constructor only for dummy objects
+    /**
+     * Constructor (TEST PURPOSE ONLY!)
+     */
     public Field() {
     	this.sizeInPx = 0;
         this.xCoord = 0;
@@ -25,10 +34,18 @@ public class Field {
         this.fieldDescription = FieldDescription.FREE;
     }
 
+    /**
+     *
+     * @return unique id of the field object
+     */
     public String getId() {
         return String.valueOf(getFieldPositionX())+"01230"+String.valueOf(getFieldPositionY());
     }
 
+    /**
+     * Get a position object of the current field. Not in px!
+     * @return position
+     */
     public Position getFieldPosition() {
         return new Position(xCoord, yCoord);
     }
@@ -64,18 +81,34 @@ public class Field {
     	return yCoord*sizeInPx;
     }
 
+    /**
+     *
+     * @return field description of this field.
+     */
     public FieldDescription getFieldDescription() {
         return fieldDescription;
     }
 
+    /**
+     * Set the field description of this field.
+     * @param fieldDescription
+     */
     public void setFieldDescription(FieldDescription fieldDescription) {
         this.fieldDescription = fieldDescription;
     }
-    
+
+    /**
+     * Get the midpoint of this field in px as spawnpoint.
+     * @return position of mid-coordinates in px
+     */
     public Position getSpawnPoint() {
     	return new Position(getPixelCoordX()+(sizeInPx/2), getPixelCoordY()+(sizeInPx/2));
     }
 
+    /**
+     *
+     * @return size of this field in px
+     */
     public int getSizeInPx() {
         return sizeInPx;
     }

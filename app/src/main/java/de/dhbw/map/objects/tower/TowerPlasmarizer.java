@@ -20,12 +20,15 @@ import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerPlasmarizer extends ATower {
+
     private final int plasmaRange = 300;
 
-    public TowerPlasmarizer(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
-        super(id, towerType, level, costs, damage, range, fireRate, field, gameActivity);
-    }
-
+    /**
+     * Constructor
+     * @param field
+     * @param level
+     * @param gameActivity
+     */
     public TowerPlasmarizer(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.PLASMARIZER, level, getPlasmarizerCostsByLevel(level), getPlasmarizerDamageByLevel(level),
                 getPlasmarizerRangeByLevel(level), getPlasmarizerFirerateByLevel(level), field, gameActivity);
@@ -69,6 +72,11 @@ public class TowerPlasmarizer extends ATower {
         return getPlasmarizerFirerateByLevel(level);
     }
 
+    /**
+     * Get the costs of this tower by level.
+     * @param level
+     * @return costs
+     */
     private static int getPlasmarizerCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_COSTS;
@@ -76,6 +84,11 @@ public class TowerPlasmarizer extends ATower {
         }
     }
 
+    /**
+     * Get the damage of this tower by level.
+     * @param level
+     * @return damage
+     */
     private static int getPlasmarizerDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_DAMAGE;
@@ -83,6 +96,11 @@ public class TowerPlasmarizer extends ATower {
         }
     }
 
+    /**
+     * Get the range in px of this tower by level.
+     * @param level
+     * @return range
+     */
     private static int getPlasmarizerRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS;
@@ -90,6 +108,11 @@ public class TowerPlasmarizer extends ATower {
         }
     }
 
+    /**
+     * Get the firerate of this tower by level.
+     * @param level
+     * @return firerate
+     */
     private static int getPlasmarizerFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_FIRERATE_IN_SECONDS;

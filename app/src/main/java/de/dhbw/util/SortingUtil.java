@@ -12,15 +12,11 @@ import java.util.stream.Collectors;
 import de.dhbw.map.objects.enemy.AEnemy;
 
 public class SortingUtil {
-	
-	public SortingUtil() {
-		
-	}
 
     /**
      * The given map is sorted by value. We need this to get the nearest AEnemy for the towers to shoot.
      * @param unsortMap
-     * @return sorted List of enemies
+     * @return sorted list of enemies
      */
 	public static List<AEnemy> getSortedListBySortingMapByValue(Map<AEnemy, Integer> unsortMap) {
         List<Map.Entry<AEnemy, Integer>> list =
@@ -40,6 +36,13 @@ public class SortingUtil {
         return result;
     }
 
+    /**
+     * Sorts a list of enemies ascending or descending (according to param greater) regarding the movedSteps of each enemy.
+     * @param enemies
+     * @param enemy
+     * @param greater
+     * @return sorted list of enemies
+     */
     public static List<AEnemy> sortListByMovedSteps(List<AEnemy> enemies, AEnemy enemy, boolean greater){
 	    if(greater){
 	        return enemies.stream()//
@@ -54,25 +57,5 @@ public class SortingUtil {
             .sorted(Comparator.comparingInt(AEnemy::getMovedSteps).reversed())
             .collect(Collectors.toList());
     }
-	
-	
-	//could be usefull later 
-	public <K, V extends Comparable<? super V>> Map<K, V> sortMapByValue(Map<K, V> unsortMap) {
-        List<Map.Entry<K, V>> list =
-                new LinkedList<Map.Entry<K, V>>(unsortMap.entrySet());
 
-        Collections.sort(list, new Comparator<Map.Entry<K, V>>() {
-            public int compare(Map.Entry<K, V> o1, Map.Entry<K, V> o2) {
-                return (o1.getValue()).compareTo(o2.getValue());
-            }
-        });
-
-        Map<K, V> result = new LinkedHashMap<K, V>();
-        for (Map.Entry<K, V> entry : list) {
-            result.put(entry.getKey(), entry.getValue());
-        }
-
-        return result;
-    }
-	
 }

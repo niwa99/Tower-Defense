@@ -10,6 +10,9 @@ import de.dhbw.game.settings.Settings;
 
 public class PreferenceManager {
 
+    /**
+     * Provides constant-strings for saving scores into the SharedPreferences.
+     */
     public enum Statistics {
         MAX_WAVE, ENEMIES_KILLED, BUILT_TOWERS, UPGRADES, MONEY_SPENT,
         EASY_MAX_WAVE, EASY_ENEMIES_KILLED, EASY_BUILT_TOWERS, EASY_UPGRADES, EASY_MONEY_SPENT,
@@ -30,10 +33,17 @@ public class PreferenceManager {
     private SharedPreferences preferencesStatistics, preferencesSettings;
     private SharedPreferences.Editor editorStatistics, editorSettings;
 
+    /**
+     * Constructor
+     */
     private PreferenceManager() {
         preferenceManager = this;
     }
 
+    /**
+     * Initializes a PreferenceManager instance for being able to save and read strings from/into SharedPreferences.
+     * @param context
+     */
     public static void init(Context context) {
         preferenceManager = new PreferenceManager();
         preferenceManager.context = context;
@@ -45,29 +55,57 @@ public class PreferenceManager {
         preferenceManager.editorSettings = preferenceManager.preferencesSettings.edit();
     }
 
+    /**
+     * Read a statistics value from the SharedPreferences.
+     * @param statsName
+     * @return value or "0" if no other value is saved.
+     */
     public static String getStatisticsValue(Statistics statsName) {
         return preferenceManager.preferencesStatistics.getString(statsName.toString(), "0");
     }
 
+    /**
+     * Write a statistics value to the SharedPreferences.
+     * @param statsName
+     * @param statsValue
+     */
     public static void setStatisticsValue(Statistics statsName, String statsValue) {
         preferenceManager.editorStatistics.putString(statsName.toString(), statsValue);
         preferenceManager.editorStatistics.apply();
     }
 
+    /**
+     * Remove the value of the specified statistics in the SharedPreferences.
+     * @param statsName
+     */
     public static void removeStatisticsValue(Statistics statsName) {
         preferenceManager.editorStatistics.remove(statsName.toString());
         preferenceManager.editorStatistics.apply();
     }
 
+    /**
+     * Read a settings value from the SharedPreferences.
+     * @param settingsName
+     * @return value or null if no other value is saved.
+     */
     public static String getSettingsValue(Settings settingsName) {
         return preferenceManager.preferencesSettings.getString(settingsName.toString(), null);
     }
 
+    /**
+     * Write a settings value to the SharedPreferences.
+     * @param settingsName
+     * @param settingsValue
+     */
     public static void setSettingsValue(Settings settingsName, String settingsValue) {
         preferenceManager.editorSettings.putString(settingsName.toString(), settingsValue);
         preferenceManager.editorSettings.apply();
     }
 
+    /**
+     * Remove the value of the specified settings in the SharedPreferences.
+     * @param settingsName
+     */
     public static void removeSettingsValue(Settings settingsName) {
         preferenceManager.editorSettings.remove(settingsName.toString());
         preferenceManager.editorSettings.apply();

@@ -31,10 +31,12 @@ import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS;
 public class TowerLaser extends ATower {
     private LaserRay bullet = null;
 
-    public TowerLaser(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
-        super(id, towerType, level, costs, damage, range, fireRate, field, gameActivity);
-    }
-
+    /**
+     * Constructor
+     * @param field
+     * @param level
+     * @param gameActivity
+     */
     public TowerLaser(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.ASSAULTLASER, level, getLaserCostsByLevel(level), getLaserDamageByLevel(level),
                 getLaserRangeByLevel(level), getLaserFireRateByLevel(level), field, gameActivity);
@@ -69,6 +71,9 @@ public class TowerLaser extends ATower {
         return false;
     }
 
+    /**
+     * Forces the bullet of the tower to be killed.
+     */
     public void removeBullet(){
         if(bullet!=null){
             bullet.killBullet();
@@ -80,6 +85,11 @@ public class TowerLaser extends ATower {
         return getLaserCostsByLevel(level);
     }
 
+    /**
+     * Get the costs of this tower by level.
+     * @param level
+     * @return costs
+     */
     private static int getLaserCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_COSTS;
@@ -92,6 +102,11 @@ public class TowerLaser extends ATower {
         return getLaserDamageByLevel(level);
     }
 
+    /**
+     * Get the damage of this tower by level.
+     * @param level
+     * @return damage
+     */
     private static int getLaserDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_DAMAGE;
@@ -104,6 +119,11 @@ public class TowerLaser extends ATower {
         return getLaserRangeByLevel(level);
     }
 
+    /**
+     * Get the range in px of this tower by level.
+     * @param level
+     * @return range
+     */
     private static int getLaserRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
@@ -116,6 +136,11 @@ public class TowerLaser extends ATower {
         return getLaserFireRateByLevel(level);
     }
 
+    /**
+     * Get the firerate of this tower by level.
+     * @param level
+     * @return firerate
+     */
     private static int getLaserFireRateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;

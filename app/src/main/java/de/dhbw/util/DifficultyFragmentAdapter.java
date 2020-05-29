@@ -8,12 +8,25 @@ import de.dhbw.game.Difficulty;
 
 public class DifficultyFragmentAdapter extends FragmentPagerAdapter {
 
+    /**
+     * Specifies the number of pages of the ViewPager.
+     * This number should be equal to the amount of difficulties.
+     */
     private static final int NUM_PAGES = 3;
 
+    /**
+     * Constructor
+     * @param fm
+     */
     public DifficultyFragmentAdapter(FragmentManager fm) {
         super(fm);
     }
 
+    /**
+     * Access the fragments of the ViewPager by passing the position as int.
+     * @param position
+     * @return fragment
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position) {
@@ -24,6 +37,10 @@ public class DifficultyFragmentAdapter extends FragmentPagerAdapter {
         }
     }
 
+    /**
+     * Read the NUM_PAGES field.
+     * @return number of pages
+     */
     @Override
     public int getCount() {
         return NUM_PAGES;

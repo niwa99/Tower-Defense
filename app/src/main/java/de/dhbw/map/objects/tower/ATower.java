@@ -23,7 +23,6 @@ import de.dhbw.util.SortingUtil;
 import de.dhbw.map.structure.Field;
 
 public abstract class ATower extends ATimerUsage {
-	private SortingUtil sortingUtil = new SortingUtil();
 
 	private UUID id;
 	private TowerType towerType;
@@ -42,7 +41,19 @@ public abstract class ATower extends ATimerUsage {
 	private TimerTask task;
 	protected AEnemy targetedEnemy;
 	protected GameActivity gameActivity;
-	
+
+	/**
+	 * Constructor
+	 * @param id
+	 * @param towerType
+	 * @param level
+	 * @param costs
+	 * @param damage
+	 * @param range
+	 * @param fireRate
+	 * @param field
+	 * @param gameActivity
+	 */
 	public ATower(UUID id, TowerType towerType, int level, int costs, int damage, int range, int fireRate, Field field, GameActivity gameActivity) {
 		this.id = id;
 		this.towerType = towerType;
@@ -88,35 +99,68 @@ public abstract class ATower extends ATimerUsage {
 		}
 		return false;
 	}
-	
+
+	/**
+	 * Checks if an enemy is in range of the tower.
+	 * @param enemy
+	 * @return true if the enemy is in range
+	 */
 	public boolean isEnemyInRange(AEnemy enemy) {
 		return MatchField.getDistance(enemy.getPositionX(), enemy.getPositionY(), x, y) < range;
 	}
 
+	/**
+	 * Sets the base image of the tower.
+	 * @param image
+	 */
 	public void setBaseImage(ImageView image){
 		this.baseImage=image;
 	}
 
+	/**
+	 * Sets the head image of the tower.
+	 * @param image
+	 */
 	public void setHeadImage(ImageView image){
 		this.headImage= Optional.of(image);
 	}
 
+	/**
+	 *
+	 * @return head image (if present)
+	 */
 	public Optional<ImageView> getHeadImage(){
 		return headImage;
 	}
 
+	/**
+	 *
+	 * @return base image
+	 */
 	public ImageView getBaseImage(){
 		return baseImage;
 	}
 
+	/**
+	 *
+	 * @return field on which the tower is located
+	 */
 	public Field getField() {
 		return field;
 	}
 
+	/**
+	 *
+	 * @return timertask of the tower
+	 */
 	public TimerTask getTask() {
 		return task;
 	}
 
+	/**
+	 * Set the task for tower.
+	 * @param task
+	 */
 	public void setTask(TimerTask task) {
 		this.task = task;
 	}
@@ -165,34 +209,52 @@ public abstract class ATower extends ATimerUsage {
 
 	/**
 	 *
-	 * @param xEnemy
-	 * @param yEnemy
-	 * @return distance between AEnemy or other Object and Tower
+	 * @return id of this tower
 	 */
-	public int getDistance(int xEnemy, int yEnemy) {
-		return (int) Math.round(Math.sqrt(Math.pow(Math.abs(xEnemy-x), 2) + Math.pow(Math.abs(yEnemy-y), 2)));
-	}
-
 	public UUID getId() {
 		return id;
 	}
 
+	/**
+	 *
+	 * @return towertype
+	 */
 	public TowerType getTowerType() { return this.towerType; }
 
+	/**
+	 *
+	 * @return level of this tower
+	 */
 	public int getLevel() { return this.level; }
 
+	/**
+	 *
+	 * @return costs of this tower
+	 */
 	public int getCosts() {
 		return costs;
 	}
 
+	/**
+	 *
+	 * @return damage of this tower
+	 */
 	public int getDamage() {
 		return damage;
 	}
 
+	/**
+	 *
+	 * @return range in px of this tower
+	 */
 	public int getRange() {
 		return range;
 	}
 
+	/**
+	 *
+	 * @return firerate of this tower
+	 */
 	public int getFireRate() {
 		return fireRate;
 	}
@@ -205,22 +267,42 @@ public abstract class ATower extends ATimerUsage {
 
 	public abstract int getFireRate(int level);
 
+	/**
+	 *
+	 * @return x-position of this tower in px (midpoint)
+	 */
 	public int getPositionX() {
 		return x;
 	}
-	
+
+	/**
+	 *
+	 * @return y-position of this tower in px (midpoint)
+	 */
 	public int getPositionY() {
 		return y;
 	}
 
+	/**
+	 *
+	 * @return position of this tower in px (midpoint)
+	 */
 	public Position getPosition() {
 		return new Position(x, y);
 	}
 
+	/**
+	 *
+	 * @return image of level-2-star
+	 */
 	public ImageView getStarlvlTwo() {
 		return starlvlTwo;
 	}
 
+	/**
+	 *
+	 * @return image of level-3-star
+	 */
 	public ImageView getStarlvlThree() {
 		return starlvlThree;
 	}

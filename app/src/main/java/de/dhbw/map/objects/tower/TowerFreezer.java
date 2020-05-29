@@ -25,6 +25,12 @@ import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS;
 public class TowerFreezer extends ATower {
     private int slowness;
 
+    /**
+     * Constructor
+     * @param field
+     * @param level
+     * @param gameActivity
+     */
     public TowerFreezer(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
                 getFreezerRangeByLevel(level), getFreezerFirerateByLevel(level), field, gameActivity);
@@ -40,7 +46,11 @@ public class TowerFreezer extends ATower {
     }
 
     /**
-     * Constructor for test purpose only!
+     * Constructor (TEST PURPOSE ONLY!)
+     * @param field
+     * @param level
+     * @param image
+     * @param gameActivity
      */
     public TowerFreezer(Field field, int level, ImageView image, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.FREEZER, level, getFreezerCostsByLevel(level), getFreezerDamageByLevel(level),
@@ -92,10 +102,19 @@ public class TowerFreezer extends ATower {
         return getFreezerFirerateByLevel(level);
     }
 
+    /**
+     * Get the slowness effect of this tower.
+     * @return slowness
+     */
     public int getSlowness(){
         return slowness;
     }
 
+    /**
+     * Get the costs of this tower by level.
+     * @param level
+     * @return costs
+     */
     public static int getFreezerCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_COSTS;
@@ -103,6 +122,11 @@ public class TowerFreezer extends ATower {
         }
     }
 
+    /**
+     * Get the slowness of this tower by level.
+     * @param level
+     * @return slowness
+     */
     private static int getFreezerSlownessByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_SLOWNESS;
@@ -110,6 +134,11 @@ public class TowerFreezer extends ATower {
         }
     }
 
+    /**
+     * Get the damage of this tower by level.
+     * @param level
+     * @return damage
+     */
     private static int getFreezerDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_DAMAGE;
@@ -117,6 +146,11 @@ public class TowerFreezer extends ATower {
         }
     }
 
+    /**
+     * Get the range in px of this tower by level.
+     * @param level
+     * @return range
+     */
     private static int getFreezerRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS;
@@ -124,6 +158,11 @@ public class TowerFreezer extends ATower {
         }
     }
 
+    /**
+     * Get the firerate of this tower by level.
+     * @param level
+     * @return firerate
+     */
     private static int getFreezerFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS;

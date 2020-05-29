@@ -84,6 +84,8 @@ public class Game {
     private int numberOfUpgrades = 0;
     private int moneySpent = 0;
 
+    private MusicPlayer musicPLayer;
+
 	public Game(GameActivity gameActivity) {
 	    this.gameActivity = gameActivity;
 	    mapStructure = new MapStructure();
@@ -91,6 +93,7 @@ public class Game {
         countDownTimer = new StatusBarCountDownTimer(gameActivity);
         generateButtonsOnMap();
         loadSettings();
+        musicPLayer = new MusicPlayer(gameSettings.get(Settings.MUSIC), gameActivity);
 	}
 
 	private void loadSettings(){
@@ -116,6 +119,7 @@ public class Game {
     }
 
     public void stop(boolean isRegularStop) {
+	    musicPLayer.stop();
         waveTimer.cancel();
         gameTimer.cancel();
         countDownTimer.stopTimer();
@@ -368,6 +372,12 @@ public class Game {
 
     public void increaseMoneySpent(int increase) {
 	    moneySpent += increase;
+    }
+
+    public void toggleMusic(boolean on){
+	    gameSettings.remove(Settings.MUSIC);
+	    gameSettings.put(Settings.MUSIC, on);
+	    musicPLayer.toggle(on, gameActivity);
     }
 
     public void setIngameSound(boolean on){

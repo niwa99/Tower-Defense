@@ -65,11 +65,7 @@ public class MenuSettings extends AMenu implements ISettingsManager {
     public void toggle(Settings setting, boolean on){
         switch (setting){
             case MUSIC:
-                if(on){
-                    gameActivity.getMediaPlayer().start();
-                }else{
-                    gameActivity.getMediaPlayer().start();
-                }
+                gameActivity.getGame().toggleMusic(on);
                 break;
             case INGAME_SOUND:
                 gameActivity.getGame().setIngameSound(on);

@@ -1,6 +1,7 @@
 package de.dhbw.game.match;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.EnemyType;
 import de.dhbw.game.wave.Wave;
 import de.dhbw.game.wave.WaveComposition;
@@ -14,7 +15,7 @@ public class MediumMatch extends AMatch {
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
 
     public MediumMatch() {
-        super(waveTime, 15);
+        super(waveTime, 15, Difficulty.MEDIUM);
     }
 
     @Override

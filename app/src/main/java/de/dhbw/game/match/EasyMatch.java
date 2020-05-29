@@ -1,6 +1,7 @@
 package de.dhbw.game.match;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.EnemyType;
 import de.dhbw.game.wave.Wave;
 import de.dhbw.game.wave.WaveComposition;
@@ -20,7 +21,7 @@ public class EasyMatch extends AMatch {
 
 
     public EasyMatch() {
-        super(waveTime, startMoney);
+        super(waveTime, startMoney, Difficulty.EASY);
     }
 
     @Override

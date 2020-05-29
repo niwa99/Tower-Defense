@@ -3,14 +3,22 @@ package de.dhbw.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.stream.Stream;
+
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.settings.Settings;
 
 public class PreferenceManager {
 
     public enum Statistics {
+        MAX_WAVE, ENEMIES_KILLED, BUILT_TOWERS, UPGRADES, MONEY_SPENT,
         EASY_MAX_WAVE, EASY_ENEMIES_KILLED, EASY_BUILT_TOWERS, EASY_UPGRADES, EASY_MONEY_SPENT,
         MEDIUM_MAX_WAVE, MEDIUM_ENEMIES_KILLED, MEDIUM_BUILT_TOWERS, MEDIUM_UPGRADES, MEDIUM_MONEY_SPENT,
         HARD_MAX_WAVE, HARD_ENEMIES_KILLED, HARD_BUILT_TOWERS, HARD_UPGRADES, HARD_MONEY_SPENT;
+
+        public static Statistics getStatisticsStringByDifficulty(Difficulty difficulty, Statistics statistics) {
+            return Stream.of(Statistics.class.getEnumConstants()).filter(constant -> constant.toString().equalsIgnoreCase(difficulty.toString() + "_" + statistics)).findFirst().get();
+        }
     }
 
     private static PreferenceManager preferenceManager;

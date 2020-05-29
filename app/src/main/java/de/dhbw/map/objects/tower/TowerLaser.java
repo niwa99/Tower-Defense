@@ -61,7 +61,7 @@ public class TowerLaser extends ATower {
         if(bullet==null || !bullet.isAlive()) {
             headImage.get().setRotation((float)rotateImage(enemies));
             if (super.fire(enemies)) {
-                bullet = new LaserRay(getPosition(), super.targetedEnemy, this.getDamage(), gameActivity, (int) (FIELD_SIZE / 2));
+                bullet = new LaserRay(getPosition(), super.targetedEnemy, enemies, this.getDamage(), gameActivity, (int) (FIELD_SIZE / 2));
                 bullet.start();
                 return true;
             }

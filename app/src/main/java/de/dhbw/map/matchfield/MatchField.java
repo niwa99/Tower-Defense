@@ -23,8 +23,6 @@ public class MatchField {
 	private List<AEnemy> enemies;
 	private List<ATower> towers;
 
-	private boolean isGameOver = false;
-
 	//responsible for all enemy movements
 	private Timer matchFieldTimer = new Timer();
 	
@@ -71,9 +69,6 @@ public class MatchField {
 				public void run() {
 					if (enemy.isAlive() && !enemy.reachedTarget()) {
 						enemy.move(gameActivity.getGame().getMapStructure());
-						if (isGameOver) {
-							stopTimer(false);
-						}
 					} else if (enemy.reachedTarget()) {
 						removeEnemiesInTarget(enemy);
 					} else if(!enemy.isAlive()){
@@ -99,9 +94,6 @@ public class MatchField {
 					}else{
 						slowEnemy(enemy);
 					}
-					if (isGameOver) {
-						stopTimer(false);
-					}
 				} else if (enemy.reachedTarget()) {
 					removeEnemiesInTarget(enemy);
 				} else if(!enemy.isAlive()){
@@ -124,11 +116,19 @@ public class MatchField {
 					if (enemies.size() > 0) {
 						tower.fire(new ArrayList<>(enemies));
 						tower.setLastTimeActionMillis(System.currentTimeMillis());
+					}else{
+						checkForFinishedGame();
 					}
 				}
 			};
 			tower.setTask(timerTask);
 			matchFieldTimer.scheduleAtFixedRate(timerTask, tower.getDelay(), tower.getFireRate() * 1000);
+	}
+
+	public void checkForFinishedGame(){
+		if(gameActivity.getGame().allEnemiesSpawned()){
+			stopTimer(true);
+		}
 	}
 
 	public void pauseTimers(){
@@ -174,12 +174,12 @@ public class MatchField {
 	}
 
 	public void removeEnemiesInTarget(AEnemy enemy) {
-		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())) {
-			isGameOver = true;
-		}
 		removeImageViewOfEnemy(enemy);
 		enemy.getTimerTask().cancel();
 		enemies.remove(enemy);
+		if (!gameActivity.getGame().decreaseLifePoints(enemy.getLifePointsCosts())) {
+			stopTimer(false);
+		}
 		System.out.println(enemy.getLabel() + " reached the target");
 	}
 

@@ -7,7 +7,7 @@ import de.dhbw.game.wave.WaveComposition;
 
 public class EasyMatch extends AMatch {
     private static final int waveTime = 45;
-    private static final int waveSpeed = 3000;
+    private static final int waveSpeed = 2000;
     private static final int startMoney = 100;
     private static WaveComposition firstWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 8);
     private static WaveComposition firstWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 2);
@@ -16,7 +16,7 @@ public class EasyMatch extends AMatch {
     private static WaveComposition thirdWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 10);
     private static WaveComposition fourthWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 5);
     private static WaveComposition fourthWaveTankL3 = new WaveComposition(EnemyType.TANK, 3, 5);
-    private static WaveComposition fithhWaveTankL3 = new WaveComposition(EnemyType.TANK, 3, 10);
+    private static WaveComposition fithWaveTankL3 = new WaveComposition(EnemyType.TANK, 3, 10);
 
 
     public EasyMatch() {
@@ -43,9 +43,9 @@ public class EasyMatch extends AMatch {
         fourthWave.generate(gameActivity);
 
         Wave fithWave = new Wave(waveSpeed);
-        fithWave.addWaveCompositions(fithhWaveTankL3);
+        fithWave.addWaveCompositions(fithWaveTankL3);
         fithWave.generate(gameActivity);
 
-        addWaves(firstWave, secondWave, fithWave, fourthWave, fithWave);
+        addWaves(firstWave, secondWave, thirdWave, fourthWave, fithWave);
     }
 }

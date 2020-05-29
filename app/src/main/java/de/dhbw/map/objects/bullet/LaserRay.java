@@ -8,14 +8,17 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
+import pl.droidsonroids.gif.GifImageView;
 
 import static de.dhbw.util.Constants.FIELD_SIZE;
 
@@ -24,11 +27,13 @@ public class LaserRay extends ABullet {
     private LaserView laserView;
     private boolean isAlive = true;
     private boolean killBullet = false;
+    private final List<AEnemy> allEnemies;
 
-    public LaserRay(Position spawnPosition, AEnemy targetedEnemy, int damage, GameActivity gameActivity, int offset) {
+    public LaserRay(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
         canvas = new Canvas();
         laserView = new LaserView(gameActivity, new Position(x,y), targetPos);
+        this.allEnemies=allEnemies;
     }
 
     @Override
@@ -51,6 +56,7 @@ public class LaserRay extends ABullet {
             gameActivity.getMapFrameLayout().addView(laserView);
         });
 
+        allEnemies.remove(targetEnemy);
         Position bulletStartPos = new Position(x,y);
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -63,11 +69,32 @@ public class LaserRay extends ABullet {
                     cancel();
                 }else{
                     targetEnemy.hit(1);
+                    allEnemies.stream().filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.hit(1));
+                    sparkle();
                     //laserView.reDraw(canvas, Color.RED);
                     //laserView.invalidate();
                 }
             }
         }, 0,250);
+    }
+
+    private void sparkle() {
+        if(gameActivity.getGame().isAnimationOn()) {
+            GifImageView gif = new GifImageView(gameActivity);
+            gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
+            gif.setX(targetPos.getX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2));
+            gif.setY(targetPos.getY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2));
+            gif.setScaleX(0.2f);
+            gif.setScaleY(0.2f);
+            gif.setImageResource(R.drawable.spark_animation);
+            gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
+                }
+            }, 250);
+        }
     }
 
     @Override

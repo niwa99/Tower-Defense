@@ -33,10 +33,7 @@ public abstract class AMatch extends ATimerUsage {
     }
 
     public Optional<AWave> next() {
-        if(!waves.get(count).hasNext() && hasNext()){
-            count++;
-        }
-        return hasNext() ? Optional.of(waves.get(count)) : Optional.empty();
+        return hasNext() ? Optional.of(waves.get(count++)) : Optional.empty();
     }
 
     public AWave getCurrent(){

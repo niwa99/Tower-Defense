@@ -24,6 +24,9 @@ public class MusicPlayer extends ATimerUsage{
 
     public void startMusicPlayer(Activity activity){
         this.isStarted=true;
+        if(timer!=null){
+            timer.cancel();
+        }
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -44,12 +47,14 @@ public class MusicPlayer extends ATimerUsage{
                         break;
                     case 3:
                         mediaPlayer = MediaPlayer.create(activity, R.raw.tower_defense_soundtrack_5);
+                        mediaPlayer.setVolume(80,80);
                         break;
                 }
                 if(on){
                     mediaPlayer.start();
                 }
                 lastTimeActionMillis = System.currentTimeMillis();
+                setDelay(0);
             }
         }, getDelay(),loopTime);
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/popup_choose_towers"
     android:layout_width="450dp"
-    android:layout_height="150dp"
+    android:layout_height="250dp"
     android:layout_gravity="center"
     android:background="#EE383838"
     android:orientation="vertical">

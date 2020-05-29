@@ -187,9 +187,6 @@ public class Game {
                     if(wave.isPresent()){
                         startWave(wave.get(), match.getWaveTime());
                     }
-                    if (!match.hasNext()) {
-                        lastWaveOut = true;
-                    }
                 }
             }, delay);
         }else{
@@ -204,7 +201,7 @@ public class Game {
         countDownTimer.timer(seconds);
 
         //status
-        currentWaveNumber = match.getCurrentWaveNumber()+1;
+        currentWaveNumber = match.getCurrentWaveNumber();
         updateStatusBar();
 
         //pause actions
@@ -212,13 +209,12 @@ public class Game {
         match.setDelay(seconds*1000);
 
         //next wave
+        lastEnemyOfWaveSpawned = false;
         startNextWave(seconds*1000);
 
         waveTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                lastEnemyOfWaveSpawned = false;
-
                 if (wave.hasNext()) {
                     matchField.addEnemy(wave.next());
                 } else {

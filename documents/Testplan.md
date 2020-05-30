@@ -1,5 +1,7 @@
 # Tower Defense - Testplan
 
+[![Build Status](https://travis-ci.org/niwa99/Tower-Defense.svg?branch=master)](https://travis-ci.org/niwa99/Tower-Defense)
+
 ## Table of Contents
 
 -   [1. Introduction](#1-introduction)
@@ -136,6 +138,7 @@ Mainly, an internal use is intended.
 | --------- |
 | [Blog](https://dh-towerdefense.de) |
 | [GitHub](https://github.com/niwa99/Tower-Defense) |
+| [Travis CI](https://travis-ci.org/github/niwa99/Tower-Defense) |
 | [SRS](https://github.com/niwa99/Tower-Defense/blob/master/documents/SRS.md) |
 | [SAD](https://github.com/niwa99/Tower-Defense/blob/master/documents/SAD.md) |
 | [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-04-25.png) |
@@ -321,7 +324,7 @@ tbd
 
 ### 7.4 Incident Logs and Change Requests
 
-In the GitHub-CI summaries, a log of all incidents is automatically generated.
+In the TravisCI summaries, each build is automatically logged in detail.
 
 ### 7.5 Smoke Test Suite and Supporting Test Scripts
 
@@ -350,7 +353,7 @@ n/a
 ## 8. Testing Workflow
 
 While developing new features, every developer has to ensure that all given tests still work properly. If they do not, the developer has to find the issue and adjust the code or the test.
-After the local testing, an automatic testrun will follow on GitHub.
+After the local testing, an automatic testrun will follow in our TravisCI.
 
 ## 9. Environmental Needs
 
@@ -377,13 +380,13 @@ The following base software elements are required in the test environment for th
 
 The following tools will be employed to support the test process for this Test Plan.
 
-| Tool Category or Type | Tool Brand Name |
-|-----------------------|-----------------|
-| Code Hoster           | GitHub.com      |
-| Project Management    | Jira Software   |
-| CI Service            | GitHub CI       |
-| Metrics Tool          | tbd             |
-| Test Coverage Monitor | tbd             |
+| Tool Category or Type | Tool Brand Name  |
+|-----------------------|------------------|
+| Code Hoster           | GitHub.com       |
+| Project Management    | Jira Software    |
+| CI Service            | TravisCI         |
+| Metrics Tool          | Metrics-Reloaded |
+| Test Coverage Monitor | Metrics-Reloaded |
 
 ### 9.4 Test Environment Configurations
 

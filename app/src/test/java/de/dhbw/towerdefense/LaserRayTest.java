@@ -74,7 +74,7 @@ public class LaserRayTest {
     }
 
     @Test
-    public void test2() throws InterruptedException {
+    public void detectIfTankIsInTheLaserRay_SHOULD_BE_TrueUntilTankMovesOut() throws InterruptedException {
         //arrange
         AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
         enemy.moveTo(FIELD_SIZE*2, FIELD_SIZE);
@@ -90,15 +90,5 @@ public class LaserRayTest {
 
         //assert
         assertFalse(LaserRay.isEnemyHitOnPosition(new Position(0,FIELD_SIZE*2), new Position(350, FIELD_SIZE), enemy));
-    }
-
-    @Test
-    public void test(){
-        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
-        enemy.moveTo(626,229);
-        enemy.setHealthpoints(10000);
-        System.out.println(LaserRay.isEnemyHitOnPosition(new Position(657,150),new Position(626,229),enemy));
-        enemy.moveTo(600,77);
-        System.out.println(LaserRay.isEnemyHitOnPosition(new Position(657,150),new Position(626,229),enemy));
     }
 }

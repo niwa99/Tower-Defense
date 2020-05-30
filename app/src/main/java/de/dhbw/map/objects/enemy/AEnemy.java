@@ -34,7 +34,19 @@ public abstract class AEnemy {
 	private final EnemyType enemyType;
 	protected ImageView image;
 	protected GameActivity gameActivity;
-	
+
+	/**
+	 * Constructor
+	 * @param label
+	 * @param uuid
+	 * @param hp
+	 * @param speed
+	 * @param value
+	 * @param lifePointsCosts
+	 * @param gameActivity
+	 * @param enemyType
+	 * @param image
+	 */
 	public AEnemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, ImageView image) {
 		this.label = label;
 		this.uuid = uuid;
@@ -47,46 +59,90 @@ public abstract class AEnemy {
 		this.image = image;
 	}
 
+	/**
+	 *
+	 * @return value of this enemy
+	 */
 	public int getValue() {
 		return value;
 	}
 
+	/**
+	 *
+	 * @return lifepointcosts of this enemy
+	 */
 	public int getLifePointsCosts() {
 		return lifePointsCosts;
 	}
 
+	/**
+	 *
+	 * @return timertask of this enemy
+	 */
 	public TimerTask getTimerTask() {
 		return timerTask;
 	}
 
+	/**
+	 * Set the timertask for this enemy.
+	 * @param task
+	 */
 	public void setTimerTask(TimerTask task) {
 		this.timerTask = task;
 	}
-	
+
+	/**
+	 *
+	 * @return healthpoints of this enemy
+	 */
 	public int getHealthPoints() {
 		return healthpoints;
 	}
 
+	/**
+	 * Set the healthpoints for this enemy.
+	 * @param healthpoints
+	 */
 	public void setHealthpoints(int healthpoints) {
 		this.healthpoints = healthpoints;
 	}
-	
+
+	/**
+	 *
+	 * @return speed of this enemy
+	 */
 	public int getSpeed() {
 		return speed;
 	}
 
+	/**
+	 *
+	 * @return type of this enemy
+	 */
 	public EnemyType getType() {
 		return enemyType;
 	}
 
+	/**
+	 *
+	 * @return image of this enemy
+	 */
 	public ImageView getImage() {
 		return image;
 	}
 
-	public void setImage(){
-		this.image=image;
+	/**
+	 * Set the image of this enemy.
+	 */
+	public void setImage() {
+		this.image = image;
 	}
-	
+
+	/**
+	 * Reduce the healthpoints by the specified damage.
+	 * If the healthpoints would be <= 0 afterwards, the isAlive attribute is set to false.
+	 * @param damage
+	 */
 	public void reduceHealthPoints(int damage) {
 		if (damage >= healthpoints) {
 			healthpoints = 0;
@@ -97,7 +153,11 @@ public abstract class AEnemy {
 	}
 
 	public abstract void hit(int damage);
-	
+
+	/**
+	 *
+	 * @return true if the enemy is alive
+	 */
 	public boolean isAlive() {
 		return isAlive;
 	}
@@ -152,66 +212,135 @@ public abstract class AEnemy {
 	public boolean reachedTarget() {
 		return reachedTarget;
 	}
-	
+
+	/**
+	 *
+	 * @return position of this enemy in px
+	 */
 	public Position getPosition() {
 		return new Position(x, y);
 	}
-	
+
+	/**
+	 * Move the enemy to the specified position (in px).
+	 * @param pos
+	 */
 	public void moveToPosition(Position pos) {
 		moveTo(pos.getX(), pos.getY());
 	}
-	
+
+	/**
+	 * Move the enemy to the specified coordinates (in px).
+	 * @param x
+	 * @param y
+	 */
 	public void moveTo(int x, int y) {
 		this.x = x;
 		this.y = y;
 		movedSteps++;
 	}
-	
+
+	/**
+	 *
+	 * @return label of this enemy
+	 */
 	public String getLabel() {
 		return label;
 	}
-	
+
+	/**
+	 *
+	 * @return uuid of this enemy
+	 */
 	public UUID getUuid() {
 		return uuid;
 	}
 
+	/**
+	 *
+	 * @return progress of this enemy
+	 */
 	public int getProgress(){
 		return progress;
 	}
 
+	/**
+	 *
+	 * @return movedSteps of this enemy
+	 */
 	public int getMovedSteps() {
 		return movedSteps;
 	}
-	
+
+	/**
+	 *
+	 * @return x coordinate of this enemy in px
+	 */
 	public int getPositionX() {
 		return x;
 	}
-	
+
+	/**
+	 *
+	 * @return y coordinate of this enemy in px
+	 */
 	public int getPositionY() {
 		return y;
 	}
 
+	/**
+	 *
+	 * @return direction where the enemy is looking right now
+	 */
 	public Direction getDirection() {
 		return direction;
 	}
 
+	/**
+	 * Slow the enemy by the specified parameter.
+	 * @param slowness
+	 */
 	public void slowDown(int slowness){
 		this.slowness = slowness;
 		gameActivity.getGame().getMatchField().slowEnemy(this);
 	}
 
-	public int getSlowness(){
-		return slowness>0? slowness--:slowness;
+	/**
+	 * Reduces the slowness of this enemy (--> makes it faster again).
+	 * @return new slowness
+	 */
+	public int getAndReduceSlowness(){
+		return slowness > 0 ? slowness-- : slowness;
 	}
 
+	/**
+	 *
+	 * @return slowness of this enemy
+	 */
+	public int getSlowness() {
+		return slowness;
+	}
+
+	/**
+	 * Set the enemy in paused mode (stops moving).
+	 * @param paused
+	 */
 	public void setPaused(boolean paused) {
 		isPaused = paused;
 	}
 
+	/**
+	 *
+	 * @return true if the enemy is in pause mode
+	 */
 	public boolean isPaused(){
 		return isPaused;
 	}
 
+	/**
+	 *
+	 * @return true if the slowness of this enemy is 0
+	 */
 	public boolean isFullSpeed(){
 		return slowness==0;
 	}

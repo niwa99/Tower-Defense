@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
+import de.dhbw.game.Difficulty;
 import de.dhbw.game.wave.AWave;
 import de.dhbw.game.wave.Wave;
 
@@ -15,10 +16,12 @@ public abstract class AMatch extends ATimerUsage {
     private boolean extendable = true;
     private List<AWave> waves = new ArrayList<>();
     private final int startMoney;
+    private Difficulty difficulty;
 
-    AMatch(int waveTime, int startMoney) {
+    AMatch(int waveTime, int startMoney, Difficulty difficulty) {
         this.waveTime = waveTime;
         this.startMoney = startMoney;
+        this.difficulty = difficulty;
     }
 
     public abstract void create(GameActivity gameActivity);
@@ -54,6 +57,10 @@ public abstract class AMatch extends ATimerUsage {
 
     public int getStartMoney() {
         return startMoney;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     @Override

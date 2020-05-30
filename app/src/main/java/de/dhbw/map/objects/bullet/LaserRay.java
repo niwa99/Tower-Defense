@@ -29,6 +29,15 @@ public class LaserRay extends ABullet {
     private boolean killBullet = false;
     private final List<AEnemy> allEnemies;
 
+    /**
+     * Constructor
+     * @param spawnPosition
+     * @param targetedEnemy
+     * @param allEnemies
+     * @param damage
+     * @param gameActivity
+     * @param offset
+     */
     public LaserRay(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
         canvas = new Canvas();
@@ -45,8 +54,11 @@ public class LaserRay extends ABullet {
     protected void startLogicalShooting(int distanceToEnemy) {
     }
 
-    public void killBullet(){
-        this.killBullet=true;
+    /**
+     * If this method is called, the bullet will stop itself on next shooting.
+     */
+    public void killBullet() {
+        this.killBullet = true;
     }
 
     @Override
@@ -71,8 +83,6 @@ public class LaserRay extends ABullet {
                     targetEnemy.hit(damage/4);
                     allEnemies.stream().filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.hit(damage/4));
                     sparkle();
-                    //laserView.reDraw(canvas, Color.RED);
-                    //laserView.invalidate();
                 }
             }
         }, 0,250);
@@ -105,14 +115,29 @@ public class LaserRay extends ABullet {
         this.y = (int) (y + vector_y * offset);
     }
 
+    /**
+     *
+     * @return x vector value of the laserRay
+     */
     private float getVectorX() {
         return (float) -Math.sin(Math.toRadians(getBulletRotation() - 90));
     }
 
+    /**
+     *
+     * @return y vector value of the laserRay
+     */
     private float getVectorY() {
         return (float) Math.cos(Math.toRadians(getBulletRotation() - 90));
     }
 
+    /**
+     * Checks if an enemy could be hit by the bullet.
+     * @param bulletStartPosition
+     * @param bulletEndPosition
+     * @param enemy
+     * @return true if enemy could be hit
+     */
     public static boolean isEnemyHitOnPosition(Position bulletStartPosition, Position bulletEndPosition, AEnemy enemy){
         int halfSize = Constants.FIELD_SIZE/2;
         int enemyX = enemy.getPositionX();
@@ -134,6 +159,10 @@ public class LaserRay extends ABullet {
 
     }
 
+    /**
+     *
+     * @return true if laserRay is alive
+     */
     public boolean isAlive(){
         return isAlive;
     }
@@ -149,8 +178,15 @@ public class LaserRay extends ABullet {
         this.y = spawnPosition.getY() + (FIELD_SIZE/2);
     }
 
-    static boolean doIntersect(Position p1, Position q1, Position p2, Position q2)
-    {
+    /**
+     * Method for hitbox calculation.
+     * @param p1
+     * @param q1
+     * @param p2
+     * @param q2
+     * @return
+     */
+    static boolean doIntersect(Position p1, Position q1, Position p2, Position q2) {
         // Find the four orientations needed for general and
         // special cases
         int o1 = orientation(p1, q1, p2);
@@ -178,6 +214,13 @@ public class LaserRay extends ABullet {
         return false; // Doesn't fall in any of the above cases
     }
 
+    /**
+     * Method for hitbox calculation.
+     * @param p
+     * @param q
+     * @param r
+     * @return
+     */
     static int orientation(Position p, Position q, Position r)
     {
         int val = (q.getY()- p.getY()) * (r.getX() - q.getX()) -
@@ -188,6 +231,13 @@ public class LaserRay extends ABullet {
         return (val > 0)? 1: 2; // clock or counterclock wise
     }
 
+    /**
+     * Method for hitbox calculation.
+     * @param p
+     * @param q
+     * @param r
+     * @return
+     */
     static boolean onSegment(Position p, Position q, Position r)
     {
         if (q.getX() <= Math.max(p.getX(), r.getX()) && q.getX() >= Math.min(p.getX(), r.getX()) &&
@@ -197,31 +247,58 @@ public class LaserRay extends ABullet {
         return false;
     }
 
+    /**
+     * This View-class is responsible for the laserRay to be drawn.
+     */
     private class LaserView extends View {
         Paint paint = new Paint();
         private Position from;
         private Position to;
 
+        /**
+         * Constructor
+         * @param a
+         * @param from
+         * @param to
+         */
         public LaserView(Activity a, Position from, Position to){
             super(a);
             this.from = from;
             this.to = to;
         }
 
+        /**
+         * Set an initial color to the view.
+         */
         private void init() {
             paint.setColor(Color.BLACK);
         }
 
+        /**
+         * Constructor
+         * @param context
+         */
         public LaserView(Context context) {
             super(context);
             init();
         }
 
+        /**
+         * Constructor
+         * @param context
+         * @param attrs
+         */
         public LaserView(Context context, AttributeSet attrs) {
             super(context, attrs);
             init();
         }
 
+        /**
+         * Constructor
+         * @param context
+         * @param attrs
+         * @param defStyle
+         */
         public LaserView(Context context, AttributeSet attrs, int defStyle) {
             super(context, attrs, defStyle);
             init();
@@ -250,6 +327,11 @@ public class LaserRay extends ABullet {
             canvas.drawLine(from.getX(), from.getY(), to.getX(), to.getY(), paint);
         }
 
+        /**
+         * Redraw the view.
+         * @param canvas
+         * @param color
+         */
         public void reDraw(Canvas canvas, int color) {
             paint.setColor(color);
             canvas.drawLine(from.getX(), from.getY(), to.getX(), to.getY(), paint);

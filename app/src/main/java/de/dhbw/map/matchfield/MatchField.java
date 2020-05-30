@@ -25,13 +25,21 @@ public class MatchField {
 
 	//responsible for all enemy movements
 	private Timer matchFieldTimer = new Timer();
-	
+
+	/**
+	 * Constructor
+	 * @param gameActivity
+	 */
 	public MatchField(GameActivity gameActivity) {
 		this.gameActivity = gameActivity;
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
 	}
-	
+
+	/**
+	 * Add a tower to the matchField.
+	 * @param tower
+	 */
 	public void addTower(ATower tower) {
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
@@ -52,7 +60,11 @@ public class MatchField {
 		startTowerFire(tower);
 		gameActivity.getGame().increaseNumberOfBuiltTowers();
 	}
-	
+
+	/**
+	 * Add an enemy to the matchField.
+	 * @param enemy
+	 */
 	public void addEnemy(AEnemy enemy) {
 		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemy.getImage()));
 		enemies.add(enemy);
@@ -81,6 +93,10 @@ public class MatchField {
 			matchFieldTimer.scheduleAtFixedRate(timerTask, 0, 1000 - enemy.getSpeed());
 	}
 
+	/**
+	 * Run a slow-TimerTask if the enemy has a slowness effect.
+	 * @param enemy
+	 */
 	public void slowEnemy(AEnemy enemy){
 		enemy.getTimerTask().cancel();
 		TimerTask timerTask = new TimerTask() {
@@ -102,7 +118,7 @@ public class MatchField {
 			}
 		};
 		enemy.setTimerTask(timerTask);
-		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getSlowness());
+		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getAndReduceSlowness());
 	}
 
 	/**
@@ -131,6 +147,10 @@ public class MatchField {
 		}
 	}
 
+
+    /**
+     * Pause the game timers.
+     */
 	public void pauseTimers(){
 		final long time = System.currentTimeMillis();
 		towers.stream().forEach(t -> t.calculateDelay(time));
@@ -138,6 +158,9 @@ public class MatchField {
 		matchFieldTimer.cancel();
 	}
 
+	/**
+	 * Continue the game timers.
+	 */
 	public void continueTimers(){
 		matchFieldTimer = new Timer();
 		enemies.stream().forEach(e -> {
@@ -147,6 +170,10 @@ public class MatchField {
 		towers.stream().forEach(t -> startTowerFire(t));
 	}
 
+	/**
+	 * Stop the matchField timer and call win-/lose-actions.
+	 * @param isWinner
+	 */
 	public void stopTimer(boolean isWinner) {
 		stopTimer();
 		if (isWinner) {
@@ -156,11 +183,18 @@ public class MatchField {
 		}
 	}
 
+	/**
+	 * Stop the matchField timer (if game is stopped unregularly).
+	 */
 	public void stopTimer() {
 		matchFieldTimer.cancel();
 		System.out.println("Game is over");
 	}
 
+	/**
+	 * Remove an enemy from the matchField and create explosion animation.
+	 * @param enemy
+	 */
 	public void removeDeadEnemy(AEnemy enemy) {
 		if (!enemy.isAlive()) {
 			enemy.getTimerTask().cancel();
@@ -173,6 +207,10 @@ public class MatchField {
 		}
 	}
 
+	/**
+	 * Remove enemies which reached the target.
+	 * @param enemy
+	 */
 	public void removeEnemiesInTarget(AEnemy enemy) {
 		removeImageViewOfEnemy(enemy);
 		enemy.getTimerTask().cancel();
@@ -183,6 +221,10 @@ public class MatchField {
 		System.out.println(enemy.getLabel() + " reached the target");
 	}
 
+	/**
+	 * Remove the imageView of an enemy.
+	 * @param enemy
+	 */
 	private void removeImageViewOfEnemy(AEnemy enemy) {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
@@ -192,6 +234,10 @@ public class MatchField {
 		}
 	}
 
+	/**
+	 * Create an explosion animation for an enemy.
+	 * @param enemy
+	 */
 	private void explode(AEnemy enemy) {
 		if(gameActivity.getGame().isAnimationOn()) {
 			GifImageView gif = new GifImageView(gameActivity);
@@ -211,14 +257,29 @@ public class MatchField {
 		}
 	}
 
+	/**
+	 * Get a tower by uuid.
+	 * @param towerUUID
+	 * @return tower
+	 */
 	private Optional<ATower> getTower(UUID towerUUID) {
 		return towers.stream().filter(tower -> tower.getId() == towerUUID).findAny();
 	}
 
+	/**
+	 * Get a tower by field.
+	 * @param field
+	 * @return tower
+	 */
 	public Optional<ATower> getTower(Field field) {
 		return towers.stream().filter(t -> t.getField().equals(field)).findAny();
 	}
 
+	/**
+	 * Remove a tower by uuid.
+	 * @param towerUUID
+	 * @return true if tower got removed
+	 */
 	private boolean removeTower(UUID towerUUID) {
 		Optional<ATower> tower = getTower(towerUUID);
 		if (tower.isPresent()) {
@@ -228,6 +289,10 @@ public class MatchField {
 		return false;
 	}
 
+	/**
+	 * Remove a tower by tower object
+	 * @param tower
+	 */
 	public void removeTower(ATower tower) {
 		tower.getTask().cancel();
 		towers.remove(tower);
@@ -249,14 +314,28 @@ public class MatchField {
 		}
 	}
 
+	/**
+	 * Get an enemy by uuid.
+	 * @param enemyUUID
+	 * @return enemy
+	 */
 	private Optional<AEnemy> getEnemy(UUID enemyUUID) {
 		return enemies.stream().filter(enemy -> enemy.getUuid() == enemyUUID).findAny();
 	}
 
+	/**
+	 * Get the uuids of all enemies as list.
+	 * @return uuids as list
+	 */
 	private List<UUID> getEnemyUUIDs() {
 		return enemies.stream().map(AEnemy::getUuid).collect(Collectors.toList());
 	}
 
+	/**
+	 * Remove an enemy by uuid.
+	 * @param enemyUUID
+	 * @return true if enemy got removed
+	 */
 	private boolean removeEnemy(UUID enemyUUID) {
 		Optional<AEnemy> enemy = getEnemy(enemyUUID);
 		if (enemy.isPresent()) {

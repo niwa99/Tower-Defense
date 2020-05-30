@@ -22,6 +22,12 @@ import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerBoombastic extends ATower {
 
+    /**
+     * Constructor
+     * @param field
+     * @param level
+     * @param gameActivity
+     */
     public TowerBoombastic(Field field, int level, GameActivity gameActivity) {
         super(UUID.randomUUID(), TowerType.BOOMBASTIC,
                 level, getTowerBoombasticCostsByLevel(level),
@@ -40,6 +46,21 @@ public class TowerBoombastic extends ATower {
         headImage.setX(getPositionX());
         headImage.setY(getPositionY());
         setHeadImage(headImage);
+    }
+
+    /**
+     * Constructor (TEST PURPOSE ONLY!)
+     * @param field
+     * @param level
+     * @param image
+     * @param gameActivity
+     */
+    public TowerBoombastic(Field field, int level, ImageView image, GameActivity gameActivity) {
+        super(UUID.randomUUID(), TowerType.BOOMBASTIC,
+                level, getTowerBoombasticCostsByLevel(level),
+                getTowerBoombasticDamageByLevel(level), getTowerBoombasticRangeByLevel(level), getTowerBoombasticFirerateByLevel(level), field, gameActivity);
+        setBaseImage(image);
+        setHeadImage(image);
     }
 
     @Override
@@ -72,6 +93,11 @@ public class TowerBoombastic extends ATower {
         return getTowerBoombasticFirerateByLevel(level);
     }
 
+    /**
+     * Get the costs of this tower by level.
+     * @param level
+     * @return costs
+     */
     public static int getTowerBoombasticCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_COSTS;
@@ -79,6 +105,11 @@ public class TowerBoombastic extends ATower {
         }
     }
 
+    /**
+     * Get the damage of this tower by level.
+     * @param level
+     * @return damage
+     */
     private static int getTowerBoombasticDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_DAMAGE;
@@ -86,6 +117,11 @@ public class TowerBoombastic extends ATower {
         }
     }
 
+    /**
+     * Get the range in px of this tower by level.
+     * @param level
+     * @return range
+     */
     private static int getTowerBoombasticRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS;
@@ -93,6 +129,11 @@ public class TowerBoombastic extends ATower {
         }
     }
 
+    /**
+     * Get the firerate of this tower by level.
+     * @param level
+     * @return firerate
+     */
     private static int getTowerBoombasticFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;

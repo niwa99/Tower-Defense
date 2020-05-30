@@ -13,8 +13,15 @@ import static de.dhbw.util.Constants.*;
 import de.dhbw.map.structure.Field;
 
 public class TowerArtillery extends ATower {
+
 	private ImageView artilleryTowerImage;
 
+	/**
+	 * Constructor
+	 * @param field
+	 * @param level
+	 * @param gameActivity
+	 */
 	public TowerArtillery(Field field, int level, GameActivity gameActivity) {
 		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryCostsByLevel(level),
 				getTowerArtilleryDamageByLevel(level), getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity);
@@ -25,10 +32,15 @@ public class TowerArtillery extends ATower {
 		artilleryTowerImage.setX(getPositionX());
 		artilleryTowerImage.setY(getPositionY());
 		setBaseImage(artilleryTowerImage);
-
-
 	}
 
+	/**
+	 * Constructor (TEST PURPOSE ONLY!)
+	 * @param field
+	 * @param level
+	 * @param artilleryTowerImage
+	 * @param gameActivity
+	 */
 	public TowerArtillery(Field field, int level, ImageView artilleryTowerImage, GameActivity gameActivity) {
 		super(UUID.randomUUID(), TowerType.ARTILLERY, level, getTowerArtilleryCostsByLevel(level),
 				getTowerArtilleryDamageByLevel(level), getTowerArtilleryRangeByLevel(level), getTowerArtilleryFirerateByLevel(level), field, gameActivity);
@@ -65,6 +77,11 @@ public class TowerArtillery extends ATower {
 		return getTowerArtilleryFirerateByLevel(level);
 	}
 
+	/**
+	 * Get the costs of this tower by level.
+	 * @param level
+	 * @return costs
+	 */
 	public static int getTowerArtilleryCostsByLevel(int level) {
 		switch (level) {
 			case 1: return TOWER_ARTILLERY_LEVEL_1_COSTS;
@@ -73,6 +90,11 @@ public class TowerArtillery extends ATower {
 		}
 	}
 
+	/**
+	 * Get the damage of this tower by level.
+	 * @param level
+	 * @return damage
+	 */
 	private static int getTowerArtilleryDamageByLevel(int level) {
 		switch (level) {
 			case 1: return TOWER_ARTILLERY_LEVEL_1_DAMAGE;
@@ -81,6 +103,11 @@ public class TowerArtillery extends ATower {
 		}
 	}
 
+	/**
+	 * Get the range in px of this tower by level.
+	 * @param level
+	 * @return range
+	 */
 	private static int getTowerArtilleryRangeByLevel(int level) {
 		switch (level) {
 			case 1: return TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS;
@@ -89,6 +116,11 @@ public class TowerArtillery extends ATower {
 		}
 	}
 
+	/**
+	 * Get the firerate of this tower by level.
+	 * @param level
+	 * @return firerate
+	 */
 	private static int getTowerArtilleryFirerateByLevel(int level) {
 		switch (level) {
 			case 1: return TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS;

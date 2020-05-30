@@ -11,8 +11,10 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
+import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
+import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -33,7 +35,7 @@ public class EnemyTest {
         AEnemy enemy = new Tank("tank1",1, imageDummy, dummyGameActivity);
 
         //act
-        enemy.reduceHealthPoints(2);
+        enemy.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS-1);
 
         //assert
         assertTrue(enemy.isAlive());
@@ -45,7 +47,7 @@ public class EnemyTest {
         AEnemy enemy = new Tank("tank1", 1, imageDummy, dummyGameActivity);
 
         //act
-        enemy.reduceHealthPoints(10);
+        enemy.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS+1);
 
         //assert
         assertFalse(enemy.isAlive());

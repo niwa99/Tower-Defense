@@ -43,6 +43,7 @@ import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 import de.dhbw.util.PreferenceManager;
 
+import static de.dhbw.util.Constants.FIELD_SIZE;
 import static de.dhbw.util.Constants.STATUS_OFF;
 import static de.dhbw.util.Constants.STATUS_ON;
 
@@ -396,35 +397,14 @@ public class Game {
 
 
     public void updateStatisticsIfHighScore() {
-        if (match instanceof EasyMatch) {
-            if (currentWaveNumber >= Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.EASY_MAX_WAVE))) {
-                if (numberOfEnemiesKilled > Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.EASY_ENEMIES_KILLED))) {
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.EASY_MAX_WAVE, String.valueOf(currentWaveNumber));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.EASY_ENEMIES_KILLED, String.valueOf(numberOfEnemiesKilled));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.EASY_BUILT_TOWERS, String.valueOf(numberOfBuiltTowers));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.EASY_UPGRADES, String.valueOf(numberOfUpgrades));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.EASY_MONEY_SPENT, String.valueOf(moneySpent));
-                }
-            }
-        } else if (match instanceof MediumMatch) {
-            if (currentWaveNumber >= Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.MEDIUM_MAX_WAVE))) {
-                if (numberOfEnemiesKilled > Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.MEDIUM_ENEMIES_KILLED))) {
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.MEDIUM_MAX_WAVE, String.valueOf(currentWaveNumber));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.MEDIUM_ENEMIES_KILLED, String.valueOf(numberOfEnemiesKilled));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.MEDIUM_BUILT_TOWERS, String.valueOf(numberOfBuiltTowers));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.MEDIUM_UPGRADES, String.valueOf(numberOfUpgrades));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.MEDIUM_MONEY_SPENT, String.valueOf(moneySpent));
-                }
-            }
-        } else if (match instanceof HardMatch) {
-            if (currentWaveNumber >= Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.HARD_MAX_WAVE))) {
-                if (numberOfEnemiesKilled > Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.HARD_ENEMIES_KILLED))) {
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.HARD_MAX_WAVE, String.valueOf(currentWaveNumber));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.HARD_ENEMIES_KILLED, String.valueOf(numberOfEnemiesKilled));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.HARD_BUILT_TOWERS, String.valueOf(numberOfBuiltTowers));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.HARD_UPGRADES, String.valueOf(numberOfUpgrades));
-                    PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.HARD_MONEY_SPENT, String.valueOf(moneySpent));
-                }
+	    Difficulty matchDifficulty = match.getDifficulty();
+        if (currentWaveNumber >= Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.MAX_WAVE)))) {
+            if (numberOfEnemiesKilled > Integer.parseInt(PreferenceManager.getStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.ENEMIES_KILLED)))) {
+                PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.MAX_WAVE), String.valueOf(currentWaveNumber));
+                PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.ENEMIES_KILLED), String.valueOf(numberOfEnemiesKilled));
+                PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.BUILT_TOWERS), String.valueOf(numberOfBuiltTowers));
+                PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.UPGRADES), String.valueOf(numberOfUpgrades));
+                PreferenceManager.setStatisticsValue(PreferenceManager.Statistics.getStatisticsStringByDifficulty(matchDifficulty, PreferenceManager.Statistics.MONEY_SPENT), String.valueOf(moneySpent));
             }
         }
     }
@@ -506,7 +486,7 @@ public class Game {
             }
         };
 
-        LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(MapStructure.getSizeField(), MapStructure.getSizeField());
+        LinearLayout.LayoutParams buttonSizeParams = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
         mapStructure.getFields().stream().forEach(field -> {
             Button fieldButton = new Button(gameActivity);
             fieldButton.setX(field.getSpawnPoint().getX());

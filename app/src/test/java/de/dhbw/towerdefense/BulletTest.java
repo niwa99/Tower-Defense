@@ -7,16 +7,27 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.bullet.Bomb;
 import de.dhbw.map.objects.bullet.Projectile;
+import de.dhbw.map.objects.bullet.SnowFlake;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
+import de.dhbw.map.objects.tower.TowerBoombastic;
+import de.dhbw.map.objects.tower.TowerFreezer;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 
+import static de.dhbw.util.Constants.FIELD_SIZE;
+import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -27,12 +38,11 @@ public class BulletTest {
     private GameActivity dummyGameActivity = mock(GameActivity.class);
 
     @Test
-    public void shootBulletFromSpawnPositionToTargetPosition() throws InterruptedException {
+    public void shootProjectileFromSpawnPositionToEnemy_SHOULD_decreaseEnemyHealthpoints() throws InterruptedException {
         //arrange
-        final int field_size = 150;
-        ATower tower = new TowerArtillery(new Field(field_size, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        ATower tower = new TowerArtillery(new Field(FIELD_SIZE, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
-        enemy.moveTo(field_size * 5, field_size * 1);
+        enemy.moveTo(FIELD_SIZE * 5, FIELD_SIZE * 1);
         enemy.setHealthpoints(1);
 
         //act
@@ -42,6 +52,50 @@ public class BulletTest {
 
         //assert
         assertNotEquals(enemy.getHealthPoints(), 1);
+    }
+
+    @Test
+    public void shootBombFromSpawnPositionToEnemies_SHOULD_hitEnemiesInRange() throws InterruptedException {
+        //arrange
+        ATower tower = new TowerBoombastic(new Field(FIELD_SIZE, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        AEnemy enemyTarget = new Tank("tank1", 1, dummyImage, dummyGameActivity);
+        AEnemy enemySideshot = new Tank("tank2", 1, dummyImage, dummyGameActivity);
+        AEnemy enemySideshot2 = new Tank("tank3", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyNotInRange = new Tank("tank4", 1, dummyImage, dummyGameActivity);
+
+        enemyTarget.moveTo(375, 300);
+        enemySideshot.moveTo(280, 300);
+        enemySideshot2.moveTo(450, 300);
+        enemyNotInRange.moveTo(500, 300);
+
+        //act
+        new Bomb(tower.getPosition(), enemyTarget, Arrays.asList(enemySideshot, enemySideshot2, enemyNotInRange), tower.getDamage(), dummyImage, dummyGameActivity);
+
+        Thread.sleep(2000);
+
+        //assert
+        assertNotEquals(enemyTarget.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+        assertNotEquals(enemySideshot.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+        assertNotEquals(enemySideshot2.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+        assertEquals(enemyNotInRange.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+    }
+
+    @Test
+    public void shootSnowFlakeFromSpawnPositionToEnemy_SHOULD_decreaseEnemySpeed() throws InterruptedException {
+        //arrange
+        TowerFreezer tower = new TowerFreezer(new Field(FIELD_SIZE, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1", 1, dummyImage, dummyGameActivity);
+
+        enemy.moveTo(375, 300);
+
+        //act
+        new SnowFlake(tower.getPosition(), enemy, tower.getDamage(), tower.getSlowness(), dummyImage, dummyGameActivity);
+        //NullPointerException will come up because of not intantiated game
+
+        Thread.sleep(2000);
+
+        //assert
+        assertTrue(enemy.getSlowness() > 0);
     }
 
 }

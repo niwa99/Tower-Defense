@@ -24,6 +24,15 @@ public abstract class ABullet {
     protected GameActivity gameActivity;
     private int bulletSpeed = BULLET_SPEED;
 
+    /**
+     * Constructor
+     * @param spawnPosition
+     * @param targetedEnemy
+     * @param damage
+     * @param bulletImageID
+     * @param gameActivity
+     * @param offset
+     */
     public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         this.gameActivity = gameActivity;
         bulletImage = new ImageView(gameActivity);
@@ -43,7 +52,12 @@ public abstract class ABullet {
     }
 
     /**
-     * Bullet Constructor for Test-Purpose only!
+     * Constructor (TEST PURPOSE ONLY!)
+     * @param spawnPosition
+     * @param targetedEnemy
+     * @param damage
+     * @param image
+     * @param gameActivity
      */
     public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, ImageView image, GameActivity gameActivity) {
         this.gameActivity = gameActivity;
@@ -61,12 +75,19 @@ public abstract class ABullet {
         startLogicalShooting(distanceToEnemy);
     }
 
+    /**
+     * Start the animation- and shooting-mechanism.
+     */
     public void start() {
         int distanceToEnemy = MatchField.getDistance(x, y, targetPos.getX(), targetPos.getY());
         startAnimation(distanceToEnemy);
         startLogicalShooting(distanceToEnemy);
     }
 
+    /**
+     * Performs the visual animation of the bullet.
+     * @param distanceToEnemy
+     */
     protected void startAnimation(int distanceToEnemy) {
         gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
@@ -79,6 +100,10 @@ public abstract class ABullet {
         });
     }
 
+    /**
+     * Performs the logical stuff of shooting the bullet.
+     * @param distanceToEnemy
+     */
     protected void startLogicalShooting(int distanceToEnemy) {
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -93,18 +118,35 @@ public abstract class ABullet {
         }, bulletSpeed * distanceToEnemy);
     }
 
+    /**
+     * Set the bullet speed.
+     * @param speed
+     */
     public void setBulletSpeed(int speed) {
         this.bulletSpeed = speed;
     }
 
+    /**
+     *
+     * @return bullet speed
+     */
     public int getBulletSpeed() {
         return this.bulletSpeed;
     }
 
+    /**
+     * Hit the targetEnemy with specified damage.
+     */
     protected void hitEnemy() {
         targetEnemy.hit(damage);
     }
 
+    /**
+     * Applies an offset for the start location of the bullet.
+     * For example, if a tower has got a pipe, the bullet should not start in the middle of the field, it should start 50px apart.
+     * This is the value to pass on to this method.
+     * @param offset
+     */
     void applyBulletOffset(float offset) {
         float vector_y = (float) Math.cos(Math.toRadians(bulletImage.getRotation() - 90));
         float vector_x = (float) -Math.sin(Math.toRadians(bulletImage.getRotation() - 90));
@@ -112,6 +154,10 @@ public abstract class ABullet {
         bulletImage.setY(bulletImage.getY() + (vector_y * offset));
     }
 
+    /**
+     *
+     * @return bullet rotation in degrees
+     */
     double getBulletRotation() {
         double a = this.x - targetPos.getX();
         double b = this.y - targetPos.getY();
@@ -119,6 +165,11 @@ public abstract class ABullet {
         return rotation + 180;
     }
 
+    /**
+     * Set the midpoints of the targetPosition and the spawnPosition.
+     * @param targetPos
+     * @param spawnPosition
+     */
     protected void setMidpointOfPositions(Position targetPos, Position spawnPosition) {
         int mid_x = targetPos.getX() + (FIELD_SIZE/2) - (BULLET_SIZE_PARAMS.height/2);
         int mid_y = targetPos.getY() + (FIELD_SIZE/2) - (BULLET_SIZE_PARAMS.height/2);

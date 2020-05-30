@@ -98,7 +98,7 @@ public class Constants {
 
     //TowerAssaultLaserParameters
     public static final int TOWER_LASER_LEVEL_1_COSTS = 100;
-    public static final int TOWER_LASER_LEVEL_1_DAMAGE = 1;
+    public static final int TOWER_LASER_LEVEL_1_DAMAGE = 4;
     public static final int TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS = 600;
     public static final int TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS = 5;
     public static final LinearLayout.LayoutParams TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);

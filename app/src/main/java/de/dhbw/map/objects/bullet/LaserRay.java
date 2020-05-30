@@ -68,8 +68,8 @@ public class LaserRay extends ABullet {
                     isAlive=false;
                     cancel();
                 }else{
-                    targetEnemy.hit(1);
-                    allEnemies.stream().filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.hit(1));
+                    targetEnemy.hit(damage/4);
+                    allEnemies.stream().filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.hit(damage/4));
                     sparkle();
                     //laserView.reDraw(canvas, Color.RED);
                     //laserView.invalidate();

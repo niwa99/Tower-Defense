@@ -184,7 +184,7 @@ public class Game {
                 @Override
                 public void run() {
                     Optional<AWave> wave = match.next();
-                    if(wave.isPresent()){
+                    if (wave.isPresent()) {
                         startWave(wave.get(), match.getWaveTime());
                     }
                 }

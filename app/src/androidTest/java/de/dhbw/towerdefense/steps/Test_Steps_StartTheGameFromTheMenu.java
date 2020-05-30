@@ -25,18 +25,20 @@ public class Test_Steps_StartTheGameFromTheMenu extends GreenCoffeeSteps {
 
     @When("I press the start game button")
     public void i_press_the_start_game_button() {
-        onViewWithId(R.id.spinner_choose_difficulties).checkIfIsDisplayed();
-        onViewWithId(R.id.spinner_choose_difficulties).click();
+        onViewWithId(R.id.playButtonMain).checkIfIsDisplayed();
+        onViewWithId(R.id.playButtonMain).click();
     }
 
     @Then("I am on the choose difficulty dropdown")
     public void i_am_on_the_choose_difficulty_dropdown() {
-        onViewWithId(R.id.spinner_choose_difficulties).checkIfContains("easy");
+        //onViewWithId(R.id.spinner_choose_difficulties).checkIfContains("easy");
+        //n/a anymore
     }
 
     @Then("I choose easy by clicking on it")
     public void i_choose_easy_by_clicking_on_it() {
-        onData(allOf(is(instanceOf(String.class)), is("easy"))).perform(click());
+        //onData(allOf(is(instanceOf(String.class)), is("easy"))).perform(click());
+        //n/a anymore
     }
 
     @Then("I am on the game page")

@@ -47,7 +47,7 @@ deploy:
   overwrite: true
   target_commitish: $TRAVIS_COMMIT
   on:
-    tags: true
+    tags: false
     branch: master
   after_deploy:
     - rm -rf $TRAVIS_BUILD_DIR/app/build/outputs

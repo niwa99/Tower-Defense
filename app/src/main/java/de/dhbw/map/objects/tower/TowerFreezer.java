@@ -20,6 +20,16 @@ import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS;
 import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_SLOWNESS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_2_COSTS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_2_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_2_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_2_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_2_SLOWNESS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_3_COSTS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_3_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_3_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_3_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_3_SLOWNESS;
 import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerFreezer extends ATower {
@@ -118,7 +128,8 @@ public class TowerFreezer extends ATower {
     public static int getFreezerCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_COSTS;
-            default: return TOWER_FREEZER_LEVEL_1_COSTS;
+            case 2: return TOWER_FREEZER_LEVEL_2_COSTS;
+            default: return TOWER_FREEZER_LEVEL_3_COSTS;
         }
     }
 
@@ -130,7 +141,8 @@ public class TowerFreezer extends ATower {
     private static int getFreezerSlownessByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_SLOWNESS;
-            default: return TOWER_FREEZER_LEVEL_1_SLOWNESS;
+            case 2: return TOWER_FREEZER_LEVEL_2_SLOWNESS;
+            default: return TOWER_FREEZER_LEVEL_3_SLOWNESS;
         }
     }
 
@@ -142,7 +154,8 @@ public class TowerFreezer extends ATower {
     private static int getFreezerDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_DAMAGE;
-            default: return TOWER_FREEZER_LEVEL_1_DAMAGE;
+            case 2: return TOWER_FREEZER_LEVEL_2_DAMAGE;
+            default: return TOWER_FREEZER_LEVEL_3_DAMAGE;
         }
     }
 
@@ -154,7 +167,8 @@ public class TowerFreezer extends ATower {
     private static int getFreezerRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS;
-            default: return TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS;
+            case 2: return TOWER_FREEZER_LEVEL_2_RANGE_IN_PIXELS;
+            default: return TOWER_FREEZER_LEVEL_3_RANGE_IN_PIXELS;
         }
     }
 
@@ -166,7 +180,8 @@ public class TowerFreezer extends ATower {
     private static int getFreezerFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS;
-            default: return TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS;
+            case 2: return TOWER_FREEZER_LEVEL_2_FIRERATE_IN_SECONDS;
+            default: return TOWER_FREEZER_LEVEL_3_FIRERATE_IN_SECONDS;
         }
     }
 }

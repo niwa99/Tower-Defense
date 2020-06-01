@@ -2,7 +2,6 @@ package de.dhbw.map.objects.tower;
 
 import android.widget.ImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +16,14 @@ import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_COSTS;
 import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_FIRERATE_IN_SECONDS;
 import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_2_COSTS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_2_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_2_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_2_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_3_COSTS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_3_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_3_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_3_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_PLASMARIZER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerPlasmarizer extends ATower {
@@ -80,7 +87,8 @@ public class TowerPlasmarizer extends ATower {
     private static int getPlasmarizerCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_COSTS;
-            default: return TOWER_PLASMARIZER_LEVEL_1_COSTS;
+            case 2: return TOWER_PLASMARIZER_LEVEL_2_COSTS;
+            default: return TOWER_PLASMARIZER_LEVEL_3_COSTS;
         }
     }
 
@@ -92,7 +100,8 @@ public class TowerPlasmarizer extends ATower {
     private static int getPlasmarizerDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_DAMAGE;
-            default: return TOWER_PLASMARIZER_LEVEL_1_DAMAGE;
+            case 2: return TOWER_PLASMARIZER_LEVEL_2_DAMAGE;
+            default: return TOWER_PLASMARIZER_LEVEL_3_DAMAGE;
         }
     }
 
@@ -104,7 +113,8 @@ public class TowerPlasmarizer extends ATower {
     private static int getPlasmarizerRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS;
-            default: return TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS;
+            case 2: return TOWER_PLASMARIZER_LEVEL_2_RANGE_IN_PIXELS;
+            default: return TOWER_PLASMARIZER_LEVEL_3_RANGE_IN_PIXELS;
         }
     }
 
@@ -116,7 +126,8 @@ public class TowerPlasmarizer extends ATower {
     private static int getPlasmarizerFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_PLASMARIZER_LEVEL_1_FIRERATE_IN_SECONDS;
-            default: return TOWER_PLASMARIZER_LEVEL_1_FIRERATE_IN_SECONDS;
+            case 2: return TOWER_PLASMARIZER_LEVEL_2_FIRERATE_IN_SECONDS;
+            default: return TOWER_PLASMARIZER_LEVEL_3_FIRERATE_IN_SECONDS;
         }
     }
 }

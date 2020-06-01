@@ -6,26 +6,26 @@ import java.util.List;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
-import de.dhbw.map.objects.bullet.ABullet;
-import de.dhbw.map.objects.bullet.Bomb;
+
 import de.dhbw.map.objects.bullet.LaserRay;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.structure.Field;
-import de.dhbw.util.Constants;
-import de.dhbw.util.Position;
 
-import static de.dhbw.util.Constants.DRAWABLE_BULLET_BOOMBASTIC;
-import static de.dhbw.util.Constants.DRAWABLE_TOWER_ARTILLERY;
-import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER_BASE;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_ASSAULTLASER_HEAD;
-import static de.dhbw.util.Constants.DRAWABLE_TOWER_BOOMBASTIC_HEAD;
 import static de.dhbw.util.Constants.FIELD_SIZE;
-import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_COSTS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_2_COSTS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_2_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_2_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_2_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_3_COSTS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_3_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_3_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_3_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS;
 
 public class TowerLaser extends ATower {
@@ -93,7 +93,8 @@ public class TowerLaser extends ATower {
     private static int getLaserCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_COSTS;
-            default: return TOWER_LASER_LEVEL_1_COSTS;
+            case 2: return TOWER_LASER_LEVEL_2_COSTS;
+            default: return TOWER_LASER_LEVEL_3_COSTS;
         }
     }
 
@@ -110,7 +111,8 @@ public class TowerLaser extends ATower {
     private static int getLaserDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_DAMAGE;
-            default: return TOWER_LASER_LEVEL_1_DAMAGE;
+            case 2: return TOWER_LASER_LEVEL_2_DAMAGE;
+            default: return TOWER_LASER_LEVEL_3_DAMAGE;
         }
     }
 
@@ -127,7 +129,8 @@ public class TowerLaser extends ATower {
     private static int getLaserRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
-            default: return TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS;
+            case 2: return TOWER_LASER_LEVEL_2_RANGE_IN_PIXELS;
+            default: return TOWER_LASER_LEVEL_3_RANGE_IN_PIXELS;
         }
     }
 
@@ -144,7 +147,8 @@ public class TowerLaser extends ATower {
     private static int getLaserFireRateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;
-            default: return TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS;
+            case 2: return TOWER_LASER_LEVEL_2_FIRERATE_IN_SECONDS;
+            default: return TOWER_LASER_LEVEL_3_FIRERATE_IN_SECONDS;
         }
     }
 }

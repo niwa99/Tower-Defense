@@ -19,6 +19,14 @@ import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_DAMAGE;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS;
 import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_2_COSTS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_2_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_2_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_2_RANGE_IN_PIXELS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_3_COSTS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_3_DAMAGE;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_3_FIRERATE_IN_SECONDS;
+import static de.dhbw.util.Constants.TOWER_BOOMBASTIC_LEVEL_3_RANGE_IN_PIXELS;
 
 public class TowerBoombastic extends ATower {
 
@@ -101,7 +109,8 @@ public class TowerBoombastic extends ATower {
     public static int getTowerBoombasticCostsByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_COSTS;
-            default: return TOWER_BOOMBASTIC_LEVEL_1_COSTS;
+            case 2: return TOWER_BOOMBASTIC_LEVEL_2_COSTS;
+            default: return TOWER_BOOMBASTIC_LEVEL_3_COSTS;
         }
     }
 
@@ -113,7 +122,8 @@ public class TowerBoombastic extends ATower {
     private static int getTowerBoombasticDamageByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_DAMAGE;
-            default: return TOWER_BOOMBASTIC_LEVEL_1_DAMAGE;
+            case 2: return TOWER_BOOMBASTIC_LEVEL_2_DAMAGE;
+            default: return TOWER_BOOMBASTIC_LEVEL_3_DAMAGE;
         }
     }
 
@@ -125,7 +135,8 @@ public class TowerBoombastic extends ATower {
     private static int getTowerBoombasticRangeByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS;
-            default: return TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS;
+            case 2: return TOWER_BOOMBASTIC_LEVEL_2_RANGE_IN_PIXELS;
+            default: return TOWER_BOOMBASTIC_LEVEL_3_RANGE_IN_PIXELS;
         }
     }
 
@@ -137,7 +148,8 @@ public class TowerBoombastic extends ATower {
     private static int getTowerBoombasticFirerateByLevel(int level) {
         switch (level) {
             case 1: return TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;
-            default: return TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS;
+            case 2: return TOWER_BOOMBASTIC_LEVEL_2_FIRERATE_IN_SECONDS;
+            default: return TOWER_BOOMBASTIC_LEVEL_3_FIRERATE_IN_SECONDS;
         }
     }
 }

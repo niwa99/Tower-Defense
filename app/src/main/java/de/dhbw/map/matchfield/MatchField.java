@@ -55,6 +55,9 @@ public class MatchField {
 			if(tower.getLevel()>2) {
 				gameActivity.getMapFrameLayout().addView(tower.getStarlvlThree());
 			}
+			if(tower.getLevel()>3) {
+				gameActivity.getMapFrameLayout().addView(tower.getStarlvlFour());
+			}
 		});
 		towers.add(tower);
 		startTowerFire(tower);

@@ -35,6 +35,7 @@ public abstract class ATower extends ATimerUsage {
 	protected Optional<ImageView> headImage = Optional.empty();
 	private ImageView starlvlTwo;
 	private ImageView starlvlThree;
+	private ImageView starlvlFour;
 	private int x;
 	private int y;
 	private Field field;
@@ -68,6 +69,12 @@ public abstract class ATower extends ATimerUsage {
 		this.gameActivity = gameActivity;
 
 		switch (level) {
+			case 4:
+				starlvlFour = new ImageView(gameActivity);
+				starlvlFour.setImageResource(R.drawable.star);
+				starlvlFour.setX(field.getSpawnPoint().getX() + 100);
+				starlvlFour.setY(field.getSpawnPoint().getY());
+				starlvlFour.setLayoutParams(new LinearLayout.LayoutParams(50, 50));
 			case 3:
 				starlvlThree = new ImageView(gameActivity);
 				starlvlThree.setImageResource(R.drawable.star);
@@ -305,6 +312,14 @@ public abstract class ATower extends ATimerUsage {
 	 */
 	public ImageView getStarlvlThree() {
 		return starlvlThree;
+	}
+
+	/**
+	 *
+	 * @return image of level-4-star
+	 */
+	public ImageView getStarlvlFour() {
+		return starlvlFour;
 	}
 
 	@Override

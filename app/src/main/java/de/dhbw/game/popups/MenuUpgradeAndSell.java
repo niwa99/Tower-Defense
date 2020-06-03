@@ -29,7 +29,7 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     private int upgradeRange;
     private int upgradeFireRate;
     private int towerDrawable;
-    private int maxLevel = 3;
+    private int maxLevel = 4;
     public static Game game;
 
     @Override
@@ -117,7 +117,7 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
         towerUpgrFireRate.setText(String.valueOf(upgradeFireRate));
         upgrade.setText(String.valueOf(upgradeCost));
 
-        if (level == 3) {
+        if (level == maxLevel) {
             Button upgradeButton = layout.findViewById(R.id.upgrade);
             upgradeButton.setText("Max Reached");
             runOnUiThread(() -> upgradeButton.setBackgroundColor(getColor(R.color.red)));

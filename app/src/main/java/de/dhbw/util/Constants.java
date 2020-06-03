@@ -59,38 +59,20 @@ public class Constants {
 
     //TowerArtillery Parameters
     public static final int TOWER_ARTILLERY_LEVEL_1_COSTS = 10;
-    public static final int TOWER_ARTILLERY_LEVEL_1_DAMAGE = 1;
+    public static final int TOWER_ARTILLERY_LEVEL_1_DAMAGE = 3;
     public static final int TOWER_ARTILLERY_LEVEL_1_RANGE_IN_PIXELS = 400;
     public static final int TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS = 3;
 
     public static final int TOWER_ARTILLERY_LEVEL_2_COSTS = 25;
-    public static final int TOWER_ARTILLERY_LEVEL_2_DAMAGE = 2;
+    public static final int TOWER_ARTILLERY_LEVEL_2_DAMAGE = 4;
     public static final int TOWER_ARTILLERY_LEVEL_2_RANGE_IN_PIXELS = 400;
     public static final int TOWER_ARTILLERY_LEVEL_2_FIRERATE_IN_SECONDS = 3;
 
     public static final int TOWER_ARTILLERY_LEVEL_3_COSTS = 50;
-    public static final int TOWER_ARTILLERY_LEVEL_3_DAMAGE = 3;
+    public static final int TOWER_ARTILLERY_LEVEL_3_DAMAGE = 4;
     public static final int TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS = 4000;
     public static final int TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS = 2;
     public static final LinearLayout.LayoutParams TOWER_ARTILLERY_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
-
-
-    //TowerBoombastic Parameters
-    public static final int TOWER_BOOMBASTIC_LEVEL_1_COSTS = 50;
-    public static final int TOWER_BOOMBASTIC_LEVEL_1_DAMAGE = 4;
-    public static final int TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS = 350;
-    public static final int TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS = 5;
-
-    public static final int TOWER_BOOMBASTIC_LEVEL_2_COSTS = 75;
-    public static final int TOWER_BOOMBASTIC_LEVEL_2_DAMAGE = 5;
-    public static final int TOWER_BOOMBASTIC_LEVEL_2_RANGE_IN_PIXELS = 400;
-    public static final int TOWER_BOOMBASTIC_LEVEL_2_FIRERATE_IN_SECONDS = 5;
-
-    public static final int TOWER_BOOMBASTIC_LEVEL_3_COSTS = 90;
-    public static final int TOWER_BOOMBASTIC_LEVEL_3_DAMAGE = 5;
-    public static final int TOWER_BOOMBASTIC_LEVEL_3_RANGE_IN_PIXELS = 400;
-    public static final int TOWER_BOOMBASTIC_LEVEL_3_FIRERATE_IN_SECONDS = 4;
-    public static final LinearLayout.LayoutParams TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 
     //TowerFreezer Parameters
@@ -112,6 +94,24 @@ public class Constants {
     public static final int TOWER_FREEZER_LEVEL_3_FIRERATE_IN_SECONDS = 4;
     public static final int TOWER_FREEZER_LEVEL_3_SLOWNESS = 80;
     public static final LinearLayout.LayoutParams TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
+
+
+    //TowerBoombastic Parameters
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_COSTS = 50;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_DAMAGE = 5;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS = 350;
+    public static final int TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS = 5;
+
+    public static final int TOWER_BOOMBASTIC_LEVEL_2_COSTS = 75;
+    public static final int TOWER_BOOMBASTIC_LEVEL_2_DAMAGE = 6;
+    public static final int TOWER_BOOMBASTIC_LEVEL_2_RANGE_IN_PIXELS = 400;
+    public static final int TOWER_BOOMBASTIC_LEVEL_2_FIRERATE_IN_SECONDS = 5;
+
+    public static final int TOWER_BOOMBASTIC_LEVEL_3_COSTS = 90;
+    public static final int TOWER_BOOMBASTIC_LEVEL_3_DAMAGE = 6;
+    public static final int TOWER_BOOMBASTIC_LEVEL_3_RANGE_IN_PIXELS = 400;
+    public static final int TOWER_BOOMBASTIC_LEVEL_3_FIRERATE_IN_SECONDS = 4;
+    public static final LinearLayout.LayoutParams TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 
     //TowerPlasmarizer Parameters

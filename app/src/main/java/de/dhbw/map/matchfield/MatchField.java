@@ -232,9 +232,7 @@ public class MatchField {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
-		switch (enemy.getType()) {
-			case TANK: gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getImage()));
-		}
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getImage()));
 	}
 
 	/**

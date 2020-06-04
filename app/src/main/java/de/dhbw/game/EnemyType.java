@@ -2,7 +2,7 @@ package de.dhbw.game;
 
 public enum EnemyType {
     TANK("tank"),
-    FREEZER("freezer");
+    CAR("car");
 
     private final String label;
 

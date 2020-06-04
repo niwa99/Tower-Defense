@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.enemy.Tank;
 
 public class Wave extends AWave {
@@ -28,7 +29,10 @@ public class Wave extends AWave {
                         addEnemy(new Tank(wave.getEnemyType().getLabel(), wave.getLevel(), gameActivity));
                     }
                     break;
-                case FREEZER:
+                case CAR:
+                    for (int i = 0; i < wave.getAmount(); i++) {
+                        addEnemy(new Car(wave.getEnemyType().getLabel(), wave.getLevel(), gameActivity));
+                    }
                     break;
             }
         });

@@ -15,6 +15,7 @@ import java.lang.Math;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.ATimerUsage;
+import de.dhbw.game.EnemyType;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Tank;
@@ -99,7 +100,11 @@ public abstract class ATower extends ATimerUsage {
 		List<AEnemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
 		AEnemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
 		if (enemy != null) {
-			if (enemy instanceof Tank) {
+			if (enemy.getType() == EnemyType.TANK) {
+				targetedEnemy = enemy;
+				return true;
+			}
+			if (enemy.getType() == EnemyType.CAR) {
 				targetedEnemy = enemy;
 				return true;
 			}

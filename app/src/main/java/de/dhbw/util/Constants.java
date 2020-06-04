@@ -198,6 +198,24 @@ public class Constants {
 
     public static final LinearLayout.LayoutParams TANK_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
+    //Car Parameters
+    public static final int CAR_LEVEL_1_HEALTHPOINTS = 10;
+    public static final int CAR_LEVEL_1_SPEED = 985; //From 0 to 1000
+    public static final int CAR_LEVEL_1_VALUE = 5;
+    public static final int CAR_LEVEL_1_LIFE_POINT_COSTS = 5;
+
+    public static final int CAR_LEVEL_2_HEALTHPOINTS = 15;
+    public static final int CAR_LEVEL_2_SPEED = 990;
+    public static final int CAR_LEVEL_2_VALUE = 10;
+    public static final int CAR_LEVEL_2_LIFE_POINT_COSTS = 5;
+
+    public static final int CAR_LEVEL_3_HEALTHPOINTS = 25;
+    public static final int CAR_LEVEL_3_SPEED = 995;
+    public static final int CAR_LEVEL_3_VALUE = 20;
+    public static final int CAR_LEVEL_3_LIFE_POINT_COSTS = 5;
+
+    public static final LinearLayout.LayoutParams CAR_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
+
 
     //Bullet Parameters
     public static final int BULLET_SPEED = 2; //if the number is low, the bullet will be quick

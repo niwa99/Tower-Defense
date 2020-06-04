@@ -13,6 +13,7 @@ import de.dhbw.R;
 public class MusicPlayer extends ATimerUsage{
     private MediaPlayer mediaPlayer;
     private Timer timer;
+    private TimerTask timerTask;
     private boolean on;
     private boolean isStarted=false;
     private final int loopTime = 180000;
@@ -28,7 +29,7 @@ public class MusicPlayer extends ATimerUsage{
             timer.cancel();
         }
         timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timerTask = new TimerTask() {
             @Override
             public void run() {
                 Random rand = new Random();
@@ -56,7 +57,8 @@ public class MusicPlayer extends ATimerUsage{
                 lastTimeActionMillis = System.currentTimeMillis();
                 setDelay(0);
             }
-        }, getDelay(),loopTime);
+        };
+        timer.scheduleAtFixedRate(timerTask, getDelay(), loopTime);
     }
 
     public void toggle(boolean on, Activity activity) {
@@ -71,6 +73,7 @@ public class MusicPlayer extends ATimerUsage{
                 mediaPlayer.pause();
             }
             timer.cancel();
+            timerTask.cancel();
             calculateDelay(System.currentTimeMillis());
         }
     }
@@ -81,6 +84,8 @@ public class MusicPlayer extends ATimerUsage{
 
     public void stop(){
         mediaPlayer.stop();
+        timer.cancel();
+        timerTask.cancel();
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.R;
 import de.dhbw.game.match.AMatch;
@@ -519,6 +520,7 @@ public class Game {
         image.setX(field.getSpawnPoint().getX() + field.getSizeInPx()/2 - tower.getRange());
         image.setY(field.getSpawnPoint().getY() + field.getSizeInPx()/2 - tower.getRange());
         image.setLayoutParams(new LinearLayout.LayoutParams(tower.getRange()*2, tower.getRange()*2));
+        image.setElevation(ImageElevation.RANGE_INDICATOR.elevation);
         gameActivity.getMapFrameLayout().addView(image);
     }
 

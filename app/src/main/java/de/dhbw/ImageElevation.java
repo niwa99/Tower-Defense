@@ -1,7 +1,8 @@
 package de.dhbw;
 
 public enum ImageElevation {
-    ENEMIES(50f);
+    ENEMIES(50f),
+    RANGE_INDICATOR(100f);
 
     public float elevation;
 

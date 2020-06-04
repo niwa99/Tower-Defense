@@ -25,7 +25,7 @@ public abstract class AMenu extends Activity {
         setContentView(mainLayout);
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
-        getWindow().setLayout(1250, 550);
+        getWindow().setLayout((int)(dm.widthPixels*0.7), (int)(dm.heightPixels*0.5));
     }
 
     public void addViewToPopUp(View child) {

@@ -27,6 +27,7 @@ public class MusicPlayer extends ATimerUsage{
         this.isStarted=true;
         if(timer!=null){
             timer.cancel();
+            timerTask.cancel();
         }
         timer = new Timer();
         timerTask = new TimerTask() {

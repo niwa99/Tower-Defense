@@ -9,11 +9,13 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
+import static de.dhbw.util.Constants.CAR_LEVEL_1_HEALTHPOINTS;
 import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,44 +28,58 @@ import static org.mockito.Mockito.mock;
 @RunWith(MockitoJUnitRunner.class)
 public class EnemyTest {
     @Mock
-    private ImageView imageDummy = mock(ImageView.class);
+    private ImageView dummyImage = mock(ImageView.class);
     private GameActivity dummyGameActivity = mock(GameActivity.class);
 
     @Test
-    public void ifDamageToEnemyIsLowerThanHP_EnemyShouldBeAlive() {
+    public void ifDamageToEnemiesIsLowerThanHP_EnemiesShouldBeAlive() {
         //arrange
-        AEnemy enemy = new Tank("tank1",1, imageDummy, dummyGameActivity);
+        AEnemy enemyTank = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
 
         //act
-        enemy.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS-1);
+        enemyTank.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS-1);
+        enemyCar.reduceHealthPoints(CAR_LEVEL_1_HEALTHPOINTS-1);
 
         //assert
-        assertTrue(enemy.isAlive());
+        assertTrue(enemyTank.isAlive());
+        assertTrue(enemyCar.isAlive());
     }
 
     @Test
-    public void ifDamageToEnemyHigherThanHP_EnemyShouldBeDead() {
+    public void ifDamageToEnemiesHigherThanHP_EnemiesShouldBeDead() {
         //arrange
-        AEnemy enemy = new Tank("tank1", 1, imageDummy, dummyGameActivity);
+        AEnemy enemyTank = new Tank("tank1", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
 
         //act
-        enemy.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS+1);
+        enemyTank.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS+1);
+        enemyCar.reduceHealthPoints(CAR_LEVEL_1_HEALTHPOINTS+1);
 
         //assert
-        assertFalse(enemy.isAlive());
+        assertFalse(enemyTank.isAlive());
+        assertFalse(enemyCar.isAlive());
     }
 
     @Test
-    public void whenEnemyMoves_ThePositionShouldChange() {
-        AEnemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
+    public void whenEnemiesMove_ThePositionsShouldChange() {
+        //arrange
+        AEnemy enemyTank = new Tank("tank", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
+
         MapStructure map = new MapStructure();
 
         //act
-        enemy.move(map);
-        Position oldPos = enemy.getPosition();
-        enemy.move(map);
+        enemyTank.move(map);
+        Position oldPosTank = enemyTank.getPosition();
+        enemyTank.move(map);
+
+        enemyCar.move(map);
+        Position oldPosCar = enemyCar.getPosition();
+        enemyCar.move(map);
 
         //assert
-        assertThat(oldPos, is(not(equalTo(enemy.getPosition()))));
+        assertThat(oldPosTank, is(not(equalTo(enemyTank.getPosition()))));
+        assertThat(oldPosCar, is(not(equalTo(enemyCar.getPosition()))));
     }
 }

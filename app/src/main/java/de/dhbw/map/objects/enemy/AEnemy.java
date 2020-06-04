@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import java.util.UUID;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.Field;
@@ -57,6 +58,7 @@ public abstract class AEnemy {
 		this.gameActivity = gameActivity;
 		this.enemyType = enemyType;
 		this.image = image;
+		image.setElevation(ImageElevation.ENEMIES.elevation);
 	}
 
 	/**

@@ -28,7 +28,7 @@ public class Constants {
     public static final int DRAWABLE_CAR_HITTED = R.drawable.car_hitted;
 
     public static final int DRAWABLE_PLANE = R.drawable.plane;
-    public static final int DRAWABLE_PLANE_HITTED = R.drawable.car_hitted;
+    public static final int DRAWABLE_PLANE_HITTED = R.drawable.plane_hitted;
 
     //Drawables Towers
     public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower_artillery;

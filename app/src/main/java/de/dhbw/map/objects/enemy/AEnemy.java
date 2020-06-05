@@ -200,11 +200,36 @@ public abstract class AEnemy {
 				moveTo(x, y+1);
 				direction = Direction.DOWN;
 			}
+			resolveRotation();
 			return true;
 		}
 		System.out.println(label + " reached the target");
 		reachedTarget = true;
 		return false;
+	}
+
+	/**
+	 * Set the rotation of the enemy image according to its direction.
+	 */
+	private void resolveRotation() {
+		gameActivity.runOnUiThread(() -> {
+			image.setX(getPositionX());
+			image.setY(getPositionY());
+			switch (getDirection()) {
+				case UP:
+					image.setRotation(0);
+					break;
+				case RIGHT:
+					image.setRotation(90);
+					break;
+				case DOWN:
+					image.setRotation(180);
+					break;
+				case LEFT:
+					image.setRotation(270);
+					break;
+			}
+		});
 	}
 
 	/**

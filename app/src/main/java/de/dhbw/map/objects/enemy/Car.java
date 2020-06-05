@@ -46,31 +46,6 @@ public class Car extends AEnemy {
     }
 
     @Override
-    public boolean move(MapStructure map) {
-        if (super.move(map)) {
-            gameActivity.runOnUiThread(() -> {
-                image.setX(getPositionX());
-                image.setY(getPositionY());
-                switch (getDirection()) {
-                    case UP:
-                        image.setRotation(0);
-                        break;
-                    case RIGHT:
-                        image.setRotation(90);
-                        break;
-                    case DOWN:
-                        image.setRotation(180);
-                        break;
-                    case LEFT:
-                        image.setRotation(270);
-                        break;
-                }
-            });
-        }
-        return false;
-    }
-
-    @Override
     public void hit(int damage) {
         super.reduceHealthPoints(damage);
         gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_CAR_HITTED));

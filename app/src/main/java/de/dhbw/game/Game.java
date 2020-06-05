@@ -353,6 +353,7 @@ public class Game {
 	    builder.setTitle("Game finished!");
 	    builder.setMessage(message);
 	    builder.setPositiveButton("OK", (dialogInterface, i) -> gameActivity.returnToMainMenu());
+	    builder.setCancelable(false);
 	    gameActivity.runOnUiThread(() -> builder.create().show());
     }
 
@@ -502,6 +503,7 @@ public class Game {
             } else if(field.getFieldDescription().equals(FieldDescription.SPAWN)) {
                 fieldButton.setOnClickListener(spawnFieldListener);
                 fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
+                fieldButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.arrow_spawn_button, null));
                 gameActivity.getMapFrameLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             } else if (field.getFieldDescription().equals(FieldDescription.FREE)) {

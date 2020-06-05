@@ -100,14 +100,8 @@ public abstract class ATower extends ATimerUsage {
 		List<AEnemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
 		AEnemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
 		if (enemy != null) {
-			if (enemy.getType() == EnemyType.TANK) {
-				targetedEnemy = enemy;
-				return true;
-			}
-			if (enemy.getType() == EnemyType.CAR) {
-				targetedEnemy = enemy;
-				return true;
-			}
+			targetedEnemy = enemy;
+			return true;
 		}
 		return false;
 	}

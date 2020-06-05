@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
@@ -46,6 +47,7 @@ public abstract class ABullet {
         bulletImage.setX(x);
         bulletImage.setY(y);
         bulletImage.setRotation((float) getBulletRotation());
+        bulletImage.setElevation(ImageElevation.BULLET.elevation);
         if (offset != 0) {
             applyBulletOffset(offset);
         }

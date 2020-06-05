@@ -10,6 +10,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
@@ -248,6 +249,7 @@ public class MatchField {
 			gif.setScaleX(0.2f);
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
+			gif.setElevation(ImageElevation.ANIMATION.elevation);
 			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
 			new Timer().schedule(new TimerTask() {
 				@Override

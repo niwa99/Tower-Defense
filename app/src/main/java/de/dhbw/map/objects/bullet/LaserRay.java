@@ -13,6 +13,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
@@ -42,6 +43,7 @@ public class LaserRay extends ABullet {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
         canvas = new Canvas();
         laserView = new LaserView(gameActivity, new Position(x,y), targetPos);
+        laserView.setElevation(ImageElevation.BULLET.elevation);
         this.allEnemies=allEnemies;
     }
 
@@ -97,6 +99,7 @@ public class LaserRay extends ABullet {
             gif.setScaleX(0.2f);
             gif.setScaleY(0.2f);
             gif.setImageResource(R.drawable.spark_animation);
+            gif.setElevation(ImageElevation.ANIMATION.elevation);
             gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
             new Timer().schedule(new TimerTask() {
                 @Override

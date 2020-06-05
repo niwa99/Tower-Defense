@@ -47,6 +47,7 @@ import de.dhbw.util.PreferenceManager;
 import static de.dhbw.util.Constants.FIELD_SIZE;
 import static de.dhbw.util.Constants.STATUS_OFF;
 import static de.dhbw.util.Constants.STATUS_ON;
+import static de.dhbw.util.Constants.startGameDelay;
 
 public class Game {
 
@@ -66,9 +67,6 @@ public class Game {
     private final StatusBarCountDownTimer countDownTimer;
 
     private Map<Settings, Boolean> gameSettings = new HashMap<Settings, Boolean>();
-    private boolean isSoundOn = false;
-    private boolean isAnimationOn = false;
-    private boolean isMusicOn = false;
 
     private boolean showCircle = false;
     private Position circleField = new Position(-1, -1);
@@ -187,7 +185,11 @@ public class Game {
                 public void run() {
                     Optional<AWave> wave = match.next();
                     if (wave.isPresent()) {
-                        startWave(wave.get(), match.getWaveTime());
+                        if(match.getCurrentWaveNumber()==1){
+                            startWave(wave.get(), startGameDelay);
+                        }else{
+                            startWave(wave.get(), match.getWaveTime());
+                        }
                     }
                 }
             }, delay);
@@ -203,7 +205,7 @@ public class Game {
         countDownTimer.timer(seconds);
 
         //status
-        currentWaveNumber = match.getCurrentWaveNumber();
+        currentWaveNumber = match.getCurrentWaveNumber()-1;
         updateStatusBar();
 
         //pause actions

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.map.objects.enemy.BossTank;
 import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.enemy.Plane;
 import de.dhbw.map.objects.enemy.Tank;
@@ -38,6 +39,11 @@ public class Wave extends AWave {
                 case PLANE:
                     for (int i = 0; i < wave.getAmount(); i++) {
                         addEnemy(new Plane(wave.getEnemyType().getLabel(), wave.getLevel(), gameActivity));
+                    }
+                    break;
+                case BOSS_TANK:
+                    for (int i = 0; i < wave.getAmount(); i++) {
+                        addEnemy(new BossTank(wave.getEnemyType().getLabel(), wave.getLevel(), gameActivity));
                     }
                     break;
             }

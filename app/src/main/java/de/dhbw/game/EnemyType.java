@@ -3,7 +3,8 @@ package de.dhbw.game;
 public enum EnemyType {
     TANK("tank"),
     CAR("car"),
-    PLANE("plane");
+    PLANE("plane"),
+    BOSS_TANK("boss_tank");
 
     private final String label;
 

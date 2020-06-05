@@ -13,9 +13,13 @@ import java.util.Optional;
 import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.game.EnemyType;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.enemy.BossTank;
+import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
 public class MatchField {
@@ -70,9 +74,15 @@ public class MatchField {
 	 * @param enemy
 	 */
 	public void addEnemy(AEnemy enemy) {
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemy.getImage()));
+		ImageView enemyImage = enemy.getImage();
+		enemyImage.setX(-500);
+		enemyImage.setY(-500);
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemyImage));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
+		if(enemy instanceof BossTank){
+			enemies.add(((BossTank) enemy).getCar());
+		}
 	}
 
 	/**
@@ -208,6 +218,18 @@ public class MatchField {
 			enemies.remove(enemy);
 			gameActivity.getGame().increaseNumberOfEnemiesKilled();
 			System.out.println(enemy.getLabel() + " is dead now");
+			spawnCarIfEnemyIsBossTank(enemy);
+		}
+	}
+
+	private void spawnCarIfEnemyIsBossTank(AEnemy enemy){
+		if(enemy.getType()== EnemyType.BOSS_TANK){
+			BossTank boss = (BossTank) enemy;
+			Car car = boss.getCar();
+			car.setHealthpoints(boss.getBossTankHealthpointsByLevel(boss.getLevel())/4);
+			car.moveToPosition(enemy.getPosition());
+			car.setProgress(enemy.getProgress()-2);
+			startEnemyMovement(car);
 		}
 	}
 

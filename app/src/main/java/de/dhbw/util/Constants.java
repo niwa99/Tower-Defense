@@ -8,6 +8,7 @@ public class Constants {
     //Settings
     public static final String STATUS_ON = "on";
     public static final String STATUS_OFF = "off";
+    public static final int startGameDelay = 10;
 
     //Drawables Bullets
     public static final int DRAWABLE_BULLET = R.drawable.bullet;
@@ -240,6 +241,10 @@ public class Constants {
 
     public static final LinearLayout.LayoutParams PLANE_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
+    //BossTank Parameters
+    public static final int BOSS_TANK_LEVEL_1_MULTIPLIKATOR = 4;
+    public static final int BOSS_TANK_LEVEL_2_MULTIPLIKATOR = 5;
+    public static final int BOSS_TANK_LEVEL_3_MULTIPLIKATOR = 6;
 
     //Bullet Parameters
     public static final int BULLET_SPEED = 2; //if the number is low, the bullet will be quick

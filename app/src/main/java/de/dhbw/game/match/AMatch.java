@@ -22,6 +22,7 @@ public abstract class AMatch extends ATimerUsage {
         this.waveTime = waveTime;
         this.startMoney = startMoney;
         this.difficulty = difficulty;
+        waves.add(new Wave(1));
     }
 
     public abstract void create(GameActivity gameActivity);

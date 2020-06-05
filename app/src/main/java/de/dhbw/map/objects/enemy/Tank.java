@@ -14,7 +14,7 @@ import static de.dhbw.util.Constants.*;
 
 public class Tank extends AEnemy {
 
-	private Timer timer;
+	protected Timer timer;
 
 	/**
 	 * Constructor
@@ -28,14 +28,14 @@ public class Tank extends AEnemy {
 	}
 
 	/**
-	 * Constructor (TEST PURPOSE ONLY!)
+	 * Constructor
 	 * @param label
 	 * @param level
 	 * @param image
 	 * @param gameActivity
 	 */
-	public Tank(String label, int level, ImageView image, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, image);
+	public Tank(String label, int level, ImageView image, EnemyType type, GameActivity gameActivity) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, type, image);
 		timer = new Timer();
 	}
 
@@ -70,7 +70,7 @@ public class Tank extends AEnemy {
 	 * @param level
 	 * @return speed
 	 */
-	private static int getTankSpeedByLevel(int level) {
+	public static int getTankSpeedByLevel(int level) {
 		switch (level) {
 			case 1: return TANK_LEVEL_1_SPEED;
 			case 2: return TANK_LEVEL_2_SPEED;
@@ -98,7 +98,7 @@ public class Tank extends AEnemy {
 	 * @param level
 	 * @return lifepointcosts
 	 */
-	private static int getTankLifePointsCostsByLevel(int level) {
+	public static int getTankLifePointsCostsByLevel(int level) {
 		switch (level) {
 			case 1: return TANK_LEVEL_1_LIFE_POINT_COSTS;
 			case 2: return TANK_LEVEL_2_LIFE_POINT_COSTS;

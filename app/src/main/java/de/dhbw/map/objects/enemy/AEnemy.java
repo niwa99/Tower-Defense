@@ -319,6 +319,10 @@ public abstract class AEnemy {
 		return y;
 	}
 
+	public void setProgress(int progress) {
+		this.progress=progress;
+	}
+
 	/**
 	 *
 	 * @return direction where the enemy is looking right now

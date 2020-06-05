@@ -20,7 +20,6 @@ public class HardMatch extends AMatch {
 
     @Override
     public void create(GameActivity gameActivity) {
-
         Wave firstWave = new Wave(1500);
         firstWave.addWaveCompositions(firstWaveTankL1, firstWaveTankL2);
         firstWave.generate(gameActivity);

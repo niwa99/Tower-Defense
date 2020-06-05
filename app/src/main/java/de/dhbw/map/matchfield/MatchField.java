@@ -80,8 +80,14 @@ public class MatchField {
 		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemyImage));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
+
 		if(enemy instanceof BossTank){
-			enemies.add(((BossTank) enemy).getCar());
+		    Car car = ((BossTank) enemy).getCar();
+            ImageView carImage = car.getImage();
+            carImage.setX(-500);
+            carImage.setY(-500);
+			enemies.add(car);
+			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(car.getImage()));
 		}
 	}
 

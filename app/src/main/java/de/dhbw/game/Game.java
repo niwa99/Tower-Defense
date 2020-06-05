@@ -84,6 +84,8 @@ public class Game {
     private int numberOfUpgrades = 0;
     private int moneySpent = 0;
 
+    private Button spawnButton;
+
     private MusicPlayer musicPLayer;
 
 	public Game(GameActivity gameActivity) {
@@ -214,6 +216,7 @@ public class Game {
 
         //next wave
         lastEnemyOfWaveSpawned = false;
+        triggerSpawnButtonImageChange();
         startNextWave(seconds*1000);
 
         waveTimer.scheduleAtFixedRate(new TimerTask() {
@@ -223,6 +226,7 @@ public class Game {
                     matchField.addEnemy(wave.next());
                 } else {
                     lastEnemyOfWaveSpawned = true;
+                    triggerSpawnButtonImageChange();
                     cancel();
                 }
                 wave.setLastTimeActionMillis(System.currentTimeMillis());
@@ -506,6 +510,7 @@ public class Game {
                 fieldButton.setOnClickListener(spawnFieldListener);
                 fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
                 fieldButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.arrow_spawn_button, null));
+                spawnButton = fieldButton;
                 gameActivity.getMapFrameLayout().addView(fieldButton);
                 mapButtons.add(fieldButton);
             } else if (field.getFieldDescription().equals(FieldDescription.FREE)) {
@@ -515,6 +520,14 @@ public class Game {
                 mapButtons.add(fieldButton);
             }
         });
+    }
+
+    private void triggerSpawnButtonImageChange(){
+	    if(lastEnemyOfWaveSpawned && !lastWaveOut){
+	        gameActivity.runOnUiThread(() -> spawnButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.arrow_spawn_button, null)));
+        }else{
+            gameActivity.runOnUiThread(() -> spawnButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.transparent_background, null)));
+        }
     }
 
    public void setCircle(ATower tower, Field field) {

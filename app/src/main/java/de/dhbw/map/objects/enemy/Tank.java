@@ -39,6 +39,18 @@ public class Tank extends AEnemy {
 		timer = new Timer();
 	}
 
+    /**
+     * Constructor (only for test purposes)
+     * @param label
+     * @param level
+     * @param image
+     * @param gameActivity
+     */
+    public Tank(String label, int level, ImageView image, GameActivity gameActivity) {
+        super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, image);
+        timer = new Timer();
+    }
+
 	@Override
 	public void hit(int damage) {
 		super.reduceHealthPoints(damage);

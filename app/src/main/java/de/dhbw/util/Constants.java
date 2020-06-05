@@ -20,6 +20,9 @@ public class Constants {
     public static final int DRAWABLE_TANK = R.drawable.tank;
     public static final int DRAWABLE_TANK_HITTED = R.drawable.tank_hitted;
 
+    public static final int DRAWABLE_TANK_BOSS = R.drawable.tank_boss;
+    public static final int DRAWABLE_TANK_BOSS_HITTED = R.drawable.tank_boss_hitted;
+
     public static final int DRAWABLE_CAR = R.drawable.car;
     public static final int DRAWABLE_CAR_HITTED = R.drawable.car_hitted;
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
@@ -151,6 +152,19 @@ public class MapStructure {
      */
     public Field getFieldForEnemy(int progress) {
         return progress < path.length ? fields.get(path[progress].toString()) : null;
+    }
+
+    public Field getFieldForPlane(Field oldField){
+        if(oldField==null){
+            int row = new Random().nextInt(AMOUNT_ROWS);
+            return getField(new Position(0, row));
+        }else{
+            if(oldField.getFieldPositionX()<AMOUNT_COLUMNS){
+                return getField(new Position(oldField.getFieldPositionX()+1, oldField.getFieldPositionY()));
+            }else{
+                return null;
+            }
+        }
     }
 
     /**

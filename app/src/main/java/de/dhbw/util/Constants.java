@@ -23,6 +23,9 @@ public class Constants {
     public static final int DRAWABLE_CAR = R.drawable.car;
     public static final int DRAWABLE_CAR_HITTED = R.drawable.car_hitted;
 
+    public static final int DRAWABLE_PLANE = R.drawable.plane;
+    public static final int DRAWABLE_PLANE_HITTED = R.drawable.car_hitted;
+
     //Drawables Towers
     public static final int DRAWABLE_TOWER_ARTILLERY = R.drawable.tower_artillery;
     public static final int DRAWABLE_TOWER_BOOMBASTIC = R.drawable.tower_boombastic_complete;
@@ -215,6 +218,24 @@ public class Constants {
     public static final int CAR_LEVEL_3_LIFE_POINT_COSTS = 5;
 
     public static final LinearLayout.LayoutParams CAR_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
+
+    //PLANE Parameters
+    public static final int PLANE_LEVEL_1_HEALTHPOINTS = 10;
+    public static final int PLANE_LEVEL_1_SPEED = 985; //From 0 to 1000
+    public static final int PLANE_LEVEL_1_VALUE = 5;
+    public static final int PLANE_LEVEL_1_LIFE_POINT_COSTS = 5;
+
+    public static final int PLANE_LEVEL_2_HEALTHPOINTS = 15;
+    public static final int PLANE_LEVEL_2_SPEED = 990;
+    public static final int PLANE_LEVEL_2_VALUE = 10;
+    public static final int PLANE_LEVEL_2_LIFE_POINT_COSTS = 5;
+
+    public static final int PLANE_LEVEL_3_HEALTHPOINTS = 25;
+    public static final int PLANE_LEVEL_3_SPEED = 995;
+    public static final int PLANE_LEVEL_3_VALUE = 20;
+    public static final int PLANE_LEVEL_3_LIFE_POINT_COSTS = 5;
+
+    public static final LinearLayout.LayoutParams PLANE_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 
     //Bullet Parameters

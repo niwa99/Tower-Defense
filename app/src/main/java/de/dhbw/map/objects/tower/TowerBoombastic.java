@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Bomb;
@@ -77,7 +78,7 @@ public class TowerBoombastic extends ATower {
 
     @Override
     public boolean fire(List<AEnemy> enemies) {
-        headImage.get().setRotation((float)rotateImage(enemies));
+        headImage.get().setRotation((float)rotateImage(getFocusableEnemies(enemies)));
         if (super.fire(enemies)) {
             new Bomb(getPosition(), super.targetedEnemy,  enemies, this.getDamage(), DRAWABLE_BULLET_BOOMBASTIC,  gameActivity, FIELD_SIZE/2).start();
             return true;

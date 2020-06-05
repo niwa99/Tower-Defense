@@ -31,7 +31,7 @@ public abstract class AEnemy {
 	private boolean reachedTarget = false;
 	private Direction direction = Direction.RIGHT;
 	private TimerTask timerTask;
-	private Field actualField;
+	protected Field actualField;
 	private final EnemyType enemyType;
 	protected ImageView image;
 	protected GameActivity gameActivity;
@@ -172,13 +172,13 @@ public abstract class AEnemy {
 	 */
 	public boolean move(MapStructure map) {
 		if (actualField == null) {
-			actualField = map.getFieldForEnemy(progress);
+			actualField = getEnemyField(map);
 			progress++;
 			moveToPosition(actualField.getSpawnPoint());
 			return true;
 		}
 		if (actualField.getSpawnPoint().equals(getPosition())) {
-			actualField = map.getFieldForEnemy(progress);
+			actualField = getEnemyField(map);
 			progress++;
 			if (actualField != null) {
 				System.out.println(label + " is moving to a new field [" + actualField.getFieldPositionX() + actualField.getFieldPositionY() + "]");
@@ -206,6 +206,10 @@ public abstract class AEnemy {
 		System.out.println(label + " reached the target");
 		reachedTarget = true;
 		return false;
+	}
+
+	protected Field getEnemyField(MapStructure map){
+		return map.getFieldForEnemy(progress);
 	}
 
 	/**

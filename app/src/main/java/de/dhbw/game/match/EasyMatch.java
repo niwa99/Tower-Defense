@@ -10,7 +10,7 @@ public class EasyMatch extends AMatch {
     private static final int waveTime = 45;
     private static final int waveSpeed = 2000;
     private static final int startMoney = 100;
-    private static WaveComposition firstWaveCarL1 = new WaveComposition(EnemyType.CAR, 1, 3);
+    private static WaveComposition firstWaveCarL1 = new WaveComposition(EnemyType.PLANE, 1, 3);
     private static WaveComposition firstWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 6);
     private static WaveComposition firstWaveTankL2 = new WaveComposition(EnemyType.TANK, 2, 2);
     private static WaveComposition secondWaveTankL1 = new WaveComposition(EnemyType.TANK, 1, 5);

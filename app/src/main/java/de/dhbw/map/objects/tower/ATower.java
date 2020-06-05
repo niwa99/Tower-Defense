@@ -97,7 +97,7 @@ public abstract class ATower extends ATimerUsage {
 	 * @return true if there is an enemy to shoot at
 	 */
 	public boolean fire(List<AEnemy> enemies) {
-		List<AEnemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy)).collect(Collectors.toList());
+		List<AEnemy> enemiesInRange = enemies.stream().filter(enemy -> isEnemyInRange(enemy) && filterPlaneIfTowerCannotFocus(enemy)).collect(Collectors.toList());
 		AEnemy enemy = getNearestEnemy(getPosition(), enemiesInRange);
 		if (enemy != null) {
 			targetedEnemy = enemy;
@@ -105,6 +105,18 @@ public abstract class ATower extends ATimerUsage {
 		}
 		return false;
 	}
+
+	protected boolean filterPlaneIfTowerCannotFocus(AEnemy enemy){
+	    if(enemy.getType()==EnemyType.PLANE){
+	        return towerType==TowerType.ARTILLERY || towerType == TowerType.FREEZER;
+        }else {
+	        return true;
+        }
+    }
+
+    protected List<AEnemy> getFocusableEnemies(List<AEnemy> enemies){
+	    return enemies.stream().filter(e -> filterPlaneIfTowerCannotFocus(e)).collect(Collectors.toList());
+    }
 
 	/**
 	 * Checks if an enemy is in range of the tower.

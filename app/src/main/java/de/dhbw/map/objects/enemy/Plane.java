@@ -12,10 +12,10 @@ import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.MapStructure;
 
 import static de.dhbw.util.Constants.PLANE_ENEMY_SIZE_PARAMS;
-import static de.dhbw.util.Constants.PLANE_LEVEL_1_HEALTHPOINTS;
-import static de.dhbw.util.Constants.PLANE_LEVEL_1_LIFE_POINT_COSTS;
-import static de.dhbw.util.Constants.PLANE_LEVEL_1_SPEED;
-import static de.dhbw.util.Constants.PLANE_LEVEL_1_VALUE;
+import static de.dhbw.util.Constants.PLANE_HEALTHPOINTS;
+import static de.dhbw.util.Constants.PLANE_LIFE_POINT_COSTS;
+import static de.dhbw.util.Constants.PLANE_SPEED;
+import static de.dhbw.util.Constants.PLANE_VALUE;
 import static de.dhbw.util.Constants.DRAWABLE_PLANE;
 import static de.dhbw.util.Constants.DRAWABLE_PLANE_HITTED;
 
@@ -69,10 +69,7 @@ public class Plane extends AEnemy {
      * @return healthpoints
      */
     private static int getPlaneHealthpointsByLevel(int level) {
-        switch (level) {
-            case 1: return PLANE_LEVEL_1_HEALTHPOINTS;
-            default: return PLANE_LEVEL_1_HEALTHPOINTS;
-        }
+        return PLANE_HEALTHPOINTS * level;
     }
 
     /**
@@ -81,10 +78,8 @@ public class Plane extends AEnemy {
      * @return speed
      */
     private static int getPlaneSpeedByLevel(int level) {
-        switch (level) {
-            case 1: return PLANE_LEVEL_1_SPEED;
-            default: return PLANE_LEVEL_1_SPEED;
-        }
+        return PLANE_SPEED;
+
     }
 
     /**
@@ -93,10 +88,7 @@ public class Plane extends AEnemy {
      * @return value
      */
     private static int getPlaneValueByLevel(int level) {
-        switch (level) {
-            case 1: return PLANE_LEVEL_1_VALUE;
-            default: return PLANE_LEVEL_1_VALUE;
-        }
+        return PLANE_VALUE * level;
     }
 
     /**
@@ -105,10 +97,7 @@ public class Plane extends AEnemy {
      * @return lifepointcosts
      */
     private static int getPlaneLifePointsCostsByLevel(int level) {
-        switch (level) {
-            case 1: return PLANE_LEVEL_1_LIFE_POINT_COSTS;
-            default: return PLANE_LEVEL_1_LIFE_POINT_COSTS;
-        }
+        return PLANE_LIFE_POINT_COSTS * level;
     }
 
     /**

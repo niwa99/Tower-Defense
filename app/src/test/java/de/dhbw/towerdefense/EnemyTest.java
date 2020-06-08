@@ -12,11 +12,10 @@ import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
-import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
-import static de.dhbw.util.Constants.CAR_LEVEL_1_HEALTHPOINTS;
-import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
+import static de.dhbw.util.Constants.CAR_HEALTHPOINTS;
+import static de.dhbw.util.Constants.TANK_HEALTHPOINTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
@@ -38,8 +37,8 @@ public class EnemyTest {
         AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
 
         //act
-        enemyTank.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS-1);
-        enemyCar.reduceHealthPoints(CAR_LEVEL_1_HEALTHPOINTS-1);
+        enemyTank.reduceHealthPoints(TANK_HEALTHPOINTS-1);
+        enemyCar.reduceHealthPoints(CAR_HEALTHPOINTS-1);
 
         //assert
         assertTrue(enemyTank.isAlive());
@@ -53,8 +52,8 @@ public class EnemyTest {
         AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
 
         //act
-        enemyTank.reduceHealthPoints(TANK_LEVEL_1_HEALTHPOINTS+1);
-        enemyCar.reduceHealthPoints(CAR_LEVEL_1_HEALTHPOINTS+1);
+        enemyTank.reduceHealthPoints(TANK_HEALTHPOINTS+1);
+        enemyCar.reduceHealthPoints(CAR_HEALTHPOINTS+1);
 
         //assert
         assertFalse(enemyTank.isAlive());

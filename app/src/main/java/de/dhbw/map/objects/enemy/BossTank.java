@@ -38,13 +38,4 @@ public class BossTank extends AEnemy {
     private static int getBossTankValueByLevel(int level) {
         return TANK_VALUE * level * 5;
     }
-
-    private static int getBossTankMultiplikator(int level){
-        switch (level) {
-            case 1: return BOSS_TANK_LEVEL_1_MULTIPLIKATOR;
-            case 2: return BOSS_TANK_LEVEL_2_MULTIPLIKATOR;
-            case 3: return BOSS_TANK_LEVEL_3_MULTIPLIKATOR;
-            default: return BOSS_TANK_LEVEL_1_MULTIPLIKATOR;
-        }
-    }
 }

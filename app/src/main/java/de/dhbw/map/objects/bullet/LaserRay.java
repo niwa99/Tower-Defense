@@ -17,6 +17,9 @@ import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.tower.ATower;
+import de.dhbw.map.objects.tower.TowerArtillery;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
@@ -83,7 +86,9 @@ public class LaserRay extends ABullet {
                     cancel();
                 }else{
                     targetEnemy.reduceHealthPoints(damage/4);
-                    allEnemies.stream().filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.reduceHealthPoints(damage/4));
+                    allEnemies.stream()
+                            .filter(e -> ATower.filterPlaneIfTowerCannotFocus(TowerType.ASSAULTLASER, e))
+                            .filter(e -> isEnemyHitOnPosition(bulletStartPos, targetPos, e)).forEach(e -> e.reduceHealthPoints(damage/4));
                     sparkle();
                 }
             }

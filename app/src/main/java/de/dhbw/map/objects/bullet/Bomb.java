@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.stream.Collectors;
 
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.tower.ATower;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -79,7 +82,8 @@ public class Bomb extends ABullet {
     public Map<AEnemy, Integer> getEnemiesToHit() {
         Map<AEnemy, Integer> enemiesInExplosionRange = new HashMap<AEnemy, Integer>();
         targetEnemy.getPosition();
-        for (AEnemy e : allEnemies) {
+        List<AEnemy> hitableEnemies = allEnemies.stream().filter(e -> ATower.filterPlaneIfTowerCannotFocus(TowerType.BOOMBASTIC, e)).collect(Collectors.toList());
+        for (AEnemy e : hitableEnemies) {
             int distance = MatchField.getDistance(targetEnemy.getPositionX(), targetEnemy.getPositionY(), e.getPositionX(), e.getPositionY());
             if(distance < range){
                 if(distance < range/2){

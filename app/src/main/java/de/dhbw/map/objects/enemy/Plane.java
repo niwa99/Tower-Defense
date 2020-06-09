@@ -1,17 +1,20 @@
 package de.dhbw.map.objects.enemy;
 
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.MapStructure;
 
-import static de.dhbw.util.Constants.PLANE_ENEMY_SIZE_PARAMS;
 import static de.dhbw.util.Constants.PLANE_LEVEL_1_HEALTHPOINTS;
 import static de.dhbw.util.Constants.PLANE_LEVEL_1_LIFE_POINT_COSTS;
 import static de.dhbw.util.Constants.PLANE_LEVEL_1_SPEED;
@@ -21,7 +24,6 @@ import static de.dhbw.util.Constants.DRAWABLE_PLANE_HITTED;
 
 public class Plane extends AEnemy {
     private Timer timer;
-    private Field actualPlaneField;
 
     /**
      * Constructor
@@ -30,7 +32,7 @@ public class Plane extends AEnemy {
      * @param gameActivity
      */
     public Plane(String label, int level, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, createPlaneImage(gameActivity));
+        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, DRAWABLE_PLANE, DRAWABLE_PLANE_HITTED);
         timer = new Timer();
     }
 
@@ -42,22 +44,9 @@ public class Plane extends AEnemy {
      * @param gameActivity
      */
     public Plane(String label, int level, ImageView image, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, image);
+        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, DRAWABLE_PLANE, DRAWABLE_PLANE_HITTED);
         timer = new Timer();
     }
-
-    @Override
-    public void hit(int damage) {
-        super.reduceHealthPoints(damage);
-        gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_PLANE_HITTED));
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_PLANE));
-            }
-        }, 100);
-    }
-
     @Override
     protected Field getEnemyField(MapStructure map){
         return map.getFieldForPlane(actualField);
@@ -111,15 +100,4 @@ public class Plane extends AEnemy {
         }
     }
 
-    /**
-     * Creates the car image with gameActivity context.
-     * @param gameActivity
-     * @return a car imageview
-     */
-    private static ImageView createPlaneImage(GameActivity gameActivity) {
-        ImageView planeImage = new ImageView(gameActivity);
-        planeImage.setLayoutParams(PLANE_ENEMY_SIZE_PARAMS);
-        planeImage.setImageResource(DRAWABLE_PLANE);
-        return planeImage;
-    }
 }

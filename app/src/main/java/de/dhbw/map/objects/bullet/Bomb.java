@@ -69,7 +69,7 @@ public class Bomb extends ABullet {
         super.hitEnemy();
         //explode();
         allEnemies.remove(targetEnemy);
-        getEnemiesToHit().entrySet().stream().forEach(e -> e.getKey().hit(e.getValue()));
+        getEnemiesToHit().entrySet().stream().forEach(e -> e.getKey().reduceHealthPoints(e.getValue()));
     }
 
     /**

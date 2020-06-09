@@ -1,10 +1,16 @@
 package de.dhbw.map.objects.enemy;
 
+import android.text.Layout;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import java.util.UUID;
 
 import de.dhbw.ImageElevation;
+import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.Field;
@@ -13,6 +19,9 @@ import de.dhbw.util.Constants;
 import de.dhbw.util.Direction;
 import de.dhbw.util.Position;
 import java.util.TimerTask;
+
+import static de.dhbw.util.Constants.DRAWABLE_PLANE;
+import static de.dhbw.util.Constants.FIELD_SIZE;
 
 public abstract class AEnemy {
 	private String label;
@@ -33,8 +42,9 @@ public abstract class AEnemy {
 	private TimerTask timerTask;
 	protected Field actualField;
 	private final EnemyType enemyType;
-	protected ImageView image;
 	protected GameActivity gameActivity;
+
+	private final EnemyView enemyView;
 
 	/**
 	 * Constructor
@@ -46,19 +56,19 @@ public abstract class AEnemy {
 	 * @param lifePointsCosts
 	 * @param gameActivity
 	 * @param enemyType
-	 * @param image
+	 * @param enemyImageID
+	 * @param enemyHitImageID
 	 */
-	public AEnemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, ImageView image) {
+	public AEnemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, int enemyImageID, int enemyHitImageID) {
 		this.label = label;
 		this.uuid = uuid;
 		this.healthpoints = hp;
 		this.speed = speed;
-		this.value=value;
+		this.value = value;
 		this.lifePointsCosts = lifePointsCosts;
 		this.gameActivity = gameActivity;
 		this.enemyType = enemyType;
-		this.image = image;
-		image.setElevation(ImageElevation.ENEMIES.elevation);
+		this.enemyView = new EnemyView(gameActivity, enemyImageID, enemyHitImageID, hp);
 	}
 
 	/**
@@ -129,15 +139,8 @@ public abstract class AEnemy {
 	 *
 	 * @return image of this enemy
 	 */
-	public ImageView getImage() {
-		return image;
-	}
-
-	/**
-	 * Set the image of this enemy.
-	 */
-	public void setImage() {
-		this.image = image;
+	public EnemyView getEnemyView() {
+		return enemyView;
 	}
 
 	/**
@@ -151,10 +154,10 @@ public abstract class AEnemy {
 			isAlive = false;
 		} else {
 			healthpoints -= damage;
+			enemyView.hitAnimation();
 		}
+		enemyView.setHealthProgress(getHealthPoints());
 	}
-
-	public abstract void hit(int damage);
 
 	/**
 	 *
@@ -200,7 +203,7 @@ public abstract class AEnemy {
 				moveTo(x, y+1);
 				direction = Direction.DOWN;
 			}
-			resolveRotation();
+			enemyView.resolveRotation(getDirection(), x, y);
 			return true;
 		}
 		System.out.println(label + " reached the target");
@@ -210,30 +213,6 @@ public abstract class AEnemy {
 
 	protected Field getEnemyField(MapStructure map){
 		return map.getFieldForEnemy(progress);
-	}
-
-	/**
-	 * Set the rotation of the enemy image according to its direction.
-	 */
-	private void resolveRotation() {
-		gameActivity.runOnUiThread(() -> {
-			image.setX(getPositionX());
-			image.setY(getPositionY());
-			switch (getDirection()) {
-				case UP:
-					image.setRotation(0);
-					break;
-				case RIGHT:
-					image.setRotation(90);
-					break;
-				case DOWN:
-					image.setRotation(180);
-					break;
-				case LEFT:
-					image.setRotation(270);
-					break;
-			}
-		});
 	}
 
 	/**

@@ -140,7 +140,7 @@ public abstract class ABullet {
      * Hit the targetEnemy with specified damage.
      */
     protected void hitEnemy() {
-        targetEnemy.hit(damage);
+        targetEnemy.reduceHealthPoints(damage);
     }
 
     /**

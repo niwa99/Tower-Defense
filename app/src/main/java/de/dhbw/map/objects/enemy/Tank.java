@@ -23,7 +23,7 @@ public class Tank extends AEnemy {
 	 * @param gameActivity
 	 */
 	public Tank(String label, int level, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, createTankImage(gameActivity));
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, DRAWABLE_TANK, DRAWABLE_TANK_HITTED);
 		timer = new Timer();
 	}
 
@@ -35,7 +35,7 @@ public class Tank extends AEnemy {
 	 * @param gameActivity
 	 */
 	public Tank(String label, int level, ImageView image, EnemyType type, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, type, image);
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, type, DRAWABLE_TANK, DRAWABLE_TANK_HITTED);
 		timer = new Timer();
 	}
 
@@ -47,21 +47,9 @@ public class Tank extends AEnemy {
      * @param gameActivity
      */
     public Tank(String label, int level, ImageView image, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, image);
+        super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, DRAWABLE_TANK, DRAWABLE_TANK_HITTED);
         timer = new Timer();
     }
-
-	@Override
-	public void hit(int damage) {
-		super.reduceHealthPoints(damage);
-		gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK_HITTED));
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK));
-			}
-		}, 100);
-	}
 
 	/**
 	 * Get healthpoints by level.
@@ -118,17 +106,4 @@ public class Tank extends AEnemy {
 			default: return TANK_LEVEL_1_LIFE_POINT_COSTS;
 		}
 	}
-
-	/**
-	 * Creates the tank image with gameActivity context.
-	 * @param gameActivity
-	 * @return a tank imageview
-	 */
-	private static ImageView createTankImage(GameActivity gameActivity) {
-		ImageView tankImage = new ImageView(gameActivity);
-		tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
-		tankImage.setImageResource(DRAWABLE_TANK);
-		return tankImage;
-	}
-
 }

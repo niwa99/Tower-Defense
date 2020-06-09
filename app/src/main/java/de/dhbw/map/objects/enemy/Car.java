@@ -10,7 +10,6 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.structure.MapStructure;
 
-import static de.dhbw.util.Constants.CAR_ENEMY_SIZE_PARAMS;
 import static de.dhbw.util.Constants.CAR_LEVEL_1_HEALTHPOINTS;
 import static de.dhbw.util.Constants.CAR_LEVEL_1_LIFE_POINT_COSTS;
 import static de.dhbw.util.Constants.CAR_LEVEL_1_SPEED;
@@ -29,7 +28,7 @@ public class Car extends AEnemy {
      * @param gameActivity
      */
     public Car(String label, int level, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, createCarImage(gameActivity));
+        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, DRAWABLE_CAR, DRAWABLE_CAR_HITTED);
         timer = new Timer();
     }
 
@@ -41,20 +40,8 @@ public class Car extends AEnemy {
      * @param gameActivity
      */
     public Car(String label, int level, ImageView image, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, image);
+        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, DRAWABLE_CAR, DRAWABLE_CAR_HITTED);
         timer = new Timer();
-    }
-
-    @Override
-    public void hit(int damage) {
-        super.reduceHealthPoints(damage);
-        gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_CAR_HITTED));
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_CAR));
-            }
-        }, 100);
     }
 
     /**
@@ -103,17 +90,5 @@ public class Car extends AEnemy {
             case 1: return CAR_LEVEL_1_LIFE_POINT_COSTS;
             default: return CAR_LEVEL_1_LIFE_POINT_COSTS;
         }
-    }
-
-    /**
-     * Creates the car image with gameActivity context.
-     * @param gameActivity
-     * @return a car imageview
-     */
-    private static ImageView createCarImage(GameActivity gameActivity) {
-        ImageView carImage = new ImageView(gameActivity);
-        carImage.setLayoutParams(CAR_ENEMY_SIZE_PARAMS);
-        carImage.setImageResource(DRAWABLE_CAR);
-        return carImage;
     }
 }

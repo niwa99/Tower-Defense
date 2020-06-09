@@ -18,7 +18,6 @@ import static de.dhbw.util.Constants.DRAWABLE_TANK;
 import static de.dhbw.util.Constants.DRAWABLE_TANK_BOSS;
 import static de.dhbw.util.Constants.DRAWABLE_TANK_BOSS_HITTED;
 import static de.dhbw.util.Constants.DRAWABLE_TANK_HITTED;
-import static de.dhbw.util.Constants.TANK_ENEMY_SIZE_PARAMS;
 import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
 import static de.dhbw.util.Constants.TANK_LEVEL_1_VALUE;
 import static de.dhbw.util.Constants.TANK_LEVEL_2_HEALTHPOINTS;
@@ -32,17 +31,10 @@ public class BossTank extends AEnemy {
     private Timer timer = new Timer();
 
     public BossTank(String label, int level, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getBossTankHealthpointsByLevel(level), Tank.getTankSpeedByLevel(level), getBossTankValueByLevel(level), Tank.getTankLifePointsCostsByLevel(level)*2, gameActivity , EnemyType.BOSS_TANK, createBossTankImage(gameActivity));
+        super(label, UUID.randomUUID(), getBossTankHealthpointsByLevel(level), Tank.getTankSpeedByLevel(level), getBossTankValueByLevel(level), Tank.getTankLifePointsCostsByLevel(level)*2, gameActivity , EnemyType.BOSS_TANK, DRAWABLE_TANK_BOSS , DRAWABLE_TANK_BOSS_HITTED);
         this.level=level;
         car = new Car(EnemyType.CAR.getLabel(), 1, gameActivity);
         car.moveToPosition(new Position(-1000, -1000));
-    }
-
-    private static ImageView createBossTankImage(GameActivity gameActivity){
-        ImageView tankImage = new ImageView(gameActivity);
-        tankImage.setLayoutParams(TANK_ENEMY_SIZE_PARAMS);
-        tankImage.setImageResource(DRAWABLE_TANK_BOSS);
-        return tankImage;
     }
 
     public int getLevel(){
@@ -80,17 +72,5 @@ public class BossTank extends AEnemy {
             case 3: return BOSS_TANK_LEVEL_3_MULTIPLIKATOR;
             default: return BOSS_TANK_LEVEL_1_MULTIPLIKATOR;
         }
-    }
-
-    @Override
-    public void hit(int damage) {
-        super.reduceHealthPoints(damage);
-        gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK_BOSS_HITTED));
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                gameActivity.runOnUiThread(() -> image.setImageResource(DRAWABLE_TANK_BOSS));
-            }
-        }, 100);
     }
 }

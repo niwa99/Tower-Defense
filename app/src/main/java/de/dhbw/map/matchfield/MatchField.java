@@ -1,5 +1,6 @@
 package de.dhbw.map.matchfield;
 
+import android.view.View;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import de.dhbw.game.EnemyType;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.BossTank;
 import de.dhbw.map.objects.enemy.Car;
+import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
 import de.dhbw.util.Position;
@@ -74,20 +76,18 @@ public class MatchField {
 	 * @param enemy
 	 */
 	public void addEnemy(AEnemy enemy) {
-		ImageView enemyImage = enemy.getImage();
-		enemyImage.setX(-500);
-		enemyImage.setY(-500);
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemyImage));
+		EnemyView enemyView = enemy.getEnemyView();
+		enemyView.setPosition(new Position(-500,-500));
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemyView.getLayout()));
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 
 		if(enemy instanceof BossTank){
 		    Car car = ((BossTank) enemy).getCar();
-            ImageView carImage = car.getImage();
-            carImage.setX(-500);
-            carImage.setY(-500);
+            EnemyView carView = car.getEnemyView();
+			carView.setPosition(new Position(-500,-500));
 			enemies.add(car);
-			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(car.getImage()));
+			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(carView.getLayout()));
 		}
 	}
 
@@ -261,7 +261,7 @@ public class MatchField {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getImage()));
+		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getEnemyView().getLayout()));
 	}
 
 	/**
@@ -272,8 +272,8 @@ public class MatchField {
 		if(gameActivity.getGame().isAnimationOn()) {
 			GifImageView gif = new GifImageView(gameActivity);
 			gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
-			gif.setX(enemy.getImage().getX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2.2));
-			gif.setY(enemy.getImage().getY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2.2));
+			gif.setX(enemy.getPositionX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2.2));
+			gif.setY(enemy.getPositionY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2.2));
 			gif.setScaleX(0.2f);
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);

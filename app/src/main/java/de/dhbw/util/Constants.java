@@ -1,6 +1,7 @@
 package de.dhbw.util;
 
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import de.dhbw.R;
 
@@ -65,6 +66,9 @@ public class Constants {
     public static final int FIELD_SIZE = 150;
     public static final int AMOUNT_ROWS = 6;
     public static final int AMOUNT_COLUMNS = 11;
+
+    //Enemy Parameters
+    public static final RelativeLayout.LayoutParams ENEMY_LAYOUT_SIZE_PARAMS = new RelativeLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
 
     //TowerArtillery Parameters
@@ -203,8 +207,6 @@ public class Constants {
     public static final int TANK_LEVEL_3_VALUE = 25;
     public static final int TANK_LEVEL_3_LIFE_POINT_COSTS = 5;
 
-    public static final LinearLayout.LayoutParams TANK_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
-
     //Car Parameters
     public static final int CAR_LEVEL_1_HEALTHPOINTS = 10;
     public static final int CAR_LEVEL_1_SPEED = 985; //From 0 to 1000
@@ -220,8 +222,6 @@ public class Constants {
     public static final int CAR_LEVEL_3_SPEED = 995;
     public static final int CAR_LEVEL_3_VALUE = 20;
     public static final int CAR_LEVEL_3_LIFE_POINT_COSTS = 5;
-
-    public static final LinearLayout.LayoutParams CAR_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //PLANE Parameters
     public static final int PLANE_LEVEL_1_HEALTHPOINTS = 10;
@@ -239,12 +239,10 @@ public class Constants {
     public static final int PLANE_LEVEL_3_VALUE = 20;
     public static final int PLANE_LEVEL_3_LIFE_POINT_COSTS = 5;
 
-    public static final LinearLayout.LayoutParams PLANE_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
-
     //BossTank Parameters
-    public static final int BOSS_TANK_LEVEL_1_MULTIPLIKATOR = 4;
-    public static final int BOSS_TANK_LEVEL_2_MULTIPLIKATOR = 5;
-    public static final int BOSS_TANK_LEVEL_3_MULTIPLIKATOR = 6;
+    public static final int BOSS_TANK_LEVEL_1_MULTIPLIKATOR = 8;
+    public static final int BOSS_TANK_LEVEL_2_MULTIPLIKATOR = 10;
+    public static final int BOSS_TANK_LEVEL_3_MULTIPLIKATOR = 12;
 
     //Bullet Parameters
     public static final int BULLET_SPEED = 2; //if the number is low, the bullet will be quick

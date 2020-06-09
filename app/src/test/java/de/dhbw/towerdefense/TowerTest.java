@@ -11,6 +11,7 @@ import java.util.Collections;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
@@ -26,13 +27,14 @@ public class TowerTest {
     @Mock
     private ImageView imageDummy = mock(ImageView.class);
     private GameActivity dummyGameActivity = mock(GameActivity.class);
+    private EnemyView enemyView = mock(EnemyView.class);
 
     @Test
     public void towerRecognizesEnemyIfItsInRange() {
         //arrange
 
         ATower tower = new TowerArtillery(new Field(), 1, imageDummy, dummyGameActivity);
-        AEnemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
+        AEnemy enemy = new Tank("tank", 1, dummyGameActivity, enemyView);
         enemy.moveToPosition(new Position(50, 50));
 
         //act
@@ -46,7 +48,7 @@ public class TowerTest {
     public void towerDontShootEnemyIfItsNotInRange() {
         //arrange
         ATower tower = new TowerArtillery(new Field(), 1, imageDummy, dummyGameActivity);
-        AEnemy enemy = new Tank("tank", 1, imageDummy, dummyGameActivity);
+        AEnemy enemy = new Tank("tank", 1, dummyGameActivity, enemyView);
         enemy.moveToPosition(new Position(150, 150));
 
         //act

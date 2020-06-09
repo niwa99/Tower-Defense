@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.LaserRay;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.util.Position;
 
@@ -21,10 +22,13 @@ public class LaserRayTest {
     private ImageView dummyImage = mock(ImageView.class);
     private GameActivity dummyGameActivity = mock(GameActivity.class);
 
+    @Mock
+    private EnemyView enemyView = mock(EnemyView.class);
+
     @Test
     public void detectIfEnemyIsHitWhenEnemyMovesFromLeftToRight_SHOULD_BE_FalseWhenEnemyXGreater151() throws InterruptedException {
         //arrange
-        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyGameActivity, enemyView);
         enemy.moveTo(FIELD_SIZE/2, FIELD_SIZE/2);
         enemy.setHealthpoints(10000);
 
@@ -43,7 +47,7 @@ public class LaserRayTest {
     @Test
     public void detectIfEnemyIsHitWhenEnemyMovesThroughLaserStartPosition_SHOULD_AlwaysBeTrue() throws InterruptedException {
         //arrange
-        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyGameActivity, enemyView);
         enemy.moveTo(FIELD_SIZE, FIELD_SIZE);
         enemy.setHealthpoints(10000);
 
@@ -58,7 +62,7 @@ public class LaserRayTest {
     @Test
     public void detectIfEnemyIsHitWhenEnemyMovesOppositeDirectionOfLaserStartPosition_SHOULD_BE_TrueUntilOutOfRange() throws InterruptedException {
         //arrange
-        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyGameActivity, enemyView);
         enemy.moveTo(FIELD_SIZE,200);
         enemy.setHealthpoints(10000);
 
@@ -76,7 +80,7 @@ public class LaserRayTest {
     @Test
     public void detectIfTankIsInTheLaserRay_SHOULD_BE_TrueUntilTankMovesOut() throws InterruptedException {
         //arrange
-        AEnemy enemy = new Tank("tank1",1, dummyImage, dummyGameActivity);
+        AEnemy enemy = new Tank("tank1",1, dummyGameActivity, enemyView);
         enemy.moveTo(FIELD_SIZE*2, FIELD_SIZE);
         enemy.setHealthpoints(10000);
 

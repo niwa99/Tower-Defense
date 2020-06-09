@@ -22,6 +22,11 @@ public class BossTank extends AEnemy {
         car.moveToPosition(new Position(-1000, -1000));
     }
 
+    public BossTank(String label, int level, GameActivity gameActivity, EnemyView enemyView) {
+        super(label, UUID.randomUUID(), getBossTankHealthpointsByLevel(level), Tank.getTankSpeedByLevel(level), getBossTankValueByLevel(level), Tank.getTankLifePointsCostsByLevel(level)*2, gameActivity , EnemyType.BOSS_TANK, enemyView);
+        this.level=level;
+    }
+
     public int getLevel(){
         return level;
     }

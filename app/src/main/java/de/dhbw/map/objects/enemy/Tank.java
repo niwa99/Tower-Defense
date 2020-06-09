@@ -31,11 +31,11 @@ public class Tank extends AEnemy {
 	 * Constructor
 	 * @param label
 	 * @param level
-	 * @param image
 	 * @param gameActivity
+	 * @param enemyView
 	 */
-	public Tank(String label, int level, ImageView image, EnemyType type, GameActivity gameActivity) {
-		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, type, DRAWABLE_TANK, DRAWABLE_TANK_HITTED);
+	public Tank(String label, int level, GameActivity gameActivity, EnemyView enemyView) {
+		super(label, UUID.randomUUID(), getTankHealthpointsByLevel(level), getTankSpeedByLevel(level), getTankValueByLevel(level), getTankLifePointsCostsByLevel(level), gameActivity, EnemyType.TANK, enemyView);
 		timer = new Timer();
 	}
 

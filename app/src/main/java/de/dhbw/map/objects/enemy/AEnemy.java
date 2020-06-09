@@ -73,6 +73,22 @@ public abstract class AEnemy {
 
 	/**
 	 *
+	 * Constructor only for testing purposes
+	 */
+	public AEnemy(String label, UUID uuid, int hp, int speed, int value, int lifePointsCosts, GameActivity gameActivity, EnemyType enemyType, EnemyView enemyView) {
+		this.label = label;
+		this.uuid = uuid;
+		this.healthpoints = hp;
+		this.speed = speed;
+		this.value = value;
+		this.lifePointsCosts = lifePointsCosts;
+		this.gameActivity = gameActivity;
+		this.enemyType = enemyType;
+		this.enemyView = enemyView;
+	}
+
+	/**
+	 *
 	 * @return value of this enemy
 	 */
 	public int getValue() {

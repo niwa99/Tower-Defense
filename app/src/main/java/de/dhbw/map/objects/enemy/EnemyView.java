@@ -29,6 +29,10 @@ public class EnemyView {
 
     private Timer timer = new Timer();
 
+    public EnemyView(){
+
+    }
+
     public EnemyView(GameActivity gameActivity, int enemyImageID, int enemyHitImageID, int healthPoints){
         this.enemyImageID = enemyImageID;
         this.enemyHitImageID = enemyHitImageID;

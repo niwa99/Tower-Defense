@@ -10,11 +10,14 @@ import org.mockito.junit.MockitoJUnitRunner;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.Car;
+import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.CAR_HEALTHPOINTS;
+import static de.dhbw.util.Constants.DRAWABLE_TANK;
+import static de.dhbw.util.Constants.DRAWABLE_TANK_HITTED;
 import static de.dhbw.util.Constants.TANK_HEALTHPOINTS;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -30,11 +33,14 @@ public class EnemyTest {
     private ImageView dummyImage = mock(ImageView.class);
     private GameActivity dummyGameActivity = mock(GameActivity.class);
 
+    @Mock
+    private EnemyView enemyView = mock(EnemyView.class);
+
     @Test
     public void ifDamageToEnemiesIsLowerThanHP_EnemiesShouldBeAlive() {
         //arrange
-        AEnemy enemyTank = new Tank("tank1",1, dummyImage, dummyGameActivity);
-        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyTank = new Tank("tank1",1, dummyGameActivity, enemyView);
+        AEnemy enemyCar = new Car("car1", 1, dummyGameActivity, enemyView);
 
         //act
         enemyTank.reduceHealthPoints(TANK_HEALTHPOINTS-1);
@@ -48,8 +54,8 @@ public class EnemyTest {
     @Test
     public void ifDamageToEnemiesHigherThanHP_EnemiesShouldBeDead() {
         //arrange
-        AEnemy enemyTank = new Tank("tank1", 1, dummyImage, dummyGameActivity);
-        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyTank = new Tank("tank1", 1, dummyGameActivity, enemyView);
+        AEnemy enemyCar = new Car("car1", 1, dummyGameActivity, enemyView);
 
         //act
         enemyTank.reduceHealthPoints(TANK_HEALTHPOINTS+1);
@@ -63,8 +69,8 @@ public class EnemyTest {
     @Test
     public void whenEnemiesMove_ThePositionsShouldChange() {
         //arrange
-        AEnemy enemyTank = new Tank("tank", 1, dummyImage, dummyGameActivity);
-        AEnemy enemyCar = new Car("car1", 1, dummyImage, dummyGameActivity);
+        AEnemy enemyTank = new Tank("tank", 1, dummyGameActivity, enemyView);
+        AEnemy enemyCar = new Car("car1", 1, dummyGameActivity, enemyView);
 
         MapStructure map = new MapStructure();
 

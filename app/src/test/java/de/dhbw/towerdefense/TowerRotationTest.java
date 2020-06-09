@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.enemy.Tank;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.ATower;
@@ -27,13 +28,14 @@ public class TowerRotationTest {
     @Mock
     private ImageView dummyImage = mock(ImageView.class);
     private GameActivity dummyGameActivity = mock(GameActivity.class);
+    private EnemyView enemyView = mock(EnemyView.class);
 
     @Test
     public void checkRotationIsOnCorrectAngle() {
         //arrange
         List<AEnemy> enemy = new ArrayList<>();
 
-        enemy.add(new Tank("tank1",1, dummyImage, dummyGameActivity));
+        enemy.add(new Tank("tank1",1, dummyGameActivity, enemyView));
         ATower tower = new TowerArtillery(new Field(1, 2, 3, FieldDescription.FREE), 1, dummyImage, dummyGameActivity);
         //act
         enemy.get(0).moveTo(3,3);

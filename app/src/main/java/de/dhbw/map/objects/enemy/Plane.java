@@ -32,11 +32,11 @@ public class Plane extends AEnemy {
      * Constructor (TEST PURPOSE ONLY!)
      * @param label
      * @param level
-     * @param image
      * @param gameActivity
+     * @param enemyView
      */
-    public Plane(String label, int level, ImageView image, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, DRAWABLE_PLANE, DRAWABLE_PLANE_HITTED);
+    public Plane(String label, int level, GameActivity gameActivity, EnemyView enemyView) {
+        super(label, UUID.randomUUID(), getPlaneHealthpointsByLevel(level), getPlaneSpeedByLevel(level), getPlaneValueByLevel(level), getPlaneLifePointsCostsByLevel(level), gameActivity, EnemyType.PLANE, enemyView);
     }
     @Override
     protected Field getEnemyField(MapStructure map){

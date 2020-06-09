@@ -29,11 +29,11 @@ public class Car extends AEnemy {
      * Constructor (TEST PURPOSE ONLY!)
      * @param label
      * @param level
-     * @param image
      * @param gameActivity
+     * @param enemyView
      */
-    public Car(String label, int level, ImageView image, GameActivity gameActivity) {
-        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, DRAWABLE_CAR, DRAWABLE_CAR_HITTED);
+    public Car(String label, int level, GameActivity gameActivity, EnemyView enemyView) {
+        super(label, UUID.randomUUID(), getCarHealthpointsByLevel(level), getCarSpeedByLevel(level), getCarValueByLevel(level), getCarLifePointsCostsByLevel(level), gameActivity, EnemyType.CAR, enemyView);
     }
 
     /**

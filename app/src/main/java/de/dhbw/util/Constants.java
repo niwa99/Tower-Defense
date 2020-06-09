@@ -191,58 +191,25 @@ public class Constants {
 
 
     //Tank Parameters
-    public static final int TANK_LEVEL_1_HEALTHPOINTS = 20;
-    public static final int TANK_LEVEL_1_SPEED = 975; //From 0 to 1000
-    public static final int TANK_LEVEL_1_VALUE = 5;
-    public static final int TANK_LEVEL_1_LIFE_POINT_COSTS = 5;
-
-
-    public static final int TANK_LEVEL_2_HEALTHPOINTS = 30;
-    public static final int TANK_LEVEL_2_SPEED = 980;
-    public static final int TANK_LEVEL_2_VALUE = 10;
-    public static final int TANK_LEVEL_2_LIFE_POINT_COSTS = 5;
-
-    public static final int TANK_LEVEL_3_HEALTHPOINTS = 50;
-    public static final int TANK_LEVEL_3_SPEED = 985;
-    public static final int TANK_LEVEL_3_VALUE = 25;
-    public static final int TANK_LEVEL_3_LIFE_POINT_COSTS = 5;
+    public static final int TANK_HEALTHPOINTS = 20;
+    public static final int TANK_SPEED = 975; //From 0 to 1000
+    public static final int TANK_VALUE = 5;
+    public static final int TANK_LIFE_POINT_COSTS = 5;
+    public static final LinearLayout.LayoutParams TANK_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //Car Parameters
-    public static final int CAR_LEVEL_1_HEALTHPOINTS = 10;
-    public static final int CAR_LEVEL_1_SPEED = 985; //From 0 to 1000
-    public static final int CAR_LEVEL_1_VALUE = 5;
-    public static final int CAR_LEVEL_1_LIFE_POINT_COSTS = 5;
-
-    public static final int CAR_LEVEL_2_HEALTHPOINTS = 15;
-    public static final int CAR_LEVEL_2_SPEED = 990;
-    public static final int CAR_LEVEL_2_VALUE = 10;
-    public static final int CAR_LEVEL_2_LIFE_POINT_COSTS = 5;
-
-    public static final int CAR_LEVEL_3_HEALTHPOINTS = 25;
-    public static final int CAR_LEVEL_3_SPEED = 995;
-    public static final int CAR_LEVEL_3_VALUE = 20;
-    public static final int CAR_LEVEL_3_LIFE_POINT_COSTS = 5;
+    public static final int CAR_HEALTHPOINTS = 10;
+    public static final int CAR_SPEED = 985; //From 0 to 1000
+    public static final int CAR_VALUE = 5;
+    public static final int CAR_LIFE_POINT_COSTS = 5;
+    public static final LinearLayout.LayoutParams CAR_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //PLANE Parameters
-    public static final int PLANE_LEVEL_1_HEALTHPOINTS = 10;
-    public static final int PLANE_LEVEL_1_SPEED = 985; //From 0 to 1000
-    public static final int PLANE_LEVEL_1_VALUE = 5;
-    public static final int PLANE_LEVEL_1_LIFE_POINT_COSTS = 5;
-
-    public static final int PLANE_LEVEL_2_HEALTHPOINTS = 15;
-    public static final int PLANE_LEVEL_2_SPEED = 990;
-    public static final int PLANE_LEVEL_2_VALUE = 10;
-    public static final int PLANE_LEVEL_2_LIFE_POINT_COSTS = 5;
-
-    public static final int PLANE_LEVEL_3_HEALTHPOINTS = 25;
-    public static final int PLANE_LEVEL_3_SPEED = 995;
-    public static final int PLANE_LEVEL_3_VALUE = 20;
-    public static final int PLANE_LEVEL_3_LIFE_POINT_COSTS = 5;
-
-    //BossTank Parameters
-    public static final int BOSS_TANK_LEVEL_1_MULTIPLIKATOR = 8;
-    public static final int BOSS_TANK_LEVEL_2_MULTIPLIKATOR = 10;
-    public static final int BOSS_TANK_LEVEL_3_MULTIPLIKATOR = 12;
+    public static final int PLANE_HEALTHPOINTS = 10;
+    public static final int PLANE_SPEED = 985; //From 0 to 1000
+    public static final int PLANE_VALUE = 5;
+    public static final int PLANE_LIFE_POINT_COSTS = 5;
+    public static final LinearLayout.LayoutParams PLANE_ENEMY_SIZE_PARAMS = new LinearLayout.LayoutParams(FIELD_SIZE, FIELD_SIZE);
 
     //Bullet Parameters
     public static final int BULLET_SPEED = 2; //if the number is low, the bullet will be quick

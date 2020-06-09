@@ -57,12 +57,7 @@ public class Tank extends AEnemy {
 	 * @return healthpoints
 	 */
 	private static int getTankHealthpointsByLevel(int level) {
-		switch (level) {
-			case 1: return TANK_LEVEL_1_HEALTHPOINTS;
-			case 2: return TANK_LEVEL_2_HEALTHPOINTS;
-			case 3: return TANK_LEVEL_3_HEALTHPOINTS;
-			default: return TANK_LEVEL_1_HEALTHPOINTS;
-		}
+		return TANK_HEALTHPOINTS * level;
 	}
 
 	/**
@@ -71,12 +66,7 @@ public class Tank extends AEnemy {
 	 * @return speed
 	 */
 	public static int getTankSpeedByLevel(int level) {
-		switch (level) {
-			case 1: return TANK_LEVEL_1_SPEED;
-			case 2: return TANK_LEVEL_2_SPEED;
-			case 3: return TANK_LEVEL_3_SPEED;
-			default: return TANK_LEVEL_1_SPEED;
-		}
+		return TANK_SPEED;
 	}
 
 	/**
@@ -85,12 +75,7 @@ public class Tank extends AEnemy {
 	 * @return value
 	 */
 	private static int getTankValueByLevel(int level) {
-		switch (level) {
-			case 1: return TANK_LEVEL_1_VALUE;
-			case 2: return TANK_LEVEL_2_VALUE;
-			case 3: return TANK_LEVEL_3_VALUE;
-			default: return TANK_LEVEL_1_VALUE;
-		}
+		return TANK_VALUE * level;
 	}
 
 	/**
@@ -99,11 +84,6 @@ public class Tank extends AEnemy {
 	 * @return lifepointcosts
 	 */
 	public static int getTankLifePointsCostsByLevel(int level) {
-		switch (level) {
-			case 1: return TANK_LEVEL_1_LIFE_POINT_COSTS;
-			case 2: return TANK_LEVEL_2_LIFE_POINT_COSTS;
-			case 3: return TANK_LEVEL_3_LIFE_POINT_COSTS;
-			default: return TANK_LEVEL_1_LIFE_POINT_COSTS;
-		}
+		return TANK_LIFE_POINT_COSTS * level;
 	}
 }

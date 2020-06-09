@@ -8,7 +8,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.List;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.bullet.Bomb;
@@ -24,7 +23,7 @@ import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 
 import static de.dhbw.util.Constants.FIELD_SIZE;
-import static de.dhbw.util.Constants.TANK_LEVEL_1_HEALTHPOINTS;
+import static de.dhbw.util.Constants.TANK_HEALTHPOINTS;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -74,10 +73,10 @@ public class BulletTest {
         Thread.sleep(2000);
 
         //assert
-        assertNotEquals(enemyTarget.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
-        assertNotEquals(enemySideshot.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
-        assertNotEquals(enemySideshot2.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
-        assertEquals(enemyNotInRange.getHealthPoints(), TANK_LEVEL_1_HEALTHPOINTS);
+        assertNotEquals(enemyTarget.getHealthPoints(), TANK_HEALTHPOINTS);
+        assertNotEquals(enemySideshot.getHealthPoints(), TANK_HEALTHPOINTS);
+        assertNotEquals(enemySideshot2.getHealthPoints(), TANK_HEALTHPOINTS);
+        assertEquals(enemyNotInRange.getHealthPoints(), TANK_HEALTHPOINTS);
     }
 
     @Test

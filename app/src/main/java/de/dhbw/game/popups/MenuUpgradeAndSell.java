@@ -56,10 +56,12 @@ public class MenuUpgradeAndSell extends AMenu implements IMoneyListener {
     @Override
     public void performMoneyUpdate(int money) {
         Button linearLayout = findViewById(R.id.upgrade);
-        if (upgradeCost <= money && level < maxLevel) {
-            runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.green)));
-        } else {
-            runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.red)));
+        if(linearLayout!=null){
+            if (upgradeCost <= money && level < maxLevel) {
+                runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.green)));
+            } else {
+                runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.red)));
+            }
         }
     }
 

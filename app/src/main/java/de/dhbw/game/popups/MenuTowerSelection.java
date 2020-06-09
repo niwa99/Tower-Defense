@@ -54,11 +54,13 @@ public class MenuTowerSelection extends AMenu implements IMoneyListener {
     public void performMoneyUpdate(int money) {
         for(int i = 0; i < getMenuLayout().getChildCount(); i++){
             LinearLayout linearLayout = getMenuLayout().getChildAt(i).findViewById(R.id.linearLayoutTower);
-            int price = Integer.parseInt(((TextView)linearLayout.getChildAt(0)).getText().toString());
-            if (price > money) {
-                runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.red)));
-            } else {
-                runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.green)));
+            if(linearLayout!=null) {
+                int price = Integer.parseInt(((TextView) linearLayout.getChildAt(0)).getText().toString());
+                if (price > money) {
+                    runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.red)));
+                } else {
+                    runOnUiThread(() -> linearLayout.setBackgroundColor(getColor(R.color.green)));
+                }
             }
         }
     }

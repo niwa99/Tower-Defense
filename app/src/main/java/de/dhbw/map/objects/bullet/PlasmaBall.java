@@ -1,9 +1,13 @@
 package de.dhbw.map.objects.bullet;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import de.dhbw.activities.GameActivity;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.map.objects.tower.ATower;
+import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.Constants;
 import de.dhbw.util.Position;
 
@@ -49,6 +53,7 @@ public class PlasmaBall extends ABullet {
         super.hitEnemy();
 
         enemies.remove(targetEnemy);
+        enemies = new ArrayList<>(enemies).stream().filter(e -> ATower.filterPlaneIfTowerCannotFocus(TowerType.PLASMARIZER, e)).collect(Collectors.toList());
 
         AEnemy nextEnemy = null;
         for (int i = 0; i < enemies.size(); i++) {

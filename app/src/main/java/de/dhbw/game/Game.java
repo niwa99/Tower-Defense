@@ -150,7 +150,9 @@ public class Game {
         match.calculateDelay(time);
         countDownTimer.stopTimer();
         waveTimer.cancel();
+        waveTimer = null;
         gameTimer.cancel();
+        gameTimer = null;
     }
 
     public void continueTimers(){
@@ -180,7 +182,9 @@ public class Game {
 
     public void startNextWave(long delay){
         if (match.hasNext()) {
-            gameTimer.cancel();
+            if (gameTimer != null) {
+                gameTimer.cancel();
+            }
             gameTimer = new Timer();
             gameTimer.schedule(new TimerTask() {
                 @Override
@@ -202,7 +206,9 @@ public class Game {
 
     private void startWave(AWave wave, int seconds) {
         //timer
-	    waveTimer.cancel();
+        if (waveTimer != null) {
+	        waveTimer.cancel();
+        }
 	    waveTimer = new Timer();
         countDownTimer.timer(seconds);
 

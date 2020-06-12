@@ -137,8 +137,10 @@ public class MatchField {
 				}
 			}
 		};
-		enemy.setTimerTask(timerTask);
-		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed())+enemy.getAndReduceSlowness());
+		if (matchFieldTimer != null) {
+			enemy.setTimerTask(timerTask);
+			matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed()) + enemy.getAndReduceSlowness());
+		}
 	}
 
 	/**
@@ -176,6 +178,7 @@ public class MatchField {
 		towers.stream().forEach(t -> t.calculateDelay(time));
 		enemies.stream().forEach(e -> e.setPaused(true));
 		matchFieldTimer.cancel();
+		matchFieldTimer = null;
 	}
 
 	/**
@@ -184,7 +187,11 @@ public class MatchField {
 	public void continueTimers(){
 		matchFieldTimer = new Timer();
 		enemies.stream().forEach(e -> {
-			startEnemyMovement(e);
+			if (e.getSlowness() == 0) {
+				startEnemyMovement(e);
+			} else {
+				e.slowDown(e.getSlowness());
+			}
 			e.setPaused(false);
 		});
 		towers.stream().forEach(t -> startTowerFire(t));

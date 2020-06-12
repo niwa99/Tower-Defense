@@ -122,8 +122,12 @@ public class Game {
 
     public void stop(boolean isRegularStop) {
 	    musicPLayer.stop();
-        waveTimer.cancel();
-        gameTimer.cancel();
+	    if(waveTimer!=null){
+            waveTimer.cancel();
+        }
+        if(gameTimer!=null){
+            gameTimer.cancel();
+        }
         countDownTimer.stopTimer();
         if (!isRegularStop) {
             matchField.stopTimer();
@@ -366,7 +370,7 @@ public class Game {
 	    builder.setMessage(message);
 	    builder.setPositiveButton("OK", (dialogInterface, i) -> gameActivity.returnToMainMenu());
 	    builder.setCancelable(false);
-	    gameActivity.runOnUiThread(() -> builder.create().show());
+	    gameActivity.showBuilder(builder);
     }
 
     public void setMenu(IMoneyListener listener) {
@@ -530,9 +534,9 @@ public class Game {
 
     private void triggerSpawnButtonImageChange(){
 	    if(lastEnemyOfWaveSpawned && !lastWaveOut){
-	        gameActivity.runOnUiThread(() -> spawnButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.arrow_spawn_button, null)));
+	        gameActivity.setForeGround(spawnButton, R.drawable.arrow_spawn_button);
         }else{
-            gameActivity.runOnUiThread(() -> spawnButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.transparent_background, null)));
+            gameActivity.setForeGround(spawnButton, R.drawable.transparent_background);
         }
     }
 

@@ -141,7 +141,7 @@ Mainly, an internal use is intended.
 | [Travis CI](https://travis-ci.org/github/niwa99/Tower-Defense) |
 | [SRS](https://github.com/niwa99/Tower-Defense/blob/master/documents/SRS.md) |
 | [SAD](https://github.com/niwa99/Tower-Defense/blob/master/documents/SAD.md) |
-| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-04-25.png) |
+| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-06-12.png) |
 | [UC 1: Start the game from the menu](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UCS-Start_The_Game_From_The_Menu/UCS-Start_The_Game_From_The_Menu.md) |
 | [UC 2: Start waves](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UCS-Start_Waves/UCS-Start_Waves.md) |
 | [UC 3: Build towers on selected area](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UCS-Build_Towers_On_Selected_Area/UCS-Build_Towers_On_Selected_Area.md) |

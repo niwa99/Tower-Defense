@@ -105,7 +105,7 @@ The document should be used for internal purposes only.
 | [Blog](https://dh-towerdefense.de/)                                                                                 | 20/10/2019 |
 | [GitHub](https://github.com/niwa99/Tower-Defense)                                                                   | 20/10/2019 |
 | [Jira](http://jira.dh-towerdefense.de)                                                                              | 20/10/2019 |
-| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-04-23.png) | 23/04/2020 |
+| [Use Case Diagram](https://github.com/niwa99/Tower-Defense/blob/master/documents/UCS/UseCaseDiagram-2020-06-12.png) | 23/04/2020 |
 
 ### 1.5 Overview
 
@@ -126,7 +126,7 @@ On top of those basic features, custom editing functionalities for enemies, towe
 
 Our Use-Case-Diagram
 
-![UseCaseDiagram](./UCS/UseCaseDiagram-2020-04-25.png)
+![UseCaseDiagram](./UCS/UseCaseDiagram-2020-06-12.png)
 
 ### 2.3 User characteristics
 

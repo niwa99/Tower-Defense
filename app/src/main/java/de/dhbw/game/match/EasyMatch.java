@@ -10,11 +10,11 @@ public class EasyMatch extends AMatch {
     private static final int waveTime = 50;
     private static final int waveSpeed = 1500;
     private static final int startMoney = 35;
-    private static WaveComposition firstWaveCar = new WaveComposition(EnemyType.CAR, 1, 3);
-    private static WaveComposition secondWaveTank = new WaveComposition(EnemyType.TANK, 1, 3);
-    private static WaveComposition thirdWaveCar = new WaveComposition(EnemyType.CAR, 2, 5);
-    private static WaveComposition fourthWaveTank = new WaveComposition(EnemyType.TANK, 2, 6);
-    private static WaveComposition fifthWavePlane = new WaveComposition(EnemyType.PLANE, 1, 6);
+    private static WaveComposition w1_Car = new WaveComposition(EnemyType.CAR, 1, 3);
+    private static WaveComposition w2_Tank = new WaveComposition(EnemyType.TANK, 1, 3);
+    private static WaveComposition w3_Car = new WaveComposition(EnemyType.CAR, 2, 5);
+    private static WaveComposition w4_Tank = new WaveComposition(EnemyType.TANK, 2, 6);
+    private static WaveComposition w5_Plane = new WaveComposition(EnemyType.PLANE, 1, 6);
     private static WaveComposition w6_Tank = new WaveComposition(EnemyType.TANK, 2, 8);
     private static WaveComposition w7_Car = new WaveComposition(EnemyType.CAR, 3, 3);
     private static WaveComposition w7_Tank = new WaveComposition(EnemyType.TANK, 3, 4);
@@ -62,25 +62,25 @@ public class EasyMatch extends AMatch {
     @Override
     public void create(GameActivity gameActivity) {
 
-        Wave firstWave = new Wave(waveSpeed);
-        firstWave.addWaveCompositions(firstWaveCar);
-        firstWave.generate(gameActivity);
+        Wave wave1 = new Wave(waveSpeed);
+        wave1.addWaveCompositions(w1_Car);
+        wave1.generate(gameActivity);
 
-        Wave secondWave = new Wave(waveSpeed);
-        secondWave.addWaveCompositions(secondWaveTank);
-        secondWave.generate(gameActivity);
+        Wave wave2 = new Wave(waveSpeed);
+        wave2.addWaveCompositions(w2_Tank);
+        wave2.generate(gameActivity);
 
-        Wave thirdWave = new Wave(waveSpeed);
-        thirdWave.addWaveCompositions(thirdWaveCar);
-        thirdWave.generate(gameActivity);
+        Wave wave3 = new Wave(waveSpeed);
+        wave3.addWaveCompositions(w3_Car);
+        wave3.generate(gameActivity);
 
-        Wave fourthWave = new Wave(waveSpeed);
-        fourthWave.addWaveCompositions(fourthWaveTank);
-        fourthWave.generate(gameActivity);
+        Wave wave4 = new Wave(waveSpeed);
+        wave4.addWaveCompositions(w4_Tank);
+        wave4.generate(gameActivity);
 
-        Wave fithWave = new Wave(waveSpeed);
-        fithWave.addWaveCompositions(fifthWavePlane);
-        fithWave.generate(gameActivity);
+        Wave wave5 = new Wave(waveSpeed);
+        wave5.addWaveCompositions(w5_Plane);
+        wave5.generate(gameActivity);
 
         Wave wave6 = new Wave(waveSpeed);
         wave6.addWaveCompositions(w6_Tank);
@@ -182,7 +182,7 @@ public class EasyMatch extends AMatch {
         wave30.addWaveCompositions(w30_TankBoss);
         wave30.generate(gameActivity);
 
-        addWaves(firstWave, secondWave, thirdWave, fourthWave, fithWave, wave6, wave7, wave8, wave9,
+        addWaves(wave1, wave2, wave3, wave4, wave5, wave6, wave7, wave8, wave9,
                 wave10, wave11, wave12, wave13, wave14, wave15, wave16, wave17, wave18, wave19,
                 wave20, wave21, wave22, wave23, wave24, wave25, wave26, wave27, wave28, wave29,
                 wave30);

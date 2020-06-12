@@ -1,6 +1,7 @@
 package de.dhbw.map.objects.bullet;
 
 import android.animation.ObjectAnimator;
+import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.Timer;
@@ -8,6 +9,7 @@ import java.util.TimerTask;
 
 import de.dhbw.ImageElevation;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.util.Position;
@@ -24,6 +26,7 @@ public abstract class ABullet {
     protected int damage;
     protected GameActivity gameActivity;
     private int bulletSpeed = BULLET_SPEED;
+    private Handler handler;
 
     /**
      * Constructor
@@ -36,6 +39,7 @@ public abstract class ABullet {
      */
     public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         this.gameActivity = gameActivity;
+        handler = gameActivity.getHandler();
         bulletImage = new ImageView(gameActivity);
         bulletImage.setImageResource(bulletImageID);
         bulletImage.setLayoutParams(BULLET_SIZE_PARAMS);
@@ -62,7 +66,6 @@ public abstract class ABullet {
      * @param gameActivity
      */
     public ABullet(Position spawnPosition, AEnemy targetedEnemy, int damage, ImageView image, GameActivity gameActivity) {
-        this.gameActivity = gameActivity;
         this.bulletImage = image;
 
         this.targetEnemy = targetedEnemy;
@@ -91,13 +94,13 @@ public abstract class ABullet {
      * @param distanceToEnemy
      */
     protected void startAnimation(int distanceToEnemy) {
-        gameActivity.addView(bulletImage);
+        GameActivity.runActionOnUI(handler, UIActions.addView, bulletImage);
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
         animatorX.setDuration(bulletSpeed * distanceToEnemy);
         animatorY.setDuration(bulletSpeed * distanceToEnemy);
-        gameActivity.startAnimator(animatorX);
-        gameActivity.startAnimator(animatorY);
+        GameActivity.runActionOnUI(handler, UIActions.startAnimator, animatorX);
+        GameActivity.runActionOnUI(handler, UIActions.startAnimator, animatorY);
     }
 
     /**
@@ -109,7 +112,7 @@ public abstract class ABullet {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameActivity.removeView(bulletImage);
+                GameActivity.runActionOnUI(handler, UIActions.removeView, bulletImage);
                 if (targetEnemy != null) { //Check if AEnemy got killed in the meantime
                     hitEnemy();
                     System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");

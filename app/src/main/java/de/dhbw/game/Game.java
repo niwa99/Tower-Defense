@@ -2,6 +2,7 @@ package de.dhbw.game;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,6 +21,7 @@ import java.util.TimerTask;
 import de.dhbw.ImageElevation;
 import de.dhbw.activities.GameActivity;
 import de.dhbw.R;
+import de.dhbw.activities.UIActions;
 import de.dhbw.game.match.AMatch;
 import de.dhbw.game.match.EasyMatch;
 import de.dhbw.game.match.HardMatch;
@@ -88,8 +90,11 @@ public class Game {
 
     private MusicPlayer musicPLayer;
 
+    private Handler handler;
+
 	public Game(GameActivity gameActivity) {
 	    this.gameActivity = gameActivity;
+	    handler = gameActivity.getHandler();
 	    mapStructure = new MapStructure();
         matchField = new MatchField(gameActivity);
         countDownTimer = new StatusBarCountDownTimer(gameActivity);
@@ -534,9 +539,9 @@ public class Game {
 
     private void triggerSpawnButtonImageChange(){
 	    if(lastEnemyOfWaveSpawned && !lastWaveOut){
-	        gameActivity.setForeGround(spawnButton, R.drawable.arrow_spawn_button);
+	        GameActivity.runActionOnUI(handler, UIActions.setForeGound, spawnButton, R.drawable.arrow_spawn_button);
         }else{
-            gameActivity.setForeGround(spawnButton, R.drawable.transparent_background);
+	        GameActivity.runActionOnUI(handler, UIActions.setForeGound, spawnButton, R.drawable.transparent_background);
         }
     }
 
@@ -548,7 +553,7 @@ public class Game {
         image.setY(field.getSpawnPoint().getY() + field.getSizeInPx()/2 - tower.getRange());
         image.setLayoutParams(new LinearLayout.LayoutParams(tower.getRange()*2, tower.getRange()*2));
         image.setElevation(ImageElevation.RANGE_INDICATOR.elevation);
-        gameActivity.getMapFrameLayout().addView(image);
+        GameActivity.runActionOnUI(handler, UIActions.addView, image);
     }
 
     public void openTowerPopup(ATower tower, Field field) {

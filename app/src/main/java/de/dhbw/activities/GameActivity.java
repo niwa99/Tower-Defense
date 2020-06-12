@@ -33,6 +33,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
     private static final int UI_ANIMATION_DELAY = 300;
+    private final Handler handler = getUiHandler();
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private MediaPlayer mediaPlayer = new MediaPlayer();
@@ -277,8 +278,13 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         runOnUiThread(()-> view.setRotation(rotation));
     }
 
-    public Handler getUiHandler(){
-        final Handler handler = new Handler(){
+    public Handler getHandler() {
+        return handler;
+    }
+
+    @SuppressLint("HandlerLeak")
+    private Handler getUiHandler(){
+        return new Handler(){
             @Override
             public void handleMessage(Message message){
                 if(message.what==UIActions.moveImage.getId()){
@@ -297,10 +303,31 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
                 }else if(message.what==UIActions.removeView.getId()){
                     View view = ((View)message.obj);
                     mapLayout.removeView(view);
+                } else if (message.what == UIActions.setForeGound.getId()) {
+                    View view = (View) message.obj;
+                    view.setForeground(getDrawable(message.arg1));
+                } else if (message.what == UIActions.startAnimator.getId()) {
+                    ObjectAnimator animator = (ObjectAnimator) message.obj;
+                    animator.start();
                 }
                 super.handleMessage(message);
             }
         };
-        return handler;
+    }
+
+    public static void runActionOnUI(Handler handler, UIActions action, Object object, int... args) {
+        Message message = new Message();
+        message.what = action.getId();
+        message.obj = object;
+        for (int i = 0; i < args.length; i++) {
+            if (i == 0) {
+                message.arg1 = args[0];
+            } else if (i == 1) {
+                message.arg2 = args[1];
+            } else {
+                break;
+            }
+        }
+        handler.sendMessage(message);
     }
 }

@@ -44,7 +44,7 @@ public class MatchField {
 	 */
 	public MatchField(GameActivity gameActivity) {
 		this.gameActivity = gameActivity;
-		handler=gameActivity.getUiHandler();
+		handler=gameActivity.getHandler();
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
 	}
@@ -57,19 +57,19 @@ public class MatchField {
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
 
-		gameActivity.addView(baseImage);
-		if(headImage.isPresent()){
-			gameActivity.addView(headImage.get());
+		GameActivity.runActionOnUI(handler, UIActions.addView, baseImage);
 
+		if(headImage.isPresent()){
+			GameActivity.runActionOnUI(handler, UIActions.addView, headImage);
 		}
 		if(tower.getLevel()>1) {
-			gameActivity.addView(tower.getStarlvlTwo());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlTwo());
 		}
 		if(tower.getLevel()>2) {
-			gameActivity.addView(tower.getStarlvlThree());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlThree());
 		}
 		if(tower.getLevel()>3) {
-			gameActivity.addView(tower.getStarlvlFour());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlFour());
 		}
 		towers.add(tower);
 		startTowerFire(tower);
@@ -83,7 +83,7 @@ public class MatchField {
 	public void addEnemy(AEnemy enemy) {
 		EnemyView enemyView = enemy.getEnemyView();
 		enemyView.setPosition(new Position(-500,-500));
-		addView(enemyView.getLayout());
+		GameActivity.runActionOnUI(handler, UIActions.addView, enemyView.getLayout());
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 
@@ -92,22 +92,8 @@ public class MatchField {
             EnemyView carView = car.getEnemyView();
 			carView.setPosition(new Position(-500,-500));
 			enemies.add(car);
-			addView(carView.getLayout());
+			GameActivity.runActionOnUI(handler, UIActions.addView, carView.getLayout());
 		}
-	}
-
-	private void addView(View view){
-		Message msg = new Message();
-		msg.what= UIActions.addView.getId();
-		msg.obj=view;
-		handler.sendMessage(msg);
-	}
-
-	private void removeView(View view){
-		Message msg = new Message();
-		msg.what= UIActions.removeView.getId();
-		msg.obj=view;
-		handler.sendMessage(msg);
 	}
 
 	/**
@@ -294,7 +280,7 @@ public class MatchField {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
-		removeView(enemy.getEnemyView().getLayout());
+		GameActivity.runActionOnUI(handler, UIActions.removeView, enemy.getEnemyView().getLayout());
 	}
 
 	/**
@@ -311,11 +297,11 @@ public class MatchField {
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
 			gif.setElevation(ImageElevation.ANIMATION.elevation);
-			addView(gif);
+			GameActivity.runActionOnUI(handler, UIActions.addView, gif);
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
-					removeView(gif);
+					GameActivity.runActionOnUI(handler, UIActions.removeView, gif);
 					gif.clearAnimation();
 				}
 			}, 500);
@@ -364,15 +350,18 @@ public class MatchField {
 
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
-		gameActivity.removeView(baseImage);
+		GameActivity.runActionOnUI(handler, UIActions.removeView, baseImage);
 		if(headImage.isPresent()){
-			gameActivity.removeView(headImage.get());
+			GameActivity.runActionOnUI(handler, UIActions.removeView, headImage.get());
 		}
 		if(tower.getLevel()>1) {
-			gameActivity.removeView(tower.getStarlvlTwo());
+			GameActivity.runActionOnUI(handler, UIActions.removeView, tower.getStarlvlTwo());
 		}
 		if(tower.getLevel()>2) {
-			gameActivity.removeView(tower.getStarlvlThree());
+			GameActivity.runActionOnUI(handler, UIActions.removeView, tower.getStarlvlThree());
+		}
+		if(tower.getLevel()>3) {
+			GameActivity.runActionOnUI(handler, UIActions.removeView, tower.getStarlvlFour());
 		}
 	}
 

@@ -1,5 +1,6 @@
 package de.dhbw.map.objects.bullet;
 
+import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.stream.Collectors;
 
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.tower.ATower;
@@ -24,6 +26,7 @@ public class Bomb extends ABullet {
 
     private List<AEnemy> allEnemies;
     private final int range = BOMB_RANGE;
+    private Handler handler;
 
     /**
      * Constructor
@@ -37,6 +40,7 @@ public class Bomb extends ABullet {
      */
     public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, int bulletImageID, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, bulletImageID, gameActivity, offset);
+        handler = gameActivity.getHandler();
         this.allEnemies = allEnemies;
     }
 
@@ -105,11 +109,11 @@ public class Bomb extends ABullet {
             gif.setScaleX(0.15f);
             gif.setScaleY(0.15f);
             gif.setImageResource(R.drawable.explosion_gif);
-            gameActivity.addView(gif);
+            GameActivity.runActionOnUI(handler, UIActions.addView, gif);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameActivity.removeView(gif);
+                    GameActivity.runActionOnUI(handler, UIActions.removeView, gif);
                 }
             }, 500);
         }

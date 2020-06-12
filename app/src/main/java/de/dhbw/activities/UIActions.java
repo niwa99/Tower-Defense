@@ -5,7 +5,9 @@ public enum UIActions {
     rotateImage(2),
     setImageResource(3),
     addView(4),
-    removeView(5);
+    removeView(5),
+    setForeGound(6),
+    startAnimator(7);
 
     int id;
 

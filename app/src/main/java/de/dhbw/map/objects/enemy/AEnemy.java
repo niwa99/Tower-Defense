@@ -70,7 +70,7 @@ public abstract class AEnemy {
 		this.gameActivity = gameActivity;
 		this.enemyType = enemyType;
 		RelativeLayout enemyLayout = (RelativeLayout) gameActivity.getLayoutInflater().inflate(R.layout.enemy_layout, null);
-		this.enemyView = new EnemyView(enemyLayout, gameActivity.getUiHandler(), enemyImageID, enemyHitImageID, hp);
+		this.enemyView = new EnemyView(enemyLayout, gameActivity.getHandler(), enemyImageID, enemyHitImageID, hp);
 	}
 
 	/**

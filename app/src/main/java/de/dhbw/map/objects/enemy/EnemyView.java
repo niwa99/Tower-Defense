@@ -60,38 +60,21 @@ public class EnemyView {
      * Set the rotation of the enemy image according to its direction.
      */
     protected void resolveRotation(Direction direction, int x, int y) {
-            moveView(enemyLayout,x,y);
-            switch (direction) {
-                case UP:
-                    rotateImage(enemyLayout, 270);
-                    break;
-                case RIGHT:
-                    rotateImage(enemyLayout, 0);
-                    break;
-                case DOWN:
-                    rotateImage(enemyLayout, 90);
-                    break;
-                case LEFT:
-                    rotateImage(enemyLayout, 180);
-                    break;
-            }
-    }
-
-    private void moveView(View layout, int x, int y){
-        Message msg = new Message();
-        msg.what= UIActions.moveImage.getId();
-        msg.obj=layout;
-        msg.arg1=x;
-        msg.arg2=y;
-        handler.sendMessage(msg);
-    }
-
-    private void rotateImage(View layout, int rotation){
-        Message msg = new Message();
-        msg.what= UIActions.rotateImage.getId();
-        msg.obj=layout;
-        msg.arg1=rotation;
-        handler.sendMessage(msg);
+        GameActivity.runActionOnUI(handler, UIActions.moveImage, enemyLayout, x, y);
+        switch (direction) {
+            case UP:
+                GameActivity.runActionOnUI(handler, UIActions.rotateImage, enemyLayout, 270);
+                break;
+            case RIGHT:
+                GameActivity.runActionOnUI(handler, UIActions.rotateImage, enemyLayout, 0);
+                break;
+            case DOWN:
+                GameActivity.runActionOnUI(handler, UIActions.rotateImage, enemyLayout, 90);
+                break;
+            case LEFT:
+                GameActivity.runActionOnUI(handler, UIActions.rotateImage, enemyLayout, 180);
+                break;
+        }
     }
 
     private void setImageResource(View layout, int id){
@@ -116,11 +99,11 @@ public class EnemyView {
     }
 
     public void hitAnimation(){
-        setImageResource(image, enemyHitImageID);
+        GameActivity.runActionOnUI(handler, UIActions.setImageResource, image, enemyHitImageID);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                setImageResource(image, enemyImageID);
+                GameActivity.runActionOnUI(handler, UIActions.setImageResource, image, enemyImageID);
             }
         }, 100);
     }

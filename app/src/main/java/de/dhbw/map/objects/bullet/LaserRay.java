@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -16,6 +17,7 @@ import java.util.TimerTask;
 import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
@@ -32,6 +34,7 @@ public class LaserRay extends ABullet {
     private boolean isAlive = true;
     private boolean killBullet = false;
     private final List<AEnemy> allEnemies;
+    private Handler handler;
 
     /**
      * Constructor
@@ -44,6 +47,7 @@ public class LaserRay extends ABullet {
      */
     public LaserRay(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, GameActivity gameActivity, int offset) {
         super(spawnPosition, targetedEnemy, damage, 0, gameActivity, offset);
+        handler = gameActivity.getHandler();
         canvas = new Canvas();
         laserView = new LaserView(gameActivity, new Position(x,y), targetPos);
         laserView.setElevation(ImageElevation.BULLET.elevation);
@@ -69,7 +73,7 @@ public class LaserRay extends ABullet {
     @Override
     protected void startAnimation(int distanceToEnemy) {
         laserView.setBackgroundColor(Color.alpha(255));
-        gameActivity.addView(laserView);
+        GameActivity.runActionOnUI(handler, UIActions.addView, laserView);
 
         allEnemies.remove(targetEnemy);
         Position bulletStartPos = new Position(x,y);
@@ -77,7 +81,7 @@ public class LaserRay extends ABullet {
             @Override
             public void run() {
                 if(!targetEnemy.isAlive() || targetEnemy.isPaused() || killBullet || !isEnemyHitOnPosition(bulletStartPos, targetPos,targetEnemy)){
-                    gameActivity.removeView(laserView);
+                    GameActivity.runActionOnUI(handler, UIActions.removeView, laserView);
                     isAlive=false;
                     cancel();
                 }else{
@@ -101,11 +105,12 @@ public class LaserRay extends ABullet {
             gif.setScaleY(0.2f);
             gif.setImageResource(R.drawable.spark_animation);
             gif.setElevation(ImageElevation.ANIMATION.elevation);
-            gameActivity.addView(gif);
+            GameActivity.runActionOnUI(handler, UIActions.addView, gif);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameActivity.removeView(gif);
+                    GameActivity.runActionOnUI(handler, UIActions.removeView, gif);
+                    gif.clearAnimation();
                 }
             }, 250);
         }

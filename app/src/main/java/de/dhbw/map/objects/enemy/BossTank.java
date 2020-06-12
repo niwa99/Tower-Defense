@@ -41,6 +41,6 @@ public class BossTank extends AEnemy {
     }
 
     private static int getBossTankValueByLevel(int level) {
-        return TANK_VALUE * level * 5;
+        return TANK_VALUE * level * 2;
     }
 }

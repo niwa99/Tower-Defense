@@ -75,7 +75,7 @@ public class Tank extends AEnemy {
 	 * @return value
 	 */
 	private static int getTankValueByLevel(int level) {
-		return TANK_VALUE * level;
+		return TANK_VALUE * (level / 5 + 1);
 	}
 
 	/**
@@ -84,6 +84,6 @@ public class Tank extends AEnemy {
 	 * @return lifepointcosts
 	 */
 	public static int getTankLifePointsCostsByLevel(int level) {
-		return TANK_LIFE_POINT_COSTS * level;
+		return TANK_LIFE_POINT_COSTS * (level / 5 + 1);
 	}
 }

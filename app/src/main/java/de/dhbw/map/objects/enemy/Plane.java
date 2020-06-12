@@ -68,7 +68,7 @@ public class Plane extends AEnemy {
      * @return value
      */
     private static int getPlaneValueByLevel(int level) {
-        return PLANE_VALUE * level;
+        return PLANE_VALUE * (level / 5 + 1);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Plane extends AEnemy {
      * @return lifepointcosts
      */
     private static int getPlaneLifePointsCostsByLevel(int level) {
-        return PLANE_LIFE_POINT_COSTS * level;
+        return PLANE_LIFE_POINT_COSTS * (level / 5 + 1);
     }
 
 }

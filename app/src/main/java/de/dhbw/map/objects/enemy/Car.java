@@ -61,7 +61,7 @@ public class Car extends AEnemy {
      * @return value
      */
     private static int getCarValueByLevel(int level) {
-        return CAR_VALUE * level;
+        return CAR_VALUE * (level / 5 + 1);
 
     }
 
@@ -71,7 +71,7 @@ public class Car extends AEnemy {
      * @return lifepointcosts
      */
     private static int getCarLifePointsCostsByLevel(int level) {
-        return CAR_LIFE_POINT_COSTS * level;
+        return CAR_LIFE_POINT_COSTS * (level / 5 + 1);
 
     }
 }

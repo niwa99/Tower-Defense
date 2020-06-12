@@ -78,16 +78,12 @@ public class TowerFreezer extends ATower {
     @Override
     public boolean fire(List<AEnemy> enemies) {
         if (super.fire(enemies)) {
-            gameActivity.runOnUiThread(() -> {
-                this.getBaseImage().setImageResource(DRAWABLE_TOWER_FREEZER_HEAD);
-            });
+            gameActivity.setImageResource(getBaseImage(), DRAWABLE_TOWER_FREEZER_HEAD);
 
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameActivity.runOnUiThread(() -> {
-                        getBaseImage().setImageResource(DRAWABLE_TOWER_FREEZER_BASE);
-                    });
+                    gameActivity.setImageResource(getBaseImage(), DRAWABLE_TOWER_FREEZER_BASE);
                 }
             }, 500);
 

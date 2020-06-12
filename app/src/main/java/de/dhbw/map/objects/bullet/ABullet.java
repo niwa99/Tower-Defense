@@ -91,15 +91,13 @@ public abstract class ABullet {
      * @param distanceToEnemy
      */
     protected void startAnimation(int distanceToEnemy) {
-        gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(bulletImage));
+        gameActivity.addView(bulletImage);
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
         animatorX.setDuration(bulletSpeed * distanceToEnemy);
         animatorY.setDuration(bulletSpeed * distanceToEnemy);
-        gameActivity.runOnUiThread(() -> {
-            animatorX.start();
-            animatorY.start();
-        });
+        gameActivity.startAnimator(animatorX);
+        gameActivity.startAnimator(animatorY);
     }
 
     /**
@@ -111,7 +109,7 @@ public abstract class ABullet {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(bulletImage));
+                gameActivity.removeView(bulletImage);
                 if (targetEnemy != null) { //Check if AEnemy got killed in the meantime
                     hitEnemy();
                     System.out.println(targetEnemy.getLabel() + " was shot by " + damage + " and has " + targetEnemy.getHealthPoints() + " hp left");

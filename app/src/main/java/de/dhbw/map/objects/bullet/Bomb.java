@@ -105,11 +105,11 @@ public class Bomb extends ABullet {
             gif.setScaleX(0.15f);
             gif.setScaleY(0.15f);
             gif.setImageResource(R.drawable.explosion_gif);
-            gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
+            gameActivity.addView(gif);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
+                    gameActivity.removeView(gif);
                 }
             }, 500);
         }

@@ -21,6 +21,7 @@ import de.dhbw.map.objects.enemy.Car;
 import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.AdvancedTimer;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -31,7 +32,7 @@ public class MatchField {
 	private List<ATower> towers;
 
 	//responsible for all enemy movements
-	private Timer matchFieldTimer = new Timer();
+	private AdvancedTimer matchFieldTimer = new AdvancedTimer();
 
 	/**
 	 * Constructor
@@ -50,22 +51,21 @@ public class MatchField {
 	public void addTower(ATower tower) {
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
-		gameActivity.runOnUiThread(() -> {
-			gameActivity.getMapFrameLayout().addView(baseImage);
-			if(headImage.isPresent()){
-				gameActivity.getMapFrameLayout().addView(headImage.get());
 
-			}
-			if(tower.getLevel()>1) {
-				gameActivity.getMapFrameLayout().addView(tower.getStarlvlTwo());
-			}
-			if(tower.getLevel()>2) {
-				gameActivity.getMapFrameLayout().addView(tower.getStarlvlThree());
-			}
-			if(tower.getLevel()>3) {
-				gameActivity.getMapFrameLayout().addView(tower.getStarlvlFour());
-			}
-		});
+		gameActivity.addView(baseImage);
+		if(headImage.isPresent()){
+			gameActivity.addView(headImage.get());
+
+		}
+		if(tower.getLevel()>1) {
+			gameActivity.addView(tower.getStarlvlTwo());
+		}
+		if(tower.getLevel()>2) {
+			gameActivity.addView(tower.getStarlvlThree());
+		}
+		if(tower.getLevel()>3) {
+			gameActivity.addView(tower.getStarlvlFour());
+		}
 		towers.add(tower);
 		startTowerFire(tower);
 		gameActivity.getGame().increaseNumberOfBuiltTowers();
@@ -78,7 +78,7 @@ public class MatchField {
 	public void addEnemy(AEnemy enemy) {
 		EnemyView enemyView = enemy.getEnemyView();
 		enemyView.setPosition(new Position(-500,-500));
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(enemyView.getLayout()));
+		gameActivity.addView(enemyView.getLayout());
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 
@@ -87,7 +87,7 @@ public class MatchField {
             EnemyView carView = car.getEnemyView();
 			carView.setPosition(new Position(-500,-500));
 			enemies.add(car);
-			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(carView.getLayout()));
+			gameActivity.addView(carView.getLayout());
 		}
 	}
 
@@ -96,6 +96,9 @@ public class MatchField {
 	 * An enemy moves only one pixel each time. Speed is 1 second - (int) speed of the enemy
 	 */
 	public void startEnemyMovement(AEnemy enemy) {
+		if(matchFieldTimer.isCanceled()){
+			return;
+		}
 			TimerTask timerTask = new TimerTask() {
 				@Override
 				public void run() {
@@ -118,6 +121,9 @@ public class MatchField {
 	 * @param enemy
 	 */
 	public void slowEnemy(AEnemy enemy){
+		if(matchFieldTimer.isCanceled()){
+			return;
+		}
 		enemy.getTimerTask().cancel();
 		TimerTask timerTask = new TimerTask() {
 			@Override
@@ -137,10 +143,8 @@ public class MatchField {
 				}
 			}
 		};
-		if (matchFieldTimer != null) {
-			enemy.setTimerTask(timerTask);
-			matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed()) + enemy.getAndReduceSlowness());
-		}
+		enemy.setTimerTask(timerTask);
+		matchFieldTimer.schedule(timerTask, (1000 - enemy.getSpeed()) + enemy.getAndReduceSlowness());
 	}
 
 	/**
@@ -148,19 +152,22 @@ public class MatchField {
 	 * int fireRate defines how much seconds the tower sleeps between two shoots
 	 */
 	public void startTowerFire(ATower tower) {
-			TimerTask timerTask = new TimerTask() {
-				@Override
-				public void run() {
-					if (enemies.size() > 0) {
-						tower.fire(new ArrayList<>(enemies));
-						tower.setLastTimeActionMillis(System.currentTimeMillis());
-					}else{
-						checkForFinishedGame();
-					}
+		if(matchFieldTimer.isCanceled()){
+			return;
+		}
+		TimerTask timerTask = new TimerTask() {
+			@Override
+			public void run() {
+				if (enemies.size() > 0) {
+					tower.fire(new ArrayList<>(enemies));
+					tower.setLastTimeActionMillis(System.currentTimeMillis());
+				}else{
+					checkForFinishedGame();
 				}
-			};
-			tower.setTask(timerTask);
-			matchFieldTimer.scheduleAtFixedRate(timerTask, tower.getDelay(), tower.getFireRate() * 1000);
+			}
+		};
+		tower.setTask(timerTask);
+		matchFieldTimer.scheduleAtFixedRate(timerTask, tower.getDelay(), tower.getFireRate() * 1000);
 	}
 
 	public void checkForFinishedGame(){
@@ -177,15 +184,14 @@ public class MatchField {
 		final long time = System.currentTimeMillis();
 		towers.stream().forEach(t -> t.calculateDelay(time));
 		enemies.stream().forEach(e -> e.setPaused(true));
-		matchFieldTimer.cancel();
-		matchFieldTimer = null;
+		stopTimer();
 	}
 
 	/**
 	 * Continue the game timers.
 	 */
 	public void continueTimers(){
-		matchFieldTimer = new Timer();
+		matchFieldTimer = new AdvancedTimer();
 		enemies.stream().forEach(e -> {
 			if (e.getSlowness() == 0) {
 				startEnemyMovement(e);
@@ -214,8 +220,9 @@ public class MatchField {
 	 * Stop the matchField timer (if game is stopped unregularly).
 	 */
 	public void stopTimer() {
-		matchFieldTimer.cancel();
-		System.out.println("Game is over");
+		if(!matchFieldTimer.isCanceled()) {
+			matchFieldTimer.cancel();
+		}
 	}
 
 	/**
@@ -227,11 +234,11 @@ public class MatchField {
 			enemy.getTimerTask().cancel();
 			removeImageViewOfEnemy(enemy);
 			explode(enemy);
+			spawnCarIfEnemyIsBossTank(enemy);
 			gameActivity.getGame().addMoney(enemy.getValue());
 			enemies.remove(enemy);
 			gameActivity.getGame().increaseNumberOfEnemiesKilled();
 			System.out.println(enemy.getLabel() + " is dead now");
-			spawnCarIfEnemyIsBossTank(enemy);
 		}
 	}
 
@@ -268,7 +275,7 @@ public class MatchField {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
-		gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView( enemy.getEnemyView().getLayout()));
+		gameActivity.removeView(enemy.getEnemyView().getLayout());
 	}
 
 	/**
@@ -285,11 +292,11 @@ public class MatchField {
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
 			gif.setElevation(ImageElevation.ANIMATION.elevation);
-			gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().addView(gif));
+			gameActivity.addView(gif);
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
-					gameActivity.runOnUiThread(() -> gameActivity.getMapFrameLayout().removeView(gif));
+					gameActivity.removeView(gif);
 				}
 			}, 500);
 		}
@@ -337,18 +344,16 @@ public class MatchField {
 
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
-		gameActivity.runOnUiThread(() -> {
-			gameActivity.getMapFrameLayout().removeView(baseImage);
-			if(headImage.isPresent()){
-				gameActivity.getMapFrameLayout().removeView(headImage.get());
+		gameActivity.removeView(baseImage);
+		if(headImage.isPresent()){
+			gameActivity.removeView(headImage.get());
 
-			}
-		});
+		}
 		if(tower.getLevel()>1) {
-			gameActivity.getMapFrameLayout().removeView(tower.getStarlvlTwo());
+			gameActivity.removeView(tower.getStarlvlTwo());
 		}
 		if(tower.getLevel()>2) {
-			gameActivity.getMapFrameLayout().removeView(tower.getStarlvlThree());
+			gameActivity.removeView(tower.getStarlvlThree());
 		}
 	}
 

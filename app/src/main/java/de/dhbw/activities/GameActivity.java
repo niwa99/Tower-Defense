@@ -1,6 +1,8 @@
 package de.dhbw.activities;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -237,5 +239,29 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     @Override
     public void setWaveTimeRemaining(String sec) {
         runOnUiThread(() -> textWaveRemaining.setText(sec));
+    }
+
+    public void addView(View view){
+        runOnUiThread(() -> mapLayout.addView(view));
+    }
+
+    public void removeView(View view){
+        runOnUiThread(() -> mapLayout.removeView(view));
+    }
+
+    public void setImageResource(ImageView view, int id){
+        runOnUiThread(() -> view.setImageResource(id));
+    }
+
+    public void setForeGround(View view, int id){
+        runOnUiThread(() -> view.setForeground(getDrawable(id)));
+    }
+
+    public void startAnimator(ObjectAnimator animator){
+        runOnUiThread(() -> animator.start());
+    }
+
+    public void showBuilder(AlertDialog.Builder builder){
+        runOnUiThread(() -> builder.create().show());
     }
 }

@@ -56,24 +56,22 @@ public class EnemyView {
      * Set the rotation of the enemy image according to its direction.
      */
     protected void resolveRotation(Direction direction, int x, int y) {
-        gameActivity.runOnUiThread(() -> {
-            enemyLayout.setX(x);
-            enemyLayout.setY(y);
-            switch (direction) {
-                case UP:
-                    enemyLayout.setRotation(-90);
-                    break;
-                case RIGHT:
-                    enemyLayout.setRotation(0);
-                    break;
-                case DOWN:
-                    enemyLayout.setRotation(90);
-                    break;
-                case LEFT:
-                    enemyLayout.setRotation(-180);
-                    break;
-            }
-        });
+        enemyLayout.setX(x);
+        enemyLayout.setY(y);
+        switch (direction) {
+            case UP:
+                enemyLayout.setRotation(-90);
+                break;
+            case RIGHT:
+                enemyLayout.setRotation(0);
+                break;
+            case DOWN:
+                enemyLayout.setRotation(90);
+                break;
+            case LEFT:
+                enemyLayout.setRotation(-180);
+                break;
+        }
     }
 
     public void setHealthProgress(int healthPoints){
@@ -90,11 +88,11 @@ public class EnemyView {
     }
 
     public void hitAnimation(){
-        gameActivity.runOnUiThread(() -> image.setImageResource(enemyHitImageID));
+        gameActivity.setImageResource(image, enemyHitImageID);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameActivity.runOnUiThread(() -> image.setImageResource(enemyImageID));
+                gameActivity.setImageResource(image, enemyImageID);
             }
         }, 100);
     }

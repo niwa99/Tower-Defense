@@ -17,6 +17,7 @@ import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerType;
+import de.dhbw.util.ObjectType;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -109,7 +110,7 @@ public class Bomb extends ABullet {
             gif.setScaleX(0.15f);
             gif.setScaleY(0.15f);
             gif.setImageResource(R.drawable.explosion_gif);
-            GameActivity.runActionOnUI(handler, UIActions.addView, gif);
+            GameActivity.runActionOnUI(handler, UIActions.addView, gif, ObjectType.BULLET);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

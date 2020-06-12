@@ -43,6 +43,7 @@ import de.dhbw.map.structure.Field;
 import de.dhbw.map.structure.FieldDescription;
 import de.dhbw.map.structure.MapStructure;
 import de.dhbw.util.Constants;
+import de.dhbw.util.ObjectType;
 import de.dhbw.util.Position;
 import de.dhbw.util.PreferenceManager;
 
@@ -553,7 +554,7 @@ public class Game {
         image.setY(field.getSpawnPoint().getY() + field.getSizeInPx()/2 - tower.getRange());
         image.setLayoutParams(new LinearLayout.LayoutParams(tower.getRange()*2, tower.getRange()*2));
         image.setElevation(ImageElevation.RANGE_INDICATOR.elevation);
-        GameActivity.runActionOnUI(handler, UIActions.addView, image);
+        GameActivity.runActionOnUI(handler, UIActions.addView, image, ObjectType.FIELD);
     }
 
     public void openTowerPopup(ATower tower, Field field) {

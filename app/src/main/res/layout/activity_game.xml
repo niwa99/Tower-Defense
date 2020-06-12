@@ -56,4 +56,25 @@
 
     </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map_enemies"
+        android:fitsSystemWindows="true">
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map_towers"
+        android:fitsSystemWindows="true">
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map_bullets"
+        android:fitsSystemWindows="true">
+    </FrameLayout>
+
 </FrameLayout>

@@ -4,11 +4,13 @@ import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
@@ -18,15 +20,24 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Random;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 
+import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
 import de.dhbw.map.objects.tower.TowerType;
+import de.dhbw.util.ObjectType;
+
+import static de.dhbw.util.ObjectType.BULLET;
+import static de.dhbw.util.ObjectType.ENEMY;
+import static de.dhbw.util.ObjectType.FIELD;
+import static de.dhbw.util.ObjectType.TOWER;
 
 public class GameActivity extends AppCompatActivity implements IStatusBar {
 
@@ -45,6 +56,10 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private TextView textWaveRemaining;
 
     private FrameLayout mapLayout;
+    private FrameLayout mapLayoutEnemies;
+    private FrameLayout mapLayoutTowers;
+    private FrameLayout mapLayoutBullets;
+
     private Game game;
 
     private final Runnable mHidePart2Runnable = new Runnable() {
@@ -193,6 +208,13 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         });
 
         mapLayout = findViewById(R.id.map);
+        mapLayout.setElevation(ImageElevation.FIELD.elevation);
+        mapLayoutEnemies = findViewById(R.id.map_enemies);
+        mapLayoutEnemies.setElevation(ImageElevation.ENEMIES.elevation);
+        mapLayoutTowers = findViewById(R.id.map_towers);
+        mapLayoutTowers.setElevation(ImageElevation.TOWER.elevation);
+        mapLayoutBullets = findViewById(R.id.map_bullets);
+        mapLayoutBullets.setElevation(ImageElevation.BULLET.elevation);
 
         game = new Game(GameActivity.this);
 
@@ -299,10 +321,45 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
                     view.setImageResource(message.arg1);
                 }else if(message.what==UIActions.addView.getId()){
                     View view = ((View)message.obj);
-                    mapLayout.addView(view);
+                    switch(message.arg1) {
+                        case FIELD:
+                            view.setTag(FIELD);
+                            mapLayout.addView(view);
+                            break;
+                        case ENEMY:
+                            view.setTag(ENEMY);
+                            mapLayoutEnemies.addView(view);
+                            break;
+                        case TOWER:
+                            view.setTag(TOWER);
+                            mapLayoutTowers.addView(view);
+                            break;
+                        case BULLET:
+                            view.setTag(BULLET);
+                            mapLayoutBullets.addView(view);
+                            break;
+                        default:
+                            view.setTag(FIELD);
+                            mapLayout.addView(view);
+                    }
                 }else if(message.what==UIActions.removeView.getId()){
                     View view = ((View)message.obj);
-                    mapLayout.removeView(view);
+                    switch((int) view.getTag()) {
+                        case FIELD:
+                            mapLayout.removeView(view);
+                            break;
+                        case ENEMY:
+                            mapLayoutEnemies.removeView(view);
+                            break;
+                        case TOWER:
+                            mapLayoutTowers.removeView(view);
+                            break;
+                        case BULLET:
+                            mapLayoutBullets.removeView(view);
+                            break;
+                        default:
+                            mapLayout.removeView(view);
+                    }
                 } else if (message.what == UIActions.setForeGound.getId()) {
                     View view = (View) message.obj;
                     view.setForeground(getDrawable(message.arg1));

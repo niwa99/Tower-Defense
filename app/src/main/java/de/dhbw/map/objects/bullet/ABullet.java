@@ -12,6 +12,7 @@ import de.dhbw.activities.GameActivity;
 import de.dhbw.activities.UIActions;
 import de.dhbw.map.matchfield.MatchField;
 import de.dhbw.map.objects.enemy.AEnemy;
+import de.dhbw.util.ObjectType;
 import de.dhbw.util.Position;
 
 import static de.dhbw.util.Constants.*;
@@ -94,7 +95,7 @@ public abstract class ABullet {
      * @param distanceToEnemy
      */
     protected void startAnimation(int distanceToEnemy) {
-        GameActivity.runActionOnUI(handler, UIActions.addView, bulletImage);
+        GameActivity.runActionOnUI(handler, UIActions.addView, bulletImage, ObjectType.BULLET);
         ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
         ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
         animatorX.setDuration(bulletSpeed * distanceToEnemy);

@@ -25,6 +25,7 @@ import de.dhbw.map.objects.enemy.EnemyView;
 import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.structure.Field;
 import de.dhbw.util.AdvancedTimer;
+import de.dhbw.util.ObjectType;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -57,19 +58,19 @@ public class MatchField {
 		ImageView baseImage = tower.getBaseImage();
 		Optional<ImageView> headImage = tower.getHeadImage();
 
-		GameActivity.runActionOnUI(handler, UIActions.addView, baseImage);
+		GameActivity.runActionOnUI(handler, UIActions.addView, baseImage, ObjectType.TOWER);
 
 		if(headImage.isPresent()){
-			GameActivity.runActionOnUI(handler, UIActions.addView, headImage);
+			GameActivity.runActionOnUI(handler, UIActions.addView, headImage.get(), ObjectType.TOWER);
 		}
 		if(tower.getLevel()>1) {
-			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlTwo());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlTwo(), ObjectType.TOWER);
 		}
 		if(tower.getLevel()>2) {
-			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlThree());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlThree(), ObjectType.TOWER);
 		}
 		if(tower.getLevel()>3) {
-			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlFour());
+			GameActivity.runActionOnUI(handler, UIActions.addView, tower.getStarlvlFour(), ObjectType.TOWER);
 		}
 		towers.add(tower);
 		startTowerFire(tower);
@@ -83,7 +84,7 @@ public class MatchField {
 	public void addEnemy(AEnemy enemy) {
 		EnemyView enemyView = enemy.getEnemyView();
 		enemyView.setPosition(new Position(-500,-500));
-		GameActivity.runActionOnUI(handler, UIActions.addView, enemyView.getLayout());
+		GameActivity.runActionOnUI(handler, UIActions.addView, enemyView.getLayout(), ObjectType.ENEMY);
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 
@@ -92,7 +93,7 @@ public class MatchField {
             EnemyView carView = car.getEnemyView();
 			carView.setPosition(new Position(-500,-500));
 			enemies.add(car);
-			GameActivity.runActionOnUI(handler, UIActions.addView, carView.getLayout());
+			GameActivity.runActionOnUI(handler, UIActions.addView, carView.getLayout(), ObjectType.ENEMY);
 		}
 	}
 
@@ -291,13 +292,13 @@ public class MatchField {
 		if(gameActivity.getGame().isAnimationOn()) {
 			GifImageView gif = new GifImageView(gameActivity);
 			gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
-			gif.setX(enemy.getPositionX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2.2));
+			gif.setX(enemy.getPositionX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2.05));
 			gif.setY(enemy.getPositionY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2.2));
 			gif.setScaleX(0.2f);
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
 			gif.setElevation(ImageElevation.ANIMATION.elevation);
-			GameActivity.runActionOnUI(handler, UIActions.addView, gif);
+			GameActivity.runActionOnUI(handler, UIActions.addView, gif, ObjectType.BULLET);
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {

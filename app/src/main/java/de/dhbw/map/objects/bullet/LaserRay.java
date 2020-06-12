@@ -23,6 +23,7 @@ import de.dhbw.map.objects.tower.ATower;
 import de.dhbw.map.objects.tower.TowerArtillery;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.Constants;
+import de.dhbw.util.ObjectType;
 import de.dhbw.util.Position;
 import pl.droidsonroids.gif.GifImageView;
 
@@ -73,7 +74,7 @@ public class LaserRay extends ABullet {
     @Override
     protected void startAnimation(int distanceToEnemy) {
         laserView.setBackgroundColor(Color.alpha(255));
-        GameActivity.runActionOnUI(handler, UIActions.addView, laserView);
+        GameActivity.runActionOnUI(handler, UIActions.addView, laserView, ObjectType.BULLET);
 
         allEnemies.remove(targetEnemy);
         Position bulletStartPos = new Position(x,y);
@@ -105,7 +106,7 @@ public class LaserRay extends ABullet {
             gif.setScaleY(0.2f);
             gif.setImageResource(R.drawable.spark_animation);
             gif.setElevation(ImageElevation.ANIMATION.elevation);
-            GameActivity.runActionOnUI(handler, UIActions.addView, gif);
+            GameActivity.runActionOnUI(handler, UIActions.addView, gif, ObjectType.BULLET);
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {

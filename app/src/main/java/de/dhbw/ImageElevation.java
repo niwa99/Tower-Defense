@@ -1,6 +1,8 @@
 package de.dhbw;
 
 public enum ImageElevation {
+    FIELD(10f),
+    TOWER(30f),
     ENEMIES(50f),
     LIFE_BAR(51f),
     BULLET(60f),

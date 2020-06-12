@@ -1,5 +1,6 @@
 package de.dhbw.map.matchfield;
 
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -8,12 +9,14 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
+import android.os.Handler;
 import java.util.stream.Collectors;
 import java.util.Optional;
 
 import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.game.EnemyType;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.objects.enemy.BossTank;
@@ -30,6 +33,7 @@ public class MatchField {
 	private final GameActivity gameActivity;
 	private List<AEnemy> enemies;
 	private List<ATower> towers;
+	private Handler handler;
 
 	//responsible for all enemy movements
 	private AdvancedTimer matchFieldTimer = new AdvancedTimer();
@@ -40,6 +44,7 @@ public class MatchField {
 	 */
 	public MatchField(GameActivity gameActivity) {
 		this.gameActivity = gameActivity;
+		handler=gameActivity.getUiHandler();
 		enemies = new ArrayList<>();
 		towers = new ArrayList<>();
 	}
@@ -78,7 +83,7 @@ public class MatchField {
 	public void addEnemy(AEnemy enemy) {
 		EnemyView enemyView = enemy.getEnemyView();
 		enemyView.setPosition(new Position(-500,-500));
-		gameActivity.addView(enemyView.getLayout());
+		addView(enemyView.getLayout());
 		enemies.add(enemy);
 		startEnemyMovement(enemy);
 
@@ -87,8 +92,22 @@ public class MatchField {
             EnemyView carView = car.getEnemyView();
 			carView.setPosition(new Position(-500,-500));
 			enemies.add(car);
-			gameActivity.addView(carView.getLayout());
+			addView(carView.getLayout());
 		}
+	}
+
+	private void addView(View view){
+		Message msg = new Message();
+		msg.what= UIActions.addView.getId();
+		msg.obj=view;
+		handler.sendMessage(msg);
+	}
+
+	private void removeView(View view){
+		Message msg = new Message();
+		msg.what= UIActions.removeView.getId();
+		msg.obj=view;
+		handler.sendMessage(msg);
 	}
 
 	/**
@@ -275,7 +294,7 @@ public class MatchField {
 		if (enemies.size() == 1 && gameActivity.getGame().allEnemiesSpawned()) {
 			stopTimer(true);
 		}
-		gameActivity.removeView(enemy.getEnemyView().getLayout());
+		removeView(enemy.getEnemyView().getLayout());
 	}
 
 	/**
@@ -292,11 +311,12 @@ public class MatchField {
 			gif.setScaleY(0.2f);
 			gif.setImageResource(R.drawable.explosion_gif);
 			gif.setElevation(ImageElevation.ANIMATION.elevation);
-			gameActivity.addView(gif);
+			addView(gif);
 			new Timer().schedule(new TimerTask() {
 				@Override
 				public void run() {
-					gameActivity.removeView(gif);
+					removeView(gif);
+					gif.clearAnimation();
 				}
 			}, 500);
 		}
@@ -347,7 +367,6 @@ public class MatchField {
 		gameActivity.removeView(baseImage);
 		if(headImage.isPresent()){
 			gameActivity.removeView(headImage.get());
-
 		}
 		if(tower.getLevel()>1) {
 			gameActivity.removeView(tower.getStarlvlTwo());

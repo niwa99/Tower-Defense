@@ -1,6 +1,8 @@
 package de.dhbw.map.objects.enemy;
 
+import android.os.Message;
 import android.text.Layout;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -8,10 +10,12 @@ import android.widget.RelativeLayout;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import android.os.Handler;
 
 import de.dhbw.ImageElevation;
 import de.dhbw.R;
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.util.Direction;
 import de.dhbw.util.Position;
 
@@ -22,26 +26,26 @@ public class EnemyView {
     private ImageView image;
     private RelativeLayout enemyLayout;
 
-    private GameActivity gameActivity;
-
     private int enemyImageID;
     private int enemyHitImageID;
 
     private Timer timer = new Timer();
 
+    private Handler handler;
+
     public EnemyView(){
 
     }
 
-    public EnemyView(GameActivity gameActivity, int enemyImageID, int enemyHitImageID, int healthPoints){
+    public EnemyView(RelativeLayout enemyLayout, Handler handler, int enemyImageID, int enemyHitImageID, int healthPoints){
         this.enemyImageID = enemyImageID;
         this.enemyHitImageID = enemyHitImageID;
-        this.gameActivity = gameActivity;
+        this.enemyLayout=enemyLayout;
+        this.handler=handler;
         createEnemyLayoutWithLifeBar(healthPoints);
     }
 
     private void createEnemyLayoutWithLifeBar(int healthPoints){
-        enemyLayout = (RelativeLayout) gameActivity.getLayoutInflater().inflate(R.layout.enemy_layout, null);
         enemyLayout.setLayoutParams(ENEMY_LAYOUT_SIZE_PARAMS);
         enemyLayout.setElevation(ImageElevation.ENEMIES.elevation);
         lifeBar = (ProgressBar) enemyLayout.getChildAt(0);
@@ -56,22 +60,46 @@ public class EnemyView {
      * Set the rotation of the enemy image according to its direction.
      */
     protected void resolveRotation(Direction direction, int x, int y) {
-        enemyLayout.setX(x);
-        enemyLayout.setY(y);
-        switch (direction) {
-            case UP:
-                enemyLayout.setRotation(-90);
-                break;
-            case RIGHT:
-                enemyLayout.setRotation(0);
-                break;
-            case DOWN:
-                enemyLayout.setRotation(90);
-                break;
-            case LEFT:
-                enemyLayout.setRotation(-180);
-                break;
-        }
+            moveView(enemyLayout,x,y);
+            switch (direction) {
+                case UP:
+                    rotateImage(enemyLayout, 270);
+                    break;
+                case RIGHT:
+                    rotateImage(enemyLayout, 0);
+                    break;
+                case DOWN:
+                    rotateImage(enemyLayout, 90);
+                    break;
+                case LEFT:
+                    rotateImage(enemyLayout, 180);
+                    break;
+            }
+    }
+
+    private void moveView(View layout, int x, int y){
+        Message msg = new Message();
+        msg.what= UIActions.moveImage.getId();
+        msg.obj=layout;
+        msg.arg1=x;
+        msg.arg2=y;
+        handler.sendMessage(msg);
+    }
+
+    private void rotateImage(View layout, int rotation){
+        Message msg = new Message();
+        msg.what= UIActions.rotateImage.getId();
+        msg.obj=layout;
+        msg.arg1=rotation;
+        handler.sendMessage(msg);
+    }
+
+    private void setImageResource(View layout, int id){
+        Message msg = new Message();
+        msg.what= UIActions.setImageResource.getId();
+        msg.obj=layout;
+        msg.arg1=id;
+        handler.sendMessage(msg);
     }
 
     public void setHealthProgress(int healthPoints){
@@ -88,11 +116,11 @@ public class EnemyView {
     }
 
     public void hitAnimation(){
-        gameActivity.setImageResource(image, enemyHitImageID);
+        setImageResource(image, enemyHitImageID);
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                gameActivity.setImageResource(image, enemyImageID);
+                setImageResource(image, enemyImageID);
             }
         }, 100);
     }

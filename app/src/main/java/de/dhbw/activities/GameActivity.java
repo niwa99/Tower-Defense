@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.view.View;
@@ -263,5 +264,43 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     public void showBuilder(AlertDialog.Builder builder){
         runOnUiThread(() -> builder.create().show());
+    }
+
+    public void moveView(View view, int x, int y){
+        runOnUiThread(() -> {
+            view.setX(x);
+            view.setY(y);
+        });
+    }
+
+    public void rotateImage(View view, float rotation){
+        runOnUiThread(()-> view.setRotation(rotation));
+    }
+
+    public Handler getUiHandler(){
+        final Handler handler = new Handler(){
+            @Override
+            public void handleMessage(Message message){
+                if(message.what==UIActions.moveImage.getId()){
+                    View view = ((View)message.obj);
+                    view.setX(message.arg1);
+                    view.setY(message.arg2);
+                }else if(message.what==UIActions.rotateImage.getId()){
+                    View view = ((View)message.obj);
+                    view.setRotation(message.arg1);
+                }else if(message.what==UIActions.setImageResource.getId()){
+                    ImageView view = ((ImageView)message.obj);
+                    view.setImageResource(message.arg1);
+                }else if(message.what==UIActions.addView.getId()){
+                    View view = ((View)message.obj);
+                    mapLayout.addView(view);
+                }else if(message.what==UIActions.removeView.getId()){
+                    View view = ((View)message.obj);
+                    mapLayout.removeView(view);
+                }
+                super.handleMessage(message);
+            }
+        };
+        return handler;
     }
 }

@@ -6,6 +6,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import java.util.UUID;
 
@@ -68,7 +69,8 @@ public abstract class AEnemy {
 		this.lifePointsCosts = lifePointsCosts;
 		this.gameActivity = gameActivity;
 		this.enemyType = enemyType;
-		this.enemyView = new EnemyView(gameActivity, enemyImageID, enemyHitImageID, hp);
+		RelativeLayout enemyLayout = (RelativeLayout) gameActivity.getLayoutInflater().inflate(R.layout.enemy_layout, null);
+		this.enemyView = new EnemyView(enemyLayout, gameActivity.getUiHandler(), enemyImageID, enemyHitImageID, hp);
 	}
 
 	/**

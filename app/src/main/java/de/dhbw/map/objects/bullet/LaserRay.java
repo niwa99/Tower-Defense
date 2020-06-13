@@ -100,7 +100,7 @@ public class LaserRay extends ABullet {
         if(gameActivity.getGame().isAnimationOn()) {
             GifImageView gif = new GifImageView(gameActivity);
             gif.setLayoutParams(gameActivity.getMapFrameLayout().getLayoutParams());
-            gif.setX(targetPos.getX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/2));
+            gif.setX(targetPos.getX() - Math.round(gameActivity.getResources().getDisplayMetrics().widthPixels/1.87));
             gif.setY(targetPos.getY() - Math.round(gameActivity.getResources().getDisplayMetrics().heightPixels/2));
             gif.setScaleX(0.2f);
             gif.setScaleY(0.2f);

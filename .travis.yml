@@ -3,6 +3,7 @@ dist: trusty
 env:
   global:
     - CC_TEST_REPORTER_ID=49bab193dc2cee335db67e8b855d0e21d466874c7a75b5d39fbfe233921e1d39
+    - JACOCO_SOURCE_PATH=src/main/java
   language: android
   rvm:
     - 2.2.0
@@ -41,6 +42,8 @@ script:
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+  - ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco
+  - ./cc-test-reporter upload-coverage
 
 after_success:
   - wget https://raw.githubusercontent.com/DiscordHooks/travis-ci-discord-webhook/master/send.sh

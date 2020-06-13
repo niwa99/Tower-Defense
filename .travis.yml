@@ -38,10 +38,11 @@ script:
   - android list target
   - ./gradlew clean build
   - ./gradlew test
+  - ./gradlew JacocoTestReport
   - ./gradlew assembleDebug
 
 after_script:
-  - ./cc-test-reporter format-coverage /jacoco.xml --input-type jacoco
+  - ./cc-test-reporter format-coverage ./app/build/reports/jacoco/jacocoTestReport/jacocoTestReport.xml --input-type jacoco
   - ./cc-test-reporter upload-coverage
 
 after_success:

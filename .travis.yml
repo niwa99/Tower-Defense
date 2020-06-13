@@ -41,8 +41,7 @@ script:
   - ./gradlew assembleDebug
 
 after_script:
-  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
-  - ./cc-test-reporter format-coverage target/site/jacoco/jacoco.xml --input-type jacoco
+  - ./cc-test-reporter format-coverage /jacoco.xml --input-type jacoco
   - ./cc-test-reporter upload-coverage
 
 after_success:

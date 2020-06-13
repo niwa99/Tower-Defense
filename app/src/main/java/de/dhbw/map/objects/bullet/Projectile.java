@@ -39,9 +39,8 @@ public class Projectile extends ABullet {
      * @param targetedEnemy
      * @param damage
      * @param bulletImage
-     * @param gameActivity
      */
-    public Projectile(Position spawnPosition, AEnemy targetedEnemy, int damage, ImageView bulletImage, GameActivity gameActivity) {
-        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+    public Projectile(Position spawnPosition, AEnemy targetedEnemy, int damage, ImageView bulletImage) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage);
     }
 }

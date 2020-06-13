@@ -65,10 +65,9 @@ public class Bomb extends ABullet {
      * @param allEnemies
      * @param damage
      * @param bulletImage
-     * @param gameActivity
      */
-    public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, ImageView bulletImage, GameActivity gameActivity) {
-        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+    public Bomb(Position spawnPosition, AEnemy targetedEnemy, List<AEnemy> allEnemies, int damage, ImageView bulletImage) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage);
         this.allEnemies = allEnemies;
     }
 

@@ -45,10 +45,9 @@ public class SnowFlake extends ABullet {
      * @param damage
      * @param slowness
      * @param bulletImage
-     * @param gameActivity
      */
-    public SnowFlake(Position spawnPosition, AEnemy targetedEnemy, int damage, int slowness, ImageView bulletImage, GameActivity gameActivity) {
-        super(spawnPosition, targetedEnemy, damage, bulletImage, gameActivity);
+    public SnowFlake(Position spawnPosition, AEnemy targetedEnemy, int damage, int slowness, ImageView bulletImage) {
+        super(spawnPosition, targetedEnemy, damage, bulletImage);
         this.slowness = slowness;
     }
 

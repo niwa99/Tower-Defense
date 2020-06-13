@@ -52,7 +52,7 @@ public class BulletTest {
         enemy.setHealthpoints(1);
 
         //act
-        new Projectile(tower.getPosition(), enemy, tower.getDamage(), dummyImage, dummyGameActivity);
+        new Projectile(tower.getPosition(), enemy, tower.getDamage(), dummyImage);
 
         Thread.sleep(2000);
 
@@ -75,7 +75,7 @@ public class BulletTest {
         enemyNotInRange.moveTo(500, 300);
 
         //act
-        new Bomb(tower.getPosition(), enemyTarget, Arrays.asList(enemySideshot, enemySideshot2, enemyNotInRange), tower.getDamage(), dummyImage, dummyGameActivity);
+        new Bomb(tower.getPosition(), enemyTarget, Arrays.asList(enemySideshot, enemySideshot2, enemyNotInRange), tower.getDamage(), dummyImage);
 
         Thread.sleep(2000);
 
@@ -95,7 +95,7 @@ public class BulletTest {
         enemy.moveTo(375, 300);
 
         //act
-        new SnowFlake(tower.getPosition(), enemy, tower.getDamage(), tower.getSlowness(), dummyImage, dummyGameActivity);
+        new SnowFlake(tower.getPosition(), enemy, tower.getDamage(), tower.getSlowness(), dummyImage);
         //NullPointerException will come up because of not intantiated game
 
         Thread.sleep(2000);

@@ -1,6 +1,7 @@
 package de.dhbw.activities;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -364,7 +365,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
                     View view = (View) message.obj;
                     view.setForeground(getDrawable(message.arg1));
                 } else if (message.what == UIActions.startAnimator.getId()) {
-                    ObjectAnimator animator = (ObjectAnimator) message.obj;
+                    ValueAnimator animator = (ValueAnimator) message.obj;
                     animator.start();
                 }
                 super.handleMessage(message);

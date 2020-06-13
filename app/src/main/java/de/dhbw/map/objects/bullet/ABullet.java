@@ -1,6 +1,7 @@
 package de.dhbw.map.objects.bullet;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.os.Handler;
 import android.widget.ImageView;
 
@@ -95,10 +96,24 @@ public abstract class ABullet {
      */
     protected void startAnimation(int distanceToEnemy) {
         GameActivity.runActionOnUI(handler, UIActions.addView, bulletImage, ObjectType.BULLET);
-        ObjectAnimator animatorX = ObjectAnimator.ofFloat(bulletImage, "translationX", targetPos.getX());
-        ObjectAnimator animatorY = ObjectAnimator.ofFloat(bulletImage, "translationY", targetPos.getY());
-        animatorX.setDuration(bulletSpeed * distanceToEnemy);
-        animatorY.setDuration(bulletSpeed * distanceToEnemy);
+
+        ValueAnimator animatorX = ValueAnimator.ofFloat(bulletImage.getX(), targetPos.getX());
+        animatorX.setDuration(bulletSpeed*distanceToEnemy);
+        ValueAnimator animatorY = ValueAnimator.ofFloat(bulletImage.getY(), targetPos.getY());
+        animatorY.setDuration(bulletSpeed*distanceToEnemy);
+
+        animatorX.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                bulletImage.setX((float) valueAnimator.getAnimatedValue());
+            }
+        });
+        animatorY.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                bulletImage.setY((float) valueAnimator.getAnimatedValue());
+            }
+        });
         GameActivity.runActionOnUI(handler, UIActions.startAnimator, animatorX);
         GameActivity.runActionOnUI(handler, UIActions.startAnimator, animatorY);
 

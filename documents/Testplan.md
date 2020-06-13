@@ -1,6 +1,7 @@
 # Tower Defense - Testplan
 
 [![Build Status](https://travis-ci.org/niwa99/Tower-Defense.svg?branch=master)](https://travis-ci.org/niwa99/Tower-Defense)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d150b05711f59eb7d1c7/maintainability)](https://codeclimate.com/github/niwa99/Tower-Defense/maintainability)
 
 ## Table of Contents
 

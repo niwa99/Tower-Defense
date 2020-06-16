@@ -37,6 +37,6 @@ public class StatusBarCountDownTimer {
     }
 
     private void setTime(){
-        status.setWaveTimeRemaining(String.valueOf(seconds--));
+        status.setWaveTimeRemaining(seconds--);
     }
 }

@@ -7,7 +7,8 @@ public enum UIActions {
     addView(4),
     removeView(5),
     setForeGound(6),
-    startAnimator(7);
+    startAnimator(7),
+    setText(8);
 
     int id;
 

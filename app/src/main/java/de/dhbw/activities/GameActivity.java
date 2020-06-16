@@ -32,6 +32,7 @@ import de.dhbw.R;
 import de.dhbw.game.Difficulty;
 import de.dhbw.game.Game;
 import de.dhbw.game.IStatusBar;
+import de.dhbw.game.StatusBar;
 import de.dhbw.map.objects.tower.TowerType;
 import de.dhbw.util.ObjectType;
 
@@ -40,7 +41,7 @@ import static de.dhbw.util.ObjectType.ENEMY;
 import static de.dhbw.util.ObjectType.FIELD;
 import static de.dhbw.util.ObjectType.TOWER;
 
-public class GameActivity extends AppCompatActivity implements IStatusBar {
+public class GameActivity extends AppCompatActivity {
 
     private static final boolean AUTO_HIDE = true;
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
@@ -49,12 +50,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
     private final Handler mHideHandler = new Handler();
     private View mContentView;
     private MediaPlayer mediaPlayer = new MediaPlayer();
-
-    //status bar
-    private TextView textLifePoints;
-    private TextView textMoney;
-    private TextView textCurrentWave;
-    private TextView textWaveRemaining;
 
     private FrameLayout mapLayout;
     private FrameLayout mapLayoutEnemies;
@@ -194,10 +189,11 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         setupAndroidFullscreenAndLayout();
 
         //identify status bar TextViews
-        this.textLifePoints = findViewById(R.id.textLivePoints);
-        this.textMoney = findViewById(R.id.textMoney);
-        this.textCurrentWave = findViewById(R.id.textCurrentWave);
-        this.textWaveRemaining = findViewById(R.id.textWaveRemaining);
+        TextView textLifePoints = findViewById(R.id.textLivePoints);
+        TextView textMoney = findViewById(R.id.textMoney);
+        TextView textCurrentWave = findViewById(R.id.textCurrentWave);
+        TextView textWaveRemaining = findViewById(R.id.textWaveRemaining);
+        StatusBar status = new StatusBar(textLifePoints, textMoney, textCurrentWave, textWaveRemaining, getStatusBarHandler());
 
         //Initialize Home Button
         Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
@@ -217,7 +213,7 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
         mapLayoutBullets = findViewById(R.id.map_bullets);
         mapLayoutBullets.setElevation(ImageElevation.BULLET.elevation);
 
-        game = new Game(GameActivity.this);
+        game = new Game(GameActivity.this, status);
 
         Difficulty chosenDifficulty = (Difficulty) getIntent().getSerializableExtra(getString(R.string.difficulty));
         if (chosenDifficulty != null) {
@@ -244,26 +240,6 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
 
     public Game getGame() {
         return game;
-    }
-
-    @Override
-    public void setLifePoints(String points) {
-        runOnUiThread(() -> textLifePoints.setText(points));
-    }
-
-    @Override
-    public void setMoney(String money) {
-        runOnUiThread(() -> textMoney.setText(money));
-    }
-
-    @Override
-    public void setCurrentWaveNumber(String wave) {
-        runOnUiThread(() -> textCurrentWave.setText((getString(R.string.wave_title) + wave)));
-    }
-
-    @Override
-    public void setWaveTimeRemaining(String sec) {
-        runOnUiThread(() -> textWaveRemaining.setText(sec));
     }
 
     public void addView(View view){
@@ -326,40 +302,50 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
                         case FIELD:
                             view.setTag(FIELD);
                             mapLayout.addView(view);
+                            mapLayout.invalidate();
                             break;
                         case ENEMY:
                             view.setTag(ENEMY);
                             mapLayoutEnemies.addView(view);
+                            mapLayoutEnemies.invalidate();
                             break;
                         case TOWER:
                             view.setTag(TOWER);
                             mapLayoutTowers.addView(view);
+                            mapLayoutTowers.invalidate();
                             break;
                         case BULLET:
                             view.setTag(BULLET);
                             mapLayoutBullets.addView(view);
+                            mapLayoutBullets.invalidate();
                             break;
                         default:
                             view.setTag(FIELD);
                             mapLayout.addView(view);
+                            mapLayout.invalidate();
                     }
                 }else if(message.what==UIActions.removeView.getId()){
                     View view = ((View)message.obj);
                     switch((int) view.getTag()) {
                         case FIELD:
                             mapLayout.removeView(view);
+                            mapLayout.invalidate();
                             break;
                         case ENEMY:
                             mapLayoutEnemies.removeView(view);
+                            mapLayoutEnemies.invalidate();
                             break;
                         case TOWER:
                             mapLayoutTowers.removeView(view);
+                            mapLayoutTowers.invalidate();
                             break;
                         case BULLET:
                             mapLayoutBullets.removeView(view);
+                            mapLayoutBullets.invalidate();
                             break;
                         default:
                             mapLayout.removeView(view);
+                            mapLayout.invalidate();
                     }
                 } else if (message.what == UIActions.setForeGound.getId()) {
                     View view = (View) message.obj;
@@ -369,6 +355,19 @@ public class GameActivity extends AppCompatActivity implements IStatusBar {
                     animator.start();
                 }
                 super.handleMessage(message);
+            }
+        };
+    }
+
+    @SuppressLint("HandlerLeak")
+    public Handler getStatusBarHandler(){
+        return new Handler() {
+            @Override
+            public void handleMessage(Message message) {
+                if(message.what == UIActions.setText.getId()){
+                    TextView view = ((TextView)message.obj);
+                    view.setText(String.valueOf(message.arg1));
+                }
             }
         };
     }

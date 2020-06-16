@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,16 +93,18 @@ public class Game {
     private MusicPlayer musicPLayer;
 
     private Handler handler;
+    private StatusBar status;
 
-	public Game(GameActivity gameActivity) {
+	public Game(GameActivity gameActivity, StatusBar status) {
 	    this.gameActivity = gameActivity;
 	    handler = gameActivity.getHandler();
 	    mapStructure = new MapStructure();
         matchField = new MatchField(gameActivity);
-        countDownTimer = new StatusBarCountDownTimer(gameActivity);
+        countDownTimer = new StatusBarCountDownTimer(status);
         generateButtonsOnMap();
         loadSettings();
         musicPLayer = new MusicPlayer(gameSettings.get(Settings.MUSIC), gameActivity);
+        this.status=status;
 	}
 
 	private void loadSettings(){
@@ -186,7 +189,7 @@ public class Game {
 
     public void start() {
 	    this.money = match.getStartMoney();
-	    updateStatusBar();
+	    status.setMoney(money);
 	    startNextWave(0);
     }
 
@@ -224,7 +227,7 @@ public class Game {
 
         //status
         currentWaveNumber = match.getCurrentWaveNumber()-1;
-        updateStatusBar();
+        status.setCurrentWaveNumber(currentWaveNumber);
 
         //pause actions
         match.setLastTimeActionMillis(System.currentTimeMillis());
@@ -303,12 +306,6 @@ public class Game {
         }
     }
 
-	private void updateStatusBar() {
-	    gameActivity.setLifePoints(String.valueOf(lifePoints));
-	    gameActivity.setMoney(String.valueOf(money));
-	    gameActivity.setCurrentWaveNumber(String.valueOf(currentWaveNumber));
-    }
-
     public int getLifePoints() {
         return lifePoints;
     }
@@ -320,11 +317,11 @@ public class Game {
     public boolean decreaseLifePoints(int lifePoints) {
         if (this.lifePoints > lifePoints) {
             this.lifePoints -= lifePoints;
-            updateStatusBar();
+            status.setLifePoints(this.lifePoints);
             return true;
         }
         this.lifePoints = 0;
-        updateStatusBar();
+        status.setLifePoints(this.lifePoints);
         return false;
     }
 
@@ -338,7 +335,7 @@ public class Game {
 
 	public void addMoney(int money) {
 	    this.money += money;
-	    updateStatusBar();
+	    status.setMoney(money);
 	    if (moneyListener != null) {
 	        moneyListener.performMoneyUpdate(this.money);
         }
@@ -347,7 +344,7 @@ public class Game {
     public boolean subMoney(int money) {
 	    if (this.money >= money) {
             this.money -= money;
-            updateStatusBar();
+            status.setMoney(money);
             increaseMoneySpent(money);
             return true;
         }

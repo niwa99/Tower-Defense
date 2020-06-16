@@ -10,6 +10,7 @@
         android:layout_width="25dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:layout_column="0"
         android:background="@drawable/icon_lifepoints" />
 
     <TextView
@@ -17,21 +18,30 @@
         android:layout_width="25dp"
         android:layout_height="match_parent"
         android:layout_marginRight="10dp"
+        android:layout_column="1"
         android:text="100" />
 
     <ImageView
         android:id="@+id/imageCurrency"
         android:layout_width="30dp"
         android:layout_height="match_parent"
+        android:layout_column="2"
         android:background="@drawable/icon_currency" />
 
     <TextView
         android:id="@+id/textMoney"
         android:layout_width="40dp"
         android:layout_height="match_parent"
-        android:layout_marginRight="30dp"
+        android:layout_marginRight="15dp"
+        android:layout_column="3"
         android:text="0"
         android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_column="4"
+        android:text="Wave: " />
 
     <TextView
         android:id="@+id/textCurrentWave"
@@ -40,12 +50,19 @@
         android:layout_row="0"
         android:layout_column="5"
         android:layout_marginRight="10dp"
-        android:text="Wave XX" />
+        android:text="XX" />
 
     <TextView
         android:id="@+id/textWaveRemaining"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_column="6"
+        android:layout_marginLeft="15dp"
+        android:text="30" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_column="7"
         android:layout_gravity="right"
-        android:text="30s" />
+        android:text="s" />
 </GridLayout>

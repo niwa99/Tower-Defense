@@ -1,5 +1,6 @@
 package de.dhbw.map.objects.tower;
 
+import android.os.Handler;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -8,9 +9,11 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 import de.dhbw.activities.GameActivity;
+import de.dhbw.activities.UIActions;
 import de.dhbw.map.objects.bullet.SnowFlake;
 import de.dhbw.map.objects.enemy.AEnemy;
 import de.dhbw.map.structure.Field;
+import de.dhbw.util.ObjectType;
 
 import static de.dhbw.util.Constants.DRAWABLE_BULLET_FREEZER;
 import static de.dhbw.util.Constants.DRAWABLE_TOWER_FREEZER_BASE;
@@ -39,6 +42,7 @@ import static de.dhbw.util.Constants.TOWER_FREEZER_LEVEL_4_SLOWNESS;
 
 public class TowerFreezer extends ATower {
     private int slowness;
+    private Handler handler;
 
     /**
      * Constructor
@@ -56,7 +60,7 @@ public class TowerFreezer extends ATower {
         baseImage.setX(getPositionX());
         baseImage.setY(getPositionY());
         setBaseImage(baseImage);
-
+        this.handler=gameActivity.getHandler();
         this.slowness=getFreezerSlownessByLevel(level);
     }
 
@@ -78,12 +82,12 @@ public class TowerFreezer extends ATower {
     @Override
     public boolean fire(List<AEnemy> enemies) {
         if (super.fire(enemies)) {
-            gameActivity.setImageResource(getBaseImage(), DRAWABLE_TOWER_FREEZER_HEAD);
+            GameActivity.runActionOnUI(handler, UIActions.setImageResource, getBaseImage(), DRAWABLE_TOWER_FREEZER_HEAD);
 
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    gameActivity.setImageResource(getBaseImage(), DRAWABLE_TOWER_FREEZER_BASE);
+                    GameActivity.runActionOnUI(handler, UIActions.setImageResource, getBaseImage(), DRAWABLE_TOWER_FREEZER_BASE);
                 }
             }, 500);
 

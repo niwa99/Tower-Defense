@@ -335,7 +335,7 @@ public class Game {
 
 	public void addMoney(int money) {
 	    this.money += money;
-	    status.setMoney(money);
+	    status.setMoney(this.money);
 	    if (moneyListener != null) {
 	        moneyListener.performMoneyUpdate(this.money);
         }
@@ -344,7 +344,7 @@ public class Game {
     public boolean subMoney(int money) {
 	    if (this.money >= money) {
             this.money -= money;
-            status.setMoney(money);
+            status.setMoney(this.money);
             increaseMoneySpent(money);
             return true;
         }
@@ -517,19 +517,19 @@ public class Game {
             if (field.getFieldDescription().equals(FieldDescription.PATH)) {
                 fieldButton.setEnabled(false);
                 fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
-                gameActivity.getMapFrameLayout().addView(fieldButton);
+                GameActivity.runActionOnUI(handler, UIActions.addView, fieldButton, ObjectType.FIELD);
                 mapButtons.add(fieldButton);
             } else if(field.getFieldDescription().equals(FieldDescription.SPAWN)) {
                 fieldButton.setOnClickListener(spawnFieldListener);
                 fieldButton.setBackground(gameActivity.getResources().getDrawable(MapStructure.calculatePath(fieldButton.getX(), fieldButton.getY()), null));
                 fieldButton.setForeground(gameActivity.getResources().getDrawable(R.drawable.arrow_spawn_button, null));
                 spawnButton = fieldButton;
-                gameActivity.getMapFrameLayout().addView(fieldButton);
+                GameActivity.runActionOnUI(handler, UIActions.addView, fieldButton, ObjectType.FIELD);
                 mapButtons.add(fieldButton);
             } else if (field.getFieldDescription().equals(FieldDescription.FREE)) {
                 fieldButton.setOnClickListener(listener);
                 fieldButton.setBackground(gameActivity.getResources().getDrawable(Constants.DRAWABLE_FIELD_TRANSPARENT, null));
-                gameActivity.getMapFrameLayout().addView(fieldButton);
+                GameActivity.runActionOnUI(handler, UIActions.addView, fieldButton, ObjectType.FIELD);
                 mapButtons.add(fieldButton);
             }
         });
@@ -538,6 +538,7 @@ public class Game {
     private void triggerSpawnButtonImageChange(){
 	    if(lastEnemyOfWaveSpawned && !lastWaveOut){
 	        GameActivity.runActionOnUI(handler, UIActions.setForeGound, spawnButton, R.drawable.arrow_spawn_button);
+	        startNextWave(0);
         }else{
 	        GameActivity.runActionOnUI(handler, UIActions.setForeGound, spawnButton, R.drawable.transparent_background);
         }

@@ -242,39 +242,8 @@ public class GameActivity extends AppCompatActivity {
         return game;
     }
 
-    public void addView(View view){
-        runOnUiThread(() -> mapLayout.addView(view));
-    }
-
-    public void removeView(View view){
-        runOnUiThread(() -> mapLayout.removeView(view));
-    }
-
-    public void setImageResource(ImageView view, int id){
-        runOnUiThread(() -> view.setImageResource(id));
-    }
-
-    public void setForeGround(View view, int id){
-        runOnUiThread(() -> view.setForeground(getDrawable(id)));
-    }
-
-    public void startAnimator(ObjectAnimator animator){
-        runOnUiThread(() -> animator.start());
-    }
-
     public void showBuilder(AlertDialog.Builder builder){
         runOnUiThread(() -> builder.create().show());
-    }
-
-    public void moveView(View view, int x, int y){
-        runOnUiThread(() -> {
-            view.setX(x);
-            view.setY(y);
-        });
-    }
-
-    public void rotateImage(View view, float rotation){
-        runOnUiThread(()-> view.setRotation(rotation));
     }
 
     public Handler getHandler() {

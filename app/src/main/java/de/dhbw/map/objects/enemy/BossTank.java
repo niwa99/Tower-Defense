@@ -23,7 +23,7 @@ public class BossTank extends AEnemy {
     }
 
     public BossTank(String label, int level, GameActivity gameActivity, EnemyView enemyView) {
-        super(label, UUID.randomUUID(), getBossTankHealthpointsByLevel(level), Tank.getTankSpeedByLevel(level), getBossTankValueByLevel(level), Tank.getTankLifePointsCostsByLevel(level)*2, gameActivity , EnemyType.BOSS_TANK, enemyView);
+        super(label, UUID.randomUUID(), getBossTankHealthpointsByLevel(level), Tank.getTankSpeedByLevel(level), getBossTankValueByLevel(level), Tank.getTankLifePointsCostsByLevel(level)*3, gameActivity , EnemyType.BOSS_TANK, enemyView);
         this.level=level;
     }
 

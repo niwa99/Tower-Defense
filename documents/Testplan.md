@@ -293,7 +293,12 @@ All tests have passed successfully.
 
 #### 6.1.3 Suspension and Resumption Criteria
 
-While developing (without publishing), it is allowed to skip the CI-tests in order to save time. The tests can be runned locally nevertheless.
+Due to the CI, all test will always be runned as soon as a new commit is pushed to the GitHub-repository. This applies to the master branch as well to every other branch.
+
+When developing on a feature branch, the case can occur that a developer is not ready with a new feature yet. In order to save the work so far, the developer can push this state to a feature branch.
+If such a Work-In-Progress commit is pushed to the feature branch, the CI will run through the tests nonetheless, but the tests do not have to pass in this case.
+
+Before pushing a new feature to the upstream, a developer should run the JUnit-tests locally in order to prevent the CI from being not able to pass the tests.
 
 ### 6.2 Test Cycles
 
@@ -313,15 +318,16 @@ n/a
 
 ### 7.1 Test Evaluation Summaries
 
-Every time a test becomes runned (when a commit becomes pushed), the result of this test is saved in the CI-summaries on GitHub.
+Every time a test becomes runned (when a commit becomes pushed), the result of this test is saved in the CI-summaries on TravisCI.
 
 ### 7.2 Reporting on Test Coverage
 
-tbd
+The test coverage is not available in real time. A connection between TravisCI and CodeClimate was not establishable without spending a lot of time.
+Nonetheless, you can assume that our test coverage will always be around 20%. By those 20%, most important game-engine functionalities are covered.
 
 ### 7.3 Perceived Quality Reports
 
-tbd
+Quality reports can be accessed by clicking on the "maintainability" badge at the top of this document. One becomes forwarded to the quality reports on CodeClimate.
 
 ### 7.4 Incident Logs and Change Requests
 
@@ -329,13 +335,13 @@ In the TravisCI summaries, each build is automatically logged in detail.
 
 ### 7.5 Smoke Test Suite and Supporting Test Scripts
 
-tbd
+n/a
 
 ### 7.6 Additional Work Products
 
 #### 7.6.1 Detailed Test Results
 
-tbd
+All detailed information to the tests are available on TravisCI (JUnit Tests) and on our blog (UI and UX Tests).
 
 #### 7.6.2 Additional Automated Functional Test Scripts
 
@@ -388,6 +394,7 @@ The following tools will be employed to support the test process for this Test P
 | CI Service            | TravisCI         |
 | Metrics Tool          | Metrics-Reloaded |
 | Test Coverage Monitor | Metrics-Reloaded |
+| Code Analytics Tool   | CodeClimate      |
 
 ### 9.4 Test Environment Configurations
 

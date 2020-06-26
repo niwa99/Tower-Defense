@@ -6,13 +6,13 @@ title __Tower Defense Class Diagram__\n
 
     package de.dhbw.activities {
 
-      class de.dhbw.activities.MainActivity {
+      class de.dhbw.activities.MainActivity #lightblue {
         - mediaPlayer : MediaPlayer
         + toggle()
         # onCreate()
       }
 
-      class de.dhbw.activities.GameActivity {
+      class de.dhbw.activities.GameActivity #lightblue {
         {static} - AUTO_HIDE : boolean
         {static} - AUTO_HIDE_DELAY_MILLIS : int
         {static} - UI_ANIMATION_DELAY : int
@@ -49,7 +49,7 @@ title __Tower Defense Class Diagram__\n
         - toggle()
       }
 
-      class de.dhbw.activities.DifficultyFragment {
+      class de.dhbw.activities.DifficultyFragment #lightblue {
         {static} - FRAGMENT_EASY : int
         {static} - FRAGMENT_HARD : int
         {static} - FRAGMENT_MEDIUM : int
@@ -75,7 +75,7 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.game.match {
 
-        abstract class de.dhbw.game.match.AMatch {
+        abstract class de.dhbw.game.match.AMatch #orange {
           - count : int
           - extendable : boolean
           - startMoney : int
@@ -93,7 +93,7 @@ title __Tower Defense Class Diagram__\n
           ~ addWaves()
         }
 
-        class de.dhbw.game.match.EasyMatch {
+        class de.dhbw.game.match.EasyMatch #orange {
           {static} - firstWaveTankL1 : WaveComposition
           {static} - firstWaveTankL2 : WaveComposition
           {static} - fithhWaveTankL3 : WaveComposition
@@ -108,7 +108,7 @@ title __Tower Defense Class Diagram__\n
           + create()
         }
 
-        class de.dhbw.game.match.MediumMatch {
+        class de.dhbw.game.match.MediumMatch #orange {
           {static} - firstWaveTankL1 : WaveComposition
           {static} - firstWaveTankL2 : WaveComposition
           {static} - secondWaveTankL1 : WaveComposition
@@ -119,7 +119,7 @@ title __Tower Defense Class Diagram__\n
           + create()
         }
 
-        class de.dhbw.game.match.HardMatch {
+        class de.dhbw.game.match.HardMatch #orange {
           {static} - firstWaveTankL1 : WaveComposition
           {static} - firstWaveTankL2 : WaveComposition
           {static} - secondWaveTankL1 : WaveComposition
@@ -134,7 +134,7 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.game.popups {
 
-        abstract class de.dhbw.game.popups.AMenu {
+        abstract class de.dhbw.game.popups.AMenu #lightblue {
           - mainLayout : LinearLayout
           - menuLayout : LinearLayout
           + addViewToPopUp()
@@ -145,7 +145,7 @@ title __Tower Defense Class Diagram__\n
           # onCreate()
         }
 
-        class de.dhbw.game.popups.MenuSettings {
+        class de.dhbw.game.popups.MenuSettings #lightblue {
           {static} + gameActivity : GameActivity
           {static} - menuSettingsLayout : LinearLayout
           + finish()
@@ -154,7 +154,7 @@ title __Tower Defense Class Diagram__\n
           # onCreate()
         }
 
-        class de.dhbw.game.popups.MenuTowerSelection {
+        class de.dhbw.game.popups.MenuTowerSelection #lightblue {
           {static} + game : Game
           + buildTower()
           + closeWindow()
@@ -162,7 +162,7 @@ title __Tower Defense Class Diagram__\n
           # onCreate()
         }
 
-        class de.dhbw.game.popups.MenuUpgradeAndSell {
+        class de.dhbw.game.popups.MenuUpgradeAndSell #lightblue {
           {static} + game : Game
           - level : int
           - maxLevel : int
@@ -187,17 +187,17 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.game.settings {
 
-        interface de.dhbw.game.settings.ISettingsManager {
+        interface de.dhbw.game.settings.ISettingsManager #orange {
           {abstract} + toggle()
         }
 
-        enum de.dhbw.game.settings.Settings {
+        enum de.dhbw.game.settings.Settings #orange {
           ANIMATIONS
           INGAME_SOUND
           MUSIC
         }
 
-        class de.dhbw.game.settings.SettingsToggleButton {
+        class de.dhbw.game.settings.SettingsToggleButton #lightblue {
           + SettingsToggleButton()
         }
 
@@ -205,7 +205,7 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.game.wave {
 
-        abstract class de.dhbw.game.wave.AWave {
+        abstract class de.dhbw.game.wave.AWave #orange {
           - count : int
           - enemies : List<AEnemy>
           - speed : int
@@ -218,14 +218,14 @@ title __Tower Defense Class Diagram__\n
           ~ addEnemy()
         }
 
-        class de.dhbw.game.wave.Wave {
+        class de.dhbw.game.wave.Wave #orange {
           - waveCompositions : List<WaveComposition>
           + Wave()
           + addWaveCompositions()
           + generate()
         }
 
-        class de.dhbw.game.wave.WaveComposition {
+        class de.dhbw.game.wave.WaveComposition #orange {
           - amount : int
           - level : int
           + WaveComposition()
@@ -236,7 +236,7 @@ title __Tower Defense Class Diagram__\n
 
       }
 
-      abstract class de.dhbw.game.ATimerUsage {
+      abstract class de.dhbw.game.ATimerUsage #orange {
         # lastTimeActionMillis : long
         - delay : long
         {abstract} + calculateDelay()
@@ -245,20 +245,20 @@ title __Tower Defense Class Diagram__\n
         # setDelay()
       }
 
-      enum de.dhbw.game.Difficulty {
+      enum de.dhbw.game.Difficulty #orange {
         EASY
         HARD
         MEDIUM
         difficultyAsNumber
       }
 
-      enum de.dhbw.game.EnemyType {
+      enum de.dhbw.game.EnemyType #orange {
         FREEZER
         TANK
         label
       }
 
-      class de.dhbw.game.Game {
+      class de.dhbw.game.Game #lightgreen {
         - clickedButton : Optional<Button>
         - currentWaveNumber : int
         - gameSettings : Map<Settings, Boolean>
@@ -319,18 +319,18 @@ title __Tower Defense Class Diagram__\n
         - updateStatusBar()
       }
 
-      interface de.dhbw.game.IMoneyListener {
+      interface de.dhbw.game.IMoneyListener #lightgreen {
         {abstract} + performMoneyUpdate()
       }
 
-      interface de.dhbw.game.IStatusBar {
+      interface de.dhbw.game.IStatusBar #lightblue {
         {abstract} + setCurrentWaveNumber()
         {abstract} + setLifePoints()
         {abstract} + setMoney()
         {abstract} + setWaveTimeRemaining()
       }
 
-      class de.dhbw.game.StatusBarCountDownTimer {
+      class de.dhbw.game.StatusBarCountDownTimer #orange {
         - seconds : int
         - timer : Timer
         + StatusBarCountDownTimer()
@@ -345,7 +345,7 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.map.matchfield {
 
-        class de.dhbw.map.matchfield.MatchField {
+        class de.dhbw.map.matchfield.MatchField #lightgreen {
           - enemies : List<AEnemy>
           - isGameOver : boolean
           - matchFieldTimer : Timer
@@ -380,7 +380,7 @@ title __Tower Defense Class Diagram__\n
 
         package de.dhbw.map.objects.bullet {
 
-          abstract class de.dhbw.map.objects.bullet.ABullet {
+          abstract class de.dhbw.map.objects.bullet.ABullet #orange {
             # damage : int
             - bulletImage : ImageView
             - x : int
@@ -395,7 +395,7 @@ title __Tower Defense Class Diagram__\n
             - startLogicalShooting()
           }
 
-          class de.dhbw.map.objects.bullet.Bomb {
+          class de.dhbw.map.objects.bullet.Bomb #orange {
             - allEnemies : List<AEnemy>
             - range : int
             + Bomb()
@@ -404,13 +404,13 @@ title __Tower Defense Class Diagram__\n
             # hitEnemy()
           }
 
-          class de.dhbw.map.objects.bullet.Projectile {
+          class de.dhbw.map.objects.bullet.Projectile #orange {
             + Projectile()
             + Projectile()
             + Projectile()
           }
 
-          class de.dhbw.map.objects.bullet.SnowFlake {
+          class de.dhbw.map.objects.bullet.SnowFlake #orange {
             - slowness : int
             + SnowFlake()
             + SnowFlake()
@@ -421,7 +421,7 @@ title __Tower Defense Class Diagram__\n
 
         package de.dhbw.map.objects.enemy {
 
-          abstract class de.dhbw.map.objects.enemy.AEnemy {
+          abstract class de.dhbw.map.objects.enemy.AEnemy #orange {
             # image : ImageView
             - healthpoints : int
             - isAlive : boolean
@@ -465,7 +465,7 @@ title __Tower Defense Class Diagram__\n
             + slowDown()
           }
 
-          class de.dhbw.map.objects.enemy.Tank {
+          class de.dhbw.map.objects.enemy.Tank #orange {
             - timer : Timer
             + Tank()
             + Tank()
@@ -482,7 +482,7 @@ title __Tower Defense Class Diagram__\n
 
         package de.dhbw.map.objects.tower {
 
-          abstract class de.dhbw.map.objects.tower.ATower {
+          abstract class de.dhbw.map.objects.tower.ATower #orange {
             # damage : int
             # headImage : Optional<ImageView>
             - baseImage : ImageView
@@ -528,7 +528,7 @@ title __Tower Defense Class Diagram__\n
             + setTask()
           }
 
-          class de.dhbw.map.objects.tower.TowerArtillery {
+          class de.dhbw.map.objects.tower.TowerArtillery #orange {
             - artilleryTowerImage : ImageView
             + TowerArtillery()
             + TowerArtillery()
@@ -543,7 +543,7 @@ title __Tower Defense Class Diagram__\n
             {static} - getTowerArtilleryRangeByLevel()
           }
 
-          class de.dhbw.map.objects.tower.TowerBoombastic {
+          class de.dhbw.map.objects.tower.TowerBoombastic #orange {
             + TowerBoombastic()
             + fire()
             + getCosts()
@@ -556,7 +556,7 @@ title __Tower Defense Class Diagram__\n
             {static} - getTowerBoombasticRangeByLevel()
           }
 
-          class de.dhbw.map.objects.tower.TowerFreezer {
+          class de.dhbw.map.objects.tower.TowerFreezer #orange {
             - slowness : int
             + TowerFreezer()
             + TowerFreezer()
@@ -573,7 +573,7 @@ title __Tower Defense Class Diagram__\n
             {static} - getFreezerSlownessByLevel()
           }
 
-          enum de.dhbw.map.objects.tower.TowerType {
+          enum de.dhbw.map.objects.tower.TowerType #orange {
             ARTILLERY
             ASSAULTLASER
             BOOMBASTIC
@@ -590,7 +590,7 @@ title __Tower Defense Class Diagram__\n
 
       package de.dhbw.map.structure {
 
-        class de.dhbw.map.structure.Field {
+        class de.dhbw.map.structure.Field #orange {
           - sizeInPx : int
           - xCoord : int
           - yCoord : int
@@ -610,7 +610,7 @@ title __Tower Defense Class Diagram__\n
           + setFieldDescription()
         }
 
-        enum de.dhbw.map.structure.FieldDescription {
+        enum de.dhbw.map.structure.FieldDescription #orange {
           FREE
           PATH
           SPAWN
@@ -618,7 +618,7 @@ title __Tower Defense Class Diagram__\n
           label
         }
 
-        class de.dhbw.map.structure.MapStructure {
+        class de.dhbw.map.structure.MapStructure #orange {
           - fields : Map<String, Field>
           {static} - path : Position[]
           + MapStructure()
@@ -637,7 +637,7 @@ title __Tower Defense Class Diagram__\n
 
     package de.dhbw.util {
 
-      class de.dhbw.util.Constants {
+      class de.dhbw.util.Constants #orange {
         {static} + AMOUNT_COLUMNS : int
         {static} + AMOUNT_ROWS : int
         {static} + BOMB_RANGE : int
@@ -710,21 +710,21 @@ title __Tower Defense Class Diagram__\n
         {static} + TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
       }
 
-      class de.dhbw.util.DifficultyFragmentAdapter {
+      class de.dhbw.util.DifficultyFragmentAdapter #lightblue {
         {static} - NUM_PAGES : int
         + DifficultyFragmentAdapter()
         + getCount()
         + getItem()
       }
 
-      enum de.dhbw.util.Direction {
+      enum de.dhbw.util.Direction #orange {
         DOWN
         LEFT
         RIGHT
         UP
       }
 
-      class de.dhbw.util.Position {
+      class de.dhbw.util.Position #orange {
         - x : int
         - y : int
         + Position()
@@ -734,7 +734,7 @@ title __Tower Defense Class Diagram__\n
         + toString()
       }
 
-      class de.dhbw.util.PreferenceManager {
+      class de.dhbw.util.PreferenceManager #orange {
         - context : Context
         - editorSettings : Editor
         - editorStatistics : Editor
@@ -753,7 +753,7 @@ title __Tower Defense Class Diagram__\n
         - PreferenceManager()
       }
 
-      enum de.dhbw.util.PreferenceManager.Statistics {
+      enum de.dhbw.util.PreferenceManager.Statistics #orange {
         EASY_BUILT_TOWERS
         EASY_ENEMIES_KILLED
         EASY_MAX_WAVE
@@ -771,7 +771,7 @@ title __Tower Defense Class Diagram__\n
         MEDIUM_UPGRADES
       }
 
-      class de.dhbw.util.SortingUtil {
+      class de.dhbw.util.SortingUtil #orange {
         + SortingUtil()
         {static} + getSortedListBySortingMapByValue()
         + sortMapByValue()
@@ -780,6 +780,13 @@ title __Tower Defense Class Diagram__\n
     }
 
   }
+
+    legend
+    |= |= Type |
+    |<back:lightblue>   </back>| View |
+    |<back:lightgreen>   </back>| Controller |
+    |<back:orange>   </back>| Model |
+    endlegend
 
 
   de.dhbw.activities.DifficultyFragment -up-|> androidx.fragment.app.Fragment

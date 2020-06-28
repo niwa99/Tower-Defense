@@ -5,11 +5,12 @@ title __ENEMY's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.enemy {
       abstract class de.dhbw.map.objects.enemy.AEnemy {
-          # image : ImageView
           - healthpoints : int
           - isAlive : boolean
+          - isPaused : boolean
           - label : String
           - lifePointsCosts : int
+          - movedSteps : int
           - progress : int
           - reachedTarget : boolean
           - slowness : int
@@ -19,33 +20,105 @@ title __ENEMY's Class Diagram__\n
           - value : int
           - x : int
           - y : int
-          + Enemy()
+          + AEnemy()
+          + AEnemy()
+          + getAndReduceSlowness()
           + getDirection()
+          + getEnemyView()
           + getHealthPoints()
-          + getImage()
           + getLabel()
           + getLifePointsCosts()
+          + getMovedSteps()
           + getPosition()
           + getPositionX()
           + getPositionY()
+          + getProgress()
           + getSlowness()
           + getSpeed()
           + getTimerTask()
           + getType()
           + getUuid()
           + getValue()
-          {abstract} + hit()
           + isAlive()
           + isFullSpeed()
+          + isPaused()
           + move()
           + moveTo()
           + moveToPosition()
           + reachedTarget()
           + reduceHealthPoints()
           + setHealthpoints()
-          + setImage()
+          + setPaused()
+          + setProgress()
           + setTimerTask()
           + slowDown()
+          # getEnemyField()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.enemy {
+      class de.dhbw.map.objects.enemy.BossTank {
+          - level : int
+          + BossTank()
+          + BossTank()
+          {static} + getBossTankHealthpointsByLevel()
+          + getCar()
+          + getLevel()
+          {static} - getBossTankValueByLevel()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.enemy {
+      class de.dhbw.map.objects.enemy.Car {
+          + Car()
+          + Car()
+          {static} - getCarHealthpointsByLevel()
+          {static} - getCarLifePointsCostsByLevel()
+          {static} - getCarSpeedByLevel()
+          {static} - getCarValueByLevel()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.enemy {
+      class de.dhbw.map.objects.enemy.EnemyView {
+          - enemyHitImageID : int
+          - enemyImageID : int
+          - enemyLayout : RelativeLayout
+          - image : ImageView
+          - lifeBar : ProgressBar
+          - timer : Timer
+          + EnemyView()
+          + EnemyView()
+          + getLayout()
+          + hitAnimation()
+          + setHealthProgress()
+          + setPosition()
+          # resolveRotation()
+          - createEnemyLayoutWithLifeBar()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.enemy {
+      class de.dhbw.map.objects.enemy.Plane {
+          + Plane()
+          + Plane()
+          # getEnemyField()
+          {static} - getPlaneHealthpointsByLevel()
+          {static} - getPlaneLifePointsCostsByLevel()
+          {static} - getPlaneSpeedByLevel()
+          {static} - getPlaneValueByLevel()
       }
     }
   }
@@ -54,25 +127,29 @@ title __ENEMY's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.enemy {
       class de.dhbw.map.objects.enemy.Tank {
-          - timer : Timer
+          # timer : Timer
           + Tank()
           + Tank()
-          + hit()
-          + move()
-          {static} - createTankImage()
+          + Tank()
+          {static} + getTankLifePointsCostsByLevel()
+          {static} + getTankSpeedByLevel()
           {static} - getTankHealthpointsByLevel()
-          {static} - getTankLifePointsCostsByLevel()
-          {static} - getTankSpeedByLevel()
           {static} - getTankValueByLevel()
       }
     }
   }
   
 
-  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.map.structure.Field : actualField
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.activities.GameActivity : gameActivity
   de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.util.Direction : direction
   de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.game.EnemyType : enemyType
+  de.dhbw.map.objects.enemy.AEnemy o-- de.dhbw.map.objects.enemy.EnemyView : enemyView
+  de.dhbw.map.objects.enemy.BossTank -up-|> de.dhbw.map.objects.enemy.AEnemy
+  de.dhbw.map.objects.enemy.BossTank o-- de.dhbw.map.objects.enemy.Car : car
+  de.dhbw.map.objects.enemy.Car -up-|> de.dhbw.map.objects.enemy.AEnemy
+  de.dhbw.map.objects.enemy.EnemyView o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.enemy.Plane -up-|> de.dhbw.map.objects.enemy.AEnemy
   de.dhbw.map.objects.enemy.Tank -up-|> de.dhbw.map.objects.enemy.AEnemy
 
 

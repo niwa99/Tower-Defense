@@ -5,13 +5,12 @@ title __MATCHFIELD's Class Diagram__\n
   namespace de.dhbw {
     namespace map.matchfield {
       class de.dhbw.map.matchfield.MatchField {
-          - enemies : List<Enemy>
-          - isGameOver : boolean
-          - matchFieldTimer : Timer
+          - enemies : List<AEnemy>
           - towers : List<ATower>
           + MatchField()
           + addEnemy()
           + addTower()
+          + checkForFinishedGame()
           + continueTimers()
           {static} + getDistance()
           + getTower()
@@ -31,12 +30,14 @@ title __MATCHFIELD's Class Diagram__\n
           - removeEnemy()
           - removeImageViewOfEnemy()
           - removeTower()
+          - spawnCarIfEnemyIsBossTank()
       }
     }
   }
   
 
   de.dhbw.map.matchfield.MatchField o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.matchfield.MatchField o-- de.dhbw.util.AdvancedTimer : matchFieldTimer
 
 
 right footer

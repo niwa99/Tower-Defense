@@ -15,6 +15,7 @@ title __MATCH's Class Diagram__\n
             {abstract} + create()
             + getCurrent()
             + getCurrentWaveNumber()
+            + getDifficulty()
             + getStartMoney()
             + getWaveTime()
             + hasNext()
@@ -31,15 +32,52 @@ title __MATCH's Class Diagram__\n
     namespace game {
       namespace match {
         class de.dhbw.game.match.EasyMatch {
-            {static} - firstWaveTankL1 : WaveComposition
-            {static} - firstWaveTankL2 : WaveComposition
-            {static} - fithhWaveTankL3 : WaveComposition
-            {static} - fourthWaveTankL2 : WaveComposition
-            {static} - fourthWaveTankL3 : WaveComposition
-            {static} - secondWaveTankL1 : WaveComposition
-            {static} - secondWaveTankL2 : WaveComposition
             {static} - startMoney : int
-            {static} - thirdWaveTankL2 : WaveComposition
+            {static} - w10_Car : WaveComposition
+            {static} - w10_Tank : WaveComposition
+            {static} - w10_TankBoss : WaveComposition
+            {static} - w11_Car : WaveComposition
+            {static} - w11_Plane : WaveComposition
+            {static} - w11_Tank : WaveComposition
+            {static} - w12_Tank : WaveComposition
+            {static} - w13_Car : WaveComposition
+            {static} - w14_Car : WaveComposition
+            {static} - w14_Tank : WaveComposition
+            {static} - w15_Car : WaveComposition
+            {static} - w15_Tank : WaveComposition
+            {static} - w16_Plane : WaveComposition
+            {static} - w17_Car : WaveComposition
+            {static} - w17_Tank : WaveComposition
+            {static} - w18_Car : WaveComposition
+            {static} - w18_Plane : WaveComposition
+            {static} - w18_Tank : WaveComposition
+            {static} - w19_Tank : WaveComposition
+            {static} - w1_Car : WaveComposition
+            {static} - w20_TankBoss : WaveComposition
+            {static} - w21_Car : WaveComposition
+            {static} - w22_Tank : WaveComposition
+            {static} - w23_Plane : WaveComposition
+            {static} - w24_Car : WaveComposition
+            {static} - w24_Plane : WaveComposition
+            {static} - w24_Tank : WaveComposition
+            {static} - w25_TankBoss : WaveComposition
+            {static} - w26_Car : WaveComposition
+            {static} - w27_Tank : WaveComposition
+            {static} - w28_Car : WaveComposition
+            {static} - w28_Tank : WaveComposition
+            {static} - w29_Plane : WaveComposition
+            {static} - w2_Tank : WaveComposition
+            {static} - w30_TankBoss : WaveComposition
+            {static} - w3_Car : WaveComposition
+            {static} - w4_Tank : WaveComposition
+            {static} - w5_Plane : WaveComposition
+            {static} - w6_Tank : WaveComposition
+            {static} - w7_Car : WaveComposition
+            {static} - w7_Tank : WaveComposition
+            {static} - w8_Tank : WaveComposition
+            {static} - w9_Car : WaveComposition
+            {static} - w9_Tank : WaveComposition
+            {static} - waveSpeed : int
             {static} - waveTime : int
             + EasyMatch()
             + create()
@@ -53,11 +91,91 @@ title __MATCH's Class Diagram__\n
     namespace game {
       namespace match {
         class de.dhbw.game.match.HardMatch {
-            {static} - firstWaveTankL1 : WaveComposition
-            {static} - firstWaveTankL2 : WaveComposition
-            {static} - secondWaveTankL1 : WaveComposition
-            {static} - secondWaveTankL2 : WaveComposition
-            {static} - thirdWaveTankL2 : WaveComposition
+            {static} - startMoney : int
+            {static} - w10_TankBoss : WaveComposition
+            {static} - w11_Tank : WaveComposition
+            {static} - w12_Car : WaveComposition
+            {static} - w13_Plane : WaveComposition
+            {static} - w14_Car : WaveComposition
+            {static} - w14_Tank : WaveComposition
+            {static} - w15_Car : WaveComposition
+            {static} - w15_Plane : WaveComposition
+            {static} - w15_Tank : WaveComposition
+            {static} - w15_TankBoss : WaveComposition
+            {static} - w16_Car : WaveComposition
+            {static} - w17_Car : WaveComposition
+            {static} - w17_Tank : WaveComposition
+            {static} - w18_Plane : WaveComposition
+            {static} - w18_Tank : WaveComposition
+            {static} - w19_Tank : WaveComposition
+            {static} - w1_Plane : WaveComposition
+            {static} - w20_TankBoss : WaveComposition
+            {static} - w21_Car : WaveComposition
+            {static} - w21_Tank : WaveComposition
+            {static} - w22_Plane : WaveComposition
+            {static} - w23_Car : WaveComposition
+            {static} - w23_Plane : WaveComposition
+            {static} - w23_Tank : WaveComposition
+            {static} - w24_Car : WaveComposition
+            {static} - w25_TankBoss : WaveComposition
+            {static} - w26_Tank : WaveComposition
+            {static} - w27_Car : WaveComposition
+            {static} - w27_Tank : WaveComposition
+            {static} - w28_Car : WaveComposition
+            {static} - w28_Plane : WaveComposition
+            {static} - w28_Tank : WaveComposition
+            {static} - w29_Car : WaveComposition
+            {static} - w29_Tank : WaveComposition
+            {static} - w2_Tank : WaveComposition
+            {static} - w30_Car : WaveComposition
+            {static} - w30_Plane : WaveComposition
+            {static} - w30_TankBoss : WaveComposition
+            {static} - w31_Tank : WaveComposition
+            {static} - w32_Car : WaveComposition
+            {static} - w33_Tank : WaveComposition
+            {static} - w34_Plane : WaveComposition
+            {static} - w35_Car : WaveComposition
+            {static} - w35_Tank : WaveComposition
+            {static} - w35_TankBoss : WaveComposition
+            {static} - w36_Car : WaveComposition
+            {static} - w36_Plane : WaveComposition
+            {static} - w37_Car : WaveComposition
+            {static} - w37_Tank : WaveComposition
+            {static} - w38_TankBoss : WaveComposition
+            {static} - w39_Car : WaveComposition
+            {static} - w39_Plane : WaveComposition
+            {static} - w39_Tank : WaveComposition
+            {static} - w3_Car : WaveComposition
+            {static} - w40_Plane : WaveComposition
+            {static} - w40_TankBoss : WaveComposition
+            {static} - w41_Tank : WaveComposition
+            {static} - w41_TankBoss : WaveComposition
+            {static} - w42_Car : WaveComposition
+            {static} - w43_Tank : WaveComposition
+            {static} - w44_Plane : WaveComposition
+            {static} - w45_Car : WaveComposition
+            {static} - w45_Plane : WaveComposition
+            {static} - w45_Tank : WaveComposition
+            {static} - w46_Car : WaveComposition
+            {static} - w46_Tank : WaveComposition
+            {static} - w46_TankBoss : WaveComposition
+            {static} - w47_Car : WaveComposition
+            {static} - w47_Tank : WaveComposition
+            {static} - w48_Plane : WaveComposition
+            {static} - w49_Car : WaveComposition
+            {static} - w49_Tank : WaveComposition
+            {static} - w4_Car : WaveComposition
+            {static} - w4_Tank : WaveComposition
+            {static} - w50_TankBoss : WaveComposition
+            {static} - w5_TankBoss : WaveComposition
+            {static} - w6_Car : WaveComposition
+            {static} - w6_Tank : WaveComposition
+            {static} - w7_Car : WaveComposition
+            {static} - w7_Plane : WaveComposition
+            {static} - w7_Tank : WaveComposition
+            {static} - w8_Tank : WaveComposition
+            {static} - w9_Car : WaveComposition
+            {static} - waveSpeed : int
             {static} - waveTime : int
             + HardMatch()
             + create()
@@ -71,11 +189,73 @@ title __MATCH's Class Diagram__\n
     namespace game {
       namespace match {
         class de.dhbw.game.match.MediumMatch {
-            {static} - firstWaveTankL1 : WaveComposition
-            {static} - firstWaveTankL2 : WaveComposition
-            {static} - secondWaveTankL1 : WaveComposition
-            {static} - secondWaveTankL2 : WaveComposition
-            {static} - thirdWaveTankL2 : WaveComposition
+            {static} - startMoney : int
+            {static} - w10_TankBoss : WaveComposition
+            {static} - w11_Tank : WaveComposition
+            {static} - w12_Car : WaveComposition
+            {static} - w13_Plane : WaveComposition
+            {static} - w14_Car : WaveComposition
+            {static} - w14_Tank : WaveComposition
+            {static} - w15_Car : WaveComposition
+            {static} - w15_Plane : WaveComposition
+            {static} - w15_Tank : WaveComposition
+            {static} - w15_TankBoss : WaveComposition
+            {static} - w16_Car : WaveComposition
+            {static} - w17_Car : WaveComposition
+            {static} - w17_Tank : WaveComposition
+            {static} - w18_Plane : WaveComposition
+            {static} - w18_Tank : WaveComposition
+            {static} - w19_Tank : WaveComposition
+            {static} - w1_Tank : WaveComposition
+            {static} - w20_TankBoss : WaveComposition
+            {static} - w21_Car : WaveComposition
+            {static} - w21_Tank : WaveComposition
+            {static} - w22_Plane : WaveComposition
+            {static} - w23_Car : WaveComposition
+            {static} - w23_Plane : WaveComposition
+            {static} - w23_Tank : WaveComposition
+            {static} - w24_Car : WaveComposition
+            {static} - w25_TankBoss : WaveComposition
+            {static} - w26_Tank : WaveComposition
+            {static} - w27_Car : WaveComposition
+            {static} - w27_Tank : WaveComposition
+            {static} - w28_Car : WaveComposition
+            {static} - w28_Plane : WaveComposition
+            {static} - w28_Tank : WaveComposition
+            {static} - w29_Car : WaveComposition
+            {static} - w29_Tank : WaveComposition
+            {static} - w2_Tank : WaveComposition
+            {static} - w30_Car : WaveComposition
+            {static} - w30_Plane : WaveComposition
+            {static} - w30_TankBoss : WaveComposition
+            {static} - w31_Tank : WaveComposition
+            {static} - w32_Car : WaveComposition
+            {static} - w33_Tank : WaveComposition
+            {static} - w34_Plane : WaveComposition
+            {static} - w35_Car : WaveComposition
+            {static} - w35_Tank : WaveComposition
+            {static} - w35_TankBoss : WaveComposition
+            {static} - w36_Car : WaveComposition
+            {static} - w36_Plane : WaveComposition
+            {static} - w37_Car : WaveComposition
+            {static} - w37_Tank : WaveComposition
+            {static} - w38_TankBoss : WaveComposition
+            {static} - w39_Car : WaveComposition
+            {static} - w39_Plane : WaveComposition
+            {static} - w39_Tank : WaveComposition
+            {static} - w3_Car : WaveComposition
+            {static} - w40_Plane : WaveComposition
+            {static} - w40_TankBoss : WaveComposition
+            {static} - w4_Plane : WaveComposition
+            {static} - w5_TankBoss : WaveComposition
+            {static} - w6_Car : WaveComposition
+            {static} - w6_Tank : WaveComposition
+            {static} - w7_Car : WaveComposition
+            {static} - w7_Plane : WaveComposition
+            {static} - w7_Tank : WaveComposition
+            {static} - w8_Tank : WaveComposition
+            {static} - w9_Car : WaveComposition
+            {static} - waveSpeed : int
             {static} - waveTime : int
             + MediumMatch()
             + create()
@@ -86,6 +266,7 @@ title __MATCH's Class Diagram__\n
   
 
   de.dhbw.game.match.AMatch -up-|> de.dhbw.game.ATimerUsage
+  de.dhbw.game.match.AMatch o-- de.dhbw.game.Difficulty : difficulty
   de.dhbw.game.match.EasyMatch -up-|> de.dhbw.game.match.AMatch
   de.dhbw.game.match.HardMatch -up-|> de.dhbw.game.match.AMatch
   de.dhbw.game.match.MediumMatch -up-|> de.dhbw.game.match.AMatch

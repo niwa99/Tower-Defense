@@ -47,16 +47,22 @@ title __ACTIVITIES's Class Diagram__\n
           - textLifePoints : TextView
           - textMoney : TextView
           - textWaveRemaining : TextView
+          + addView()
           + getGame()
           + getMapFrameLayout()
           + getMediaPlayer()
           + onBackPressed()
           + onOptionsItemSelected()
+          + removeView()
           + returnToMainMenu()
           + setCurrentWaveNumber()
+          + setForeGround()
+          + setImageResource()
           + setLifePoints()
           + setMoney()
           + setWaveTimeRemaining()
+          + showBuilder()
+          + startAnimator()
           # onCreate()
           # onPostCreate()
           - delayedHide()

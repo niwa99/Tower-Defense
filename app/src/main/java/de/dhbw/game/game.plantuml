@@ -31,7 +31,9 @@ title __GAME's Class Diagram__\n
   namespace de.dhbw {
     namespace game {
       enum EnemyType {
-        FREEZER
+        BOSS_TANK
+        CAR
+        PLANE
         TANK
         label
       }
@@ -46,9 +48,7 @@ title __GAME's Class Diagram__\n
           - currentWaveNumber : int
           - gameSettings : Map<Settings, Boolean>
           - gameTimer : Timer
-          - isAnimationOn : boolean
-          - isMusicOn : boolean
-          - isSoundOn : boolean
+          - isMenuOpen : boolean
           - lastEnemyOfWaveSpawned : boolean
           - lastWaveOut : boolean
           - lifePoints : int
@@ -58,11 +58,13 @@ title __GAME's Class Diagram__\n
           - numberOfEnemiesKilled : int
           - numberOfUpgrades : int
           - showCircle : boolean
+          - spawnButton : Button
           - waveTimer : Timer
           + Game()
           + addMoney()
           + allEnemiesSpawned()
           + buildTower()
+          + closeMenu()
           + continueTimers()
           + createNewTowerOnField()
           + decreaseLifePoints()
@@ -92,6 +94,7 @@ title __GAME's Class Diagram__\n
           + startNextWave()
           + stop()
           + subMoney()
+          + toggleMusic()
           + updateStatisticsIfHighScore()
           + upgradeTower()
           + winActions()
@@ -99,6 +102,7 @@ title __GAME's Class Diagram__\n
           - loadSettings()
           - showGameFinishedDialog()
           - startWave()
+          - triggerSpawnButtonImageChange()
           - updateStatusBar()
       }
     }
@@ -128,6 +132,26 @@ title __GAME's Class Diagram__\n
 
   namespace de.dhbw {
     namespace game {
+      class de.dhbw.game.MusicPlayer {
+          - isStarted : boolean
+          - loopTime : int
+          - mediaPlayer : MediaPlayer
+          - on : boolean
+          - timer : Timer
+          - timerTask : TimerTask
+          + MusicPlayer()
+          + calculateDelay()
+          + isStarted()
+          + startMusicPlayer()
+          + stop()
+          + toggle()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace game {
       class de.dhbw.game.StatusBarCountDownTimer {
           - seconds : int
           - timer : Timer
@@ -147,6 +171,8 @@ title __GAME's Class Diagram__\n
   de.dhbw.game.Game o-- de.dhbw.game.match.AMatch : match
   de.dhbw.game.Game o-- de.dhbw.map.matchfield.MatchField : matchField
   de.dhbw.game.Game o-- de.dhbw.game.IMoneyListener : moneyListener
+  de.dhbw.game.Game o-- de.dhbw.game.MusicPlayer : musicPLayer
+  de.dhbw.game.MusicPlayer -up-|> de.dhbw.game.ATimerUsage
   de.dhbw.game.StatusBarCountDownTimer o-- de.dhbw.game.IStatusBar : status
 
 

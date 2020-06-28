@@ -49,9 +49,9 @@ title __STRUCTURE's Class Diagram__\n
           {static} + calculatePath()
           + getField()
           + getFieldForEnemy()
+          + getFieldForPlane()
           + getFields()
           {static} + getPathNumber()
-          {static} + getSizeField()
           - createPath()
       }
     }

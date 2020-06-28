@@ -7,7 +7,7 @@ title __WAVE's Class Diagram__\n
       namespace wave {
         abstract class de.dhbw.game.wave.AWave {
             - count : int
-            - enemies : List<Enemy>
+            - enemies : List<AEnemy>
             - speed : int
             + calculateDelay()
             {abstract} + generate()

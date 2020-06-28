@@ -6,17 +6,21 @@ title __BULLET's Class Diagram__\n
     namespace map.objects.bullet {
       abstract class de.dhbw.map.objects.bullet.ABullet {
           # damage : int
+          # x : int
+          # y : int
           - bulletImage : ImageView
-          - x : int
-          - y : int
+          - bulletSpeed : int
           + ABullet()
           + ABullet()
+          + getBulletSpeed()
+          + setBulletSpeed()
+          + start()
           # hitEnemy()
-          - applyBulletOffset()
-          - getBulletRotation()
-          - setMidpointOfPositions()
-          - startAnimation()
-          - startLogicalShooting()
+          # setMidpointOfPositions()
+          # startAnimation()
+          # startLogicalShooting()
+          ~ applyBulletOffset()
+          ~ getBulletRotation()
       }
     }
   }
@@ -25,12 +29,71 @@ title __BULLET's Class Diagram__\n
   namespace de.dhbw {
     namespace map.objects.bullet {
       class de.dhbw.map.objects.bullet.Bomb {
-          - allEnemies : List<Enemy>
+          - allEnemies : List<AEnemy>
           - range : int
+          + Bomb()
           + Bomb()
           + Bomb()
           + getEnemiesToHit()
           # hitEnemy()
+          - explode()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.bullet {
+      class de.dhbw.map.objects.bullet.LaserRay {
+          - allEnemies : List<AEnemy>
+          - canvas : Canvas
+          - isAlive : boolean
+          - killBullet : boolean
+          + LaserRay()
+          + isAlive()
+          {static} + isEnemyHitOnPosition()
+          + killBullet()
+          # hitEnemy()
+          # setMidpointOfPositions()
+          # startAnimation()
+          # startLogicalShooting()
+          ~ applyBulletOffset()
+          {static} ~ doIntersect()
+          {static} ~ onSegment()
+          {static} ~ orientation()
+          - getVectorX()
+          - getVectorY()
+          - sparkle()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.bullet {
+      class de.dhbw.map.objects.bullet.LaserRay.LaserView {
+          ~ paint : Paint
+          + LaserView()
+          + LaserView()
+          + LaserView()
+          + LaserView()
+          + onDraw()
+          + reDraw()
+          - init()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace map.objects.bullet {
+      class de.dhbw.map.objects.bullet.PlasmaBall {
+          - enemies : List<AEnemy>
+          - range : int
+          + PlasmaBall()
+          + PlasmaBall()
+          # hitEnemy()
+          - isNextEnemyInRange()
       }
     }
   }
@@ -53,16 +116,24 @@ title __BULLET's Class Diagram__\n
           - slowness : int
           + SnowFlake()
           + SnowFlake()
+          + SnowFlake()
           # hitEnemy()
       }
     }
   }
   
 
-  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.AEnemy : targetEnemy
   de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.activities.GameActivity : gameActivity
+  de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.map.objects.enemy.AEnemy : targetEnemy
   de.dhbw.map.objects.bullet.ABullet o-- de.dhbw.util.Position : targetPos
   de.dhbw.map.objects.bullet.Bomb -up-|> de.dhbw.map.objects.bullet.ABullet
+  de.dhbw.map.objects.bullet.LaserRay -up-|> de.dhbw.map.objects.bullet.ABullet
+  de.dhbw.map.objects.bullet.LaserRay o-- de.dhbw.map.objects.bullet.LaserRay.LaserView : laserView
+  de.dhbw.map.objects.bullet.LaserRay +-down- de.dhbw.map.objects.bullet.LaserRay.LaserView
+  de.dhbw.map.objects.bullet.LaserRay.LaserView -up-|> android.view.View
+  de.dhbw.map.objects.bullet.LaserRay.LaserView o-- de.dhbw.util.Position : from
+  de.dhbw.map.objects.bullet.LaserRay.LaserView o-- de.dhbw.util.Position : to
+  de.dhbw.map.objects.bullet.PlasmaBall -up-|> de.dhbw.map.objects.bullet.ABullet
   de.dhbw.map.objects.bullet.Projectile -up-|> de.dhbw.map.objects.bullet.ABullet
   de.dhbw.map.objects.bullet.SnowFlake -up-|> de.dhbw.map.objects.bullet.ABullet
 

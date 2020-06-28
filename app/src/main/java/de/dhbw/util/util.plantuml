@@ -4,15 +4,37 @@ title __UTIL's Class Diagram__\n
 
   namespace de.dhbw {
     namespace util {
+      class de.dhbw.util.AdvancedTimer {
+          ~ isCanceled : boolean
+          ~ timer : Timer
+          + cancel()
+          + isCanceled()
+          + schedule()
+          + scheduleAtFixedRate()
+      }
+    }
+  }
+  
+
+  namespace de.dhbw {
+    namespace util {
       class de.dhbw.util.Constants {
           {static} + AMOUNT_COLUMNS : int
           {static} + AMOUNT_ROWS : int
           {static} + BOMB_RANGE : int
           {static} + BULLET_SIZE_PARAMS : LayoutParams
           {static} + BULLET_SPEED : int
+          {static} + CAR_ENEMY_SIZE_PARAMS : LayoutParams
+          {static} + CAR_HEALTHPOINTS : int
+          {static} + CAR_LIFE_POINT_COSTS : int
+          {static} + CAR_SPEED : int
+          {static} + CAR_VALUE : int
           {static} + DRAWABLE_BULLET : int
           {static} + DRAWABLE_BULLET_BOOMBASTIC : int
           {static} + DRAWABLE_BULLET_FREEZER : int
+          {static} + DRAWABLE_BULLET_PLASMARIZER : int
+          {static} + DRAWABLE_CAR : int
+          {static} + DRAWABLE_CAR_HITTED : int
           {static} + DRAWABLE_FIELD_ON_CLICK_PLUS : int
           {static} + DRAWABLE_FIELD_TRANSPARENT : int
           {static} + DRAWABLE_PATH_HORIZONTAL : int
@@ -21,14 +43,23 @@ title __UTIL's Class Diagram__\n
           {static} + DRAWABLE_PATH_RIGHT_DOWN : int
           {static} + DRAWABLE_PATH_RIGHT_UP : int
           {static} + DRAWABLE_PATH_VERTICAL : int
+          {static} + DRAWABLE_PLANE : int
+          {static} + DRAWABLE_PLANE_HITTED : int
           {static} + DRAWABLE_TANK : int
+          {static} + DRAWABLE_TANK_BOSS : int
+          {static} + DRAWABLE_TANK_BOSS_HITTED : int
           {static} + DRAWABLE_TANK_HITTED : int
           {static} + DRAWABLE_TOWER_ARTILLERY : int
+          {static} + DRAWABLE_TOWER_ASSAULTLASER : int
+          {static} + DRAWABLE_TOWER_ASSAULTLASER_BASE : int
+          {static} + DRAWABLE_TOWER_ASSAULTLASER_HEAD : int
           {static} + DRAWABLE_TOWER_BOOMBASTIC : int
           {static} + DRAWABLE_TOWER_BOOMBASTIC_BASE : int
           {static} + DRAWABLE_TOWER_BOOMBASTIC_HEAD : int
           {static} + DRAWABLE_TOWER_FREEZER_BASE : int
           {static} + DRAWABLE_TOWER_FREEZER_HEAD : int
+          {static} + DRAWABLE_TOWER_PLASMARIZER_BASE : int
+          {static} + ENEMY_LAYOUT_SIZE_PARAMS : LayoutParams
           {static} + FIELD_SIZE : int
           {static} + ICON_ANIMATION_OFF : int
           {static} + ICON_ANIMATION_ON : int
@@ -36,21 +67,18 @@ title __UTIL's Class Diagram__\n
           {static} + ICON_MUSIC_ON : int
           {static} + ICON_SOUND_OFF : int
           {static} + ICON_SOUND_ON : int
+          {static} + PLANE_ENEMY_SIZE_PARAMS : LayoutParams
+          {static} + PLANE_HEALTHPOINTS : int
+          {static} + PLANE_LIFE_POINT_COSTS : int
+          {static} + PLANE_SPEED : int
+          {static} + PLANE_VALUE : int
           {static} + STATUS_OFF : String
           {static} + STATUS_ON : String
           {static} + TANK_ENEMY_SIZE_PARAMS : LayoutParams
-          {static} + TANK_LEVEL_1_HEALTHPOINTS : int
-          {static} + TANK_LEVEL_1_LIFE_POINT_COSTS : int
-          {static} + TANK_LEVEL_1_SPEED : int
-          {static} + TANK_LEVEL_1_VALUE : int
-          {static} + TANK_LEVEL_2_HEALTHPOINTS : int
-          {static} + TANK_LEVEL_2_LIFE_POINT_COSTS : int
-          {static} + TANK_LEVEL_2_SPEED : int
-          {static} + TANK_LEVEL_2_VALUE : int
-          {static} + TANK_LEVEL_3_HEALTHPOINTS : int
-          {static} + TANK_LEVEL_3_LIFE_POINT_COSTS : int
-          {static} + TANK_LEVEL_3_SPEED : int
-          {static} + TANK_LEVEL_3_VALUE : int
+          {static} + TANK_HEALTHPOINTS : int
+          {static} + TANK_LIFE_POINT_COSTS : int
+          {static} + TANK_SPEED : int
+          {static} + TANK_VALUE : int
           {static} + TOWER_ARTILLERY_LEVEL_1_COSTS : int
           {static} + TOWER_ARTILLERY_LEVEL_1_DAMAGE : int
           {static} + TOWER_ARTILLERY_LEVEL_1_FIRERATE_IN_SECONDS : int
@@ -64,17 +92,83 @@ title __UTIL's Class Diagram__\n
           {static} + TOWER_ARTILLERY_LEVEL_3_DAMAGE : int
           {static} + TOWER_ARTILLERY_LEVEL_3_FIRERATE_IN_SECONDS : int
           {static} + TOWER_ARTILLERY_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_ARTILLERY_LEVEL_4_COSTS : int
+          {static} + TOWER_ARTILLERY_LEVEL_4_DAMAGE : int
+          {static} + TOWER_ARTILLERY_LEVEL_4_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_ARTILLERY_LEVEL_4_RANGE_IN_PIXELS : int
           {static} + TOWER_BOOMBASTIC_LEVEL_1_COSTS : int
           {static} + TOWER_BOOMBASTIC_LEVEL_1_DAMAGE : int
           {static} + TOWER_BOOMBASTIC_LEVEL_1_FIRERATE_IN_SECONDS : int
           {static} + TOWER_BOOMBASTIC_LEVEL_1_RANGE_IN_PIXELS : int
           {static} + TOWER_BOOMBASTIC_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_BOOMBASTIC_LEVEL_2_COSTS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_2_DAMAGE : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_2_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_2_RANGE_IN_PIXELS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_3_COSTS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_3_DAMAGE : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_3_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_4_COSTS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_4_DAMAGE : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_4_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_BOOMBASTIC_LEVEL_4_RANGE_IN_PIXELS : int
           {static} + TOWER_FREEZER_LEVEL_1_COSTS : int
           {static} + TOWER_FREEZER_LEVEL_1_DAMAGE : int
           {static} + TOWER_FREEZER_LEVEL_1_FIRERATE_IN_SECONDS : int
           {static} + TOWER_FREEZER_LEVEL_1_RANGE_IN_PIXELS : int
           {static} + TOWER_FREEZER_LEVEL_1_SLOWNESS : int
           {static} + TOWER_FREEZER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_FREEZER_LEVEL_2_COSTS : int
+          {static} + TOWER_FREEZER_LEVEL_2_DAMAGE : int
+          {static} + TOWER_FREEZER_LEVEL_2_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_FREEZER_LEVEL_2_RANGE_IN_PIXELS : int
+          {static} + TOWER_FREEZER_LEVEL_2_SLOWNESS : int
+          {static} + TOWER_FREEZER_LEVEL_3_COSTS : int
+          {static} + TOWER_FREEZER_LEVEL_3_DAMAGE : int
+          {static} + TOWER_FREEZER_LEVEL_3_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_FREEZER_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_FREEZER_LEVEL_3_SLOWNESS : int
+          {static} + TOWER_FREEZER_LEVEL_4_COSTS : int
+          {static} + TOWER_FREEZER_LEVEL_4_DAMAGE : int
+          {static} + TOWER_FREEZER_LEVEL_4_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_FREEZER_LEVEL_4_RANGE_IN_PIXELS : int
+          {static} + TOWER_FREEZER_LEVEL_4_SLOWNESS : int
+          {static} + TOWER_LASER_LEVEL_1_COSTS : int
+          {static} + TOWER_LASER_LEVEL_1_DAMAGE : int
+          {static} + TOWER_LASER_LEVEL_1_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_LASER_LEVEL_1_RANGE_IN_PIXELS : int
+          {static} + TOWER_LASER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_LASER_LEVEL_2_COSTS : int
+          {static} + TOWER_LASER_LEVEL_2_DAMAGE : int
+          {static} + TOWER_LASER_LEVEL_2_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_LASER_LEVEL_2_RANGE_IN_PIXELS : int
+          {static} + TOWER_LASER_LEVEL_3_COSTS : int
+          {static} + TOWER_LASER_LEVEL_3_DAMAGE : int
+          {static} + TOWER_LASER_LEVEL_3_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_LASER_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_LASER_LEVEL_4_COSTS : int
+          {static} + TOWER_LASER_LEVEL_4_DAMAGE : int
+          {static} + TOWER_LASER_LEVEL_4_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_LASER_LEVEL_4_RANGE_IN_PIXELS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_1_COSTS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_1_DAMAGE : int
+          {static} + TOWER_PLASMARIZER_LEVEL_1_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_1_RANGE_IN_PIXELS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_1_TOWER_SIZE_PARAMS : LayoutParams
+          {static} + TOWER_PLASMARIZER_LEVEL_2_COSTS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_2_DAMAGE : int
+          {static} + TOWER_PLASMARIZER_LEVEL_2_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_2_RANGE_IN_PIXELS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_3_COSTS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_3_DAMAGE : int
+          {static} + TOWER_PLASMARIZER_LEVEL_3_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_3_RANGE_IN_PIXELS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_4_COSTS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_4_DAMAGE : int
+          {static} + TOWER_PLASMARIZER_LEVEL_4_FIRERATE_IN_SECONDS : int
+          {static} + TOWER_PLASMARIZER_LEVEL_4_RANGE_IN_PIXELS : int
+          {static} + startGameDelay : int
       }
     }
   }
@@ -146,21 +240,26 @@ title __UTIL's Class Diagram__\n
   namespace de.dhbw {
     namespace util {
       enum Statistics {
+        BUILT_TOWERS
         EASY_BUILT_TOWERS
         EASY_ENEMIES_KILLED
         EASY_MAX_WAVE
         EASY_MONEY_SPENT
         EASY_UPGRADES
+        ENEMIES_KILLED
         HARD_BUILT_TOWERS
         HARD_ENEMIES_KILLED
         HARD_MAX_WAVE
         HARD_MONEY_SPENT
         HARD_UPGRADES
+        MAX_WAVE
         MEDIUM_BUILT_TOWERS
         MEDIUM_ENEMIES_KILLED
         MEDIUM_MAX_WAVE
         MEDIUM_MONEY_SPENT
         MEDIUM_UPGRADES
+        MONEY_SPENT
+        UPGRADES
       }
     }
   }
@@ -169,9 +268,8 @@ title __UTIL's Class Diagram__\n
   namespace de.dhbw {
     namespace util {
       class de.dhbw.util.SortingUtil {
-          + SortingUtil()
           {static} + getSortedListBySortingMapByValue()
-          + sortMapByValue()
+          {static} + sortListByMovedSteps()
       }
     }
   }
